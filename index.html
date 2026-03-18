@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>毎日の運勢</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Hiragino Kaku Gothic Pro', 'Meiryo', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 6px;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+    }
+
+    .date {
+      font-size: 0.9rem;
+      color: #aac4e0;
+      margin-bottom: 30px;
+    }
+
+    .sign-selector {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      max-width: 640px;
+      margin-bottom: 30px;
+    }
+
+    .sign-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 8px;
+      color: #fff;
+      padding: 8px 14px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .sign-btn:hover,
+    .sign-btn.active {
+      background: rgba(255, 215, 0, 0.25);
+      border-color: #ffd700;
+      color: #ffd700;
+      box-shadow: 0 0 12px rgba(255, 215, 0, 0.3);
+    }
+
+    .card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 16px;
+      padding: 30px 36px;
+      max-width: 500px;
+      width: 100%;
+      backdrop-filter: blur(10px);
+      text-align: center;
+      display: none;
+    }
+
+    .card.visible { display: block; }
+
+    .sign-title {
+      font-size: 1.6rem;
+      margin-bottom: 4px;
+      color: #ffd700;
+    }
+
+    .sign-period {
+      font-size: 0.8rem;
+      color: #aac4e0;
+      margin-bottom: 20px;
+    }
+
+    .overall {
+      margin-bottom: 20px;
+    }
+
+    .overall-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: #aac4e0;
+      margin-bottom: 6px;
+    }
+
+    .stars {
+      font-size: 1.8rem;
+      letter-spacing: 4px;
+    }
+
+    .fortune-message {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #dce8f5;
+      margin-bottom: 24px;
+    }
+
+    .metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.05);
+      border-radius: 10px;
+      padding: 10px 8px;
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: #aac4e0;
+      margin-bottom: 6px;
+    }
+
+    .metric-bar-bg {
+      background: rgba(255,255,255,0.1);
+      border-radius: 4px;
+      height: 6px;
+      overflow: hidden;
+      margin-bottom: 4px;
+    }
+
+    .metric-bar {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, #667eea, #ffd700);
+      transition: width 0.8s ease;
+    }
+
+    .metric-value {
+      font-size: 0.75rem;
+      color: #ffd700;
+    }
+
+    .lucky {
+      display: flex;
+      justify-content: space-around;
+      font-size: 0.85rem;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 18px;
+    }
+
+    .lucky-item span:first-child {
+      display: block;
+      font-size: 0.7rem;
+      color: #aac4e0;
+      margin-bottom: 4px;
+    }
+
+    .lucky-color-dot {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 4px;
+    }
+
+    .hint {
+      color: #aac4e0;
+      font-size: 0.9rem;
+    }
+  </style>
+</head>
+<body>
+
+<h1>&#x2728; 毎日の運勢 &#x2728;</h1>
+<div class="date" id="today-date"></div>
+
+<div class="sign-selector" id="sign-selector"></div>
+
+<div class="card" id="fortune-card">
+  <div class="sign-title" id="card-sign"></div>
+  <div class="sign-period" id="card-period"></div>
+  <div class="overall">
+    <div class="overall-label">総合運</div>
+    <div class="stars" id="card-stars"></div>
+  </div>
+  <p class="fortune-message" id="card-message"></p>
+  <div class="metrics">
+    <div class="metric">
+      <div class="metric-label">恋愛運</div>
+      <div class="metric-bar-bg"><div class="metric-bar" id="bar-love"></div></div>
+      <div class="metric-value" id="val-love"></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">仕事運</div>
+      <div class="metric-bar-bg"><div class="metric-bar" id="bar-work"></div></div>
+      <div class="metric-value" id="val-work"></div>
+    </div>
+    <div class="metric">
+      <div class="metric-label">健康運</div>
+      <div class="metric-bar-bg"><div class="metric-bar" id="bar-health"></div></div>
+      <div class="metric-value" id="val-health"></div>
+    </div>
+  </div>
+  <div class="lucky">
+    <div class="lucky-item">
+      <span>ラッキーカラー</span>
+      <span><span class="lucky-color-dot" id="lucky-color-dot"></span><span id="lucky-color"></span></span>
+    </div>
+    <div class="lucky-item">
+      <span>ラッキーナンバー</span>
+      <span id="lucky-number"></span>
+    </div>
+    <div class="lucky-item">
+      <span>ラッキーアイテム</span>
+      <span id="lucky-item"></span>
+    </div>
+  </div>
+</div>
+
+<p class="hint" id="hint" style="margin-top:24px;">星座を選んでください</p>
+
+<script>
+const SIGNS = [
+  { name: '牡羊座', emoji: '♈', period: '3/21〜4/19' },
+  { name: '牡牛座', emoji: '♉', period: '4/20〜5/20' },
+  { name: '双子座', emoji: '♊', period: '5/21〜6/21' },
+  { name: '蟹座',   emoji: '♋', period: '6/22〜7/22' },
+  { name: '獅子座', emoji: '♌', period: '7/23〜8/22' },
+  { name: '乙女座', emoji: '♍', period: '8/23〜9/22' },
+  { name: '天秤座', emoji: '♎', period: '9/23〜10/23' },
+  { name: '蠍座',   emoji: '♏', period: '10/24〜11/22' },
+  { name: '射手座', emoji: '♐', period: '11/23〜12/21' },
+  { name: '山羊座', emoji: '♑', period: '12/22〜1/19' },
+  { name: '水瓶座', emoji: '♒', period: '1/20〜2/18' },
+  { name: '魚座',   emoji: '♓', period: '2/19〜3/20' },
+];
+
+const MESSAGES = [
+  '今日はあなたの直感が冴えわたる日。迷ったときは心の声に従いましょう。小さな親切が大きな幸運を呼び込みます。',
+  '新しい出会いや挑戦がポジティブな変化をもたらすでしょう。積極的に行動することで道が開けます。',
+  '焦らず一歩一歩進むことが大切。丁寧に取り組んだことは必ず実を結びます。周囲への感謝も忘れずに。',
+  '創造力が高まる一日です。アイデアをメモしておくと後で役立つかもしれません。自分の可能性を信じて。',
+  '人間関係に恵まれる暗示があります。素直な気持ちを伝えることで絆が深まるでしょう。',
+  '過去のこだわりを手放すと、新たなチャンスが訪れます。柔軟な発想が鍵となる日です。',
+  '安定と調和をテーマに過ごすと吉。無理に動かず、今ある幸せに目を向けてみましょう。',
+  'エネルギーが充実しています。体を動かすことでよりよい結果が生まれるでしょう。夜は早めに休んで。',
+  '学びの機会が多い一日。好奇心のままに情報を集めると思わぬ発見があります。読書や会話を大切に。',
+  '経済面でのひらめきがある日。計画的に動けば着実に前進できます。衝動買いには注意しましょう。',
+  '感性が研ぎ澄まされています。芸術や音楽に触れると心が豊かになるでしょう。感情を大切に表現して。',
+  '周囲からのサポートに感謝を。一人で抱え込まず、頼れる人に相談するとうまくいきます。',
+];
+
+const COLORS = [
+  { name: '深紅', hex: '#c0392b' },
+  { name: 'ゴールド', hex: '#f1c40f' },
+  { name: 'ロイヤルブルー', hex: '#2980b9' },
+  { name: 'エメラルド', hex: '#27ae60' },
+  { name: 'ラベンダー', hex: '#9b59b6' },
+  { name: 'コーラル', hex: '#e67e22' },
+  { name: 'ターコイズ', hex: '#1abc9c' },
+  { name: 'ローズ', hex: '#e91e63' },
+  { name: 'アイボリー', hex: '#f5f0e8' },
+  { name: 'ネイビー', hex: '#1a237e' },
+];
+
+const ITEMS = [
+  '手帳', '観葉植物', 'お茶', 'キャンドル', '写真',
+  'ハーブ', 'ノート', '音楽', '石鹸', 'マグカップ',
+  '本', 'お守り', 'クリスタル', 'アロマ', 'ペン',
+];
+
+// Simple seeded pseudo-random (deterministic for date + sign)
+function seededRand(seed) {
+  let x = Math.sin(seed) * 10000;
+  return x - Math.floor(x);
+}
+
+function makeSeed(signIndex) {
+  const d = new Date();
+  const dateNum = d.getFullYear() * 10000 + (d.getMonth() + 1) * 100 + d.getDate();
+  return dateNum * 100 + signIndex;
+}
+
+function getFortuneData(signIndex) {
+  const seed = makeSeed(signIndex);
+  const r = (offset) => seededRand(seed + offset);
+
+  const score = (min, max, offset) => Math.floor(r(offset) * (max - min + 1)) + min;
+
+  const overall = score(1, 5, 0);
+  const love    = score(20, 100, 1);
+  const work    = score(20, 100, 2);
+  const health  = score(20, 100, 3);
+  const msgIdx  = Math.floor(r(4) * MESSAGES.length);
+  const colorIdx = Math.floor(r(5) * COLORS.length);
+  const number   = Math.floor(r(6) * 9) + 1;
+  const itemIdx  = Math.floor(r(7) * ITEMS.length);
+
+  return { overall, love, work, health, msgIdx, colorIdx, number, itemIdx };
+}
+
+function stars(n) {
+  return '★'.repeat(n) + '☆'.repeat(5 - n);
+}
+
+function showFortune(signIndex) {
+  const sign = SIGNS[signIndex];
+  const d = getFortuneData(signIndex);
+
+  document.getElementById('card-sign').textContent = sign.emoji + ' ' + sign.name;
+  document.getElementById('card-period').textContent = sign.period;
+  document.getElementById('card-stars').textContent = stars(d.overall);
+  document.getElementById('card-message').textContent = MESSAGES[d.msgIdx];
+
+  document.getElementById('bar-love').style.width = d.love + '%';
+  document.getElementById('val-love').textContent = d.love + '%';
+  document.getElementById('bar-work').style.width = d.work + '%';
+  document.getElementById('val-work').textContent = d.work + '%';
+  document.getElementById('bar-health').style.width = d.health + '%';
+  document.getElementById('val-health').textContent = d.health + '%';
+
+  const color = COLORS[d.colorIdx];
+  document.getElementById('lucky-color-dot').style.background = color.hex;
+  document.getElementById('lucky-color').textContent = color.name;
+  document.getElementById('lucky-number').textContent = d.number;
+  document.getElementById('lucky-item').textContent = ITEMS[d.itemIdx];
+
+  document.getElementById('fortune-card').classList.add('visible');
+  document.getElementById('hint').style.display = 'none';
+}
+
+// Render date
+const now = new Date();
+const opts = { year: 'numeric', month: 'long', day: 'numeric', weekday: 'long' };
+document.getElementById('today-date').textContent = now.toLocaleDateString('ja-JP', opts);
+
+// Render sign buttons
+const selector = document.getElementById('sign-selector');
+SIGNS.forEach((sign, i) => {
+  const btn = document.createElement('button');
+  btn.className = 'sign-btn';
+  btn.textContent = sign.emoji + ' ' + sign.name;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.sign-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    showFortune(i);
+  });
+  selector.appendChild(btn);
+});
+</script>
+</body>
+</html>
