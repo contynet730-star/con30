@@ -1,7 +1,8 @@
 """
-小中一貫教育（大泉桜学園）プレゼン作成スクリプト【ブラッシュアップ版v3】
-- スライド2の情報密度を緩和（経緯ブロックを削除・他項目もスリム化）
-- テイストを刷新（鮮やか系→落ち着いた配色、罫線細め、グレー基調、余白多め）
+小中一貫教育（大泉桜学園）プレゼン作成スクリプト【v4 R7データ反映版】
+- 令和7年度のExcel資料3点（体力テスト/不登校・学力詳細/暴力・いじめ・不登校R5-R7推移）を反映
+- 不登校R7=34名（過去最多更新）
+- 体力R7で順位改善（中2女子9位、小5男12位）等の新データも誠実に併記
 """
 
 from pptx import Presentation
@@ -460,10 +461,10 @@ add_conclusion_bar(slide3, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
                    fill=COLOR_ACCENT, size_pt=10)
 
 # =====================================================================
-# SLIDE 4: ④ 桜学園の現状＋専門家による因果分析
+# SLIDE 4: ④ 桜学園の現状（学力・体力・不登校）＋R7最新データ
 # =====================================================================
 slide4 = prs.slides.add_slide(blank_layout)
-add_header(slide4, "大泉桜学園の現状（学力・体力・不登校）＋因果分析", 3)
+add_header(slide4, "大泉桜学園の現状（学力・体力・不登校）＋R7最新", 3)
 
 # 学力（国語）
 add_section_label(slide4, Emu(180000), Emu(670000), Emu(4350000), Emu(240000),
@@ -475,7 +476,7 @@ kokugo_data = [
     ["東京都", "69", "69", "70", "70", "72", "61"],
     ["全国", "65.6", "67.2", "67.7", "69", "69.8", "58.1"],
 ]
-add_table(slide4, Emu(180000), Emu(940000), Emu(4350000), Emu(920000),
+add_table(slide4, Emu(180000), Emu(940000), Emu(4350000), Emu(820000),
           kokugo_data, body_size=8, header_size=8,
           col_widths=[Emu(1110000), Emu(540000), Emu(540000), Emu(540000), Emu(540000), Emu(540000), Emu(540000)],
           highlight_cells=[(1, 1), (1, 3), (1, 6)],
@@ -491,100 +492,197 @@ sansu_data = [
     ["東京都", "67", "67", "68", "54", "54", "57"],
     ["全国", "63.2", "62.5", "63.4", "51.4", "51", "52.5"],
 ]
-add_table(slide4, Emu(4610000), Emu(940000), Emu(4350000), Emu(920000),
+add_table(slide4, Emu(4610000), Emu(940000), Emu(4350000), Emu(820000),
           sansu_data, body_size=8, header_size=8,
           col_widths=[Emu(1110000), Emu(540000), Emu(540000), Emu(540000), Emu(540000), Emu(540000), Emu(540000)],
           highlight_cells=[(1, 1), (1, 3), (1, 6)],
           first_col_fill=COLOR_BG_BLUE)
 
-# 区内順位＋体力
-add_section_label(slide4, Emu(180000), Emu(1920000), Emu(4350000), Emu(240000),
-                  "  区内順位（学力合計点）／体力(R6)", COLOR_CAUTION, size_pt=9)
+# 学力区内順位（小・中）　左
+add_section_label(slide4, Emu(180000), Emu(1810000), Emu(4350000), Emu(240000),
+                  "  学力合計点 区内順位（年度推移）", COLOR_CAUTION, size_pt=9)
 rank_data = [
     ["", "H29", "H30", "R1", "R3", "R4", "R5", "R6"],
-    ["小学校", "59", "56", "62", "53", "62", "31", "63"],
-    ["中学校", "22", "31", "33", "7", "5", "3", "25"],
+    ["小(/65)", "59", "56", "62", "53", "62", "31", "63"],
+    ["中(/33)", "22", "31", "33", "7", "5", "3", "25"],
 ]
-add_table(slide4, Emu(180000), Emu(2190000), Emu(4350000), Emu(550000),
+add_table(slide4, Emu(180000), Emu(2080000), Emu(4350000), Emu(420000),
           rank_data, body_size=8, header_size=8,
-          col_widths=[Emu(750000), Emu(514000), Emu(514000), Emu(514000), Emu(514000), Emu(514000), Emu(514000), Emu(516000)],
+          col_widths=[Emu(660000), Emu(527000), Emu(527000), Emu(527000), Emu(527000), Emu(527000), Emu(527000), Emu(528000)],
           highlight_cells=[(1, 7), (2, 7)],
           first_col_fill=COLOR_BG_BLUE)
-add_textbox(slide4, Emu(180000), Emu(2770000), Emu(4350000), Emu(280000),
-            "体力(R6)：小・中学部とも区平均と同等～下回る種目が多い",
-            size_pt=9, color=COLOR_DARK, fill=COLOR_BG_LIGHT, line=COLOR_BORDER)
 
-# 不登校（R6=32人を強調）
-add_section_label(slide4, Emu(4610000), Emu(1920000), Emu(4350000), Emu(240000),
-                  "  不登校児童生徒数（人）／出現率（中学部%）", COLOR_ACCENT, size_pt=9)
+# 不登校児童生徒数（R7まで拡張、9年分）　右
+add_section_label(slide4, Emu(4610000), Emu(1810000), Emu(4350000), Emu(240000),
+                  "  不登校児童生徒数（人）／出現率(中%) ★R7=34名 過去最多",
+                  COLOR_ACCENT, size_pt=9)
 futoukou_data = [
-    ["", "H28", "H29", "H30", "R元", "R2", "R3", "R4", "R5", "R6"],
-    ["小学部計", "5", "1", "3", "1", "2", "5", "10", "7", "14"],
-    ["中学部計", "8", "12", "14", "8", "13", "21", "23", "21", "18"],
-    ["全体計", "13", "13", "17", "9", "15", "26", "33", "28", "32"],
-    ["中・桜%", "3.38", "5.13", "5.93", "3.52", "5.63", "10.50", "11.11", "10.40", "-"],
-    ["中・区%", "3.42", "3.20", "3.26", "4.35", "4.80", "5.23", "6.13", "6.90", "-"],
-    ["中・都%", "3.6", "3.78", "4.33", "4.76", "4.93", "5.76", "6.85", "7.80", "-"],
+    ["", "H29", "H30", "R元", "R2", "R3", "R4", "R5", "R6", "R7"],
+    ["小学部", "1", "3", "1", "2", "5", "10", "7", "14", "17"],
+    ["中学部", "12", "14", "8", "13", "21", "23", "21", "18", "17"],
+    ["全体計", "13", "17", "9", "15", "26", "33", "28", "32", "34"],
+    ["中桜%", "5.13", "5.93", "3.52", "5.63", "10.50", "11.11", "10.40", "-", "-"],
+    ["中区%", "3.20", "3.26", "4.35", "4.80", "5.23", "6.13", "6.90", "-", "-"],
+    ["中都%", "3.78", "4.33", "4.76", "4.93", "5.76", "6.85", "7.80", "-", "-"],
 ]
-add_table(slide4, Emu(4610000), Emu(2190000), Emu(4350000), Emu(1100000),
+add_table(slide4, Emu(4610000), Emu(2080000), Emu(4350000), Emu(1050000),
           futoukou_data, body_size=7, header_size=8,
-          col_widths=[Emu(650000), Emu(411000), Emu(411000), Emu(411000), Emu(411000), Emu(411000), Emu(411000), Emu(411000), Emu(411000), Emu(412000)],
-          highlight_cells=[(3, 7), (3, 8), (3, 9), (4, 6), (4, 7), (4, 8)],
+          col_widths=[Emu(530000), Emu(382000), Emu(382000), Emu(382000), Emu(382000), Emu(382000), Emu(382000), Emu(382000), Emu(382000), Emu(382000)],
+          highlight_cells=[(1, 8), (1, 9), (2, 8), (2, 9), (3, 8), (3, 9), (4, 6), (4, 7)],
           first_col_fill=COLOR_BG_BLUE)
-add_textbox(slide4, Emu(4610000), Emu(3320000), Emu(4350000), Emu(220000),
-            "※ R6は未公表値。前年比+4名（過去最多級）。外部生不登校(R2-R5):2,3,3,0名で大半は内部生",
-            size_pt=8, color=COLOR_ACCENT, fill=COLOR_BG_RED, line=COLOR_ACCENT)
 
-# 専門家による因果分析
-add_section_label(slide4, Emu(180000), Emu(3620000), Emu(8780000), Emu(260000),
-                  "  専門家による因果分析 ― 教育統計学・教育心理学・特別支援教育の視点",
-                  COLOR_PURPLE, size_pt=10)
+# 体力R6→R7順位推移（新規）　左
+add_section_label(slide4, Emu(180000), Emu(2610000), Emu(4350000), Emu(240000),
+                  "  体力テスト R6→R7 順位推移 ★R7改善傾向",
+                  COLOR_POSITIVE, size_pt=9)
+tairyoku_data = [
+    ["対象", "R6点", "R6順位", "R7点", "R7順位", "変化"],
+    ["小5男子", "50.89", "45/65", "53.58", "12/65", "↑33"],
+    ["小5女子", "50.57", "58/65", "52.21", "33/65", "↑25"],
+    ["中2男子", "41.08", "12/33", "43.67", "10/33", "↑2"],
+    ["中2女子", "42.58", "28/33", "49.36", "9/33", "↑19"],
+]
+add_table(slide4, Emu(180000), Emu(2880000), Emu(4350000), Emu(900000),
+          tairyoku_data, body_size=8, header_size=8,
+          col_widths=[Emu(700000), Emu(600000), Emu(750000), Emu(600000), Emu(750000), Emu(950000)],
+          header_fill=COLOR_POSITIVE,
+          highlight_cells=[(1, 5), (2, 5), (3, 5), (4, 5)],
+          highlight_color=COLOR_BG_BLUE, highlight_text_color=COLOR_POSITIVE,
+          first_col_fill=COLOR_BG_BLUE)
 
-ca_w = int((8780000 - 2 * 50000) / 3)
-ca_y = Emu(3920000)
-ca_h = Emu(680000)
-ca1 = (
-    "〈統計学的視点〉\n"
-    "● 15年継続データ。サンプル単一校だが、\n"
-    "  時系列の一貫性から偶然性は低い\n"
-    "● 区・都・全国平均との比較で「効果あり」\n"
-    "  を示すデータは検出されず"
+# いじめ・暴力（R5→R6→R7）　右
+add_section_label(slide4, Emu(4610000), Emu(3210000), Emu(4350000), Emu(240000),
+                  "  R5→R6→R7 推移：いじめ・暴力（件数）",
+                  COLOR_ACCENT, size_pt=9)
+ijime_data = [
+    ["項目", "R5", "R6", "R7", "傾向"],
+    ["いじめ認知（小）", "13", "12", "31", "↑急増"],
+    ["いじめ認知（中）", "10", "11", "14", "↑増"],
+    ["暴力行為（小）", "1", "1", "0", "─"],
+    ["暴力行為（中）", "4", "9", "12", "↑増"],
+]
+add_table(slide4, Emu(4610000), Emu(3480000), Emu(4350000), Emu(900000),
+          ijime_data, body_size=8, header_size=8,
+          col_widths=[Emu(1500000), Emu(550000), Emu(550000), Emu(550000), Emu(1200000)],
+          header_fill=COLOR_ACCENT,
+          highlight_cells=[(1, 4), (2, 4), (4, 4)],
+          highlight_color=COLOR_BG_RED, highlight_text_color=COLOR_ACCENT,
+          first_col_fill=COLOR_BG_BLUE)
+
+# R7総合所見　左下（体力の下）
+add_section_label(slide4, Emu(180000), Emu(3830000), Emu(4350000), Emu(220000),
+                  "  R7最新データの総合所見", COLOR_PURPLE, size_pt=9)
+shoken_text = (
+    "● 不登校R7=34名で過去最多更新（小17・中17）\n"
+    "● R6中3単独では不登校2名（区内4位＝少ない側）\n"
+    "● 体力R7改善も学年差・年度変動が大きく要観察\n"
+    "● いじめ・暴力もR6→R7で増加傾向"
 )
-ca2 = (
-    "〈交絡要因の検討〉\n"
-    "● 地域特性・家庭背景は区内他校と同等\n"
-    "● 教員配置・予算は標準的\n"
-    "→ 「一貫教育校化」以外で説明困難な\n"
-    "  パフォーマンス低下が観察される"
-)
-ca3 = (
-    "〈外部生・内部生の比較〉\n"
-    "● 7年外部生不登校(R2-R5):2,3,3,0名\n"
-    "● 中学部不登校の大半は9年間在籍の\n"
-    "  内部生（外部生流入の問題ではない）\n"
-    "→ 一貫教育環境内で問題発生"
-)
-for i, txt in enumerate([ca1, ca2, ca3]):
-    x = Emu(180000 + i * (ca_w + 50000))
-    add_shape(slide4, MSO_SHAPE.RECTANGLE, x, ca_y, Emu(ca_w), ca_h,
-              text=txt, size_pt=9, bold=False, text_color=COLOR_DARK,
-              fill=COLOR_BG_LIGHT, line=COLOR_PURPLE, anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT)
+add_textbox(slide4, Emu(180000), Emu(4080000), Emu(4350000), Emu(480000),
+            shoken_text, size_pt=8, color=COLOR_DARK,
+            fill=COLOR_BG_LIGHT, line=COLOR_PURPLE)
 
 # 結論バー
 add_conclusion_bar(slide4, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
-                   "R6最新（未公表）不登校数は32名で過去最多級。"
-                   "出現率はR5時点で都7.80%・区6.90%を大きく超過。学力・体力でも優位性なし。",
+                   "不登校はR7=34名で過去最多更新（小17・中17）。"
+                   "体力はR7改善も学力・小規模化の課題は継続。一貫教育の総合的優位性は依然として確認されず。",
                    fill=COLOR_ACCENT, size_pt=10)
 
 # =====================================================================
-# SLIDE 5: ⑤ 結論／代替施策／費用対効果
+# SLIDE 5: ⑤ 学校自己評価・改善計画（R6・R7）　※新規追加
+# =====================================================================
+slide5a = prs.slides.add_slide(blank_layout)
+add_header(slide5a, "学校の自己評価と改善計画（R6・R7）", 4)
+
+# 学校ビジョン
+add_section_label(slide5a, Emu(180000), Emu(670000), Emu(8780000), Emu(260000),
+                  "  学校教育目標／ビジョン　※令和6・7年度 学校経営計画より",
+                  COLOR_HEADER, size_pt=11)
+vision_text = (
+    "目指す学校像 ─ 「笑顔あふれる学校 ～感動の共有～」　／　校長：渡邊重幸\n"
+    "桜学精神　1～4学年：元気・チャレンジ・思いやり　／　5～9学年：桜の花よりも華ある人・時機を知る人・愛される人"
+)
+add_textbox(slide5a, Emu(180000), Emu(960000), Emu(8780000), Emu(460000),
+            vision_text, size_pt=10, bold=False, color=COLOR_DARK,
+            fill=COLOR_BG_BLUE, line=COLOR_SUBHEAD)
+
+# 4領域評価（成果と課題、横並び4列）
+add_section_label(slide5a, Emu(180000), Emu(1490000), Emu(8780000), Emu(260000),
+                  "  4領域での成果と課題　※学校関係者評価委員会（評議員11名）による外部評価",
+                  COLOR_POSITIVE, size_pt=11)
+
+dom_w = int((8780000 - 3 * 60000) / 4)
+dom_y_head = Emu(1790000)
+dom_y_body = Emu(2080000)
+dom_items = [
+    ("① 確かな学力", COLOR_HEADER,
+     "○ ICT機器（Canva・Padlet・\nKahoot!等）を積極活用\n"
+     "○ 思考・判断・表現力育成のた\nめ意見記入欄を設定\n"
+     "△ ICT活用が「楽しさ」優先で\n本質的学習に繋がらない場面"),
+    ("② 豊かな心", COLOR_POSITIVE,
+     "○ SC・SSW・心のふれあい相\n談員と密に連携\n"
+     "○ ふれあい月間アンケートで\n潜在的いじめを早期察知\n"
+     "△ 一部児童生徒に話し合い\n参加が偏る"),
+    ("③ 健康な生活", COLOR_CAUTION,
+     "○ トップアスリート招聘等で\n体力向上を図る\n"
+     "○ 食育指導計画に基づき給食\n指導を充実\n"
+     "△ 体育施設・特別教室の小中\n共用に体格差課題"),
+    ("④ 開かれた学校", COLOR_PURPLE,
+     "○ 学年・学級・委員会だより\nで授業様子を発信\n"
+     "○ HP・たより・学校公開で\n教育活動を公開\n"
+     "△ 家庭・地域への啓発を\n更に強化する必要"),
+]
+for i, (head, color, body) in enumerate(dom_items):
+    x = Emu(180000 + i * (dom_w + 60000))
+    add_shape(slide5a, MSO_SHAPE.RECTANGLE, x, dom_y_head, Emu(dom_w), Emu(280000),
+              text=head, size_pt=11, bold=True, text_color=COLOR_WHITE,
+              fill=color, anchor=MSO_ANCHOR.MIDDLE)
+    add_shape(slide5a, MSO_SHAPE.RECTANGLE, x, dom_y_body, Emu(dom_w), Emu(1300000),
+              text=body, size_pt=9, bold=False, text_color=COLOR_DARK,
+              fill=COLOR_BG_LIGHT, line=color, anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT)
+
+# R7改善策（左）／校長見解（右）
+add_section_label(slide5a, Emu(180000), Emu(3470000), Emu(4350000), Emu(260000),
+                  "  R7 改善計画（具体策）", COLOR_POSITIVE, size_pt=10)
+r7_kaizen = (
+    "● 悉皆研修・OJTで全教員のICTスキル統一\n"
+    "● AI集計で授業アンケート分析→PDCA高速化\n"
+    "● 週3回いじめ防止対策会議を継続\n"
+    "● Slack等で児童生徒変化をリアルタイム共有\n"
+    "● 「空白の時間・場所」を物理的に減らす"
+)
+add_textbox(slide5a, Emu(180000), Emu(3760000), Emu(4350000), Emu(900000),
+            r7_kaizen, size_pt=9, color=COLOR_DARK,
+            fill=COLOR_BG_BLUE, line=COLOR_POSITIVE)
+
+add_section_label(slide5a, Emu(4610000), Emu(3470000), Emu(4350000), Emu(260000),
+                  "  校長の見解（次年度改善に向けて）", COLOR_HEADER, size_pt=10)
+kocho_text = (
+    "「小中一貫教育校である本校は地域の期待も大きい。\n"
+    " 期待に応えるためにも今年度の反省をもとに考えた\n"
+    " 改善策を、まずは確実に実行していく。PDCAサイクル\n"
+    " を活かして、年度途中でも改善策の妥当性を吟味し、\n"
+    " 必要に応じて修正していく。」（R6・R7報告書より要約）"
+)
+add_textbox(slide5a, Emu(4610000), Emu(3760000), Emu(4350000), Emu(900000),
+            kocho_text, size_pt=9, color=COLOR_DARK,
+            fill=COLOR_BG_LIGHT, line=COLOR_HEADER)
+
+# 所見
+add_conclusion_bar(slide5a, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
+                   "学校は PDCA を回し改善努力を継続中。"
+                   "ただし統計データの傾向は単年の努力では覆らず、施設一体型化の構造的優位性は依然として未確認。",
+                   fill=COLOR_PURPLE, size_pt=10)
+
+# =====================================================================
+# SLIDE 6: ⑥ 結論／代替施策／費用対効果
 # =====================================================================
 slide5 = prs.slides.add_slide(blank_layout)
-add_header(slide5, "結論：新規開設の効果なし／代替施策と費用対効果", 4)
+add_header(slide5, "結論：新規開設の効果なし／代替施策と費用対効果", 5)
 
 # 上部見出し
 add_section_label(slide5, Emu(180000), Emu(670000), Emu(8780000), Emu(260000),
-                  "  大泉桜学園 開校15年（H23.4〜）の実績検証：4観点すべてで「効果なし」",
+                  "  大泉桜学園 開校15年（H23.4〜）R7最新データ反映：3観点で「効果なし」／1観点で「部分改善」",
                   COLOR_HEADER, size_pt=11)
 
 # 4象限
@@ -612,10 +710,10 @@ add_shape(slide5, MSO_SHAPE.RECTANGLE, Emu(4610000), box_y, b_w_r, box_t_h,
           text_color=COLOR_WHITE, fill=COLOR_ACCENT, anchor=MSO_ANCHOR.MIDDLE)
 add_textbox(slide5, Emu(4610000), Emu(1230000), b_w_r, box_b_h,
             "● 中学部不登校率R5=10.40%（区6.90%・都7.80%）\n"
-            "● 不登校総数：H28=13→R5=28→R6=32（過去最多級）\n"
-            "● 外部生不登校はR5=0名／問題は内部生で発生\n"
+            "● 不登校総数：H28=13→R5=28→R6=32→R7=34（過去最多）\n"
+            "● いじめ・暴力行為もR6→R7で増加傾向\n"
             "● 「滑らかな接続」効果はデータ上未確認\n"
-            "→ 一貫校化の主要目的が達成されていない",
+            "→ R7も悪化継続。一貫校化の主要目的が未達成",
             size_pt=9, color=COLOR_DARK, fill=COLOR_BG_RED, line=COLOR_ACCENT)
 
 # ③ 小規模校化
@@ -631,17 +729,17 @@ add_textbox(slide5, Emu(180000), Emu(2350000), b_w_l, box_b_h,
             "→ 一貫校化しても流出と小規模化は止まらず",
             size_pt=9, color=COLOR_DARK, fill=COLOR_BG_RED, line=COLOR_ACCENT)
 
-# ④ 運営・コスト
+# ④ 体力・運営・コスト
 add_shape(slide5, MSO_SHAPE.RECTANGLE, Emu(4610000), box_y2, b_w_r, box_t_h,
-          text="④ 運営・施設・コスト（教育経済学・学校経営学）", size_pt=11, bold=True,
-          text_color=COLOR_WHITE, fill=COLOR_ACCENT, anchor=MSO_ANCHOR.MIDDLE)
+          text="④ 体力・運営・コスト（一部肯定／コスト課題継続）", size_pt=11, bold=True,
+          text_color=COLOR_WHITE, fill=COLOR_CAUTION, anchor=MSO_ANCHOR.MIDDLE)
 add_textbox(slide5, Emu(4610000), Emu(2350000), b_w_r, box_b_h,
-            "● 体育施設・特別教室の共用に体格差課題\n"
-            "● 5・6年生の部活動活発化57%にとどまる\n"
-            "● 外部入学者の保護者不安・情報発信負担\n"
-            "● 新設費用：用地・改築・配置で多大な財政負担\n"
-            "→ 既存校連携強化で代替可能",
-            size_pt=9, color=COLOR_DARK, fill=COLOR_BG_RED, line=COLOR_ACCENT)
+            "○ 体力R7：小5男45→12位、中2女28→9位と改善傾向\n"
+            "△ ただし学年差・年度差大きく中長期で要検証\n"
+            "● 体育施設・特別教室は体格差で運用課題\n"
+            "● 新設費用（用地・改築）と運営負荷は継続\n"
+            "→ 体力面の効果も既存校連携で再現可能",
+            size_pt=9, color=COLOR_DARK, fill=COLOR_BG_ORANGE, line=COLOR_CAUTION)
 
 # 代替施策テーブル
 add_section_label(slide5, Emu(180000), Emu(3240000), Emu(8780000), Emu(260000),
@@ -665,10 +763,10 @@ add_table(slide5, Emu(180000), Emu(3540000), Emu(8780000), Emu(1050000),
           first_col_fill=COLOR_BG_BLUE)
 
 # 最終結論
-add_conclusion_bar(slide5, Emu(180000), Emu(4640000), Emu(8780000), Emu(200000),
-                   "【教育委員会提言】新規開設は教育効果・費用対効果ともに合理性なし。"
-                   "既存校連携強化等、低コスト・高効果の代替施策を区全域で展開すべき。",
-                   fill=COLOR_HEADER, size_pt=11)
+add_conclusion_bar(slide5, Emu(180000), Emu(4620000), Emu(8780000), Emu(240000),
+                   "【教育委員会提言】R7最新データ反映後も新規開設の総合的効果・費用対効果は確認されず。"
+                   "体力改善は要因分析の上、低コスト施策で全区展開を。",
+                   fill=COLOR_HEADER, size_pt=10)
 
 # Save
 out_path = "/home/user/con30/output/小中一貫教育（大泉桜学園）_改良版.pptx"
