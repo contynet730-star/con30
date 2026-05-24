@@ -358,20 +358,6 @@ issue_text = (
 add_textbox(slide2, Emu(4610000), Emu(2380000), Emu(4350000), Emu(1500000), issue_text,
             size_pt=10, color=COLOR_DARK, fill=COLOR_BG_ORANGE, line=COLOR_CAUTION)
 
-# 下段：専門家10視点（横並びチップ）
-add_section_label(slide2, Emu(180000), Emu(4050000), Emu(8780000), Emu(260000),
-                  "  本資料は以下の10専門分野の知見を踏まえて作成",
-                  COLOR_PURPLE, size_pt=10)
-experts = ["教育社会学", "教育経済学", "教育統計学", "教育心理学", "学校経営学",
-           "発達心理学", "比較教育学", "政策評価学", "特別支援教育", "教育行政学"]
-exp_y = Emu(4380000)
-exp_h = Emu(220000)
-each_w_emu = int((8780000 - 9 * 30000) / 10)
-for i, lbl in enumerate(experts):
-    x = Emu(180000 + i * (each_w_emu + 30000))
-    add_chip(slide2, x, exp_y, Emu(each_w_emu), exp_h, lbl,
-             fill=COLOR_PURPLE, size_pt=8)
-
 # 下部メッセージ
 add_conclusion_bar(slide2, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
                    "「効果」と「課題」が併記されており、定量的な教育効果のエビデンスは限定的。"
@@ -379,10 +365,10 @@ add_conclusion_bar(slide2, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
                    fill=COLOR_HEADER, size_pt=10)
 
 # =====================================================================
-# SLIDE 3: ③ 児童生徒数の推移／他自治体・全国動向との比較
+# SLIDE 3: ③ 児童生徒数の推移
 # =====================================================================
 slide3 = prs.slides.add_slide(blank_layout)
-add_header(slide3, "児童生徒数の推移／他自治体・全国動向との比較", 2)
+add_header(slide3, "児童生徒数の推移／桜中進学率と区全体動向", 2)
 
 # 上左：桜中進学率
 add_section_label(slide3, Emu(180000), Emu(670000), Emu(4350000), Emu(260000),
@@ -437,27 +423,26 @@ for i, (head, body, bg, border, txtc) in enumerate(midp_items):
               text=body, size_pt=9, bold=False, text_color=txtc,
               fill=bg, line=border, anchor=MSO_ANCHOR.MIDDLE)
 
-# 他自治体テーブル
+# 中段の詳細補足（他自治体テーブルの代わりに、桜学園データの追加観察）
 add_section_label(slide3, Emu(180000), Emu(3580000), Emu(8780000), Emu(260000),
-                  "  他自治体・全国動向との比較 ― 比較教育学・政策評価学の視点",
-                  COLOR_PURPLE, size_pt=10)
-hojin_data = [
-    ["", "区立校数（一貫型）", "主な方針・実績", "教訓"],
-    ["全国（文科省）", "義務教育学校 約207校（R5）", "全国学テで一貫校が通常校を有意に上回る結果は確認されず", "施設一体型の優位性は限定的"],
-    ["世田谷区", "施設一体型：限定的", "「世田谷9年教育」連携型を全校で展開。一体型新設は推進せず", "連携型でも目標は達成可能"],
-    ["品川区", "施設一体型：6校", "H18開設後、学力向上効果は地区差あり。中1ギャップ解消も限定的", "新設の費用対効果に課題"],
-    ["三鷹市", "施設一体型：限定的", "コミュニティ・スクール＋連携型小中一貫教育を全市展開", "地域連携型でも効果あり"],
+                  "  追加観察：桜中入学者の構成変化", COLOR_HEADER, size_pt=10)
+sup_data = [
+    ["年度", "R3", "R4", "R5", "R6", "R7", "概況"],
+    ["合計入学者", "70", "89", "64", "56", "61", "R4ピーク後 減少傾向"],
+    ["うち区立外", "8", "13", "10", "10", "8", "区立外への流出はほぼ横ばい"],
+    ["うち区立(桜中以外)", "6", "3", "4", "7", "12", "近年 区立内他校への進学が増加"],
+    ["桜中進学率", "80%", "82%", "78%", "70%", "67%", "▲13ポイント下降"],
 ]
-add_table(slide3, Emu(180000), Emu(3880000), Emu(8780000), Emu(950000),
-          hojin_data, body_size=8, header_size=8,
-          col_widths=[Emu(1500000), Emu(1800000), Emu(3680000), Emu(1800000)],
-          header_fill=COLOR_PURPLE,
-          first_col_fill=COLOR_BG_LIGHT)
+add_table(slide3, Emu(180000), Emu(3880000), Emu(8780000), Emu(720000),
+          sup_data, body_size=8, header_size=8,
+          col_widths=[Emu(1500000), Emu(550000), Emu(550000), Emu(550000), Emu(550000), Emu(550000), Emu(4530000)],
+          highlight_cells=[(4, 4), (4, 5)],
+          first_col_fill=COLOR_BG_BLUE)
 
 # 結論バー
 add_conclusion_bar(slide3, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
-                   "桜学園データ＋全国・他自治体動向：施設一体型小中一貫教育校は、"
-                   "小規模校化の解決策にも、学力・生徒数の増加策にもなっていない。",
+                   "桜中進学率は5年で80%→67%へ。"
+                   "区全体は概ね安定する一方、桜学園のみで小規模校化が進行している。",
                    fill=COLOR_ACCENT, size_pt=10)
 
 # =====================================================================
@@ -694,7 +679,7 @@ b_w_r = Emu(4400000)
 
 # ① 学力
 add_shape(slide5, MSO_SHAPE.RECTANGLE, Emu(180000), box_y, b_w_l, box_t_h,
-          text="① 学力向上効果（教育統計学）", size_pt=11, bold=True,
+          text="① 学力向上効果", size_pt=11, bold=True,
           text_color=COLOR_WHITE, fill=COLOR_ACCENT, anchor=MSO_ANCHOR.MIDDLE)
 add_textbox(slide5, Emu(180000), Emu(1230000), b_w_l, box_b_h,
             "● 区・都平均を継続的に下回る項目が多数\n"
@@ -706,7 +691,7 @@ add_textbox(slide5, Emu(180000), Emu(1230000), b_w_l, box_b_h,
 
 # ② 不登校
 add_shape(slide5, MSO_SHAPE.RECTANGLE, Emu(4610000), box_y, b_w_r, box_t_h,
-          text="② 不登校・中1ギャップ解消（教育心理学）", size_pt=11, bold=True,
+          text="② 不登校・中1ギャップ解消", size_pt=11, bold=True,
           text_color=COLOR_WHITE, fill=COLOR_ACCENT, anchor=MSO_ANCHOR.MIDDLE)
 add_textbox(slide5, Emu(4610000), Emu(1230000), b_w_r, box_b_h,
             "● 中学部不登校率R5=10.40%（区6.90%・都7.80%）\n"
@@ -719,7 +704,7 @@ add_textbox(slide5, Emu(4610000), Emu(1230000), b_w_r, box_b_h,
 # ③ 小規模校化
 box_y2 = Emu(2090000)
 add_shape(slide5, MSO_SHAPE.RECTANGLE, Emu(180000), box_y2, b_w_l, box_t_h,
-          text="③ 小規模校化対応（教育社会学・人口統計）", size_pt=11, bold=True,
+          text="③ 小規模校化対応", size_pt=11, bold=True,
           text_color=COLOR_WHITE, fill=COLOR_ACCENT, anchor=MSO_ANCHOR.MIDDLE)
 add_textbox(slide5, Emu(180000), Emu(2350000), b_w_l, box_b_h,
             "● 桜中進学率 80%(R3)→67%(R7) と低下\n"
@@ -743,7 +728,7 @@ add_textbox(slide5, Emu(4610000), Emu(2350000), b_w_r, box_b_h,
 
 # 代替施策テーブル
 add_section_label(slide5, Emu(180000), Emu(3240000), Emu(8780000), Emu(260000),
-                  "  推奨される代替施策と費用対効果 ― 教育経済学・教育行政学の試算",
+                  "  推奨される代替施策と費用対効果（試算）",
                   COLOR_POSITIVE, size_pt=11)
 cost_data = [
     ["施策", "想定費用（区負担）", "期待効果", "実施期間"],
