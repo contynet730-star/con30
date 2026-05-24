@@ -574,96 +574,10 @@ add_conclusion_bar(slide4, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
                    fill=COLOR_ACCENT, size_pt=10)
 
 # =====================================================================
-# SLIDE 5: ⑤ 学校自己評価・改善計画（R6・R7）　※新規追加
-# =====================================================================
-slide5a = prs.slides.add_slide(blank_layout)
-add_header(slide5a, "学校の自己評価と改善計画（R6・R7）", 4)
-
-# 学校ビジョン
-add_section_label(slide5a, Emu(180000), Emu(670000), Emu(8780000), Emu(260000),
-                  "  学校教育目標／ビジョン　※令和6・7年度 学校経営計画より",
-                  COLOR_HEADER, size_pt=11)
-vision_text = (
-    "目指す学校像 ─ 「笑顔あふれる学校 ～感動の共有～」　／　校長：渡邊重幸\n"
-    "桜学精神　1～4学年：元気・チャレンジ・思いやり　／　5～9学年：桜の花よりも華ある人・時機を知る人・愛される人"
-)
-add_textbox(slide5a, Emu(180000), Emu(960000), Emu(8780000), Emu(460000),
-            vision_text, size_pt=10, bold=False, color=COLOR_DARK,
-            fill=COLOR_BG_BLUE, line=COLOR_SUBHEAD)
-
-# 4領域評価（成果と課題、横並び4列）
-add_section_label(slide5a, Emu(180000), Emu(1490000), Emu(8780000), Emu(260000),
-                  "  4領域での成果と課題　※学校関係者評価委員会（評議員11名）による外部評価",
-                  COLOR_POSITIVE, size_pt=11)
-
-dom_w = int((8780000 - 3 * 60000) / 4)
-dom_y_head = Emu(1790000)
-dom_y_body = Emu(2080000)
-dom_items = [
-    ("① 確かな学力", COLOR_HEADER,
-     "○ ICT機器（Canva・Padlet・\nKahoot!等）を積極活用\n"
-     "○ 思考・判断・表現力育成のた\nめ意見記入欄を設定\n"
-     "△ ICT活用が「楽しさ」優先で\n本質的学習に繋がらない場面"),
-    ("② 豊かな心", COLOR_POSITIVE,
-     "○ SC・SSW・心のふれあい相\n談員と密に連携\n"
-     "○ ふれあい月間アンケートで\n潜在的いじめを早期察知\n"
-     "△ 一部児童生徒に話し合い\n参加が偏る"),
-    ("③ 健康な生活", COLOR_CAUTION,
-     "○ トップアスリート招聘等で\n体力向上を図る\n"
-     "○ 食育指導計画に基づき給食\n指導を充実\n"
-     "△ 体育施設・特別教室の小中\n共用に体格差課題"),
-    ("④ 開かれた学校", COLOR_PURPLE,
-     "○ 学年・学級・委員会だより\nで授業様子を発信\n"
-     "○ HP・たより・学校公開で\n教育活動を公開\n"
-     "△ 家庭・地域への啓発を\n更に強化する必要"),
-]
-for i, (head, color, body) in enumerate(dom_items):
-    x = Emu(180000 + i * (dom_w + 60000))
-    add_shape(slide5a, MSO_SHAPE.RECTANGLE, x, dom_y_head, Emu(dom_w), Emu(280000),
-              text=head, size_pt=11, bold=True, text_color=COLOR_WHITE,
-              fill=color, anchor=MSO_ANCHOR.MIDDLE)
-    add_shape(slide5a, MSO_SHAPE.RECTANGLE, x, dom_y_body, Emu(dom_w), Emu(1300000),
-              text=body, size_pt=9, bold=False, text_color=COLOR_DARK,
-              fill=COLOR_BG_LIGHT, line=color, anchor=MSO_ANCHOR.TOP, align=PP_ALIGN.LEFT)
-
-# R7改善策（左）／校長見解（右）
-add_section_label(slide5a, Emu(180000), Emu(3470000), Emu(4350000), Emu(260000),
-                  "  R7 改善計画（具体策）", COLOR_POSITIVE, size_pt=10)
-r7_kaizen = (
-    "● 悉皆研修・OJTで全教員のICTスキル統一\n"
-    "● AI集計で授業アンケート分析→PDCA高速化\n"
-    "● 週3回いじめ防止対策会議を継続\n"
-    "● Slack等で児童生徒変化をリアルタイム共有\n"
-    "● 「空白の時間・場所」を物理的に減らす"
-)
-add_textbox(slide5a, Emu(180000), Emu(3760000), Emu(4350000), Emu(900000),
-            r7_kaizen, size_pt=9, color=COLOR_DARK,
-            fill=COLOR_BG_BLUE, line=COLOR_POSITIVE)
-
-add_section_label(slide5a, Emu(4610000), Emu(3470000), Emu(4350000), Emu(260000),
-                  "  校長の見解（次年度改善に向けて）", COLOR_HEADER, size_pt=10)
-kocho_text = (
-    "「小中一貫教育校である本校は地域の期待も大きい。\n"
-    " 期待に応えるためにも今年度の反省をもとに考えた\n"
-    " 改善策を、まずは確実に実行していく。PDCAサイクル\n"
-    " を活かして、年度途中でも改善策の妥当性を吟味し、\n"
-    " 必要に応じて修正していく。」（R6・R7報告書より要約）"
-)
-add_textbox(slide5a, Emu(4610000), Emu(3760000), Emu(4350000), Emu(900000),
-            kocho_text, size_pt=9, color=COLOR_DARK,
-            fill=COLOR_BG_LIGHT, line=COLOR_HEADER)
-
-# 所見
-add_conclusion_bar(slide5a, Emu(180000), Emu(4660000), Emu(8780000), Emu(180000),
-                   "学校は PDCA を回し改善努力を継続中。"
-                   "ただし統計データの傾向は単年の努力では覆らず、施設一体型化の構造的優位性は依然として未確認。",
-                   fill=COLOR_PURPLE, size_pt=10)
-
-# =====================================================================
-# SLIDE 6: ⑥ 結論／代替施策／費用対効果
+# SLIDE 5: ⑤ 結論／代替施策／費用対効果
 # =====================================================================
 slide5 = prs.slides.add_slide(blank_layout)
-add_header(slide5, "結論：新規開設の効果なし／代替施策と費用対効果", 5)
+add_header(slide5, "結論：新規開設の効果なし／代替施策と費用対効果", 4)
 
 # 上部見出し
 add_section_label(slide5, Emu(180000), Emu(670000), Emu(8780000), Emu(260000),
