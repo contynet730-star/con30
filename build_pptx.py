@@ -1,9 +1,12 @@
 """
 石神井南中学校 6/3 校内研修 講義スライド（27枚・約40分）
-専門家5人視点で修正済み
-Part1：主体的・対話的で深い学び × 評価の在り方（約15分）
-Part2：「主体的に学習に取り組む態度」の評価（約22分）
-まとめ：明日から動かす（約3分）
+アップロード版（光が丘三中構成）をベースに専門家5人視点で修正
+構成：
+  ０ はじめに（章扉＋クイズ）
+  １ 主体的・対話的で深い学びの実現に向けた授業改善について（約15分）
+  ２ 『主体的に学習に取り組む態度』の学習評価（約22分）
+  おわりに（明日から動かす・約3分）
+デザイン：メイリオ／水色枠
 """
 from pptx import Presentation
 from pptx.util import Inches, Pt, Emu, Cm
@@ -25,6 +28,10 @@ DARK_GRAY = RGBColor(0x40, 0x40, 0x40)
 
 F_MAIN = "メイリオ"
 
+# 章タイトル定数（アップロード版踏襲）
+CH1 = "１　主体的・対話的で深い学びの実現に向けた授業改善について"
+CH2 = "２　『主体的に学習に取り組む態度』の学習評価"
+
 prs = Presentation()
 prs.slide_width = Emu(12192000)
 prs.slide_height = Emu(6858000)
@@ -34,7 +41,7 @@ SH = prs.slide_height
 def add_blank_slide():
     return prs.slides.add_slide(prs.slide_layouts[6])
 
-def add_chapter_bar(slide, chapter_text):
+def add_chapter_bar(slide, chapter_text, fontsize=22):
     bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, 0, SW, Emu(720000))
     bar.fill.solid(); bar.fill.fore_color.rgb = DEEP_WATER
     bar.line.fill.background()
@@ -48,12 +55,12 @@ def add_chapter_bar(slide, chapter_text):
     p.alignment = PP_ALIGN.LEFT
     r = p.add_run()
     r.text = chapter_text
-    r.font.size = Pt(28)
+    r.font.size = Pt(fontsize)
     r.font.bold = True
     r.font.color.rgb = WHITE
     r.font.name = F_MAIN
 
-def add_sub_heading(slide, text):
+def add_sub_heading(slide, text, fontsize=28):
     bar = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, 0, Emu(830000), SW, Emu(700000))
     bar.fill.solid(); bar.fill.fore_color.rgb = LIGHT_WATER
     bar.line.fill.background()
@@ -67,7 +74,7 @@ def add_sub_heading(slide, text):
     p.alignment = PP_ALIGN.LEFT
     r = p.add_run()
     r.text = text
-    r.font.size = Pt(28)
+    r.font.size = Pt(fontsize)
     r.font.bold = True
     r.font.color.rgb = NAVY
     r.font.name = F_MAIN
@@ -229,12 +236,12 @@ add_plain_text(s, Emu(700000), Emu(180000), Emu(10800000), Emu(540000), [
 ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE)
 
 add_plain_text(s, Emu(400000), Emu(1450000), Emu(11400000), Emu(900000), [
-    ("「主体的に学習に取り組む態度」の評価",
+    ("『主体的に学習に取り組む態度』の評価",
      {'size': 44, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
 ], default_size=44, vertical_anchor=MSO_ANCHOR.MIDDLE)
 
 add_body_box(s, Emu(1500000), Emu(2600000), Emu(9200000), Emu(900000), [
-    ("〜「主体的・対話的で深い学び」と学習評価〜",
+    ("〜主体的・対話的で深い学びと学習評価〜",
      {'size': 28, 'bold': True, 'color': DEEP_WATER, 'align': PP_ALIGN.CENTER}),
 ], default_size=28, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=4.0)
 
@@ -257,74 +264,70 @@ add_plain_text(s, Emu(400000), Emu(5860000), Emu(11400000), Emu(420000), [
 ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE)
 
 # ============================================================
-# S2: 本日の流れ
+# S2: 研修内容（本日の流れ）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "本日の流れ")
+add_chapter_bar(s, "研修内容")
 add_sub_heading(s, "講話 約40分 ／ グループワーク 約30分 ／ 講評 約10分")
 add_page_number(s, 2)
 
 agenda = [
-    ("Part 1", "「主体的・対話的で深い学び」と評価の在り方", "約15分"),
-    ("Part 2", "「主体的に学習に取り組む態度」の評価", "約22分"),
-    ("まとめ", "評価のばらつきを防ぐ ─ 明日から動かす", "約3分"),
+    ("１", "主体的・対話的で深い学びの実現に向けた\n授業改善について", "約15分"),
+    ("２", "『主体的に学習に取り組む態度』\nの学習評価", "約22分"),
+    ("まとめ", "評価のばらつきを防ぐ\n─ 明日から動かす", "約3分"),
 ]
-y = 1900000
+y = 1850000
 for i, (part, title, time) in enumerate(agenda):
-    yy = y + i * 1100000
-    add_body_box(s, Emu(400000), Emu(yy), Emu(1900000), Emu(950000), [
-        (part, {'size': 26, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
-    ], default_size=26, vertical_anchor=MSO_ANCHOR.MIDDLE,
+    yy = y + i * 1180000
+    add_body_box(s, Emu(400000), Emu(yy), Emu(1700000), Emu(1050000), [
+        (part, {'size': 28, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
+    ], default_size=28, vertical_anchor=MSO_ANCHOR.MIDDLE,
        fill_color=DEEP_WATER, border_color=DEEP_WATER, border_width=2.0)
-    add_body_box(s, Emu(2400000), Emu(yy), Emu(7600000), Emu(950000), [
-        (title, {'size': 24, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.LEFT}),
-    ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=2.5)
-    add_body_box(s, Emu(10100000), Emu(yy), Emu(1700000), Emu(950000), [
+    add_body_box(s, Emu(2200000), Emu(yy), Emu(7700000), Emu(1050000), [
+        (title, {'size': 22, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.LEFT}),
+    ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=2.5, line_spacing=1.2)
+    add_body_box(s, Emu(10000000), Emu(yy), Emu(1800000), Emu(1050000), [
         (time, {'size': 22, 'bold': True, 'color': DEEP_WATER, 'align': PP_ALIGN.CENTER}),
     ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=2.5)
 
-add_body_box(s, Emu(400000), Emu(5450000), Emu(11400000), Emu(800000), [
+add_body_box(s, Emu(400000), Emu(5500000), Emu(11400000), Emu(800000), [
     [("講話のあと、", {'size': 22, 'color': BLACK}),
      ("各教科の評価資料を持ち寄ってグループ協議", {'size': 24, 'color': ORANGE_KW}),
      ("します", {'size': 22, 'color': BLACK})],
 ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=LIGHT_WATER, border_width=3.0)
 
 # ============================================================
-# S3: 今日の3つの問い【管理職視点で要望3点を問い形式に変換】
+# S3: 校長からの依頼 ── 今日の研修で扱う3点【学校要望3点を明示】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "今日の研修で答えを見つける　3つの問い")
+add_chapter_bar(s, "０　はじめに")
+add_sub_heading(s, "校長からの依頼 ── 今日の研修で扱う3点")
 add_page_number(s, 3)
 
-# サブ見出しなし、大きな問い形式で
 items = [
-    ("問１", "「深い学び」が実現する授業で、\n評価はどう機能するか？"),
-    ("問２", "「主体的に学習に取り組む態度」は\n何を・どうやって見取るか？"),
-    ("問３", "評価が教員によって「ばらつく」のを\n防ぐために、何をそろえるか？"),
+    ("①", "「主体的・対話的で深い学び」を実現する", "評価の在り方"),
+    ("②", "「主体的に学習に取り組む態度」", "の評価の実施"),
+    ("③", "評価のばらつきが出ないようにする", "指導の工夫"),
 ]
-y = 1600000
-for i, (num, q) in enumerate(items):
-    yy = y + i * 1480000
-    add_body_box(s, Emu(400000), Emu(yy), Emu(1200000), Emu(1250000), [
-        (num, {'size': 28, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
-    ], default_size=28, vertical_anchor=MSO_ANCHOR.MIDDLE,
+y = 1900000
+for i, (num, kw, tail) in enumerate(items):
+    yy = y + i * 1300000
+    add_body_box(s, Emu(400000), Emu(yy), Emu(1000000), Emu(1100000), [
+        (num, {'size': 50, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
+    ], default_size=50, vertical_anchor=MSO_ANCHOR.MIDDLE,
        fill_color=DEEP_WATER, border_color=DEEP_WATER, border_width=2.0)
-    add_body_box(s, Emu(1700000), Emu(yy), Emu(10100000), Emu(1250000), [
-        (q, {'size': 24, 'color': NAVY}),
-    ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=3.0, line_spacing=1.3)
+    add_body_box(s, Emu(1500000), Emu(yy), Emu(10300000), Emu(1100000), [
+        (kw, {'size': 24, 'color': ORANGE_KW}),
+        (tail, {'size': 24, 'color': NAVY}),
+    ], default_size=24, line_spacing=1.2, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=3.0)
 
-add_body_box(s, Emu(400000), Emu(6030000), Emu(11400000), Emu(260000), [
-    ("この3問への答えを、今日の講話とグループワークで見つけましょう",
-     {'size': 14, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
-], default_size=14, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=YELLOW, border_color=ORANGE_KW, border_width=2.0)
-
-add_source_line(s, "石神井南中学校 指導主事派遣願（令和8年5月）")
+add_source_line(s, "石神井南中学校 指導主事派遣願（令和8年5月）／木原校長メール")
 
 # ============================================================
 # S4: ウォームアップ ─ 数字あてクイズ
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "ウォームアップ")
+add_chapter_bar(s, "０　はじめに")
 add_sub_heading(s, "この数字は何を表しているでしょう？")
 add_page_number(s, 4)
 
@@ -353,7 +356,7 @@ add_plain_text(s, Emu(8100000), Emu(3450000), Emu(3700000), Emu(400000), [
 ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE)
 
 add_body_box(s, Emu(400000), Emu(4150000), Emu(11400000), Emu(800000), [
-    ("答え：区内3校・同一教科の「主体的に学習に取り組む態度」評定割合（A:B:C %）",
+    ("答え：区内3校・社会科の「主体的に取り組む態度」評定割合（A:B:C %）",
      {'size': 20, 'bold': True, 'color': ORANGE_KW, 'align': PP_ALIGN.CENTER}),
 ], default_size=20, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=LIGHT_WATER, border_width=3.0)
 
@@ -366,27 +369,12 @@ add_body_box(s, Emu(400000), Emu(5050000), Emu(11400000), Emu(1100000), [
 ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=3.0, line_spacing=1.3)
 
 # ============================================================
-# S5: Part1 章扉
+# S5: 資質・能力の3つの柱
 # ============================================================
 s = add_blank_slide()
-add_page_number(s, 5)
-add_body_box(s, Emu(1000000), Emu(2000000), Emu(10200000), Emu(2900000), [
-    ("Part 1", {'size': 36, 'bold': True, 'color': WATER_BLUE, 'align': PP_ALIGN.CENTER}),
-    ("", {'size': 14}),
-    ("「主体的・対話的で深い学び」", {'size': 38, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
-    ("と評価の在り方", {'size': 38, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
-    ("", {'size': 8}),
-    ("─ 何ができるようになるか × どのように学ぶか ─",
-     {'size': 18, 'bold': True, 'color': DEEP_WATER, 'align': PP_ALIGN.CENTER}),
-], default_size=28, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=5.0, fill_color=LIGHT_WATER)
-
-# ============================================================
-# S6: 資質・能力の3つの柱
-# ============================================================
-s = add_blank_slide()
-add_chapter_bar(s, "Part 1　深い学び × 評価の在り方")
+add_chapter_bar(s, CH1)
 add_sub_heading(s, "何ができるようになるか ─ 資質・能力の3つの柱")
-add_page_number(s, 6)
+add_page_number(s, 5)
 
 pillars = [
     ("①", "知識・技能", "何を理解しているか、何ができるか"),
@@ -408,12 +396,12 @@ for i, (num, name, desc) in enumerate(pillars):
 add_source_line(s, "中学校学習指導要領 解説　総則編／文部科学省")
 
 # ============================================================
-# S7: 主体的・対話的で深い学び（3カード）
+# S6: 主体的・対話的で深い学び（3カード）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 1　深い学び × 評価の在り方")
+add_chapter_bar(s, CH1)
 add_sub_heading(s, "どのように学ぶか ─ 主体的・対話的で深い学び")
-add_page_number(s, 7)
+add_page_number(s, 6)
 
 three = [
     ("主体的な学び", "見通しをもち、粘り強く取り組み、振り返る"),
@@ -444,17 +432,17 @@ add_body_box(s, Emu(400000), Emu(4600000), Emu(11400000), Emu(1600000), [
 add_source_line(s, "中学校学習指導要領 解説　総則編／文部科学省")
 
 # ============================================================
-# S8: 3つの学びのイメージ（統合版）【授業改善専門家・研修設計専門家指摘：3枚→1枚に統合】
+# S7: 3つの学びのイメージ（統合）【研修設計専門家：3枚→1枚に】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 1　深い学び × 評価の在り方")
-add_sub_heading(s, "3つの学び ─ どんな「姿」を見取るか")
-add_page_number(s, 8)
+add_chapter_bar(s, CH1)
+add_sub_heading(s, "3つの学びのイメージ ─ どんな「姿」を見取るか")
+add_page_number(s, 7)
 
 cols = [
-    ("主体的な学び", ["見通しをもつ", "粘り強く取り組む", "振り返り・次へつなげる"], DEEP_WATER),
+    ("主体的な学び", ["見通しをもつ", "粘り強く取り組む", "振り返り次へつなげる"], DEEP_WATER),
     ("対話的な学び", ["互いの考えを比べる", "共に考えを創り上げる", "自分の考えを更新する"], WATER_BLUE),
-    ("深い学び", ["知識・技能を活用する", "自分の考えを形成する", "問い続ける・創り上げる"], ORANGE_KW),
+    ("深い学び", ["知識・技能を活用する", "自分の考えを形成する", "問い続け創り上げる"], ORANGE_KW),
 ]
 col_w = 3750000
 gap = 80000
@@ -481,12 +469,12 @@ add_body_box(s, Emu(400000), Emu(5250000), Emu(11400000), Emu(970000), [
 add_source_line(s, "中学校学習指導要領 解説　総則編／文部科学省")
 
 # ============================================================
-# S9: 授業改善と評価の一体化
+# S8: 授業改善と評価の一体化
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 1　深い学び × 評価の在り方")
+add_chapter_bar(s, CH1)
 add_sub_heading(s, "授業改善 と 評価 は一体")
-add_page_number(s, 9)
+add_page_number(s, 8)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(900000), [
     ("「主体的・対話的で深い学び」の視点で授業を改善する",
@@ -513,12 +501,12 @@ add_body_box(s, Emu(400000), Emu(5100000), Emu(11400000), Emu(1100000), [
 ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=4.0)
 
 # ============================================================
-# S10: キーメッセージ①
+# S9: キーメッセージ①【授業改善専門家：キーメッセージ明示】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 1　深い学び × 評価の在り方")
+add_chapter_bar(s, CH1)
 add_sub_heading(s, "【キーメッセージ①】")
-add_page_number(s, 10)
+add_page_number(s, 9)
 
 add_body_box(s, Emu(800000), Emu(2100000), Emu(10600000), Emu(1500000), [
     [("評価は", {'size': 36, 'color': NAVY}),
@@ -538,27 +526,27 @@ add_body_box(s, Emu(800000), Emu(4000000), Emu(10600000), Emu(1800000), [
 ], default_size=24, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=3.0, line_spacing=1.3)
 
 # ============================================================
-# S11: Part2 章扉
+# S10: 章扉 ── Part2
 # ============================================================
 s = add_blank_slide()
-add_page_number(s, 11)
+add_page_number(s, 10)
 add_body_box(s, Emu(1000000), Emu(2000000), Emu(10200000), Emu(2900000), [
-    ("Part 2", {'size': 36, 'bold': True, 'color': WATER_BLUE, 'align': PP_ALIGN.CENTER}),
+    ("２", {'size': 60, 'bold': True, 'color': WATER_BLUE, 'align': PP_ALIGN.CENTER}),
     ("", {'size': 14}),
-    ("「主体的に学習に取り組む態度」", {'size': 36, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
-    ("の評価", {'size': 36, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
+    ("『主体的に学習に取り組む態度』", {'size': 34, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
+    ("の学習評価", {'size': 34, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.CENTER}),
     ("", {'size': 8}),
     ("─ どう見取り、どうばらつきを防ぐか ─",
      {'size': 20, 'bold': True, 'color': DEEP_WATER, 'align': PP_ALIGN.CENTER}),
 ], default_size=28, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=5.0, fill_color=LIGHT_WATER)
 
 # ============================================================
-# S12: 学習評価の現状における課題
+# S11: 学習評価の現状における課題
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "学習評価の現状における課題")
-add_page_number(s, 12)
+add_page_number(s, 11)
 
 issues = [
     ("学習改善への活用が弱い", "「ためた評価」が次の授業に生きていない"),
@@ -581,12 +569,12 @@ add_body_box(s, Emu(400000), Emu(6080000), Emu(11400000), Emu(240000), [
 ], default_size=14, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=YELLOW, border_color=ORANGE_KW, border_width=2.0)
 
 # ============================================================
-# S13: 学習評価の改善の基本方針
+# S12: 学習評価の改善の基本方針
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "学習評価の改善の基本方針")
-add_page_number(s, 13)
+add_page_number(s, 12)
 
 basics = [
     ("①", "生徒の学習改善", "につながるものにしていく"),
@@ -608,12 +596,12 @@ for i, (num, kw, tail) in enumerate(basics):
 add_source_line(s, "平成31年１月 中央教育審議会「児童生徒の学習評価の在り方について（報告）」")
 
 # ============================================================
-# S14: 各教科の評価の基本構造（3観点）
+# S13: 各教科の評価の基本構造（3観点）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "各教科における評価の基本構造")
-add_page_number(s, 14)
+add_page_number(s, 13)
 
 views = [
     ("知識・技能", "何を知っているか・できるか", DEEP_WATER),
@@ -639,13 +627,12 @@ add_body_box(s, Emu(400000), Emu(6080000), Emu(11400000), Emu(240000), [
 add_source_line(s, "国立教育政策研究所「学習評価の在り方ハンドブック（中学校編）」")
 
 # ============================================================
-# S15: 「知識・技能」と「思考・判断・表現」の評価（統合）
-#       【学習評価専門家：2枚→1枚統合、主体的態度に比重移す】
+# S14: 知識・技能 ＋ 思考・判断・表現（統合）【学習評価専門家】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "「知識・技能」「思考・判断・表現」の評価")
-add_page_number(s, 15)
+add_page_number(s, 14)
 
 # 左：知識・技能
 add_body_box(s, Emu(400000), Emu(1900000), Emu(5600000), Emu(600000), [
@@ -687,12 +674,12 @@ add_body_box(s, Emu(400000), Emu(5950000), Emu(11400000), Emu(270000), [
 add_source_line(s, "国立教育政策研究所「学習評価の在り方ハンドブック（中学校編）」")
 
 # ============================================================
-# S16: 「主体的に学習に取り組む態度」の評価 ─ 2つの側面
+# S15: 主体的に取り組む態度 ── 2つの側面【学習評価専門家：カード化】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "「主体的に学習に取り組む態度」── 2つの側面")
-add_page_number(s, 16)
+add_page_number(s, 15)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(5600000), Emu(700000), [
     ("① 粘り強い取組", {'size': 26, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
@@ -701,8 +688,8 @@ add_body_box(s, Emu(400000), Emu(1900000), Emu(5600000), Emu(700000), [
 add_body_box(s, Emu(400000), Emu(2600000), Emu(5600000), Emu(2000000), [
     ("自らの学習を", {'size': 22, 'color': BLACK}),
     [("　", {'size': 22}),
-     ("粘り強く調整", {'size': 26, 'color': ORANGE_KW})],
-    ("しようとしている姿", {'size': 22, 'color': BLACK}),
+     ("粘り強く取り組もう", {'size': 26, 'color': ORANGE_KW})],
+    ("としている姿", {'size': 22, 'color': BLACK}),
 ], default_size=22, line_spacing=1.3, border_width=3.0)
 
 add_body_box(s, Emu(6200000), Emu(1900000), Emu(5600000), Emu(700000), [
@@ -726,12 +713,12 @@ add_body_box(s, Emu(400000), Emu(4800000), Emu(11400000), Emu(1400000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」")
 
 # ============================================================
-# S17: 「主体的に取り組む態度」── 評価の工夫例
+# S16: 主体的に取り組む態度 ── 評価の工夫例
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "「主体的に取り組む態度」── 評価の工夫例")
-add_page_number(s, 17)
+add_page_number(s, 16)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(640000), [
     ("＜評価の工夫例＞", {'size': 24, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.LEFT}),
@@ -759,12 +746,12 @@ add_body_box(s, Emu(400000), Emu(6020000), Emu(11400000), Emu(300000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」")
 
 # ============================================================
-# S18: 行動観察の工夫（数学の例）
+# S17: 行動観察の工夫（数学の例）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "行動観察の工夫例 ─ 数学・問題解決の場面（全教科適用可）")
-add_page_number(s, 18)
+add_page_number(s, 17)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(5600000), Emu(640000), [
     ("①粘り強く取り組む姿", {'size': 22, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
@@ -803,22 +790,22 @@ add_body_box(s, Emu(400000), Emu(5400000), Emu(11400000), Emu(800000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」（数学）")
 
 # ============================================================
-# S19: 評価につながる発問の工夫【現場教員視点：「使える」形に充実】
+# S18: 発問の工夫（3タイプ）【現場教員視点：充実】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "評価につながる発問の工夫 ─ 自己評価を引き出す")
-add_page_number(s, 19)
+add_page_number(s, 18)
 
 prompts = [
     ("①", "理解の変容を振り返らせる",
-     "「授業の最初と比べて、考え方が変わったところは？」",
+     "授業の最初と比べて、考え方が変わったところは？",
      "→ 学習の見通し・振り返りを引き出す"),
     ("②", "他者との比較で考えを相対化させる",
-     "「友達の意見を聞いて、自分の考えを見直してみよう」",
+     "友達の意見を聞いて、自分の考えを見直してみよう",
      "→ 対話的な学びの自己調整を引き出す"),
     ("③", "目標への達成感を自己評価させる",
-     "「今日の学習の目標は達成できたかな？理由も書いてみよう」",
+     "今日の学習の目標は達成できたかな？理由も書いてみよう",
      "→ 理由を書かせることで、A/Bの判断材料になる"),
 ]
 y = 1600000
@@ -830,19 +817,19 @@ for i, (num, name, ex, hint) in enumerate(prompts):
        fill_color=DEEP_WATER, border_color=DEEP_WATER, border_width=2.0)
     add_body_box(s, Emu(1400000), Emu(yy), Emu(10400000), Emu(1250000), [
         (name, {'size': 20, 'color': ORANGE_KW}),
-        ("発問例：「" + ex[1:-1] + "」", {'size': 16, 'color': NAVY}),
+        ("発問例：「" + ex + "」", {'size': 16, 'color': NAVY}),
         (hint, {'size': 15, 'color': DARK_GRAY}),
     ], default_size=18, line_spacing=1.2, vertical_anchor=MSO_ANCHOR.MIDDLE, border_width=3.0)
 
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」")
 
 # ============================================================
-# S20: キーメッセージ② 「指導してから評価する」
+# S19: キーメッセージ②「指導してから評価する」【授業改善専門家：復活】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "【キーメッセージ②】《本日の最重要メッセージ》")
-add_page_number(s, 20)
+add_page_number(s, 19)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(700000), [
     ("「主体的に学習に取り組む態度」は",
@@ -881,12 +868,12 @@ add_plain_text(s, Emu(400000), Emu(5850000), Emu(11400000), Emu(380000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」")
 
 # ============================================================
-# S21: 「学び方」を指導する 9つの働きかけ
+# S20: 9つの働きかけ【現場教員視点：S26で参照されていた実体を追加】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "「学び方」を指導する 9つの働きかけ")
-add_page_number(s, 21)
+add_page_number(s, 20)
 
 works = [
     "1. 学習目標の共有",
@@ -922,12 +909,12 @@ add_body_box(s, Emu(400000), Emu(5700000), Emu(11400000), Emu(550000), [
 add_source_line(s, "国立教育政策研究所（2020）参考資料より整理")
 
 # ============================================================
-# S22: 評価のばらつきを防ぐ（妥当性×信頼性）
+# S21: 評価のばらつきを防ぐ（妥当性×信頼性）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "評価のばらつきを防ぐ ─ 妥当性 × 信頼性")
-add_page_number(s, 22)
+add_page_number(s, 21)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(5600000), Emu(700000), [
     ("妥当性", {'size': 26, 'bold': True, 'color': WHITE, 'align': PP_ALIGN.CENTER}),
@@ -968,12 +955,12 @@ add_body_box(s, Emu(400000), Emu(5200000), Emu(11400000), Emu(1000000), [
 add_source_line(s, "令和２年９月 東京都教育委員会「指導と評価の一体化を目指して」")
 
 # ============================================================
-# S23: 教科会で揃える3つ（ばらつき対策）
+# S22: 教科会で揃える3つ
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "教科会で揃える3つ（ばらつき対策）")
-add_page_number(s, 23)
+add_page_number(s, 22)
 
 items = [
     ("①", "Bの姿", "観点別評価で「B」と判断する具体的な姿"),
@@ -995,12 +982,12 @@ for i, (num, kw, desc) in enumerate(items):
 add_source_line(s, "東京都教育委員会「指導と評価の一体化を目指して」")
 
 # ============================================================
-# S24: Bの姿の具体化（数学の例）
+# S23: Bの姿の具体化（数学の例）
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "「Bの姿」を具体化する ─ 数学「二次方程式」の例")
-add_page_number(s, 24)
+add_page_number(s, 23)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(640000), [
     ("学習シートに「気を付けるポイント」を記述",
@@ -1042,12 +1029,12 @@ add_body_box(s, Emu(400000), Emu(5500000), Emu(11400000), Emu(700000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」（数学）")
 
 # ============================================================
-# S25: 単元計画に「記録欄」を1列足す
+# S24: 単元計画に「記録」欄を1列足す
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "Part 2　「主体的に取り組む態度」の評価")
+add_chapter_bar(s, CH2)
 add_sub_heading(s, "単元計画に「記録」欄を1列足す")
-add_page_number(s, 25)
+add_page_number(s, 24)
 
 add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(800000), [
     ("「いつ／何で／どう見取るか」を可視化",
@@ -1087,12 +1074,12 @@ add_body_box(s, Emu(400000), Emu(5550000), Emu(11400000), Emu(640000), [
 add_source_line(s, "国立教育政策研究所「指導と評価の一体化のための参考資料」より作成")
 
 # ============================================================
-# S26: 明日からできること【現場教員視点：具体的チェックリスト】
+# S25: 明日からできること
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "まとめ ─ 明日から動かす")
+add_chapter_bar(s, "おわりに ─ 明日から動かす")
 add_sub_heading(s, "明日からできること ── 1つ選んでください")
-add_page_number(s, 26)
+add_page_number(s, 25)
 
 choices = [
     "□ 次の単元の指導計画に「記録」欄を1列足す",
@@ -1113,13 +1100,12 @@ add_body_box(s, Emu(400000), Emu(5780000), Emu(11400000), Emu(500000), [
 ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=YELLOW, border_color=ORANGE_KW, border_width=3.0)
 
 # ============================================================
-# S27: 3つのキーメッセージ × 協議会への橋渡し
-#       【研修設計専門家：協議テーマを「教科別の問い」として具体化】
+# S26: 3つのキーメッセージ × 協議会への橋渡し【研修設計専門家：協議テーマ具体化】
 # ============================================================
 s = add_blank_slide()
-add_chapter_bar(s, "まとめ ─ 本日のキーメッセージ")
+add_chapter_bar(s, "おわりに ─ 本日のキーメッセージ")
 add_sub_heading(s, "3つのキーメッセージ × これからの協議へ")
-add_page_number(s, 27)
+add_page_number(s, 26)
 
 msgs = [
     ("①", "評価は「ためる」より「使う」もの"),
@@ -1142,7 +1128,6 @@ add_body_box(s, Emu(400000), Emu(4200000), Emu(11400000), Emu(580000), [
      {'size': 22, 'bold': True, 'color': NAVY, 'align': PP_ALIGN.LEFT}),
 ], default_size=22, vertical_anchor=MSO_ANCHOR.MIDDLE, fill_color=YELLOW, border_color=ORANGE_KW, border_width=3.0)
 
-# 協議テーマを具体的な「問い」として明示
 add_body_box(s, Emu(400000), Emu(4870000), Emu(11400000), Emu(1380000), [
     [("教科会単位で ", {'size': 20, 'color': BLACK}),
      ("各教科の評価資料を持ち寄り", {'size': 22, 'color': ORANGE_KW}),
@@ -1152,6 +1137,29 @@ add_body_box(s, Emu(400000), Emu(4870000), Emu(11400000), Emu(1380000), [
     ("　② 単元のどの場面で、どうやって見取るか？",
      {'size': 20, 'color': NAVY}),
 ], default_size=20, line_spacing=1.3, border_width=3.0, vertical_anchor=MSO_ANCHOR.MIDDLE)
+
+# ============================================================
+# S27: 参考文献
+# ============================================================
+s = add_blank_slide()
+add_chapter_bar(s, "参考文献")
+add_sub_heading(s, "本研修の根拠資料")
+add_page_number(s, 27)
+
+refs = [
+    "● 中学校学習指導要領 解説　総則編　文部科学省",
+    "● 学習評価の在り方ハンドブック（中学校編）",
+    "　 　文部科学省　国立教育政策研究所教育課程研究センター",
+    "● 「指導と評価の一体化」のための学習評価に関する参考資料",
+    "　 　文部科学省　国立教育政策研究所教育課程研究センター",
+    "● 「子供たちに未来の創り手となるために必要な資質・能力を",
+    "　 　育む指導と評価の一体化を目指して」Ⅰ理論編　Ⅱ実践編",
+    "　 　東京都教育委員会作成資料",
+]
+add_body_box(s, Emu(400000), Emu(1900000), Emu(11400000), Emu(3700000), [
+    (r, {'size': 20, 'color': NAVY, 'align': PP_ALIGN.LEFT}) for r in refs
+], default_size=20, line_spacing=1.5, border_width=3.0, fill_color=LIGHT_WATER,
+   vertical_anchor=MSO_ANCHOR.MIDDLE)
 
 # ========== lxml でフォント統一（メイリオ） ==========
 from lxml import etree
