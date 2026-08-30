@@ -235,6 +235,32 @@ details ul{margin:0; padding-left:20px; display:flex; flex-direction:column; gap
   margin-top:76px; padding-top:26px; border-top:1px solid var(--rule);
   font-size:13px; color:var(--muted); line-height:1.85; max-width:660px;
 }
+
+/* ── timeline (年金カバレッジ) ────────── */
+.tl{margin-top:26px; display:flex; flex-direction:column; gap:6px}
+.tl-bar{display:flex; height:64px; border:1px solid var(--rule); border-radius:2px; overflow:hidden}
+.tl-bar i{display:flex; flex-direction:column; justify-content:center; padding:0 16px; font-style:normal; overflow:hidden}
+.tl-gap{flex:5; background:var(--warn-soft); border-right:1px solid var(--rule)}
+.tl-cov{flex:35; background:var(--accent-wash)}
+.tl-bar b{font-family:var(--mono); font-size:14px; font-weight:600; line-height:1.4; white-space:nowrap}
+.tl-gap b{color:var(--warn)} .tl-cov b{color:var(--accent)}
+.tl-bar span{font-size:12px; color:var(--muted); line-height:1.45}
+.tl-axis{display:flex; font-family:var(--mono); font-size:11.5px; color:var(--muted)}
+.tl-axis span:first-child{flex:5} .tl-axis span:nth-child(2){flex:35}
+/* ── figure row (大きな数字の並び) ─────── */
+.figs{display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:1px;
+  background:var(--rule); border:1px solid var(--rule); border-radius:2px; margin-top:26px; overflow:hidden}
+.figs > div{background:var(--surface); padding:22px 20px; display:flex; flex-direction:column; gap:6px}
+.figs dt{font-size:12.5px; color:var(--muted); letter-spacing:.04em}
+.figs dd{margin:0; font-family:var(--mono); font-size:30px; font-weight:600; line-height:1.1; letter-spacing:-.02em}
+.figs dd small{font-size:14px; font-weight:400; color:var(--muted); margin-left:2px}
+.figs p{font-size:12.5px; color:var(--muted); line-height:1.65}
+.figs .hi dd{color:var(--accent)}
+/* ── change banner ───────────────────── */
+.changed{border-left:3px solid var(--gold); background:var(--gold-soft); padding:18px 22px;
+  border-radius:0 2px 2px 0; margin-top:26px; display:flex; flex-direction:column; gap:6px}
+.changed h3{font-size:15.5px; font-weight:600; color:var(--gold)}
+.changed p{font-size:14px; color:var(--ink-2); line-height:1.8}
 @media (prefers-reduced-motion:no-preference){
   .verdict,.card,.scroll{transition:border-color .2s ease}
 }
@@ -251,136 +277,288 @@ details ul{margin:0; padding-left:20px; display:flex; flex-direction:column; gap
 <div class="wrap">
 
 <header class="masthead spine">
-  <div class="eyebrow">45歳 → 60歳 ／ 残り15年</div>
+  <div class="eyebrow">共働き世帯 ／ 45歳 → 60歳 ／ 残り15年</div>
   <h1>60歳リタイア<br><span class="thin">逆算プラン</span></h1>
   <p class="standfirst">
-    先に結論から。<strong>この条件なら、生活費が月22万円までに収まるなら60歳リタイアは十分に届きます。</strong>
-    月25万円を望むなら、あと一手が要ります。月30万円は今の積立額では届きません。
-    以下は、その一手までを含めた15年分の設計図です。
+    年金を計算に入れると、結論が変わります。<strong>夫婦の公的年金は65歳から月38万円ほど。
+    これが最大の資産です。</strong>生活費が月40万円までなら、積立を増やさなくても60歳リタイアは成立します。
+    残る課題は<em>年金が出ない60〜65歳の5年間をどう埋めるか</em>、その一点です。
   </p>
   <dl class="given">
+    <div><dt>世帯年収</dt><dd class="num">1,800万円</dd></div>
     <div><dt>現在の資産</dt><dd class="num">1,500万円</dd></div>
     <div><dt>毎月の積立</dt><dd class="num">5万円</dd></div>
-    <div><dt>年齢</dt><dd class="num">45歳</dd></div>
-    <div><dt>目標</dt><dd class="num">60歳で退職</dd></div>
+    <div><dt>年齢</dt><dd class="num">夫婦45歳</dd></div>
   </dl>
 </header>
 
 <div class="verdict spine">
-  <div class="verdict-head">結論 ─ 決めることは3つだけ</div>
+  <div class="verdict-head">結論 ─ 決めることは3つ</div>
   <ol>
     <li>
-      <h3>買うのは全世界株式インデックス1本</h3>
-      <p><strong>eMAXIS Slim 全世界株式（オール・カントリー）</strong>。信託報酬は年0.05775%以内。
-      NISAのつみたて投資枠でも成長投資枠でも同じものを買えます。商品選びに時間をかけるほど、
-      機会損失のほうが大きくなります。1本で終わらせてください。</p>
+      <h3>月5万円は、夫婦それぞれのiDeCoに全額入れる</h3>
+      <p>年収900万円の限界税率は<strong>30%</strong>（所得税20%＋住民税10%）。iDeCoの掛金は全額が所得控除なので、
+      夫婦で月2.3万円ずつ＝年55.2万円を拠出すると<strong class="num">年16.6万円</strong>が確実に戻ります。
+      相場と無関係な確定利益で、NISAにはない機能です。<em>2026年12月から上限が月6.2万円に上がります</em>。</p>
     </li>
     <li>
-      <h3>月5万円は全額NISAに入れない。iDeCo 2万＋NISA 3万に割る</h3>
-      <p>ここが一番の分かれ目です。既存の1,200万円を成長投資枠に入れると、<em>NISAの生涯枠1,800万円は54歳で埋まります</em>。
-      埋まった後の積立は課税口座行き。それなら最初から割ったほうが、iDeCoの所得控除を15年分受け取れて
-      <strong>60歳時点で約80〜100万円得します</strong>。</p>
+      <h3>既存1,200万円は、夫婦のNISA成長投資枠に3年で入れる</h3>
+      <p>NISA枠は1人1,800万円＝<strong>夫婦で3,600万円</strong>。年間枠も夫婦で720万円あるので、
+      1,200万円は45〜47歳の3年で入れ切れます。枠は1,500万円以上余るので、
+      「NISA枠が足りない」という制約は<strong>この世帯には存在しません</strong>。</p>
     </li>
     <li>
-      <h3>既存1,200万円は5年かけて成長投資枠へ、300万円は現金で置く</h3>
-      <p>年間投資枠が360万円なので、1,200万円は制度上どうやっても一括では入りません。
-      年240万円×5年（45〜49歳）が最速。残す300万円は生活防衛資金で、これは投資しません。</p>
+      <h3>判定は生活費しだい。月40万円が分かれ目</h3>
+      <p>年金月38万円のおかげで、<strong>生活費が月40万円までなら今のまま60歳で辞められます</strong>。
+      月45万円を望むなら積立を月10万円に増やす必要があります。
+      ただし<em>退職金しだいで結論はひっくり返ります</em>。まずそこを確認してください。</p>
     </li>
   </ol>
 </div>
 
 <section class="spine">
-  <div class="sec-label">STEP 1 ─ 資産の置き場所</div>
-  <h2>1,500万円を、投資する分と守る分に割る</h2>
-  <p class="lede">全額を投資に回してはいけません。60歳リタイアを目指す人にとって、
-  現金は「利回りの低い資産」ではなく「暴落中に投資分を売らずに済ませる保険」です。</p>
-  <div class="alloc">
-    <div class="a1"><b>1,200万円</b><span>投資へ ─ NISA成長投資枠に5年で分割投入</span></div>
-    <div class="a2"><b>300万円</b><span>現金で保持</span></div>
+  <div class="sec-label">前提の更新</div>
+  <h2>年金が入ると、何が変わったか</h2>
+  <div class="changed">
+    <h3>「生活費 月22万円まで」→「月40万円まで」に緩みました</h3>
+    <p>年金を一般的な水準（月15万円）で仮置きしていたときは、月22万円の生活費が上限でした。
+    実際は夫婦とも年収900万円の厚生年金加入者なので、受給額は<strong>その2.5倍</strong>になります。
+    高所得の共働き世帯では、公的年金そのものが数千万円規模の資産に相当します。</p>
   </div>
-  <p class="note" style="margin-top:14px">
-    現金300万円は普通預金のままでも、<strong>個人向け国債 変動10年</strong>に置いても構いません（元本割れなし・1年経てば中途換金可）。
-    生活費の6か月〜1年分が目安です。仕事を失っても、病気になっても、この300万円があれば投資分に手をつけずに済みます。
+</section>
+
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 1 ─ 年金の推計</div>
+    <h2>夫婦の年金は、65歳から月38万円</h2>
+    <p class="lede">1981年前後の生まれなら、就職した年がちょうど総報酬制の開始（2003年4月）と重なるため、
+    計算はシンプルです。報酬比例部分は<span class="num">平均標準報酬額 × 5.481/1000 × 加入月数</span>で求めます。</p>
+  </div>
+
+  <dl class="figs">
+    <div><dt>報酬比例部分（1人）</dt><dd class="num">145<small>万円/年</small></dd>
+      <p>生涯平均標準報酬額 58.2万円／月・加入38年で試算</p></div>
+    <div><dt>老齢基礎年金（1人）</dt><dd class="num">83<small>万円/年</small></dd>
+      <p>40年納付の満額。未納期間があれば減ります</p></div>
+    <div class="hi"><dt>夫婦合計</dt><dd class="num">457<small>万円/年</small></dd>
+      <p>月あたり 38.1万円。65歳から生涯続きます</p></div>
+  </dl>
+
+  <div class="scroll">
+    <table>
+      <caption>生涯平均標準報酬額の置き方による感度（夫婦合計・年額）。実額はねんきんネットで確認してください</caption>
+      <thead><tr><th>生涯平均標準報酬額</th><th>1人あたり</th><th>夫婦合計</th><th>月あたり</th></tr></thead>
+      <tbody>
+        <tr><td>50.0万円 / 月</td><td>208万円</td><td>416万円</td><td>34.7万円</td></tr>
+        <tr><td>55.0万円 / 月</td><td>220万円</td><td>441万円</td><td>36.7万円</td></tr>
+        <tr class="phase"><td>58.2万円 / 月 ─ 本試算の前提</td><td>228万円</td><td>457万円</td><td>38.1万円</td></tr>
+        <tr><td>62.0万円 / 月</td><td>238万円</td><td>476万円</td><td>39.7万円</td></tr>
+        <tr><td>65.0万円 / 月</td><td>245万円</td><td>491万円</td><td>40.9万円</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note spine" style="margin-top:16px">
+    厚生年金の標準報酬月額には<strong>上限65万円</strong>があるため、年収900万円でも青天井には増えません。
+    逆にいえば、この水準を超える収入があっても年金は増えないので、超過分は自分で運用する必要があります。
+    なお夫婦とも厚生年金の加入期間が20年以上あるため、<strong>配偶者加給年金は支給されません</strong>。
   </p>
 </section>
 
 <section>
   <div class="spine">
-    <div class="sec-label">STEP 2 ─ 枠の埋め方</div>
-    <h2>NISA生涯枠1,800万円を、15年でちょうど使い切る</h2>
-    <p class="lede">iDeCo 2万＋NISA 3万に割ると、15年間の投入額が<strong>1,740万円</strong>となり、
-    生涯枠1,800万円にきれいに収まります。成長投資枠も上限1,200万円ぴったりです。偶然ですが、この条件では最適解になります。</p>
+    <div class="sec-label">STEP 2 ─ 問題の構造</div>
+    <h2>本当の課題は、60歳から65歳までの5年間だけ</h2>
+    <p class="lede">65歳以降は年金が月38万円入るので、生活費の大半は自動的に賄われます。
+    リタイア後40年のうち、<strong>資産だけで生きる必要があるのは最初の5年</strong>です。ここに設計を集中させてください。</p>
   </div>
-
-  <div class="meter">
-    <div class="meter-bar" role="img" aria-label="NISA生涯枠1800万円の内訳：成長投資枠1200万円、つみたて投資枠540万円、未使用60万円">
-      <i class="m1"></i><i class="m2"></i><i class="m3"></i>
+  <div class="tl">
+    <div class="tl-bar" role="img" aria-label="60歳から65歳は年金なしで資産のみ。65歳以降は年金が月38万円入る">
+      <i class="tl-gap"><b>年金ゼロ</b><span>資産だけで生活</span></i>
+      <i class="tl-cov"><b>年金 月38.1万円</b><span>不足分だけを資産から補う</span></i>
     </div>
-    <div class="meter-key">
-      <span><i class="chip" style="background:var(--accent)"></i>成長投資枠 <b class="num">1,200万</b>（既存資金・上限ぴったり）</span>
-      <span><i class="chip" style="background:var(--accent-2);opacity:.62"></i>つみたて投資枠 <b class="num">540万</b>（月3万×15年）</span>
-      <span><i class="chip" style="background:var(--surface-2);border:1px solid var(--rule)"></i>未使用 <b class="num">60万</b></span>
-    </div>
+    <div class="tl-axis"><span>60歳 ───── 65歳</span><span>65歳 ─────────────────────────── 100歳</span></div>
   </div>
+  <p class="note spine" style="margin-top:16px">
+    生活費が月45万円なら、60〜65歳は年540万円を丸ごと資産から出し、65歳以降は差額の年83万円だけを補えば済みます。
+    <strong>負担の重さが5年目を境に6分の1以下になる</strong>、という構造です。
+  </p>
+</section>
 
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 3 ─ 必要額</div>
+    <h2>60歳で、いくら持っていればいいか</h2>
+    <p class="lede">生活費から逆算した「100歳まで持たせるために60歳時点で必要な資産」です。
+    年金457万円／年（65歳〜）と年率3%運用を前提にしています。</p>
+  </div>
   <div class="scroll">
     <table>
-      <caption>年間投資枠は つみたて120万＋成長240万＝合計360万円。下表はその範囲内に収まっています（単位：万円）</caption>
-      <thead>
-        <tr><th>年齢</th><th>成長投資枠</th><th>つみたて投資枠</th><th>NISA累計</th><th>iDeCo</th><th>年間の拠出計</th></tr>
-      </thead>
+      <caption>月5万円の積立を続けた場合、60歳時点の資産は3,264万円（年率3%）の見込み</caption>
+      <thead><tr><th>夫婦の生活費</th><th>60歳で必要な資産</th><th>月5万円積立で届くか</th></tr></thead>
       <tbody>
-        <tr class="phase"><td class="age">45歳</td><td>240</td><td>36</td><td>276</td><td>24</td><td>300</td></tr>
-        <tr class="phase"><td class="age">46歳</td><td>240</td><td>36</td><td>552</td><td>24</td><td>300</td></tr>
-        <tr class="phase"><td class="age">47歳</td><td>240</td><td>36</td><td>828</td><td>24</td><td>300</td></tr>
-        <tr class="phase"><td class="age">48歳</td><td>240</td><td>36</td><td>1,104</td><td>24</td><td>300</td></tr>
-        <tr class="phase"><td class="age">49歳</td><td>240</td><td>36</td><td>1,380</td><td>24</td><td>300</td></tr>
-        <tr><td class="age">50〜54歳</td><td class="dim">─</td><td>36 ×5年</td><td>1,560</td><td>24 ×5年</td><td>60</td></tr>
-        <tr><td class="age">55〜59歳</td><td class="dim">─</td><td>36 ×5年</td><td>1,740</td><td>24 ×5年</td><td>60</td></tr>
-        <tr class="total"><td>15年間の合計</td><td>1,200</td><td>540</td><td>1,740</td><td>360</td><td>2,100</td></tr>
+        <tr><td>月30万円</td><td>1,698万円</td><td><span class="badge ok">届く ─ 1,566万円の余裕</span></td></tr>
+        <tr><td>月35万円</td><td>1,981万円</td><td><span class="badge ok">届く ─ 1,283万円の余裕</span></td></tr>
+        <tr class="phase"><td>月40万円</td><td>2,737万円</td><td><span class="badge ok">届く ─ 527万円の余裕</span></td></tr>
+        <tr><td>月45万円</td><td>4,252万円</td><td><span class="badge bad">988万円 不足</span></td></tr>
+        <tr><td>月50万円</td><td>5,767万円</td><td><span class="badge bad">2,503万円 不足</span></td></tr>
+        <tr><td>月55万円</td><td>7,282万円</td><td><span class="badge bad">4,018万円 不足</span></td></tr>
       </tbody>
     </table>
   </div>
   <p class="note spine" style="margin-top:16px">
-    最初の5年は年300万円の拠出になります。内訳は「既存資金から240万円＋給与から60万円」で、
-    <strong>新たな負担が増えるわけではありません</strong>。手元の1,200万円を5年かけてNISAへ移し替えているだけです。
+    月40万円と月45万円の間で必要額が<strong>1,500万円も跳ねます</strong>。年金でカバーしきれる水準を超えると、
+    不足分が生涯にわたって積み上がるためです。<strong>この段差の手前に生活費を収められるかどうかが、実質的な合否ライン</strong>になります。
   </p>
 </section>
 
-<section class="spine">
-  <div class="sec-label">STEP 3 ─ iDeCoを併用する理由</div>
-  <h2>同じ月5万円でも、割り方で結果が変わる</h2>
-  <p class="lede">投資額はどちらも月5万円。違うのは入れる箱だけです。それでも差がつきます。</p>
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 4 ─ 積立額</div>
+    <h2>月5万円は、この収入では少なすぎます</h2>
+    <p class="lede">世帯手取りは月110万円ほど。月5万円の積立は<strong>手取りの4.5%</strong>です。
+    住宅ローンや教育費の事情はあると思いますが、事実として、これが唯一かつ最大のレバーです。</p>
+  </div>
   <div class="scroll">
     <table>
-      <caption>60歳時点の手取り額で比較（課税口座分は売却時20.315%を控除。単位：万円）</caption>
-      <thead><tr><th>月5万円の配分</th><th>3%成長</th><th>5%成長</th><th>7%成長</th></tr></thead>
+      <caption>60歳時点の資産（既存1,200万円の投資分＋現金300万円を含む。単位：万円）</caption>
+      <thead><tr><th>毎月の積立</th><th>手取りに占める割合</th><th>3%成長</th><th>5%成長</th><th>7%成長</th></tr></thead>
       <tbody>
-        <tr><td>NISAに全額 ─ 55歳以降は課税口座へ</td><td>2,895</td><td>3,596</td><td>4,474</td></tr>
-        <tr><td>iDeCo 2万＋NISA 3万</td><td>2,901</td><td>3,610</td><td>4,499</td></tr>
-        <tr><td>└ iDeCoの所得控除による節税</td><td>+72</td><td>+72</td><td>+72</td></tr>
-        <tr class="total"><td>併用したほうが得する額</td><td>+79</td><td>+86</td><td>+97</td></tr>
+        <tr class="phase"><td>5万円 ─ 現状</td><td class="dim">4.5%</td><td>3,264</td><td>4,043</td><td>5,034</td></tr>
+        <tr><td>10万円</td><td class="dim">9.1%</td><td>4,402</td><td>5,385</td><td>6,629</td></tr>
+        <tr><td>15万円</td><td class="dim">13.6%</td><td>5,539</td><td>6,727</td><td>8,223</td></tr>
+        <tr><td>25万円</td><td class="dim">22.7%</td><td>7,815</td><td>9,411</td><td>11,411</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="spine">
+    <div class="scroll">
+      <table>
+        <caption>判定マトリクス（年率3%・年金457万円／65歳〜・100歳まで持つか）</caption>
+        <thead><tr><th>生活費</th><th>月5万</th><th>月10万</th><th>月15万</th><th>月25万</th></tr></thead>
+        <tbody>
+          <tr><td>月35万円</td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td></tr>
+          <tr><td>月40万円</td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td></tr>
+          <tr><td>月45万円</td><td><span class="badge bad">76歳</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td></tr>
+          <tr><td>月50万円</td><td><span class="badge bad">68歳</span></td><td><span class="badge bad">80歳</span></td><td><span class="badge mid">99歳</span></td><td><span class="badge ok">◎</span></td></tr>
+          <tr><td>月55万円</td><td><span class="badge bad">65歳</span></td><td><span class="badge bad">73歳</span></td><td><span class="badge bad">82歳</span></td><td><span class="badge ok">◎</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note" style="margin-top:16px">◎＝100歳を超えても資産が残る／数字＝枯渇する年齢。
+    <strong>月10万円まで増やせば、生活費月45万円でも成立します</strong>。差額の月5万円が、選択肢の幅をそのまま広げます。</p>
+  </div>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 5 ─ 最重要の未確認事項</div>
+  <h2>退職金しだいで、結論はひっくり返ります</h2>
+  <p class="lede">年収900万円・勤続38年の会社員なら、退職金は1人1,500〜2,500万円が一つの目安です。
+  夫婦それぞれにあるなら、合計3,000〜5,000万円。<strong>これは他のどの要素よりも大きく判定を動かします。</strong></p>
+  <div class="scroll">
+    <table>
+      <caption>積立は月5万円のまま・年率3%。退職金を60歳資産に加算した場合の判定</caption>
+      <thead><tr><th>夫婦の退職金合計</th><th>60歳資産</th><th>生活費 月45万</th><th>月50万</th><th>月55万</th></tr></thead>
+      <tbody>
+        <tr><td>なし</td><td>3,264万</td><td><span class="badge bad">76歳</span></td><td><span class="badge bad">68歳</span></td><td><span class="badge bad">65歳</span></td></tr>
+        <tr><td>1,000万円</td><td>4,264万</td><td><span class="badge ok">◎</span></td><td><span class="badge bad">78歳</span></td><td><span class="badge bad">72歳</span></td></tr>
+        <tr><td>2,000万円</td><td>5,264万</td><td><span class="badge ok">◎</span></td><td><span class="badge mid">93歳</span></td><td><span class="badge bad">79歳</span></td></tr>
+        <tr class="phase"><td>3,000万円</td><td>6,264万</td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge mid">90歳</span></td></tr>
+        <tr><td>4,000万円</td><td>7,264万</td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td></tr>
       </tbody>
     </table>
   </div>
   <div class="callout" style="margin-top:26px">
-    <h3>iDeCoの掛金は「確定利回り」で戻ってくる</h3>
-    <p>掛金は全額が所得控除になります。所得税10%＋住民税10%の課税帯なら、年24万円の拠出で<strong class="num">約4.8万円</strong>が毎年戻ります。
-    15年で約72万円。相場がどう動こうと確定している利益で、これはNISAにはない機能です。
-    なお<strong>2026年12月の改正</strong>で、会社員の拠出上限は企業年金の有無にかかわらず月6.2万円まで引き上げられます（企業年金がある場合は合算枠）。余力が増えたらここを厚くできます。</p>
+    <h3>勤続38年なら、退職所得控除は1人2,060万円</h3>
+    <p><span class="num">800万円＋70万円×(38年−20年)＝2,060万円</span>。この範囲内の退職金は非課税で受け取れます。
+    夫婦それぞれに枠があるので、合計4,120万円まで税金がかかりません。
+    ただし<strong>iDeCoの一時金を同時に受け取ると、この枠を食い合います</strong>（次項）。</p>
   </div>
-  <div class="callout risk" style="margin-top:16px">
-    <h3>ただし iDeCoの資金は60歳まで1円も引き出せません</h3>
-    <p>これは弱点ですが、<strong>60歳リタイアが目標なら拘束期間とゴールが一致します</strong>ので、この条件では実質的な不利になりません。
-    ただし「途中で住宅購入や教育費が必要になるかもしれない」なら、iDeCoは減らしてNISAを厚くしてください。NISAはいつでも引き出せます。</p>
-  </div>
+  <p class="note" style="margin-top:20px">
+    退職金の有無・金額、60歳で辞めた場合の減額率（多くの会社は定年前退職で減額されます）は、
+    就業規則か人事に確認してください。<strong>この数字が分かるまで、リタイア時期の最終決定はしないほうがいい</strong>と考えます。
+  </p>
 </section>
 
 <section class="spine">
-  <div class="sec-label">STEP 4 ─ 商品と配分</div>
-  <h2>何を買い、いつリスクを落とすか</h2>
-  <p class="lede">45歳から60歳までの15年は、まだ株式中心で構いません。
-  ただし<strong>60歳の直前だけは別</strong>です。リタイア直前の暴落は、取り返す時間がないので致命傷になります。</p>
+  <div class="sec-label">STEP 6 ─ 口座の使い分け</div>
+  <h2>iDeCoを最優先にする理由</h2>
+  <p class="lede">NISA枠は夫婦で3,600万円あり、この世帯では余ります。
+  だから口座選びの基準は「枠の大きさ」ではなく<strong>「税制上どちらが得か」</strong>だけになります。答えはiDeCoです。</p>
+
+  <dl class="figs">
+    <div><dt>現行の上限（月2.3万円×2人）</dt><dd class="num">16.6<small>万円/年</small></dd>
+      <p>年55.2万円の拠出に対する節税額。15年で248万円</p></div>
+    <div class="hi"><dt>2026年12月〜（月6.2万円×2人）</dt><dd class="num">44.6<small>万円/年</small></dd>
+      <p>年148.8万円の拠出に対する節税額。15年で670万円</p></div>
+    <div><dt>拠出額に対する即時リターン</dt><dd class="num">30<small>%</small></dd>
+      <p>所得税20%＋住民税10%。相場と無関係な確定利益</p></div>
+  </dl>
+
+  <div class="stack" style="margin-top:26px">
+    <div class="callout">
+      <h3>入口で30%戻り、出口でもほぼ課税されない</h3>
+      <p>60〜64歳にiDeCoを<strong>年金形式</strong>で受け取ると、その期間はまだ公的年金が始まっていないため、
+      <strong class="num">公的年金等控除 年60万円</strong>（65歳未満）が丸ごと使えます。基礎控除と合わせれば、
+      この世帯の受給額なら実質的にほぼ非課税で引き出せます。しかも年金が出ない5年間の穴埋めにそのまま使えるので、
+      <strong>STEP 2で見た「60〜65歳の谷」に対する解答にもなっています</strong>。</p>
+    </div>
+    <div class="callout risk">
+      <h3>一時金で受け取ると、退職金の控除枠を食い合います</h3>
+      <p><strong>2026年1月から、退職金とiDeCo一時金の退職所得控除の重複調整期間が5年→10年に延長されました。</strong>
+      60歳で退職金とiDeCo一時金を同じ年に受け取ると、控除枠は合算で1つ分しか使えません。
+      退職金が2,060万円の控除枠に近い金額なら、iDeCoは一時金にせず<strong>年金形式を選んでください</strong>。
+      これだけで数十万円の差が出ます。</p>
+    </div>
+  </div>
+
+  <ul class="steps" style="margin-top:26px">
+    <li>iDeCo ─ 夫2.3万円＋妻2.3万円＝月4.6万円<small>上限まで入れます。2026年12月に月6.2万円へ引き上げられたら、増額の第一候補もここです。</small></li>
+    <li>NISAつみたて投資枠 ─ 残り月0.4万円<small>金額は小さくても、口座と積立設定は今のうちに作っておきます。増額したときの受け皿になります。</small></li>
+    <li>節税分の年16.6万円も、そのまま積み立てる<small>使ってしまうと効果が消えます。再投資すれば実質の積立額は月6.4万円になり、60歳資産が315万円増えます。</small></li>
+  </ul>
+</section>
+
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 7 ─ NISAの使い方</div>
+    <h2>既存1,200万円は、夫婦の成長投資枠に3年で入れる</h2>
+    <p class="lede">年間投資枠は1人360万円（つみたて120＋成長240）。<strong>夫婦なら年720万円</strong>使えるので、
+    単身の想定より2年早く投入し終えられます。</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <caption>生活防衛資金300万円を除いた1,200万円の投入スケジュール（単位：万円）</caption>
+      <thead><tr><th>年齢</th><th>夫の成長投資枠</th><th>妻の成長投資枠</th><th>年間計</th><th>累計</th></tr></thead>
+      <tbody>
+        <tr class="phase"><td class="age">45歳</td><td>240</td><td>240</td><td>480</td><td>480</td></tr>
+        <tr class="phase"><td class="age">46歳</td><td>240</td><td>240</td><td>480</td><td>960</td></tr>
+        <tr class="phase"><td class="age">47歳</td><td>120</td><td>120</td><td>240</td><td>1,200</td></tr>
+        <tr class="total"><td>投入完了</td><td>600</td><td>600</td><td>1,200</td><td>1,200</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="meter">
+    <div class="meter-bar" role="img" aria-label="夫婦のNISA生涯枠3600万円のうち、既存資金1200万円と積立900万円で2100万円を使用。1500万円が余る">
+      <i class="m1" style="flex:1200"></i><i class="m2" style="flex:900"></i><i class="m3" style="flex:1500"></i>
+    </div>
+    <div class="meter-key">
+      <span><i class="chip" style="background:var(--accent)"></i>既存資金 <b class="num">1,200万</b></span>
+      <span><i class="chip" style="background:var(--accent-2);opacity:.62"></i>積立15年分 <b class="num">900万</b>（月5万の場合）</span>
+      <span><i class="chip" style="background:var(--surface-2);border:1px solid var(--rule)"></i>未使用 <b class="num">1,500万</b></span>
+    </div>
+  </div>
+  <p class="note spine" style="margin-top:16px">
+    夫婦の生涯枠3,600万円に対し、月5万円の積立を15年続けても<strong>1,500万円以上が使われないまま残ります</strong>。
+    積立を増やしても枠は当分足りるので、NISAについては<strong>枠を気にする必要がありません</strong>。
+  </p>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 8 ─ 商品</div>
+  <h2>買うのは全世界株式インデックス1本</h2>
+  <p class="lede"><strong>eMAXIS Slim 全世界株式（オール・カントリー）</strong>、信託報酬は年0.05775%以内。
+  NISAのつみたて投資枠でも成長投資枠でもiDeCoでも、同じものを買えます。夫婦の全口座で同一商品にして構いません。</p>
 
   <div class="glide">
     <div class="glide-row"><div class="glide-age">45〜52歳</div>
@@ -390,219 +568,131 @@ details ul{margin:0; padding-left:20px; display:flex; flex-direction:column; gap
     <div class="glide-row"><div class="glide-age">58〜60歳</div>
       <div class="glide-bar"><i class="g-eq" style="flex:60">株式 60%</i><i class="g-bd" style="flex:15">債券15%</i><i class="g-cs" style="flex:25">現金 25%</i></div></div>
   </div>
-  <p class="note" style="margin-top:16px">株式＝eMAXIS Slim 全世界株式（オール・カントリー）／
-  債券・現金＝個人向け国債 変動10年、または預金。<strong>58歳以降の現金比率は「リタイア後5年分の生活費」から逆算</strong>してください（月25万円なら1,500万円）。</p>
 
   <div class="callout risk" style="margin-top:26px">
-    <h3>58歳から始める作業 ─ 5年分の生活費を現金に移す</h3>
-    <p>60歳の時点でリーマン級の下落が来て、そこから取り崩しを始めると、資産は二度と回復しません（収益率配列リスク）。
-    防ぎ方は単純で、<strong>58歳から少しずつ、5年分の生活費を現金と個人向け国債に移しておく</strong>だけです。
-    暴落が来ても、その5年分を使いながら株式の回復を待てます。60歳到達時に慌てて全部売る、が最悪手です。</p>
+    <h3>58歳から、60〜65歳の5年分を現金に移す</h3>
+    <p>この世帯の場合、必要な現金クッションは明確です。<strong>年金が出ない5年間の生活費</strong>そのもの。
+    月45万円で暮らすなら<strong class="num">2,700万円</strong>を、58歳から少しずつ現金と個人向け国債に移してください。
+    60歳の時点で暴落が来ても、この5年分があれば株式を売らずに回復を待てます。
+    65歳以降は年金が支えるので、それより後ろの資産は株式のまま持ち続けて構いません。</p>
   </div>
 </section>
 
-<section>
-  <div class="spine">
-    <div class="sec-label">STEP 5 ─ 到達点</div>
-    <h2>60歳で、いくらになっているか</h2>
-    <p class="lede">拠出の合計は2,400万円（既存1,500万＋積立900万）。
-    そのうち<strong class="num">2,100万円</strong>が投資に回ります。</p>
-  </div>
-  <div class="cards">
-    <div class="card">
-      <div class="card-rate">年率 3% ─ 保守的</div>
-      <div class="card-big">3,201<small>万円</small></div>
-      <div class="breakdown">
-        <div><span>成長投資枠</span><b>1,764</b></div>
-        <div><span>つみたて投資枠</span><b>683</b></div>
-        <div><span>iDeCo</span><b>455</b></div>
-        <div><span>現金</span><b>300</b></div>
-      </div>
-      <div class="card-foot">世界株の長期実績を大きく下回る前提。「これでも足りるか」を確かめる用の数字です。</div>
-    </div>
-    <div class="card hero">
-      <div class="card-rate">年率 5% ─ 中心シナリオ</div>
-      <div class="card-big">3,910<small>万円</small></div>
-      <div class="breakdown">
-        <div><span>成長投資枠</span><b>2,268</b></div>
-        <div><span>つみたて投資枠</span><b>805</b></div>
-        <div><span>iDeCo</span><b>537</b></div>
-        <div><span>現金</span><b>300</b></div>
-      </div>
-      <div class="card-foot">計画はこの数字を基準に立ててください。運用益は約1,500万円で、NISA分は全額が非課税です。</div>
-    </div>
-    <div class="card">
-      <div class="card-rate">年率 7% ─ 順調な場合</div>
-      <div class="card-big">4,799<small>万円</small></div>
-      <div class="breakdown">
-        <div><span>成長投資枠</span><b>2,905</b></div>
-        <div><span>つみたて投資枠</span><b>956</b></div>
-        <div><span>iDeCo</span><b>638</b></div>
-        <div><span>現金</span><b>300</b></div>
-      </div>
-      <div class="card-foot">全世界株の過去平均に近い水準。ただし15年で必ずこうなる保証はありません。</div>
-    </div>
-  </div>
-  <p class="note spine" style="margin-top:20px">
-    いずれもiDeCoの節税72万円は含んでいません。また<strong>退職金と企業型DCは未算入</strong>です。
-    勤務先に退職金制度があるなら、その金額がそのまま上乗せされます。これは判定を大きく変えるので、必ず確認してください。
-  </p>
-</section>
-
-<div class="pivot"><hr><span>ここから、60歳以降の話</span><hr></div>
-
-<section>
-  <div class="spine">
-    <div class="sec-label">STEP 6 ─ 判定</div>
-    <h2>それで、60歳で辞められるのか</h2>
-    <p class="lede">答えは<strong>「生活費しだい」</strong>です。資産額ではなく、毎月いくらで暮らすかが結論を決めます。
-    下表は、資産を取り崩しながら同じ利回りで運用し続けた場合に、何歳まで資産がもつかです。</p>
-  </div>
+<section class="spine">
+  <div class="sec-label">STEP 9 ─ 繰下げ</div>
+  <h2>年金の繰下げは、資産が足りている場合だけ有効</h2>
+  <p class="lede">月38万円が月54万円になる（+42%）のは魅力的ですが、その代わり65〜70歳の5年分を資産で埋める必要があります。
+  <strong>資産が足りない状態で繰り下げると、かえって早く枯渇します。</strong></p>
   <div class="scroll">
     <table>
-      <caption>公的年金は65歳から年180万円（月15万円）と仮定。60〜64歳は資産のみで生活する前提</caption>
-      <thead><tr><th>毎月の生活費</th><th>3%成長 / 3,201万</th><th>5%成長 / 3,910万</th><th>7%成長 / 4,799万</th></tr></thead>
+      <caption>生活費 月45万円・年率3%の場合に、資産が何歳まで持つか</caption>
+      <thead><tr><th>積立額（60歳資産）</th><th>2人とも65歳受給</th><th>1人だけ70歳繰下げ</th><th>2人とも70歳繰下げ</th></tr></thead>
       <tbody>
-        <tr><td>20万円</td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
-        <tr><td>22万円</td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
-        <tr><td>25万円</td><td><span class="badge bad">88歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
-        <tr><td>28万円</td><td><span class="badge bad">79歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
-        <tr><td>30万円</td><td><span class="badge bad">76歳で枯渇</span></td><td><span class="badge mid">94歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+        <tr><td>月5万円（3,264万）</td><td><span class="badge bad">76歳</span></td><td><span class="badge bad">66歳</span></td><td><span class="badge bad">66歳</span></td></tr>
+        <tr><td>月10万円（4,402万）</td><td><span class="badge ok">◎</span></td><td><span class="badge bad">69歳</span></td><td><span class="badge bad">69歳</span></td></tr>
+        <tr class="phase"><td>月15万円（5,539万）</td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td><td><span class="badge ok">◎</span></td></tr>
       </tbody>
     </table>
   </div>
-  <div class="spine stack" style="margin-top:26px">
-    <div class="callout">
-      <h3>読み方 ─ 3%の列だけを見てください</h3>
-      <p>5%や7%になる可能性は十分ありますが、<strong>それを前提に人生の決定をしてはいけません</strong>。
-      3%の列で成立するかどうかが、実質的な合否です。その基準でいうと──
-      <strong>月22万円までなら、いま何もしなくても60歳リタイアは成立します。月25万円を望むなら、次のレバーが必要です。</strong></p>
-    </div>
-  </div>
-</section>
-
-<section class="spine">
-  <div class="sec-label">STEP 7 ─ 足りない分の埋め方</div>
-  <h2>月25万円で暮らすための、4つのレバー</h2>
-  <p class="lede">条件は「3%成長・生活費 月25万円・年金 月15万円」＝そのままでは88歳で枯渇。
-  ここに以下を足すと判定が変わります。<strong>①か③なら、それ1つで解決します。</strong>
-  ②と④は単独では100歳に届きませんが、他と組み合わせれば十分です。全部やる必要はありません。</p>
-
-  <div class="levers">
-    <div class="lever">
-      <h3>積立を月5万円 → 月8万円に増やす</h3>
-      <span class="badge ok">100歳超も安泰</span>
-      <p>いま45歳。増額の効果が最も大きいのは今日です。差額の3万円はiDeCoの増枠（2026年12月から月6.2万円）に入れれば、節税も同時に増えます。</p>
-    </div>
-    <div class="lever">
-      <h3>60〜65歳だけ、月8万円ぶん働く</h3>
-      <span class="badge mid">98歳まで持続</span>
-      <p>週2〜3日のパートや業務委託で届く水準です。「完全リタイア」ではなくなりますが、資産寿命への効き方は非常に大きい。年金が始まる65歳までの5年間だけの話です。</p>
-    </div>
-    <div class="lever">
-      <h3>生活費を月25万円 → 22万円に下げる</h3>
-      <span class="badge ok">100歳超も安泰</span>
-      <p>月3万円です。子どもが独立していれば、住居・保険・通信の見直しだけで到達することが多い水準。<strong>最も確実で、いちばん早く効くレバー</strong>です。</p>
-    </div>
-    <div class="lever">
-      <h3>年金の受給を70歳まで繰り下げる（+42%）</h3>
-      <span class="badge mid">93歳まで持続</span>
-      <p>月15万円が月21.3万円になり、一生涯続きます。ただし65〜70歳の5年分を資産で埋める必要があるため、
-      <strong>これ単独では88歳→93歳への改善にとどまります</strong>。長生きリスクへの備えとしては優秀なので、①〜③のどれかと組み合わせて使ってください。</p>
-    </div>
-  </div>
-  <p class="note" style="margin-top:22px">
-    <strong>月30万円の生活を望む場合</strong>は、レバー1つでは足りません。積立増額と就労延長の併用、
-    あるいはリタイアを62〜63歳に後ろ倒しすることを検討してください。今の月5万円のままでは3%シナリオで76歳、5%でも94歳です。
+  <p class="note" style="margin-top:16px">
+    繰下げが選択肢になるのは月15万円積立の水準からです。そこまで到達できるなら、
+    <strong>片方だけ繰り下げる</strong>のが現実的でしょう。65〜70歳の負担を半分に抑えつつ、
+    長生きした場合の備えを厚くできます。夫婦の年齢差があるなら、年上のほうを繰り下げてください。
   </p>
 </section>
 
 <section class="spine">
-  <div class="sec-label">STEP 8 ─ 見落としやすい部分</div>
+  <div class="sec-label">STEP 10 ─ 見落としやすい部分</div>
   <h2>60歳でやめると、その日から増える固定費</h2>
-  <p class="lede">上のシミュレーションはこれらを生活費に含めた前提ですが、金額を見誤りやすいので個別に挙げます。</p>
   <ul class="steps">
-    <li>健康保険料が全額自己負担になる
-      <small>会社の折半負担が消えます。任意継続（最長2年）か国民健康保険を選択。<strong>月3〜4万円</strong>を見込んでください。退職1年目は前年所得で計算されるため最も高くなります。</small>
+    <li>健康保険料が夫婦2人分、全額自己負担になる
+      <small>会社の折半負担が消えます。任意継続（最長2年）か国民健康保険。年収900万円クラスだと保険料も上限近くになるため、<strong>2人で月6〜8万円</strong>を見込んでください。年間80〜100万円で、生活費の想定に必ず含めること。</small>
     </li>
-    <li>住民税は「辞めた翌年」に請求が来る
-      <small>前年の所得に対して課税されるため、収入がゼロになった年に前年分の請求が届きます。<strong>初年度は現金を厚めに</strong>用意しておくこと。</small>
+    <li>住民税は「辞めた翌年」に、前年の高い所得で請求される
+      <small>年収900万円の住民税は1人あたり年約55万円。<strong>夫婦で約110万円が、収入ゼロになった年に届きます</strong>。リタイア初年度は現金を厚く用意しておいてください。</small>
     </li>
-    <li>国民年金は60歳以降、納付義務がなくなる
-      <small>ただし未納・免除期間があるなら、<strong>65歳までの任意加入</strong>で満額に近づけられます。1年の追納で受給額が年約2万円増え、生涯続くので回収効率は高いです。ねんきんネットで納付月数を確認してください。</small>
+    <li>60歳以降の国民年金は納付義務がなくなる
+      <small>ただし学生時代の未納・猶予期間があるなら、<strong>65歳までの任意加入</strong>で満額に近づけられます。1年の追納で受給額が年約2万円増え、それが生涯続くので回収効率は高い。ねんきんネットで納付月数を確認してください。</small>
     </li>
-    <li>iDeCoは「60〜64歳に年金形式で受け取る」と有利になりやすい
-      <small>公的年金が始まる65歳までの空白を埋められ、65歳未満なら公的年金等控除が年60万円使えます。加えて<strong>2026年1月から、退職金とiDeCo一時金の退職所得控除の重複調整期間が5年→10年に延長</strong>されました。退職金がある人が60歳で両方を一時金で受け取ると税負担が増える場合があるため、受け取り方は退職金額を確認してから決めてください。</small>
+    <li>夫婦の年齢差があれば、年金開始のタイミングがずれる
+      <small>本試算は同い年を前提にしています。年齢差があるなら「谷」の長さが変わるので、必要な現金クッションも変わります。</small>
     </li>
   </ul>
 </section>
 
 <section class="spine">
-  <div class="sec-label">STEP 9 ─ 取り崩しの順番</div>
-  <h2>どの口座から先に使うか</h2>
+  <div class="sec-label">STEP 11 ─ 取り崩し</div>
+  <h2>どの順番で使うか</h2>
   <ul class="steps">
     <li>現金・個人向け国債（58歳から積み上げた5年分）
-      <small>相場が悪い年は、ここだけで生活します。株式を売らずに済ませることが最大の目的です。</small>
+      <small>60〜65歳の主力。相場が悪い年ほど、ここだけで生活します。</small>
+    </li>
+    <li>iDeCo ─ 60〜64歳に年金形式で受給
+      <small>公的年金等控除が使えるうえ、退職金の退職所得控除と競合しません。谷の期間に定期収入として効きます。</small>
     </li>
     <li>NISA口座
-      <small>売却益は非課税。しかも<strong>売却した分の非課税枠は翌年に復活</strong>するので、使いすぎた分を戻すこともできます。取り崩しの主役はここです。</small>
+      <small>売却益は非課税。<strong>売った分の非課税枠は翌年に復活します</strong>。65歳以降の不足分は主にここから。</small>
     </li>
-    <li>課税口座（あれば）
+    <li>課税口座（あれば最後）
       <small>利益に20.315%かかります。損益通算できる年にまとめて処理すると有利です。</small>
     </li>
-    <li>iDeCo
-      <small>60〜64歳に年金形式で受け取る設計にしておけば、上の順番とは別に定期収入として機能します。</small>
-    </li>
   </ul>
-  <p class="note" style="margin-top:20px">取り崩し額は「定額」より<strong>「資産の3.5〜4%」の定率</strong>が安全です。
-  相場が悪い年は自動的に引き出し額が減るため、資産が枯渇しにくくなります。</p>
+  <p class="note" style="margin-top:20px">65歳以降の取り崩しは「定額」より<strong>「資産の3.5〜4%」の定率</strong>が安全です。
+  相場が悪い年は自動的に引き出し額が減り、資産が枯渇しにくくなります。</p>
 </section>
 
 <section class="spine">
-  <div class="sec-label">STEP 10 ─ 禁止事項</div>
+  <div class="sec-label">STEP 12 ─ 禁止事項</div>
   <h2>この15年でやってはいけないこと</h2>
   <ul class="donts">
     <li>毎月分配型・テーマ型ファンド、ラップ口座、外貨建て保険を買う
-      <small>元本を取り崩して分配しているだけの商品や、年1〜3%の手数料が抜かれる商品です。15年で数百万円の差になります。</small>
+      <small>元本を取り崩して分配しているだけの商品や、年1〜3%の手数料が抜かれる商品です。世帯年収1,800万円だと、金融機関から熱心に勧められる層に入ります。</small>
     </li>
-    <li>銀行の窓口や対面証券で口座を開く
-      <small>ネット証券（SBI証券・楽天証券・マネックス証券など）で開設してください。窓口で勧められる商品は、上の1行目に該当することがほとんどです。</small>
+    <li>銀行や証券の窓口で相談して決める
+      <small>ネット証券（SBI証券・楽天証券・マネックス証券など）で自分で開設してください。窓口で勧められる商品は、上の1行目に該当することがほとんどです。</small>
     </li>
-    <li>暴落したときに積立を止める、または売る
-      <small>15年の間に30%級の下落は複数回来ます。安く買える期間であって、損した期間ではありません。ここで止めた人だけが本当に負けます。</small>
-    </li>
-    <li>60歳になった瞬間に全額を売却する
-      <small>60歳はゴールではありません。そこから30年以上の運用が続きます。売るのは使う分だけです。</small>
+    <li>資産が足りないまま年金を繰り下げる
+      <small>STEP 9のとおり、資産不足での繰下げは枯渇を早めます。順番は「資産を積む」→「繰下げを検討する」です。</small>
     </li>
     <li>年金を60歳から繰り上げ受給する
-      <small>1か月あたり0.4%、60歳受給なら<strong>24%の減額が一生涯</strong>続きます。資産が尽きかけたときの最終手段であって、最初から選ぶ選択肢ではありません。</small>
+      <small>1か月あたり0.4%、60歳受給なら<strong>24%の減額が一生涯</strong>続きます。月38万円が月29万円になります。最終手段であって、最初から選ぶ選択肢ではありません。</small>
     </li>
-    <li>「もっと良い商品」を探し続ける
-      <small>全世界株式インデックスより明確に優れた選択肢を、15年前から探し続けている人が大勢います。まだ見つかっていません。</small>
+    <li>退職金の額を確認しないまま退職時期を決める
+      <small>この世帯では、退職金が判定を左右する最大の変数です。多くの会社は定年前退職で減額されるので、60歳退職の場合の金額を確認してください。</small>
+    </li>
+    <li>暴落したときに積立を止める、売る、60歳で全額売却する
+      <small>15年の間に30%級の下落は複数回来ます。また60歳はゴールではなく、そこから30年以上の運用が続きます。売るのは使う分だけです。</small>
     </li>
   </ul>
 </section>
 
 <section class="spine">
   <div class="sec-label">今週やること</div>
-  <h2>最初の3手</h2>
+  <h2>最初の4手</h2>
   <ul class="steps">
-    <li>ネット証券でNISA口座を開設し、成長投資枠で月20万円の積立設定をする<small>年240万円÷12か月。一括で買わず、毎月に分けます。</small></li>
-    <li>つみたて投資枠で月3万円、iDeCoで月2万円を設定する<small>iDeCoは勤務先の証明書が要る場合があります。手続きに1〜2か月かかるので、先に申し込みだけ済ませてください。</small></li>
-    <li>ねんきんネットで、65歳からの年金見込額と納付月数を確認する<small>この数字が判定表の前提です。仮定の年180万円と大きく違えば、必要な生活費の水準が変わります。</small></li>
+    <li>ねんきんネットで、夫婦それぞれの年金見込額を確認する<small>本試算の457万円は推計値です。実額が分かれば、必要な生活費の水準が確定します。ここが全ての土台になります。</small></li>
+    <li>就業規則か人事で、60歳退職時の退職金額を確認する<small>判定を最も大きく動かす変数です。夫婦それぞれ確認してください。</small></li>
+    <li>夫婦それぞれiDeCoに加入し、月2.3万円ずつ拠出する<small>勤務先の証明書が必要な場合があり、手続きに1〜2か月かかります。先に申し込みだけ済ませてください。</small></li>
+    <li>夫婦それぞれNISA口座を開き、成長投資枠で月20万円ずつの積立を設定する<small>年240万円÷12か月。一括で買わず毎月に分け、45〜47歳の3年で1,200万円を入れ切ります。</small></li>
   </ul>
+  <p class="note" style="margin-top:22px">
+    1と2の結果しだいで、判定は大きく動きます。<strong>月40万円の生活費で足りるなら、いま何も変えなくても60歳リタイアは成立します。</strong>
+    それ以上を望むなら、積立を月10万円に増やすのが最短経路です。
+  </p>
 </section>
 
 <details class="spine">
   <summary>前提条件と注意事項</summary>
   <div class="body">
     <ul>
-      <li>金額はすべて名目値です。インフレを考慮するなら、リターンから年1〜2%を引いて読んでください（3%の列を「実質1〜2%」とみなすと保守的な検算になります）。</li>
-      <li>公的年金は「65歳から年180万円（月15万円）」を仮定しています。会社員として長く勤めた単身者を想定した水準です。実額はねんきんネットで確認してください。夫婦2人分なら年240〜280万円程度になることが多く、その場合は判定が大きく緩みます。</li>
-      <li>退職金・企業型DCは計算に含めていません。あれば、その分がそのまま上振れします。</li>
-      <li>iDeCoの節税額は所得税10%＋住民税10%（課税所得195万〜330万円の帯）で試算しています。課税所得がこれより高ければ節税額はさらに増えます。</li>
-      <li>取り崩しシミュレーションは、リタイア後も同じ利回りで運用を続ける前提です。実際には現金比率を上げるため、リターンはやや下がります。</li>
-      <li>家族構成、住居（持ち家か賃貸か）、住宅ローンの残債、企業年金の有無は不明のため考慮していません。特に<strong>賃貸で老後も家賃が続く場合</strong>は、生活費の想定を上げる必要があります。</li>
+      <li>公的年金は推計値です。1981年前後の生まれ・22歳就職・60歳まで厚生年金加入・生涯平均標準報酬額58.2万円／月として、報酬比例部分145万円＋老齢基礎年金83万円＝1人228万円と置きました。実額は必ずねんきんネットで確認してください。±30万円程度はぶれます。</li>
+      <li>夫婦は同い年で、同時に60歳で退職する前提です。年齢差があれば年金開始のタイミングがずれます。</li>
+      <li>老齢基礎年金は40年納付の満額83万円で計算しています。学生時代に未納・納付猶予があると減額されます。</li>
+      <li>退職金・企業型DCは、STEP 5を除き計算に含めていません。あればその分が上振れします。企業型DCがある場合はiDeCoの拠出上限が変わります。</li>
+      <li>iDeCoの節税額は限界税率30%（所得税20%＋住民税10%、課税所得330万〜695万円の帯）で試算しています。年収900万円・社会保険料控除後の課税所得は概ね520万円前後です。</li>
+      <li>金額はすべて名目値です。インフレを考慮するならリターンから年1〜2%を引いて読んでください。3%の列を「実質1〜2%」とみなすと保守的な検算になります。</li>
+      <li>生活費には健康保険料（月6〜8万円）を含めて考えてください。住宅ローンの残債、賃貸か持ち家か、教育費がいつ終わるかは不明のため考慮していません。</li>
+      <li>取り崩しシミュレーションは、リタイア後も同じ利回りで運用を続ける前提です。実際には現金比率を上げるためリターンはやや下がります。</li>
       <li>信託報酬などの商品情報は2026年8月時点のものです。制度・商品ともに変わりうるので、実行前に最新の情報を確認してください。</li>
       <li>これは一般的な情報提供であり、個別の投資助言ではありません。最終判断はご自身で、必要ならファイナンシャルプランナー等にご相談ください。</li>
     </ul>
@@ -610,9 +700,10 @@ details ul{margin:0; padding-left:20px; display:flex; flex-direction:column; gap
 </details>
 
 <p class="colophon">
-  試算条件：45歳・金融資産1,500万円・毎月5万円の積立・60歳で退職。<br>
+  試算条件：夫婦とも45歳・年収各900万円（世帯1,800万円）・金融資産1,500万円・毎月5万円の積立・60歳で退職。<br>
+  公的年金は報酬比例部分（平均標準報酬額×5.481/1000×加入月数）と老齢基礎年金の合算による推計。<br>
   NISAは2026年8月時点の制度（年間投資枠360万円／生涯非課税限度額1,800万円・うち成長投資枠1,200万円・非課税保有期間無期限）に基づく。<br>
-  2026年度税制改正での成人向けNISAの枠変更はなし。iDeCoは2026年12月施行の拠出限度額引き上げ（会社員 月6.2万円）を反映。
+  iDeCoは2026年12月施行の拠出限度額引き上げ（会社員 月6.2万円）、および2026年1月施行の退職所得控除の重複調整期間10年への延長を反映。
 </p>
 
 </div>
