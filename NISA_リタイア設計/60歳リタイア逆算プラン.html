@@ -1,0 +1,618 @@
+<title>60歳リタイア逆算プラン</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+<style>
+:root{
+  --ground:#F4F6F3; --surface:#FFFFFF; --surface-2:#EDF1EE;
+  --ink:#14201D; --ink-2:#33423D; --muted:#64726D; --rule:#D6DDD9; --rule-soft:#E4E9E6;
+  --accent:#1D5B51; --accent-2:#2E7C6E; --accent-soft:#D5E5DF; --accent-wash:#E9F1EE;
+  --warn:#9E4A18; --warn-soft:#F3E2D6; --gold:#8A6E2C; --gold-soft:#F0E9D6;
+  --shadow:0 1px 2px rgba(20,32,29,.05), 0 8px 24px -12px rgba(20,32,29,.18);
+  --mincho:"Zen Old Mincho","Yu Mincho","Hiragino Mincho ProN",serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,"SFMono-Regular",monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --ground:#101512; --surface:#181F1B; --surface-2:#1F2723;
+    --ink:#E6EDE8; --ink-2:#C3CFC9; --muted:#8E9C96; --rule:#2C3733; --rule-soft:#232C28;
+    --accent:#5EBBA4; --accent-2:#7ACCB7; --accent-soft:#1C352E; --accent-wash:#16241F;
+    --warn:#DE8A5C; --warn-soft:#33221A; --gold:#C6A458; --gold-soft:#2B2519;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+  }
+}
+:root[data-theme="dark"]{
+  --ground:#101512; --surface:#181F1B; --surface-2:#1F2723;
+  --ink:#E6EDE8; --ink-2:#C3CFC9; --muted:#8E9C96; --rule:#2C3733; --rule-soft:#232C28;
+  --accent:#5EBBA4; --accent-2:#7ACCB7; --accent-soft:#1C352E; --accent-wash:#16241F;
+  --warn:#DE8A5C; --warn-soft:#33221A; --gold:#C6A458; --gold-soft:#2B2519;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 8px 24px -12px rgba(0,0,0,.6);
+}
+*{box-sizing:border-box}
+body{
+  background:var(--ground); color:var(--ink);
+  font-family:var(--gothic); font-size:16px; line-height:1.85;
+  -webkit-font-smoothing:antialiased; letter-spacing:.01em;
+}
+.wrap{max-width:1120px; margin:0 auto; padding:0 24px 96px}
+.spine{max-width:660px}
+h1,h2,h3{font-family:var(--mincho); text-wrap:balance; letter-spacing:.02em; margin:0}
+p{margin:0}
+strong{font-weight:700; color:var(--ink)}
+em{font-style:normal; background:linear-gradient(transparent 62%, var(--accent-soft) 62%); font-weight:500}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums; font-feature-settings:"tnum"}
+a{color:var(--accent); text-underline-offset:3px}
+a:focus-visible,summary:focus-visible{outline:2px solid var(--accent); outline-offset:3px; border-radius:3px}
+
+/* ── masthead ─────────────────────────── */
+.masthead{padding:72px 0 40px; display:flex; flex-direction:column; gap:22px}
+.eyebrow{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.2em; text-transform:uppercase;
+  color:var(--accent); display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+}
+.eyebrow::after{content:""; flex:1; min-width:24px; height:1px; background:var(--rule)}
+h1{font-size:clamp(34px,5.4vw,54px); line-height:1.28; font-weight:700}
+h1 .thin{color:var(--muted); font-weight:400}
+.standfirst{max-width:600px; color:var(--ink-2); font-size:17px; line-height:1.95}
+.given{
+  display:flex; flex-wrap:wrap; gap:0; margin-top:8px;
+  border-top:1px solid var(--rule); border-bottom:1px solid var(--rule);
+}
+.given div{padding:14px 26px 14px 0; margin-right:26px; border-right:1px solid var(--rule-soft)}
+.given div:last-child{border-right:0}
+.given dt{font-size:11.5px; letter-spacing:.13em; color:var(--muted); margin-bottom:2px}
+.given dd{margin:0; font-family:var(--mono); font-size:19px; font-weight:500; letter-spacing:-.01em}
+
+/* ── verdict ─────────────────────────── */
+.verdict{
+  background:var(--surface); border:1px solid var(--rule); border-radius:2px;
+  box-shadow:var(--shadow); margin:40px 0 8px; overflow:hidden;
+}
+.verdict-head{
+  padding:16px 28px; background:var(--accent); color:#F4F6F3;
+  font-family:var(--mono); font-size:12px; letter-spacing:.18em; text-transform:uppercase;
+}
+:root[data-theme="dark"] .verdict-head{color:#0E1512}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .verdict-head{color:#0E1512}}
+.verdict ol{margin:0; padding:8px 0; list-style:none; counter-reset:v}
+.verdict li{
+  counter-increment:v; display:grid; grid-template-columns:56px 1fr; gap:4px 12px;
+  padding:20px 28px; border-bottom:1px solid var(--rule-soft);
+}
+.verdict li:last-child{border-bottom:0}
+.verdict li::before{
+  content:counter(v); font-family:var(--mincho); font-size:30px; line-height:1;
+  color:var(--accent); opacity:.55; padding-top:6px;
+}
+.verdict h3{font-size:20px; line-height:1.5; font-weight:600}
+.verdict p{color:var(--ink-2); font-size:15px; line-height:1.85}
+
+/* ── sections ─────────────────────────── */
+section{padding-top:76px}
+.sec-label{
+  font-family:var(--mono); font-size:11.5px; letter-spacing:.19em; text-transform:uppercase;
+  color:var(--muted); margin-bottom:10px;
+}
+h2{font-size:clamp(23px,3vw,31px); line-height:1.45; font-weight:700; margin-bottom:18px}
+.lede{color:var(--ink-2); font-size:16.5px; margin-bottom:8px}
+.stack{display:flex; flex-direction:column; gap:20px}
+.note{font-size:14px; color:var(--muted); line-height:1.8}
+
+/* ── allocation bar ───────────────────── */
+.alloc{display:flex; height:78px; border-radius:2px; overflow:hidden; border:1px solid var(--rule); margin-top:26px}
+.alloc div{display:flex; flex-direction:column; justify-content:center; padding:0 18px; color:#F4F6F3}
+.alloc .a1{flex:12; background:var(--accent)}
+.alloc .a2{flex:3; background:var(--surface-2); color:var(--ink)}
+:root[data-theme="dark"] .alloc div:not(.a2){color:#0E1512}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .alloc div:not(.a2){color:#0E1512}}
+.alloc b{font-family:var(--mono); font-size:20px; font-weight:600; line-height:1.3}
+.alloc span{font-size:12.5px; opacity:.85; line-height:1.4}
+
+/* ── quota meter ──────────────────────── */
+.meter{margin-top:28px}
+.meter-bar{display:flex; height:52px; border:1px solid var(--rule); border-radius:2px; overflow:hidden}
+.meter-bar i{display:block; height:100%}
+.m1{flex:1200; background:var(--accent)}
+.m2{flex:540; background:var(--accent-2); opacity:.62}
+.m3{flex:60; background:var(--surface-2); border-left:1px dashed var(--rule)}
+.meter-key{display:flex; flex-wrap:wrap; gap:8px 24px; margin-top:14px; font-size:13.5px; color:var(--ink-2)}
+.meter-key span{display:flex; align-items:center; gap:8px}
+.chip{width:11px; height:11px; border-radius:1px; flex:none}
+
+/* ── tables ───────────────────────────── */
+.scroll{overflow-x:auto; margin-top:26px; border:1px solid var(--rule); border-radius:2px; background:var(--surface)}
+table{border-collapse:collapse; width:100%; min-width:560px; font-size:14.5px}
+caption{text-align:left; padding:16px 20px 0; font-size:13px; color:var(--muted)}
+th,td{padding:11px 16px; text-align:right; border-bottom:1px solid var(--rule-soft); white-space:nowrap}
+th:first-child,td:first-child{text-align:left}
+thead th{
+  font-family:var(--mono); font-size:11px; letter-spacing:.11em; text-transform:uppercase;
+  color:var(--muted); font-weight:500; border-bottom:1px solid var(--rule); background:var(--surface-2);
+  position:sticky; top:0;
+}
+tbody td:not(:first-child){font-family:var(--mono); font-variant-numeric:tabular-nums}
+tbody tr:last-child td{border-bottom:0}
+tr.phase td{background:var(--accent-wash)}
+tr.total td{font-weight:700; border-top:2px solid var(--accent); background:var(--surface-2)}
+td.dim{color:var(--muted)}
+.age{font-family:var(--mono); color:var(--accent); font-weight:500}
+
+/* ── scenario cards ───────────────────── */
+.cards{display:grid; grid-template-columns:repeat(auto-fit,minmax(238px,1fr)); gap:16px; margin-top:26px}
+.card{background:var(--surface); border:1px solid var(--rule); border-radius:2px; padding:22px; display:flex; flex-direction:column; gap:14px}
+.card.hero{border-color:var(--accent); border-width:1px; box-shadow:var(--shadow)}
+.card-rate{font-family:var(--mono); font-size:12px; letter-spacing:.13em; color:var(--muted)}
+.card-big{font-family:var(--mono); font-size:35px; font-weight:600; line-height:1; letter-spacing:-.02em}
+.card-big small{font-size:15px; font-weight:400; color:var(--muted); margin-left:3px; letter-spacing:0}
+.card.hero .card-big{color:var(--accent)}
+.breakdown{display:flex; flex-direction:column; gap:0; border-top:1px solid var(--rule-soft); padding-top:12px}
+.breakdown div{display:flex; justify-content:space-between; gap:12px; font-size:13.5px; padding:3px 0; color:var(--ink-2)}
+.breakdown b{font-family:var(--mono); font-weight:500; font-variant-numeric:tabular-nums}
+.card-foot{font-size:12.5px; color:var(--muted); line-height:1.65; margin-top:auto; padding-top:4px}
+
+/* ── pivot rule ───────────────────────── */
+.pivot{margin:92px 0 0; display:flex; align-items:center; gap:20px}
+.pivot hr{flex:1; border:0; height:1px; background:var(--rule); margin:0}
+.pivot span{
+  font-family:var(--mincho); font-size:16px; color:var(--accent); letter-spacing:.14em;
+  white-space:nowrap; padding:0 4px;
+}
+
+/* ── verdict matrix ───────────────────── */
+.badge{
+  display:inline-flex; align-items:center; gap:6px; padding:3px 10px; border-radius:2px;
+  font-size:12.5px; font-family:var(--gothic); white-space:nowrap;
+}
+.ok{background:var(--accent-soft); color:var(--accent)}
+.mid{background:var(--gold-soft); color:var(--gold)}
+.bad{background:var(--warn-soft); color:var(--warn)}
+:root[data-theme="dark"] .ok{color:var(--accent-2)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ok{color:var(--accent-2)}}
+
+/* ── levers ───────────────────────────── */
+.levers{display:flex; flex-direction:column; gap:0; margin-top:26px; border-top:1px solid var(--rule)}
+.lever{
+  display:grid; grid-template-columns:1fr auto; gap:6px 20px; align-items:center;
+  padding:18px 2px; border-bottom:1px solid var(--rule-soft);
+}
+.lever h3{font-size:16.5px; font-weight:600; line-height:1.5}
+.lever p{grid-column:1/-1; font-size:14px; color:var(--muted); line-height:1.75; margin-top:-2px}
+
+/* ── glidepath ────────────────────────── */
+.glide{display:flex; flex-direction:column; gap:2px; margin-top:26px}
+.glide-row{display:grid; grid-template-columns:104px 1fr; gap:16px; align-items:center}
+.glide-age{font-family:var(--mono); font-size:13px; color:var(--ink-2); text-align:right}
+.glide-bar{display:flex; height:38px; border-radius:2px; overflow:hidden; border:1px solid var(--rule)}
+.glide-bar i{display:flex; align-items:center; padding:0 10px; font-size:11.5px; font-family:var(--mono); color:#F4F6F3; overflow:hidden}
+.g-eq{background:var(--accent)}
+.g-bd{background:var(--accent-2); opacity:.5; color:var(--ink)}
+.g-cs{background:var(--surface-2); color:var(--ink)}
+:root[data-theme="dark"] .g-eq{color:#0E1512}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .g-eq{color:#0E1512}}
+
+/* ── callout / donts ──────────────────── */
+.callout{
+  border-left:3px solid var(--accent); background:var(--accent-wash);
+  padding:20px 24px; border-radius:0 2px 2px 0; display:flex; flex-direction:column; gap:8px;
+}
+.callout.risk{border-left-color:var(--warn); background:var(--warn-soft)}
+.callout h3{font-size:17px; font-weight:600}
+.callout p{font-size:14.5px; color:var(--ink-2); line-height:1.85}
+.donts{list-style:none; padding:0; margin:26px 0 0; border-top:1px solid var(--rule)}
+.donts li{
+  padding:15px 2px 15px 34px; border-bottom:1px solid var(--rule-soft); position:relative;
+  font-size:15.5px; line-height:1.75;
+}
+.donts li::before{
+  content:"×"; position:absolute; left:6px; top:15px; color:var(--warn);
+  font-family:var(--mono); font-size:17px; font-weight:600;
+}
+.donts small{display:block; color:var(--muted); font-size:13.5px; line-height:1.7; margin-top:3px}
+
+/* ── steps ────────────────────────────── */
+.steps{list-style:none; padding:0; margin:26px 0 0; counter-reset:s; display:flex; flex-direction:column; gap:0}
+.steps li{
+  counter-increment:s; display:grid; grid-template-columns:32px 1fr; gap:14px; align-items:baseline;
+  padding:14px 2px; border-bottom:1px solid var(--rule-soft); font-size:15.5px; line-height:1.75;
+}
+.steps li::before{
+  content:counter(s); font-family:var(--mono); font-size:12px; color:var(--accent);
+  border:1px solid var(--accent-soft); border-radius:50%; width:26px; height:26px;
+  display:flex; align-items:center; justify-content:center; background:var(--accent-wash);
+}
+.steps small{display:block; color:var(--muted); font-size:13.5px; line-height:1.7; margin-top:2px}
+
+/* ── footer ───────────────────────────── */
+details{margin-top:26px; border:1px solid var(--rule); border-radius:2px; background:var(--surface)}
+summary{padding:16px 22px; cursor:pointer; font-size:14.5px; font-weight:500; list-style:none; display:flex; justify-content:space-between; gap:12px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"＋"; color:var(--accent); font-family:var(--mono)}
+details[open] summary::after{content:"−"}
+details .body{padding:0 22px 22px; font-size:14px; color:var(--ink-2); line-height:1.9; display:flex; flex-direction:column; gap:12px}
+details ul{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:7px}
+.colophon{
+  margin-top:76px; padding-top:26px; border-top:1px solid var(--rule);
+  font-size:13px; color:var(--muted); line-height:1.85; max-width:660px;
+}
+@media (prefers-reduced-motion:no-preference){
+  .verdict,.card,.scroll{transition:border-color .2s ease}
+}
+@media (max-width:620px){
+  .masthead{padding:48px 0 32px}
+  .given div{padding-right:18px; margin-right:18px}
+  .verdict li{grid-template-columns:1fr; padding:18px 20px}
+  .verdict li::before{font-size:22px; padding-top:0}
+  .glide-row{grid-template-columns:1fr; gap:4px}
+  .glide-age{text-align:left}
+}
+</style>
+
+<div class="wrap">
+
+<header class="masthead spine">
+  <div class="eyebrow">45歳 → 60歳 ／ 残り15年</div>
+  <h1>60歳リタイア<br><span class="thin">逆算プラン</span></h1>
+  <p class="standfirst">
+    先に結論から。<strong>この条件なら、生活費が月22万円までに収まるなら60歳リタイアは十分に届きます。</strong>
+    月25万円を望むなら、あと一手が要ります。月30万円は今の積立額では届きません。
+    以下は、その一手までを含めた15年分の設計図です。
+  </p>
+  <dl class="given">
+    <div><dt>現在の資産</dt><dd class="num">1,500万円</dd></div>
+    <div><dt>毎月の積立</dt><dd class="num">5万円</dd></div>
+    <div><dt>年齢</dt><dd class="num">45歳</dd></div>
+    <div><dt>目標</dt><dd class="num">60歳で退職</dd></div>
+  </dl>
+</header>
+
+<div class="verdict spine">
+  <div class="verdict-head">結論 ─ 決めることは3つだけ</div>
+  <ol>
+    <li>
+      <h3>買うのは全世界株式インデックス1本</h3>
+      <p><strong>eMAXIS Slim 全世界株式（オール・カントリー）</strong>。信託報酬は年0.05775%以内。
+      NISAのつみたて投資枠でも成長投資枠でも同じものを買えます。商品選びに時間をかけるほど、
+      機会損失のほうが大きくなります。1本で終わらせてください。</p>
+    </li>
+    <li>
+      <h3>月5万円は全額NISAに入れない。iDeCo 2万＋NISA 3万に割る</h3>
+      <p>ここが一番の分かれ目です。既存の1,200万円を成長投資枠に入れると、<em>NISAの生涯枠1,800万円は54歳で埋まります</em>。
+      埋まった後の積立は課税口座行き。それなら最初から割ったほうが、iDeCoの所得控除を15年分受け取れて
+      <strong>60歳時点で約80〜100万円得します</strong>。</p>
+    </li>
+    <li>
+      <h3>既存1,200万円は5年かけて成長投資枠へ、300万円は現金で置く</h3>
+      <p>年間投資枠が360万円なので、1,200万円は制度上どうやっても一括では入りません。
+      年240万円×5年（45〜49歳）が最速。残す300万円は生活防衛資金で、これは投資しません。</p>
+    </li>
+  </ol>
+</div>
+
+<section class="spine">
+  <div class="sec-label">STEP 1 ─ 資産の置き場所</div>
+  <h2>1,500万円を、投資する分と守る分に割る</h2>
+  <p class="lede">全額を投資に回してはいけません。60歳リタイアを目指す人にとって、
+  現金は「利回りの低い資産」ではなく「暴落中に投資分を売らずに済ませる保険」です。</p>
+  <div class="alloc">
+    <div class="a1"><b>1,200万円</b><span>投資へ ─ NISA成長投資枠に5年で分割投入</span></div>
+    <div class="a2"><b>300万円</b><span>現金で保持</span></div>
+  </div>
+  <p class="note" style="margin-top:14px">
+    現金300万円は普通預金のままでも、<strong>個人向け国債 変動10年</strong>に置いても構いません（元本割れなし・1年経てば中途換金可）。
+    生活費の6か月〜1年分が目安です。仕事を失っても、病気になっても、この300万円があれば投資分に手をつけずに済みます。
+  </p>
+</section>
+
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 2 ─ 枠の埋め方</div>
+    <h2>NISA生涯枠1,800万円を、15年でちょうど使い切る</h2>
+    <p class="lede">iDeCo 2万＋NISA 3万に割ると、15年間の投入額が<strong>1,740万円</strong>となり、
+    生涯枠1,800万円にきれいに収まります。成長投資枠も上限1,200万円ぴったりです。偶然ですが、この条件では最適解になります。</p>
+  </div>
+
+  <div class="meter">
+    <div class="meter-bar" role="img" aria-label="NISA生涯枠1800万円の内訳：成長投資枠1200万円、つみたて投資枠540万円、未使用60万円">
+      <i class="m1"></i><i class="m2"></i><i class="m3"></i>
+    </div>
+    <div class="meter-key">
+      <span><i class="chip" style="background:var(--accent)"></i>成長投資枠 <b class="num">1,200万</b>（既存資金・上限ぴったり）</span>
+      <span><i class="chip" style="background:var(--accent-2);opacity:.62"></i>つみたて投資枠 <b class="num">540万</b>（月3万×15年）</span>
+      <span><i class="chip" style="background:var(--surface-2);border:1px solid var(--rule)"></i>未使用 <b class="num">60万</b></span>
+    </div>
+  </div>
+
+  <div class="scroll">
+    <table>
+      <caption>年間投資枠は つみたて120万＋成長240万＝合計360万円。下表はその範囲内に収まっています（単位：万円）</caption>
+      <thead>
+        <tr><th>年齢</th><th>成長投資枠</th><th>つみたて投資枠</th><th>NISA累計</th><th>iDeCo</th><th>年間の拠出計</th></tr>
+      </thead>
+      <tbody>
+        <tr class="phase"><td class="age">45歳</td><td>240</td><td>36</td><td>276</td><td>24</td><td>300</td></tr>
+        <tr class="phase"><td class="age">46歳</td><td>240</td><td>36</td><td>552</td><td>24</td><td>300</td></tr>
+        <tr class="phase"><td class="age">47歳</td><td>240</td><td>36</td><td>828</td><td>24</td><td>300</td></tr>
+        <tr class="phase"><td class="age">48歳</td><td>240</td><td>36</td><td>1,104</td><td>24</td><td>300</td></tr>
+        <tr class="phase"><td class="age">49歳</td><td>240</td><td>36</td><td>1,380</td><td>24</td><td>300</td></tr>
+        <tr><td class="age">50〜54歳</td><td class="dim">─</td><td>36 ×5年</td><td>1,560</td><td>24 ×5年</td><td>60</td></tr>
+        <tr><td class="age">55〜59歳</td><td class="dim">─</td><td>36 ×5年</td><td>1,740</td><td>24 ×5年</td><td>60</td></tr>
+        <tr class="total"><td>15年間の合計</td><td>1,200</td><td>540</td><td>1,740</td><td>360</td><td>2,100</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note spine" style="margin-top:16px">
+    最初の5年は年300万円の拠出になります。内訳は「既存資金から240万円＋給与から60万円」で、
+    <strong>新たな負担が増えるわけではありません</strong>。手元の1,200万円を5年かけてNISAへ移し替えているだけです。
+  </p>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 3 ─ iDeCoを併用する理由</div>
+  <h2>同じ月5万円でも、割り方で結果が変わる</h2>
+  <p class="lede">投資額はどちらも月5万円。違うのは入れる箱だけです。それでも差がつきます。</p>
+  <div class="scroll">
+    <table>
+      <caption>60歳時点の手取り額で比較（課税口座分は売却時20.315%を控除。単位：万円）</caption>
+      <thead><tr><th>月5万円の配分</th><th>3%成長</th><th>5%成長</th><th>7%成長</th></tr></thead>
+      <tbody>
+        <tr><td>NISAに全額 ─ 55歳以降は課税口座へ</td><td>2,895</td><td>3,596</td><td>4,474</td></tr>
+        <tr><td>iDeCo 2万＋NISA 3万</td><td>2,901</td><td>3,610</td><td>4,499</td></tr>
+        <tr><td>└ iDeCoの所得控除による節税</td><td>+72</td><td>+72</td><td>+72</td></tr>
+        <tr class="total"><td>併用したほうが得する額</td><td>+79</td><td>+86</td><td>+97</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout" style="margin-top:26px">
+    <h3>iDeCoの掛金は「確定利回り」で戻ってくる</h3>
+    <p>掛金は全額が所得控除になります。所得税10%＋住民税10%の課税帯なら、年24万円の拠出で<strong class="num">約4.8万円</strong>が毎年戻ります。
+    15年で約72万円。相場がどう動こうと確定している利益で、これはNISAにはない機能です。
+    なお<strong>2026年12月の改正</strong>で、会社員の拠出上限は企業年金の有無にかかわらず月6.2万円まで引き上げられます（企業年金がある場合は合算枠）。余力が増えたらここを厚くできます。</p>
+  </div>
+  <div class="callout risk" style="margin-top:16px">
+    <h3>ただし iDeCoの資金は60歳まで1円も引き出せません</h3>
+    <p>これは弱点ですが、<strong>60歳リタイアが目標なら拘束期間とゴールが一致します</strong>ので、この条件では実質的な不利になりません。
+    ただし「途中で住宅購入や教育費が必要になるかもしれない」なら、iDeCoは減らしてNISAを厚くしてください。NISAはいつでも引き出せます。</p>
+  </div>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 4 ─ 商品と配分</div>
+  <h2>何を買い、いつリスクを落とすか</h2>
+  <p class="lede">45歳から60歳までの15年は、まだ株式中心で構いません。
+  ただし<strong>60歳の直前だけは別</strong>です。リタイア直前の暴落は、取り返す時間がないので致命傷になります。</p>
+
+  <div class="glide">
+    <div class="glide-row"><div class="glide-age">45〜52歳</div>
+      <div class="glide-bar"><i class="g-eq" style="flex:100">株式 100%</i></div></div>
+    <div class="glide-row"><div class="glide-age">53〜57歳</div>
+      <div class="glide-bar"><i class="g-eq" style="flex:85">株式 85%</i><i class="g-bd" style="flex:15">15%</i></div></div>
+    <div class="glide-row"><div class="glide-age">58〜60歳</div>
+      <div class="glide-bar"><i class="g-eq" style="flex:60">株式 60%</i><i class="g-bd" style="flex:15">債券15%</i><i class="g-cs" style="flex:25">現金 25%</i></div></div>
+  </div>
+  <p class="note" style="margin-top:16px">株式＝eMAXIS Slim 全世界株式（オール・カントリー）／
+  債券・現金＝個人向け国債 変動10年、または預金。<strong>58歳以降の現金比率は「リタイア後5年分の生活費」から逆算</strong>してください（月25万円なら1,500万円）。</p>
+
+  <div class="callout risk" style="margin-top:26px">
+    <h3>58歳から始める作業 ─ 5年分の生活費を現金に移す</h3>
+    <p>60歳の時点でリーマン級の下落が来て、そこから取り崩しを始めると、資産は二度と回復しません（収益率配列リスク）。
+    防ぎ方は単純で、<strong>58歳から少しずつ、5年分の生活費を現金と個人向け国債に移しておく</strong>だけです。
+    暴落が来ても、その5年分を使いながら株式の回復を待てます。60歳到達時に慌てて全部売る、が最悪手です。</p>
+  </div>
+</section>
+
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 5 ─ 到達点</div>
+    <h2>60歳で、いくらになっているか</h2>
+    <p class="lede">拠出の合計は2,400万円（既存1,500万＋積立900万）。
+    そのうち<strong class="num">2,100万円</strong>が投資に回ります。</p>
+  </div>
+  <div class="cards">
+    <div class="card">
+      <div class="card-rate">年率 3% ─ 保守的</div>
+      <div class="card-big">3,201<small>万円</small></div>
+      <div class="breakdown">
+        <div><span>成長投資枠</span><b>1,764</b></div>
+        <div><span>つみたて投資枠</span><b>683</b></div>
+        <div><span>iDeCo</span><b>455</b></div>
+        <div><span>現金</span><b>300</b></div>
+      </div>
+      <div class="card-foot">世界株の長期実績を大きく下回る前提。「これでも足りるか」を確かめる用の数字です。</div>
+    </div>
+    <div class="card hero">
+      <div class="card-rate">年率 5% ─ 中心シナリオ</div>
+      <div class="card-big">3,910<small>万円</small></div>
+      <div class="breakdown">
+        <div><span>成長投資枠</span><b>2,268</b></div>
+        <div><span>つみたて投資枠</span><b>805</b></div>
+        <div><span>iDeCo</span><b>537</b></div>
+        <div><span>現金</span><b>300</b></div>
+      </div>
+      <div class="card-foot">計画はこの数字を基準に立ててください。運用益は約1,500万円で、NISA分は全額が非課税です。</div>
+    </div>
+    <div class="card">
+      <div class="card-rate">年率 7% ─ 順調な場合</div>
+      <div class="card-big">4,799<small>万円</small></div>
+      <div class="breakdown">
+        <div><span>成長投資枠</span><b>2,905</b></div>
+        <div><span>つみたて投資枠</span><b>956</b></div>
+        <div><span>iDeCo</span><b>638</b></div>
+        <div><span>現金</span><b>300</b></div>
+      </div>
+      <div class="card-foot">全世界株の過去平均に近い水準。ただし15年で必ずこうなる保証はありません。</div>
+    </div>
+  </div>
+  <p class="note spine" style="margin-top:20px">
+    いずれもiDeCoの節税72万円は含んでいません。また<strong>退職金と企業型DCは未算入</strong>です。
+    勤務先に退職金制度があるなら、その金額がそのまま上乗せされます。これは判定を大きく変えるので、必ず確認してください。
+  </p>
+</section>
+
+<div class="pivot"><hr><span>ここから、60歳以降の話</span><hr></div>
+
+<section>
+  <div class="spine">
+    <div class="sec-label">STEP 6 ─ 判定</div>
+    <h2>それで、60歳で辞められるのか</h2>
+    <p class="lede">答えは<strong>「生活費しだい」</strong>です。資産額ではなく、毎月いくらで暮らすかが結論を決めます。
+    下表は、資産を取り崩しながら同じ利回りで運用し続けた場合に、何歳まで資産がもつかです。</p>
+  </div>
+  <div class="scroll">
+    <table>
+      <caption>公的年金は65歳から年180万円（月15万円）と仮定。60〜64歳は資産のみで生活する前提</caption>
+      <thead><tr><th>毎月の生活費</th><th>3%成長 / 3,201万</th><th>5%成長 / 3,910万</th><th>7%成長 / 4,799万</th></tr></thead>
+      <tbody>
+        <tr><td>20万円</td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+        <tr><td>22万円</td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+        <tr><td>25万円</td><td><span class="badge bad">88歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+        <tr><td>28万円</td><td><span class="badge bad">79歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+        <tr><td>30万円</td><td><span class="badge bad">76歳で枯渇</span></td><td><span class="badge mid">94歳で枯渇</span></td><td><span class="badge ok">100歳超も安泰</span></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="spine stack" style="margin-top:26px">
+    <div class="callout">
+      <h3>読み方 ─ 3%の列だけを見てください</h3>
+      <p>5%や7%になる可能性は十分ありますが、<strong>それを前提に人生の決定をしてはいけません</strong>。
+      3%の列で成立するかどうかが、実質的な合否です。その基準でいうと──
+      <strong>月22万円までなら、いま何もしなくても60歳リタイアは成立します。月25万円を望むなら、次のレバーが必要です。</strong></p>
+    </div>
+  </div>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 7 ─ 足りない分の埋め方</div>
+  <h2>月25万円で暮らすための、4つのレバー</h2>
+  <p class="lede">条件は「3%成長・生活費 月25万円・年金 月15万円」＝そのままでは88歳で枯渇。
+  ここに以下を足すと判定が変わります。<strong>①か③なら、それ1つで解決します。</strong>
+  ②と④は単独では100歳に届きませんが、他と組み合わせれば十分です。全部やる必要はありません。</p>
+
+  <div class="levers">
+    <div class="lever">
+      <h3>積立を月5万円 → 月8万円に増やす</h3>
+      <span class="badge ok">100歳超も安泰</span>
+      <p>いま45歳。増額の効果が最も大きいのは今日です。差額の3万円はiDeCoの増枠（2026年12月から月6.2万円）に入れれば、節税も同時に増えます。</p>
+    </div>
+    <div class="lever">
+      <h3>60〜65歳だけ、月8万円ぶん働く</h3>
+      <span class="badge mid">98歳まで持続</span>
+      <p>週2〜3日のパートや業務委託で届く水準です。「完全リタイア」ではなくなりますが、資産寿命への効き方は非常に大きい。年金が始まる65歳までの5年間だけの話です。</p>
+    </div>
+    <div class="lever">
+      <h3>生活費を月25万円 → 22万円に下げる</h3>
+      <span class="badge ok">100歳超も安泰</span>
+      <p>月3万円です。子どもが独立していれば、住居・保険・通信の見直しだけで到達することが多い水準。<strong>最も確実で、いちばん早く効くレバー</strong>です。</p>
+    </div>
+    <div class="lever">
+      <h3>年金の受給を70歳まで繰り下げる（+42%）</h3>
+      <span class="badge mid">93歳まで持続</span>
+      <p>月15万円が月21.3万円になり、一生涯続きます。ただし65〜70歳の5年分を資産で埋める必要があるため、
+      <strong>これ単独では88歳→93歳への改善にとどまります</strong>。長生きリスクへの備えとしては優秀なので、①〜③のどれかと組み合わせて使ってください。</p>
+    </div>
+  </div>
+  <p class="note" style="margin-top:22px">
+    <strong>月30万円の生活を望む場合</strong>は、レバー1つでは足りません。積立増額と就労延長の併用、
+    あるいはリタイアを62〜63歳に後ろ倒しすることを検討してください。今の月5万円のままでは3%シナリオで76歳、5%でも94歳です。
+  </p>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 8 ─ 見落としやすい部分</div>
+  <h2>60歳でやめると、その日から増える固定費</h2>
+  <p class="lede">上のシミュレーションはこれらを生活費に含めた前提ですが、金額を見誤りやすいので個別に挙げます。</p>
+  <ul class="steps">
+    <li>健康保険料が全額自己負担になる
+      <small>会社の折半負担が消えます。任意継続（最長2年）か国民健康保険を選択。<strong>月3〜4万円</strong>を見込んでください。退職1年目は前年所得で計算されるため最も高くなります。</small>
+    </li>
+    <li>住民税は「辞めた翌年」に請求が来る
+      <small>前年の所得に対して課税されるため、収入がゼロになった年に前年分の請求が届きます。<strong>初年度は現金を厚めに</strong>用意しておくこと。</small>
+    </li>
+    <li>国民年金は60歳以降、納付義務がなくなる
+      <small>ただし未納・免除期間があるなら、<strong>65歳までの任意加入</strong>で満額に近づけられます。1年の追納で受給額が年約2万円増え、生涯続くので回収効率は高いです。ねんきんネットで納付月数を確認してください。</small>
+    </li>
+    <li>iDeCoは「60〜64歳に年金形式で受け取る」と有利になりやすい
+      <small>公的年金が始まる65歳までの空白を埋められ、65歳未満なら公的年金等控除が年60万円使えます。加えて<strong>2026年1月から、退職金とiDeCo一時金の退職所得控除の重複調整期間が5年→10年に延長</strong>されました。退職金がある人が60歳で両方を一時金で受け取ると税負担が増える場合があるため、受け取り方は退職金額を確認してから決めてください。</small>
+    </li>
+  </ul>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 9 ─ 取り崩しの順番</div>
+  <h2>どの口座から先に使うか</h2>
+  <ul class="steps">
+    <li>現金・個人向け国債（58歳から積み上げた5年分）
+      <small>相場が悪い年は、ここだけで生活します。株式を売らずに済ませることが最大の目的です。</small>
+    </li>
+    <li>NISA口座
+      <small>売却益は非課税。しかも<strong>売却した分の非課税枠は翌年に復活</strong>するので、使いすぎた分を戻すこともできます。取り崩しの主役はここです。</small>
+    </li>
+    <li>課税口座（あれば）
+      <small>利益に20.315%かかります。損益通算できる年にまとめて処理すると有利です。</small>
+    </li>
+    <li>iDeCo
+      <small>60〜64歳に年金形式で受け取る設計にしておけば、上の順番とは別に定期収入として機能します。</small>
+    </li>
+  </ul>
+  <p class="note" style="margin-top:20px">取り崩し額は「定額」より<strong>「資産の3.5〜4%」の定率</strong>が安全です。
+  相場が悪い年は自動的に引き出し額が減るため、資産が枯渇しにくくなります。</p>
+</section>
+
+<section class="spine">
+  <div class="sec-label">STEP 10 ─ 禁止事項</div>
+  <h2>この15年でやってはいけないこと</h2>
+  <ul class="donts">
+    <li>毎月分配型・テーマ型ファンド、ラップ口座、外貨建て保険を買う
+      <small>元本を取り崩して分配しているだけの商品や、年1〜3%の手数料が抜かれる商品です。15年で数百万円の差になります。</small>
+    </li>
+    <li>銀行の窓口や対面証券で口座を開く
+      <small>ネット証券（SBI証券・楽天証券・マネックス証券など）で開設してください。窓口で勧められる商品は、上の1行目に該当することがほとんどです。</small>
+    </li>
+    <li>暴落したときに積立を止める、または売る
+      <small>15年の間に30%級の下落は複数回来ます。安く買える期間であって、損した期間ではありません。ここで止めた人だけが本当に負けます。</small>
+    </li>
+    <li>60歳になった瞬間に全額を売却する
+      <small>60歳はゴールではありません。そこから30年以上の運用が続きます。売るのは使う分だけです。</small>
+    </li>
+    <li>年金を60歳から繰り上げ受給する
+      <small>1か月あたり0.4%、60歳受給なら<strong>24%の減額が一生涯</strong>続きます。資産が尽きかけたときの最終手段であって、最初から選ぶ選択肢ではありません。</small>
+    </li>
+    <li>「もっと良い商品」を探し続ける
+      <small>全世界株式インデックスより明確に優れた選択肢を、15年前から探し続けている人が大勢います。まだ見つかっていません。</small>
+    </li>
+  </ul>
+</section>
+
+<section class="spine">
+  <div class="sec-label">今週やること</div>
+  <h2>最初の3手</h2>
+  <ul class="steps">
+    <li>ネット証券でNISA口座を開設し、成長投資枠で月20万円の積立設定をする<small>年240万円÷12か月。一括で買わず、毎月に分けます。</small></li>
+    <li>つみたて投資枠で月3万円、iDeCoで月2万円を設定する<small>iDeCoは勤務先の証明書が要る場合があります。手続きに1〜2か月かかるので、先に申し込みだけ済ませてください。</small></li>
+    <li>ねんきんネットで、65歳からの年金見込額と納付月数を確認する<small>この数字が判定表の前提です。仮定の年180万円と大きく違えば、必要な生活費の水準が変わります。</small></li>
+  </ul>
+</section>
+
+<details class="spine">
+  <summary>前提条件と注意事項</summary>
+  <div class="body">
+    <ul>
+      <li>金額はすべて名目値です。インフレを考慮するなら、リターンから年1〜2%を引いて読んでください（3%の列を「実質1〜2%」とみなすと保守的な検算になります）。</li>
+      <li>公的年金は「65歳から年180万円（月15万円）」を仮定しています。会社員として長く勤めた単身者を想定した水準です。実額はねんきんネットで確認してください。夫婦2人分なら年240〜280万円程度になることが多く、その場合は判定が大きく緩みます。</li>
+      <li>退職金・企業型DCは計算に含めていません。あれば、その分がそのまま上振れします。</li>
+      <li>iDeCoの節税額は所得税10%＋住民税10%（課税所得195万〜330万円の帯）で試算しています。課税所得がこれより高ければ節税額はさらに増えます。</li>
+      <li>取り崩しシミュレーションは、リタイア後も同じ利回りで運用を続ける前提です。実際には現金比率を上げるため、リターンはやや下がります。</li>
+      <li>家族構成、住居（持ち家か賃貸か）、住宅ローンの残債、企業年金の有無は不明のため考慮していません。特に<strong>賃貸で老後も家賃が続く場合</strong>は、生活費の想定を上げる必要があります。</li>
+      <li>信託報酬などの商品情報は2026年8月時点のものです。制度・商品ともに変わりうるので、実行前に最新の情報を確認してください。</li>
+      <li>これは一般的な情報提供であり、個別の投資助言ではありません。最終判断はご自身で、必要ならファイナンシャルプランナー等にご相談ください。</li>
+    </ul>
+  </div>
+</details>
+
+<p class="colophon">
+  試算条件：45歳・金融資産1,500万円・毎月5万円の積立・60歳で退職。<br>
+  NISAは2026年8月時点の制度（年間投資枠360万円／生涯非課税限度額1,800万円・うち成長投資枠1,200万円・非課税保有期間無期限）に基づく。<br>
+  2026年度税制改正での成人向けNISAの枠変更はなし。iDeCoは2026年12月施行の拠出限度額引き上げ（会社員 月6.2万円）を反映。
+</p>
+
+</div>
