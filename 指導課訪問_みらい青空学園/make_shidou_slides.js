@@ -1,38 +1,50 @@
 // 令和８年度 教育指導課訪問（練馬区立みらい青空学園）５校時 指導・講評資料
+// 配色・書体は指定テンプレート（テーマ「黄緑」）に準拠
 // 生成: node make_shidou_slides.js  →  指導課訪問_５校時指導助言資料_みらい青空学園.pptx
 const PptxGenJS = require("pptxgenjs");
 
 const pres = new PptxGenJS();
-pres.layout = "LAYOUT_16x9"; // 10.0 x 5.625 inch（参考資料と同一）
+pres.layout = "LAYOUT_16x9"; // 10.0 x 5.625 inch（テンプレートと同一）
 pres.author = "練馬区教育委員会";
 pres.title = "令和８年度 教育指導課訪問 ５校時 指導・講評資料（みらい青空学園）";
 
-const FONT = "Meiryo";
-const BLUE = "00B0F0"; // 見出しバー・小見出し
-const ORANGE = "EB6C15"; // キーワード強調
-const GREEN = "07A973"; // 補助強調
-const INK = "1A1A1A";
-const GRAY = "595959";
-const TINT = "EAF6FD"; // カード地色
+/* ---------- テンプレート由来の配色・書体 ---------- */
+const TEAL = "44C1A3"; // テーマ accent4：見出しバー・表紙帯・チップ
+const KEY = "EE7B08"; // テーマ hlink：キーワード強調
+const GREEN = "63A537"; // テーマ accent2：補助強調
+const INK = "595959"; // 本文（tx1 明度65%）
+const GRAY = "808080";
+const TINT = "E9F7F3"; // カード地色（TEAL の淡色）
+const LINE = "B9E5DA"; // カード罫線
+
+const FONT = "メイリオ"; // 本文
+const FONT_T = "游ゴシック"; // 表紙
+const FONT_D = "ＭＳ Ｐゴシック"; // 表紙の日付・氏名
+
 const W = 10.0;
+const MX = 0.52; // 本文左端（テンプレート準拠）
+const BW = 8.96; // 本文幅
 
 /* ---------- 共通パーツ ---------- */
 
-// 上部の見出しバー（参考資料と同じ：全幅・水色地・白抜き太字）
-function bar(slide, label) {
-  slide.addText("　" + label, {
-    x: 0, y: 0, w: W, h: 0.63,
-    fill: { color: BLUE }, color: "FFFFFF",
-    fontFace: FONT, fontSize: 28, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
+// 見出しバー：１行 h=0.67／２行 h=1.27（テンプレート準拠）
+function bar(slide, main, sub) {
+  const h = sub ? 1.27 : 0.67;
+  const runs = [{ text: "　" + main, options: { fontSize: 30, breakLine: !!sub } }];
+  if (sub) runs.push({ text: "　" + sub, options: { fontSize: 28 } });
+  slide.addText(runs, {
+    x: 0, y: -0.01, w: W, h,
+    fill: { color: TEAL }, color: "FFFFFF",
+    fontFace: FONT, bold: true,
+    align: "left", valign: "middle", margin: 0,
+    lineSpacingMultiple: 1.2, isTextBox: true,
   });
+  return sub ? 1.55 : 0.95; // 本文開始 Y
 }
 
-// 「①」などの丸数字バッジ
-function badge(slide, n, x, y, d, color) {
-  slide.addShape(pres.ShapeType.ellipse, {
-    x, y, w: d, h: d, fill: { color: color || ORANGE },
-  });
+// 丸数字バッジ
+function badge(slide, n, x, y, d) {
+  slide.addShape(pres.ShapeType.ellipse, { x, y, w: d, h: d, fill: { color: TEAL } });
   slide.addText(String(n), {
     x, y, w: d, h: d,
     color: "FFFFFF", fontFace: FONT, fontSize: Math.round(d * 46), bold: true,
@@ -40,37 +52,55 @@ function badge(slide, n, x, y, d, color) {
   });
 }
 
-// 授業者カード（薄い水色地・角丸／罫線ストライプは使わない）
-function card(slide, x, y, w, h, head, sub, lines) {
+// 淡色カード
+function panel(slide, x, y, w, h) {
   slide.addShape(pres.ShapeType.roundRect, {
-    x, y, w, h, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
+    x, y, w, h, rectRadius: 0.06,
+    fill: { color: TINT }, line: { color: LINE, width: 1 },
   });
+}
+
+// 見出し付きチップ（塗り／淡色）
+function chip(slide, x, y, w, h, text, size, solid) {
+  slide.addShape(pres.ShapeType.roundRect, {
+    x, y, w, h, rectRadius: 0.07,
+    fill: { color: solid ? TEAL : TINT },
+    line: solid ? undefined : { color: LINE, width: 1 },
+  });
+  slide.addText(text, {
+    x, y, w, h,
+    color: solid ? "FFFFFF" : INK, fontFace: FONT, fontSize: size, bold: true,
+    align: "center", valign: "middle", margin: 0, lineSpacingMultiple: 1.15, isTextBox: true,
+  });
+}
+
+// 授業者カード
+function card(slide, x, y, w, h, head, sub, lines) {
+  panel(slide, x, y, w, h);
   slide.addText(head, {
-    x: x + 0.16, y: y + 0.13, w: w - 0.32, h: 0.3,
-    color: BLUE, fontFace: FONT, fontSize: 16, bold: true,
+    x: x + 0.16, y: y + 0.12, w: w - 0.32, h: 0.3,
+    color: TEAL, fontFace: FONT, fontSize: 16, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   slide.addText(sub, {
-    x: x + 0.16, y: y + 0.43, w: w - 0.32, h: 0.26,
+    x: x + 0.16, y: y + 0.42, w: w - 0.32, h: 0.26,
     color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   slide.addText(
     lines.map((t, i) => ({
       text: t.text,
-      options: { color: t.hi ? ORANGE : INK, breakLine: i !== lines.length - 1 },
+      options: { color: t.hi ? KEY : INK, breakLine: i !== lines.length - 1 },
     })),
     {
-      x: x + 0.16, y: y + 0.74, w: w - 0.32, h: h - 0.88,
+      x: x + 0.16, y: y + 0.72, w: w - 0.32, h: h - 0.86,
       color: INK, fontFace: FONT, fontSize: 13.5, bold: true,
-      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.25,
-      isTextBox: true,
+      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
     }
   );
 }
 
-// 本文の大きな太字ブロック（[[…]] で橙、{{…}} で緑、<<…>> で水色）
+// 本文ブロック（[[…]] 橙／{{…}} 緑／<<…>> 緑青）
 function body(slide, x, y, w, h, text, size, spacing) {
   const runs = [];
   const lines = text.split("\n");
@@ -79,9 +109,9 @@ function body(slide, x, y, w, h, text, size, spacing) {
     if (parts.length === 0) parts.push("");
     parts.forEach((p, pi) => {
       let color = INK, txt = p;
-      if (p.startsWith("[[")) { color = ORANGE; txt = p.slice(2, -2); }
+      if (p.startsWith("[[")) { color = KEY; txt = p.slice(2, -2); }
       else if (p.startsWith("{{")) { color = GREEN; txt = p.slice(2, -2); }
-      else if (p.startsWith("<<")) { color = BLUE; txt = p.slice(2, -2); }
+      else if (p.startsWith("<<")) { color = TEAL; txt = p.slice(2, -2); }
       runs.push({
         text: txt,
         options: { color, breakLine: pi === parts.length - 1 && li !== lines.length - 1 },
@@ -92,28 +122,26 @@ function body(slide, x, y, w, h, text, size, spacing) {
     x, y, w, h,
     color: INK, fontFace: FONT, fontSize: size, bold: true,
     align: "left", valign: "top", margin: 0,
-    lineSpacingMultiple: spacing || 1.4, isTextBox: true,
+    lineSpacingMultiple: spacing || 1.2, isTextBox: true,
   });
 }
 
 /* ---------- スライド１　表紙 ---------- */
 {
   const s = pres.addSlide();
-  s.addText("令和８年度　教育指導課訪問", {
-    x: 0.6, y: 0.62, w: 8.8, h: 0.5,
-    color: BLUE, fontFace: FONT, fontSize: 22, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  s.addText("練馬区立みらい青空学園", {
-    x: 0.6, y: 1.16, w: 8.8, h: 0.85,
-    color: INK, fontFace: FONT, fontSize: 40, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  s.addText("５校時　指導・講評", {
-    x: 0.6, y: 2.02, w: 8.8, h: 0.62,
-    color: INK, fontFace: FONT, fontSize: 30, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
+  s.addText(
+    [
+      { text: "　練馬区立みらい青空学園", options: { breakLine: true } },
+      { text: "　教育指導課訪問（５校時）", options: {} },
+    ],
+    {
+      x: 0, y: 0, w: W, h: 3.13,
+      fill: { color: TEAL }, color: "FFFFFF",
+      fontFace: FONT_T, fontSize: 40, bold: true,
+      align: "left", valign: "middle", margin: 0,
+      lineSpacingMultiple: 1.2, isTextBox: true,
+    }
+  );
   s.addText(
     [
       { text: "授業者　塚本　瑞穂　先生（外国語・７年Ｂ組）", options: { breakLine: true } },
@@ -121,8 +149,8 @@ function body(slide, x, y, w, h, text, size, spacing) {
       { text: "　　　　東海林　静江　先生（道徳・特別支援学級Ｄ組）", options: {} },
     ],
     {
-      x: 0.6, y: 2.86, w: 5.6, h: 1.3,
-      color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
+      x: MX, y: 3.45, w: 5.2, h: 1.3,
+      color: INK, fontFace: FONT, fontSize: 13.5, bold: true,
       align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.35, isTextBox: true,
     }
   );
@@ -130,12 +158,12 @@ function body(slide, x, y, w, h, text, size, spacing) {
     [
       { text: "令和８年９月９日（水）", options: { breakLine: true } },
       { text: "練馬区教育委員会", options: { breakLine: true } },
-      { text: "指導主事　田口　暁之", options: {} },
+      { text: "指導主事　紺多　章一郎", options: {} },
     ],
     {
-      x: 6.4, y: 3.55, w: 3.1, h: 1.4,
-      color: GRAY, fontFace: FONT, fontSize: 15, bold: true,
-      align: "right", valign: "middle", margin: 0, lineSpacingMultiple: 1.35, isTextBox: true,
+      x: 5.85, y: 3.45, w: 3.63, h: 1.4,
+      color: INK, fontFace: FONT_D, fontSize: 18, bold: true,
+      align: "right", valign: "top", margin: 0, lineSpacingMultiple: 1.35, isTextBox: true,
     }
   );
   s.addNotes(
@@ -148,50 +176,58 @@ function body(slide, x, y, w, h, text, size, spacing) {
 {
   const s = pres.addSlide();
   bar(s, "本日の講評");
-  badge(s, "１", 0.7, 1.22, 0.62);
+  badge(s, "①", MX + 0.2, 1.30, 0.56);
   s.addText("練馬区の小中一貫教育について", {
-    x: 1.5, y: 1.22, w: 8.0, h: 0.62,
-    color: INK, fontFace: FONT, fontSize: 30, bold: true,
+    x: MX + 0.95, y: 1.30, w: 8.0, h: 0.56,
+    color: INK, fontFace: FONT, fontSize: 26, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  badge(s, "２", 0.7, 2.42, 0.62);
+  badge(s, "②", MX + 0.2, 2.35, 0.56);
   s.addText("本時の授業について", {
-    x: 1.5, y: 2.42, w: 8.0, h: 0.62,
-    color: INK, fontFace: FONT, fontSize: 30, bold: true,
+    x: MX + 0.95, y: 2.35, w: 8.0, h: 0.56,
+    color: INK, fontFace: FONT, fontSize: 26, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addText("主体的・対話的で深い学びの視点からの授業改善", {
-    x: 1.5, y: 3.14, w: 8.0, h: 0.5,
-    color: ORANGE, fontFace: FONT, fontSize: 22, bold: true,
+    x: MX + 0.95, y: 3.02, w: 8.0, h: 0.45,
+    color: KEY, fontFace: FONT, fontSize: 19, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  body(s, 0.7, 4.02, 8.8, 1.0,
-    "まず授業そのものではなく、\n[[「学力調査結果から見える子どもの姿」]]から考えたい。", 18, 1.35);
+  panel(s, MX, 3.95, BW, 1.0);
+  s.addText(
+    [
+      { text: "まず授業そのものではなく、", options: { color: INK, breakLine: true } },
+      { text: "「学力調査結果から見える子どもの姿」", options: { color: KEY } },
+      { text: "から考えたい。", options: { color: INK } },
+    ],
+    {
+      x: MX + 0.28, y: 3.95, w: BW - 0.56, h: 1.0,
+      fontFace: FONT, fontSize: 17, bold: true,
+      align: "left", valign: "middle", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
+    }
+  );
   s.addNotes("講評の柱は２点です。あらかじめ流れをお示しします。導入として、授業の前に学力調査から見える子どもの姿に触れます。");
 }
 
 /* ---------- スライド３　練馬区の小中一貫教育（区の目標） ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "１　練馬区の小中一貫教育");
-  body(s, 0.7, 0.95, 8.8, 1.0,
-    "練馬区教育委員会の目標\n　[[夢や希望をもち、困難を乗り越える力]]の育成", 20, 1.35);
-  body(s, 0.7, 2.15, 8.8, 1.0,
-    "その実現のための施策が\n　[[９年間を見通した教育]]（小学校６年間＋中学校３年間）", 19, 1.35);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 3.35, w: 8.6, h: 1.5, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  bar(s, "指導・講評", "１　練馬区の小中一貫教育");
+  body(s, MX, 1.60, BW, 0.9,
+    "練馬区教育委員会の目標\n　[[夢や希望をもち、困難を乗り越える力]]の育成", 20);
+  body(s, MX, 2.65, BW, 0.9,
+    "その実現のための施策が\n　[[９年間を見通した教育]]（小学校６年間＋中学校３年間）", 19);
+  panel(s, MX, 3.72, BW, 1.35);
   s.addText(
     [
-      { text: "期待される効果", options: { color: BLUE, breakLine: true } },
-      { text: "　授業改善による学力・体力の向上　／　豊かな人間性・社会性の育成", options: { color: INK, breakLine: true } },
-      { text: "　滑らかな接続による安定した学校生活の実現", options: { color: INK } },
+      { text: "期待される効果", options: { color: TEAL, fontSize: 16, breakLine: true } },
+      { text: "　授業改善による学力・体力の向上　／　豊かな人間性・社会性の育成", options: { color: INK, fontSize: 16, breakLine: true } },
+      { text: "　滑らかな接続による安定した学校生活の実現", options: { color: INK, fontSize: 16 } },
     ],
     {
-      x: 0.9, y: 3.5, w: 8.2, h: 1.2,
-      fontFace: FONT, fontSize: 17, bold: true,
-      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.3, isTextBox: true,
+      x: MX + 0.2, y: 3.86, w: BW - 0.4, h: 1.1,
+      fontFace: FONT, bold: true, align: "left", valign: "top",
+      margin: 0, lineSpacingMultiple: 1.3, isTextBox: true,
     }
   );
   s.addNotes(
@@ -203,28 +239,18 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド４　施設一体型の強み ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "１　練馬区の小中一貫教育");
+  bar(s, "指導・講評", "１　練馬区の小中一貫教育");
   s.addText("施設一体型だからこそ高まる教育効果", {
-    x: 0.7, y: 0.92, w: 8.8, h: 0.55,
-    color: BLUE, fontFace: FONT, fontSize: 24, bold: true,
+    x: MX, y: 1.58, w: BW, h: 0.5,
+    color: TEAL, fontFace: FONT, fontSize: 22, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  const items = ["教員間の\n連携強化", "異学年交流の\n活性化", "小中学校間の\n指導の統一化"];
-  items.forEach((t, i) => {
-    const x = 0.7 + i * 2.95;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 1.62, w: 2.65, h: 1.28, rectRadius: 0.08,
-      fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-    });
-    s.addText(t, {
-      x, y: 1.62, w: 2.65, h: 1.28,
-      color: INK, fontFace: FONT, fontSize: 18, bold: true,
-      align: "center", valign: "middle", margin: 0, lineSpacingMultiple: 1.2, isTextBox: true,
-    });
+  ["教員間の\n連携強化", "異学年交流の\n活性化", "小中学校間の\n指導の統一化"].forEach((t, i) => {
+    chip(s, MX + i * 3.0, 2.18, 2.7, 1.15, t, 17, false);
   });
-  body(s, 0.7, 3.14, 8.8, 2.0,
+  body(s, MX, 3.58, BW, 1.5,
     "みらい青空学園は、区内２校目の施設一体型として\n令和８年４月に開校した[[開校１年目]]の学校である。\n" +
-    "１年生から９年生までが同じ学び舎で学ぶ強みを生かし、\n[[「目指す１５歳の姿」]]を９年間で描いていくことに期待している。", 19, 1.4);
+    "１年生から９年生までが同じ学び舎で学ぶ強みを生かし、\n[[「目指す１５歳の姿」]]を９年間で描いていくことに期待している。", 17);
   s.addNotes(
     "施設一体型では、教員間の連携強化、異学年交流の活性化、指導の統一化により、さらに教育効果が高まることが期待されています。\n" +
     "本校は区内２校目の施設一体型として今年４月に開校しました。小竹小学校との校区別協議会も含め、「目指す１５歳の姿」を９年間で共有していただきたいと考えています。"
@@ -234,42 +260,31 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド５　学力調査から見える強み ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "学力調査結果から見える強み");
-  body(s, 0.7, 0.95, 4.9, 0.9,
-    "本校では、次の３点が\n着実に育っている。", 20, 1.3);
-  const strengths = ["学習規律", "学習習慣", "学びへの主体性"];
-  strengths.forEach((t, i) => {
-    const y = 2.05 + i * 0.92;
-    s.addShape(pres.ShapeType.roundRect, {
-      x: 0.7, y, w: 4.55, h: 0.74, rectRadius: 0.08,
-      fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-    });
-    s.addText(t, {
-      x: 0.7, y, w: 4.55, h: 0.74,
-      color: ORANGE, fontFace: FONT, fontSize: 24, bold: true,
-      align: "center", valign: "middle", margin: 0, isTextBox: true,
-    });
+  bar(s, "指導・講評", "学力調査結果から見える強み");
+  body(s, MX, 1.58, 4.6, 0.8, "本校では、次の３点が\n着実に育っている。", 18);
+  ["学習規律", "学習習慣", "学びへの主体性"].forEach((t, i) => {
+    chip(s, MX, 2.52 + i * 0.84, 4.4, 0.68, t, 21, false);
   });
   s.addShape(pres.ShapeType.rect, {
-    x: 5.75, y: 1.0, w: 3.6, h: 3.55,
-    fill: { color: "FAFCFE" }, line: { color: BLUE, width: 1.5, dashType: "dash" },
+    x: 5.55, y: 1.58, w: 3.93, h: 3.3,
+    fill: { color: "FBFEFD" }, line: { color: TEAL, width: 1.5, dashType: "dash" },
   });
   s.addText(
     [
-      { text: "学力調査・意識調査グラフ", options: { color: BLUE, fontSize: 17, breakLine: true } },
-      { text: "（貼付欄）", options: { color: BLUE, fontSize: 17, breakLine: true } },
+      { text: "学力調査・意識調査グラフ", options: { color: TEAL, fontSize: 16, breakLine: true } },
+      { text: "（貼付欄）", options: { color: TEAL, fontSize: 16, breakLine: true } },
       { text: " ", options: { fontSize: 10, breakLine: true } },
       { text: "全国学力・学習状況調査", options: { color: GRAY, fontSize: 12, breakLine: true } },
       { text: "児童・生徒質問紙調査　ほか", options: { color: GRAY, fontSize: 12 } },
     ],
     {
-      x: 5.9, y: 1.15, w: 3.3, h: 3.25,
+      x: 5.7, y: 1.73, w: 3.63, h: 3.0,
       fontFace: FONT, bold: true, align: "center", valign: "middle",
       margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
     }
   );
   s.addText("※ 本校の調査結果グラフを貼り付けてご使用ください。", {
-    x: 5.75, y: 4.62, w: 3.6, h: 0.32,
+    x: 5.55, y: 4.95, w: 3.93, h: 0.3,
     color: GRAY, fontFace: FONT, fontSize: 10, bold: true,
     align: "center", valign: "middle", margin: 0, isTextBox: true,
   });
@@ -283,31 +298,27 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド６　なぜその成果が現れているのか ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "学力調査結果から見える強み");
-  body(s, 0.7, 0.92, 8.8, 1.15,
-    "学力調査結果は「結果」である。\nでは、[[その結果を生み出した要因は何か]]。", 22, 1.35);
+  bar(s, "指導・講評", "学力調査結果から見える強み");
+  body(s, MX, 1.55, BW, 0.95,
+    "学力調査結果は「結果」である。\nでは、[[その結果を生み出した要因は何か]]。", 20);
   s.addText("本日の授業から、次の３つが見えてきた。", {
-    x: 0.7, y: 2.12, w: 8.8, h: 0.42,
-    color: GRAY, fontFace: FONT, fontSize: 16, bold: true,
+    x: MX, y: 2.50, w: BW, h: 0.38,
+    color: GRAY, fontFace: FONT, fontSize: 15, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  const three = ["自己肯定感", "対話・協働", "学習の自己調整"];
-  three.forEach((t, i) => {
-    const x = 0.7 + i * 2.95;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 2.72, w: 2.65, h: 1.72, rectRadius: 0.08,
-      fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-    });
-    badge(s, ["①", "②", "③"][i], x + 1.055, 2.95, 0.54);
+  ["自己肯定感", "対話・協働", "学習の自己調整"].forEach((t, i) => {
+    const x = MX + i * 3.0;
+    panel(s, x, 2.98, 2.7, 1.55);
+    badge(s, ["①", "②", "③"][i], x + 1.1, 3.16, 0.5);
     s.addText(t, {
-      x: x + 0.1, y: 3.62, w: 2.45, h: 0.6,
-      color: ORANGE, fontFace: FONT, fontSize: 19, bold: true,
+      x: x + 0.1, y: 3.76, w: 2.5, h: 0.55,
+      color: KEY, fontFace: FONT, fontSize: 18, bold: true,
       align: "center", valign: "middle", margin: 0, isTextBox: true,
     });
   });
   s.addText("この３つが、学力調査結果を支える土台になっている。", {
-    x: 0.7, y: 4.6, w: 8.8, h: 0.42,
-    color: INK, fontFace: FONT, fontSize: 16, bold: true,
+    x: MX, y: 4.66, w: BW, h: 0.38,
+    color: INK, fontFace: FONT, fontSize: 15, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addNotes(
@@ -319,29 +330,20 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド７　①自己肯定感（定義） ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  badge(s, "①", 0.7, 0.9, 0.6);
-  s.addText("今日の授業から見えたもの　自己肯定感", {
-    x: 1.45, y: 0.9, w: 8.1, h: 0.6,
-    color: BLUE, fontFace: FONT, fontSize: 24, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  body(s, 0.7, 1.78, 8.8, 1.1,
-    "これからの時代、学力向上の基盤となるのは\n　[[自己肯定感]]である。", 26, 1.4);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 3.1, w: 8.6, h: 1.85, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  bar(s, "２　５校時の授業について", "①　自己肯定感");
+  body(s, MX, 1.62, BW, 1.1,
+    "これからの時代、学力向上の基盤となるのは\n　[[自己肯定感]]である。", 24);
+  panel(s, MX, 2.95, BW, 1.9);
   s.addText(
     [
-      { text: "自己肯定感とは", options: { color: BLUE, fontSize: 18, breakLine: true } },
+      { text: "自己肯定感とは", options: { color: TEAL, fontSize: 17, breakLine: true } },
       { text: "「できる子になる」ことではなく、", options: { color: INK, fontSize: 22, breakLine: true } },
-      { text: "「成長できる自分を信じること」である。", options: { color: ORANGE, fontSize: 22 } },
+      { text: "「成長できる自分を信じること」である。", options: { color: KEY, fontSize: 22 } },
     ],
     {
-      x: 1.0, y: 3.28, w: 8.0, h: 1.5,
+      x: MX + 0.28, y: 3.12, w: BW - 0.56, h: 1.55,
       fontFace: FONT, bold: true, align: "left", valign: "top",
-      margin: 0, lineSpacingMultiple: 1.35, isTextBox: true,
+      margin: 0, lineSpacingMultiple: 1.3, isTextBox: true,
     }
   );
   s.addNotes(
@@ -353,13 +355,8 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド８　①自己肯定感を育む授業 ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  s.addText("① 自己肯定感を育む授業", {
-    x: 0.7, y: 0.78, w: 8.8, h: 0.45,
-    color: BLUE, fontFace: FONT, fontSize: 21, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  card(s, 0.35, 1.32, 2.9, 2.6, "田口　和磨　先生", "保健体育・９年ＡＢ組／水泳", [
+  bar(s, "２　５校時の授業について", "①　自己肯定感を育む授業");
+  card(s, 0.35, 1.55, 2.95, 2.62, "田口　和磨　先生", "保健体育・９年ＡＢ組／水泳", [
     { text: "泳力差の大きい集団に" },
     { text: "・段階的な課題設定", hi: true },
     { text: "・泳力別のコース編成", hi: true },
@@ -367,7 +364,7 @@ function body(slide, x, y, w, h, text, size, spacing) {
     { text: "確認の視点を３点示し、" },
     { text: "見る目を育てていた。" },
   ]);
-  card(s, 3.55, 1.32, 2.9, 2.6, "東海林　静江　先生", "道徳・特別支援学級Ｄ組／うそ", [
+  card(s, 3.53, 1.55, 2.95, 2.62, "東海林　静江　先生", "道徳・特別支援学級Ｄ組／うそ", [
     { text: "安心して自分の考えを" },
     { text: "表現できる環境", hi: true },
     { text: "・前時の考えを尊重" },
@@ -375,7 +372,7 @@ function body(slide, x, y, w, h, text, size, spacing) {
     { text: "答えは一つではないと" },
     { text: "保障されていた。" },
   ]);
-  card(s, 6.75, 1.32, 2.9, 2.6, "塚本　瑞穂　先生", "外国語・７年Ｂ組／Unit 4", [
+  card(s, 6.71, 1.55, 2.95, 2.62, "塚本　瑞穂　先生", "外国語・７年Ｂ組／Unit 4", [
     { text: "習熟度差の大きい学級で" },
     { text: "・発表前にペアで共有", hi: true },
     { text: "・全員に発話の機会", hi: true },
@@ -383,8 +380,8 @@ function body(slide, x, y, w, h, text, size, spacing) {
     { text: "参加できる場をつくって" },
     { text: "いた。" },
   ]);
-  body(s, 0.35, 4.18, 9.3, 1.0,
-    "子どもたちは「認められる」よりも、[[「自分で成長を実感する」]]経験を\n積み重ねていた。", 17, 1.3);
+  body(s, 0.35, 4.35, 9.3, 0.9,
+    "子どもたちは「認められる」よりも、[[「自分で成長を実感する」]]経験を\n積み重ねていた。", 16);
   s.addNotes(
     "田口先生は、泳力差の大きい集団に対して段階的な課題、泳力別のコース、バディでの確認活動を用意されていました。キックの確認の視点を３点示されたことで、子どもが自分の泳ぎを見る目をもてていました。\n" +
     "東海林先生は、安心して自分の考えを表現できる環境をつくられていました。前時の考えを大切にしつつ、意見が変わってもよいと保障されていた点が印象的でした。\n" +
@@ -396,24 +393,15 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド９　②対話・協働（土台） ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  badge(s, "②", 0.7, 0.9, 0.6);
-  s.addText("今日の授業から見えたもの　対話・協働", {
-    x: 1.45, y: 0.9, w: 8.1, h: 0.6,
-    color: BLUE, fontFace: FONT, fontSize: 24, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  body(s, 0.7, 1.75, 8.8, 1.0,
-    "本校の学力調査結果からは、\n　[[主体的な学びの土台]]が形成されていることが分かる。", 22, 1.4);
-  body(s, 0.7, 3.0, 8.8, 1.0,
-    "その背景にあるのは、日常的に行われている\n　[[「対話を通した学び」]]である。", 22, 1.4);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 4.2, w: 8.6, h: 0.9, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  bar(s, "２　５校時の授業について", "②　対話・協働");
+  body(s, MX, 1.58, BW, 0.95,
+    "本校の学力調査結果からは、\n　[[主体的な学びの土台]]が形成されていることが分かる。", 22);
+  body(s, MX, 2.75, BW, 0.95,
+    "その背景にあるのは、日常的に行われている\n　[[「対話を通した学び」]]である。", 22);
+  panel(s, MX, 3.95, BW, 0.9);
   s.addText("本日の３つの授業にも、対話が学びを深める場面が表れていた。", {
-    x: 0.95, y: 4.2, w: 8.1, h: 0.9,
-    color: INK, fontFace: FONT, fontSize: 17, bold: true,
+    x: MX + 0.28, y: 3.95, w: BW - 0.56, h: 0.9,
+    color: INK, fontFace: FONT, fontSize: 16, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addNotes(
@@ -425,13 +413,8 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド１０　②対話によって学びは深まる ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  s.addText("② 対話によって学びは深まる", {
-    x: 0.7, y: 0.78, w: 8.8, h: 0.45,
-    color: BLUE, fontFace: FONT, fontSize: 21, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  card(s, 0.35, 1.32, 2.9, 2.6, "保健体育", "田口　和磨　先生", [
+  bar(s, "２　５校時の授業について", "②　対話によって学びは深まる");
+  card(s, 0.35, 1.55, 2.95, 2.62, "保健体育", "田口　和磨　先生", [
     { text: "バディ同士で" },
     { text: "互いの泳ぎを見て", hi: true },
     { text: "改善点を考えていた。", hi: true },
@@ -439,14 +422,14 @@ function body(slide, x, y, w, h, text, size, spacing) {
     { text: "担い、全員に役割が" },
     { text: "あった。" },
   ]);
-  card(s, 3.55, 1.32, 2.9, 2.6, "道徳", "東海林　静江　先生", [
+  card(s, 3.53, 1.55, 2.95, 2.62, "道徳", "東海林　静江　先生", [
     { text: "「嘘」をテーマに、" },
     { text: "価値観の違いについて", hi: true },
     { text: "議論していた。", hi: true },
     { text: "発表より議論の時間を" },
     { text: "重視した構成だった。" },
   ]);
-  card(s, 6.75, 1.32, 2.9, 2.6, "外国語", "塚本　瑞穂　先生", [
+  card(s, 6.71, 1.55, 2.95, 2.62, "外国語", "塚本　瑞穂　先生", [
     { text: "ペアでのやり取りから" },
     { text: "全体の学びへつなぐ。", hi: true },
     { text: "音読も一人ではなく" },
@@ -454,8 +437,8 @@ function body(slide, x, y, w, h, text, size, spacing) {
     { text: "表現を確かなものに" },
     { text: "していた。" },
   ]);
-  body(s, 0.35, 4.18, 9.3, 1.0,
-    "教科は異なっても、共通していたのは\n[[「相手を通して自分を見つめる学び」]]であった。", 17, 1.3);
+  body(s, 0.35, 4.35, 9.3, 0.9,
+    "教科は異なっても、共通していたのは\n[[「相手を通して自分を見つめる学び」]]であった。", 16);
   s.addNotes(
     "保健体育では、バディで互いの泳ぎを見合い、改善点を考えていました。道徳では「嘘」をテーマに価値観の違いを議論していました。外国語では、ペアでのやり取りを全体の学びにつないでいました。\n" +
     "教科は異なりますが、共通していたのは「相手を通して自分を見つめる学び」です。これが対話・協働の本質だと考えます。"
@@ -465,24 +448,15 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド１１　③学習の自己調整 ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  badge(s, "③", 0.7, 0.9, 0.6);
-  s.addText("今日の授業から見えたもの　学習の自己調整", {
-    x: 1.45, y: 0.9, w: 8.1, h: 0.6,
-    color: BLUE, fontFace: FONT, fontSize: 24, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  body(s, 0.7, 1.7, 8.8, 1.35,
-    "これから求められる子どもは、\n　教えられたことを学ぶ子どもではなく、\n　[[自分で学び続ける子ども]]である。", 22, 1.4);
-  body(s, 0.7, 3.45, 8.8, 0.6,
-    "そのために必要なのが[[学習の自己調整]]である。", 22, 1.35);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 4.2, w: 8.6, h: 0.9, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  bar(s, "２　５校時の授業について", "③　学習の自己調整");
+  body(s, MX, 1.58, BW, 1.4,
+    "これから求められる子どもは、\n　教えられたことを学ぶ子どもではなく、\n　[[自分で学び続ける子ども]]である。", 21);
+  body(s, MX, 3.15, BW, 0.55,
+    "そのために必要なのが[[学習の自己調整]]である。", 21);
+  panel(s, MX, 3.95, BW, 0.9);
   s.addText("学習指導要領が示す「学びに向かう力」の中核をなす力である。", {
-    x: 0.95, y: 4.2, w: 8.1, h: 0.9,
-    color: INK, fontFace: FONT, fontSize: 17, bold: true,
+    x: MX + 0.28, y: 3.95, w: BW - 0.56, h: 0.9,
+    color: INK, fontFace: FONT, fontSize: 16, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addNotes(
@@ -494,47 +468,29 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド１２　③自己調整が行われていた授業 ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "２　５校時の授業について");
-  s.addText("③ 自己調整が行われていた授業", {
-    x: 0.7, y: 0.78, w: 8.8, h: 0.45,
-    color: BLUE, fontFace: FONT, fontSize: 21, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
-  });
-  const chips = ["本時の目標", "振り返り", "自己評価", "次時への見通し"];
-  chips.forEach((t, i) => {
-    const x = 0.35 + i * 2.4;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 1.3, w: 2.2, h: 0.6, rectRadius: 0.1,
-      fill: { color: ORANGE },
-    });
-    s.addText(t, {
-      x, y: 1.3, w: 2.2, h: 0.6,
-      color: "FFFFFF", fontFace: FONT, fontSize: 15, bold: true,
-      align: "center", valign: "middle", margin: 0, isTextBox: true,
-    });
+  bar(s, "２　５校時の授業について", "③　自己調整が行われていた授業");
+  ["本時の目標", "振り返り", "自己評価", "次時への見通し"].forEach((t, i) => {
+    chip(s, 0.35 + i * 2.4, 1.58, 2.2, 0.58, t, 15, true);
   });
   s.addText("本日の授業では、この４点が大切にされていた。", {
-    x: 0.35, y: 2.02, w: 9.3, h: 0.38,
+    x: 0.35, y: 2.26, w: 9.3, h: 0.35,
     color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  body(s, 0.35, 2.5, 9.3, 1.75,
+  body(s, 0.35, 2.70, 9.3, 1.3,
     "・田口　先生　　着替えの前に目標と流れを確認し、[[学習カードで要点を振り返る]]\n" +
     "・塚本　先生　　Today’s Goal と Plan を提示し、[[振り返りをワークシートに記入]]\n" +
-    "・東海林　先生　[[前時のワークシート]]で自分の考えを確かめてから議論へ", 16, 1.55);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.35, y: 4.32, w: 9.3, h: 0.86, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+    "・東海林　先生　[[前時のワークシート]]で自分の考えを確かめてから議論へ", 15, 1.5);
+  panel(s, 0.35, 4.15, 9.3, 0.85);
   s.addText(
     [
       { text: "教師が管理する学習から　", options: { color: INK } },
-      { text: "子どもが管理する学習へ", options: { color: ORANGE } },
+      { text: "子どもが管理する学習へ", options: { color: KEY } },
       { text: "　着実に転換が進んでいる。", options: { color: INK } },
     ],
     {
-      x: 0.55, y: 4.32, w: 8.9, h: 0.86,
-      fontFace: FONT, fontSize: 18, bold: true,
+      x: 0.63, y: 4.15, w: 8.74, h: 0.85,
+      fontFace: FONT, fontSize: 17, bold: true,
       align: "left", valign: "middle", margin: 0, isTextBox: true,
     }
   );
@@ -545,48 +501,35 @@ function body(slide, x, y, w, h, text, size, spacing) {
   );
 }
 
-/* ---------- スライド１３　今後の方向性 ---------- */
+/* ---------- スライド１３　今後に向けて ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "今後に向けて");
-  body(s, 0.7, 0.92, 8.8, 1.25,
-    "[[学力調査結果]]　と　[[今日の授業]]　をつなげて考えると、\n今後さらに伸ばしたいのは", 19, 1.35);
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 2.06, w: 8.6, h: 0.9, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  const y0 = bar(s, "今後に向けて");
+  body(s, MX, y0 + 0.03, BW, 0.85,
+    "[[学力調査結果]]　と　[[今日の授業]]　をつなげて考えると、\n今後さらに伸ばしたいのは", 18);
+  panel(s, MX, 1.92, BW, 0.85);
   s.addText("「学びを自分事として捉える子ども」である。", {
-    x: 0.9, y: 2.06, w: 8.2, h: 0.9,
-    color: ORANGE, fontFace: FONT, fontSize: 24, bold: true,
+    x: MX + 0.28, y: 1.92, w: BW - 0.56, h: 0.85,
+    color: KEY, fontFace: FONT, fontSize: 23, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addText("そのためには", {
-    x: 0.7, y: 3.12, w: 8.8, h: 0.38,
-    color: INK, fontFace: FONT, fontSize: 16, bold: true,
+    x: MX, y: 2.92, w: BW, h: 0.35,
+    color: GRAY, fontFace: FONT, fontSize: 15, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  const three = ["自己肯定感", "対話・協働", "学習の自己調整"];
-  three.forEach((t, i) => {
-    const x = 0.7 + i * 2.95;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 3.56, w: 2.65, h: 0.66, rectRadius: 0.08,
-      fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-    });
-    s.addText(t, {
-      x, y: 3.56, w: 2.65, h: 0.66,
-      color: ORANGE, fontFace: FONT, fontSize: 17, bold: true,
-      align: "center", valign: "middle", margin: 0, isTextBox: true,
-    });
+  ["自己肯定感", "対話・協働", "学習の自己調整"].forEach((t, i) => {
+    chip(s, MX + i * 3.0, 3.34, 2.7, 0.64, t, 16, false);
   });
   s.addText(
     [
       { text: "を　", options: { color: INK } },
-      { text: "９年間で系統的に", options: { color: ORANGE } },
+      { text: "９年間で系統的に", options: { color: KEY } },
       { text: "　育てていくことが重要である。", options: { color: INK } },
     ],
     {
-      x: 0.7, y: 4.42, w: 8.8, h: 0.6,
-      fontFace: FONT, fontSize: 19, bold: true,
+      x: MX, y: 4.20, w: BW, h: 0.55,
+      fontFace: FONT, fontSize: 18, bold: true,
       align: "left", valign: "middle", margin: 0, isTextBox: true,
     }
   );
@@ -599,51 +542,38 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド１４　まとめ ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "まとめ");
-  body(s, 0.7, 0.92, 8.8, 0.8,
-    "学力向上は、[[知識の積み上げだけ]]で実現するものではない。", 19, 1.3);
+  const y0 = bar(s, "まとめ");
+  body(s, MX, y0 + 0.03, BW, 0.5,
+    "学力向上は、[[知識の積み上げだけ]]で実現するものではない。", 18);
   s.addText("みらい青空学園では", {
-    x: 0.7, y: 1.66, w: 8.8, h: 0.38,
+    x: MX, y: 1.58, w: BW, h: 0.35,
     color: GRAY, fontFace: FONT, fontSize: 15, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  const three = ["自己肯定感", "対話・協働", "学習の自己調整"];
-  three.forEach((t, i) => {
-    const x = 0.7 + i * 2.95;
-    s.addShape(pres.ShapeType.roundRect, {
-      x, y: 2.08, w: 2.65, h: 0.7, rectRadius: 0.08,
-      fill: { color: ORANGE },
-    });
-    s.addText(t, {
-      x, y: 2.08, w: 2.65, h: 0.7,
-      color: "FFFFFF", fontFace: FONT, fontSize: 17, bold: true,
-      align: "center", valign: "middle", margin: 0, isTextBox: true,
-    });
+  ["自己肯定感", "対話・協働", "学習の自己調整"].forEach((t, i) => {
+    chip(s, MX + i * 3.0, 2.00, 2.7, 0.68, t, 17, true);
   });
   s.addText("が着実に育成されている。", {
-    x: 0.7, y: 2.9, w: 8.8, h: 0.4,
+    x: MX, y: 2.80, w: BW, h: 0.4,
     color: INK, fontFace: FONT, fontSize: 17, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  s.addShape(pres.ShapeType.roundRect, {
-    x: 0.7, y: 3.42, w: 8.6, h: 1.02, rectRadius: 0.08,
-    fill: { color: TINT }, line: { color: "C9E6F5", width: 1 },
-  });
+  panel(s, MX, 3.32, BW, 1.0);
   s.addText(
     [
       { text: "これこそが、", options: { color: INK, breakLine: true } },
-      { text: "施設一体型小中一貫教育校としての最大の強み", options: { color: ORANGE } },
+      { text: "施設一体型小中一貫教育校としての最大の強み", options: { color: KEY } },
       { text: "である。", options: { color: INK } },
     ],
     {
-      x: 0.9, y: 3.42, w: 8.2, h: 1.02,
-      fontFace: FONT, fontSize: 18, bold: true,
+      x: MX + 0.28, y: 3.32, w: BW - 0.56, h: 1.0,
+      fontFace: FONT, fontSize: 17, bold: true,
       align: "left", valign: "middle", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
     }
   );
   s.addText("今後も、９年間を見通した学びの充実に期待している。", {
-    x: 0.7, y: 4.6, w: 8.8, h: 0.5,
-    color: INK, fontFace: FONT, fontSize: 19, bold: true,
+    x: MX, y: 4.50, w: BW, h: 0.5,
+    color: INK, fontFace: FONT, fontSize: 18, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addNotes(
