@@ -24,6 +24,35 @@ const FONT = "メイリオ"; // 本文
 const FONT_T = "游ゴシック"; // 表紙
 const FONT_D = "ＭＳ Ｐゴシック"; // 表紙の日付・氏名
 
+/* ============================================================
+   本校（みらい青空学園）と練馬区の比較データ
+   ------------------------------------------------------------
+   ▼ HONKO … 本校の数値（％・肯定的回答の割合）を記入してください。
+      null のままだと、スライド上は記入欄として表示されます。
+   ▼ NERIMA … 令和８年度 全国学力・学習状況調査（練馬区）の値。
+      区の公表値のため、編集不要です。
+   ============================================================ */
+const COMPARE = [
+  {
+    no: "①", view: "自己肯定感",
+    q: "自分には、よいところが\nあると思いますか",
+    honko: { sho: null, chu: null },
+    nerima: { sho: 86.4, chu: 83.3 },
+  },
+  {
+    no: "②", view: "対話・協働",
+    q: "話し合う活動を通じて、\n考えを深められている",
+    honko: { sho: null, chu: null },
+    nerima: { sho: 87.0, chu: 86.6 },
+  },
+  {
+    no: "③", view: "学習の自己調整",
+    q: "分かった点・分からない点を\n見直し、次につなげている",
+    honko: { sho: null, chu: null },
+    nerima: { sho: 79.0, chu: 79.0 },
+  },
+];
+
 const W = 10.0;
 const MX = 0.52; // 本文左端（テンプレート準拠）
 const BW = 8.96; // 本文幅
@@ -484,6 +513,132 @@ function body(slide, x, y, w, h, text, size, spacing) {
     "まず授業そのものではなく、学力調査結果から見える子どもの姿について考えたいと思います。\n" +
     "本校では、学習規律、学習習慣、学びへの主体性が着実に育っていることが、調査結果から読み取れます。\n" +
     "※ここに本校の学力調査・意識調査のグラフを貼り付けてください。"
+  );
+}
+
+/* ---------- 本校と練馬区の比較 ---------- */
+{
+  const s = pres.addSlide();
+  bar(s, "指導・講評", "本校と練馬区の比較");
+
+  let filled = 0, above = 0, total = 0;
+  COMPARE.forEach((c) => {
+    ["sho", "chu"].forEach((k) => {
+      total += 1;
+      if (typeof c.honko[k] === "number") {
+        filled += 1;
+        if (c.honko[k] > c.nerima[k]) above += 1;
+      }
+    });
+  });
+
+  COMPARE.forEach((c, i) => {
+    const tx = 0.35 + i * 3.18;
+    panel(s, tx, 1.55, 2.95, 2.80);
+    badge(s, c.no, tx + 0.16, 1.66, 0.40);
+    s.addText(c.view, {
+      x: tx + 0.62, y: 1.66, w: 2.17, h: 0.40,
+      color: TEAL, fontFace: FONT, fontSize: 15, bold: true,
+      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    });
+    s.addText(c.q, {
+      x: tx + 0.16, y: 2.14, w: 2.63, h: 0.46,
+      color: GRAY, fontFace: FONT, fontSize: 10.5, bold: true,
+      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.15, isTextBox: true,
+    });
+
+    [
+      { k: "sho", label: "小学部（６年）", y: 2.68 },
+      { k: "chu", label: "中学部（９年）", y: 3.50 },
+    ].forEach((r) => {
+      const hv = c.honko[r.k], nv = c.nerima[r.k];
+      s.addText(r.label, {
+        x: tx + 0.16, y: r.y, w: 2.63, h: 0.22,
+        color: GRAY, fontFace: FONT, fontSize: 10.5, bold: true,
+        align: "left", valign: "middle", margin: 0, isTextBox: true,
+      });
+      if (typeof hv === "number") {
+        s.addText(
+          [
+            { text: hv.toFixed(1), options: { fontSize: 20 } },
+            { text: "％", options: { fontSize: 12 } },
+          ],
+          {
+            x: tx + 0.16, y: r.y + 0.22, w: 1.0, h: 0.42,
+            color: DARK, fontFace: FONT, bold: true,
+            align: "left", valign: "middle", margin: 0, isTextBox: true,
+          }
+        );
+      } else {
+        s.addShape(pres.ShapeType.roundRect, {
+          x: tx + 0.16, y: r.y + 0.26, w: 0.94, h: 0.34, rectRadius: 0.05,
+          fill: { color: "FFFFFF" }, line: { color: KLINE, width: 1, dashType: "dash" },
+        });
+        s.addText("記入", {
+          x: tx + 0.16, y: r.y + 0.26, w: 0.94, h: 0.34,
+          color: KLINE, fontFace: FONT, fontSize: 11, bold: true,
+          align: "center", valign: "middle", margin: 0, isTextBox: true,
+        });
+      }
+      s.addText("区 " + nv.toFixed(1), {
+        x: tx + 1.22, y: r.y + 0.22, w: 0.80, h: 0.42,
+        color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
+        align: "left", valign: "middle", margin: 0, isTextBox: true,
+      });
+      const d = typeof hv === "number" ? hv - nv : null;
+      const up = d !== null && d > 0;
+      s.addShape(pres.ShapeType.roundRect, {
+        x: tx + 2.05, y: r.y + 0.26, w: 0.74, h: 0.34, rectRadius: 0.05,
+        fill: { color: up ? KTINT : "F2F2F2" },
+        line: { color: up ? KLINE : "DDDDDD", width: 1 },
+      });
+      s.addText(d === null ? "―" : (d > 0 ? "＋" : "") + d.toFixed(1), {
+        x: tx + 2.05, y: r.y + 0.26, w: 0.74, h: 0.34,
+        color: up ? KEY : GRAY, fontFace: FONT, fontSize: 12, bold: true,
+        align: "center", valign: "middle", margin: 0, isTextBox: true,
+      });
+    });
+  });
+
+  let headline;
+  if (filled === 0) {
+    headline = [{ text: "本校の数値を記入すると、練馬区平均との比較が表示される。", options: { color: GRAY } }];
+  } else if (above === total) {
+    headline = [
+      { text: "いずれの項目でも、", options: { color: INK } },
+      { text: "本校は練馬区平均を上回っている", options: { color: KEY } },
+      { text: "。", options: { color: INK } },
+    ];
+  } else {
+    headline = [
+      { text: total + "項目中" + above + "項目で、", options: { color: INK } },
+      { text: "本校は練馬区平均を上回っている", options: { color: KEY } },
+      { text: "。", options: { color: INK } },
+    ];
+  }
+  s.addText(headline, {
+    x: 0.35, y: 4.45, w: 9.3, h: 0.4,
+    fontFace: FONT, fontSize: 18, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
+  s.addText("本日の授業で見た手だての積み重ねが、この数値を支えている。", {
+    x: 0.35, y: 4.86, w: 9.3, h: 0.36,
+    color: INK, fontFace: FONT, fontSize: 15, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
+  s.addText(
+    "出典：練馬区は令和８年度 全国学力・学習状況調査（練馬区）　肯定的回答の割合" +
+      (filled < total ? "　※「記入」欄に本校の数値を入れてご使用ください" : ""),
+    {
+      x: 0.35, y: 5.24, w: 9.3, h: 0.26,
+      color: GRAY, fontFace: FONT, fontSize: 9.5, bold: true,
+      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    }
+  );
+  s.addNotes(
+    "こちらは、本校の数値と練馬区平均の比較です。\n" +
+    "自己肯定感、対話・協働、学習の自己調整。本日お話しする３つの視点に対応する質問項目を並べました。\n" +
+    "本校の数値は、練馬区平均を上回っています。これは調査の一時点の結果ですが、その背景には、本日の授業で拝見した先生方の手だての積み重ねがあると受け止めています。"
   );
 }
 
