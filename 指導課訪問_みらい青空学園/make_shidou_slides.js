@@ -27,28 +27,28 @@ const FONT_D = "ＭＳ Ｐゴシック"; // 表紙の日付・氏名
 /* ============================================================
    本校（みらい青空学園）と練馬区の比較データ
    ------------------------------------------------------------
-   ▼ HONKO … 本校の数値（％・肯定的回答の割合）を記入してください。
-      null のままだと、スライド上は記入欄として表示されます。
-   ▼ NERIMA … 令和８年度 全国学力・学習状況調査（練馬区）の値。
-      区の公表値のため、編集不要です。
+   honko  … 本校（旧旭丘小 ６年27名／旧旭丘中 ３年47名）の肯定的回答の割合。
+             令和８年度 全国学力・学習状況調査　回答結果集計表より。
+   nerima … 同調査の練馬区の値。
+   ※ null にすると、スライド上は記入欄として表示されます。
    ============================================================ */
 const COMPARE = [
   {
     no: "①", view: "自己肯定感",
     q: "自分には、よいところが\nあると思いますか",
-    honko: { sho: null, chu: null },
+    honko: { sho: 85.2, chu: 91.5 },
     nerima: { sho: 86.4, chu: 83.3 },
   },
   {
     no: "②", view: "対話・協働",
     q: "話し合う活動を通じて、\n考えを深められている",
-    honko: { sho: null, chu: null },
+    honko: { sho: 92.5, chu: 97.9 },
     nerima: { sho: 87.0, chu: 86.6 },
   },
   {
     no: "③", view: "学習の自己調整",
     q: "分かった点・分からない点を\n見直し、次につなげている",
-    honko: { sho: null, chu: null },
+    honko: { sho: 92.6, chu: 89.4 },
     nerima: { sho: 79.0, chu: 79.0 },
   },
 ];
@@ -244,52 +244,69 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド３　アイスブレイク　クイズ出題 ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "０　アイスブレイク", "クイズ　小学校から中学校へ、答えはどう変わる？");
-  s.addText("令和８年度　全国学力・学習状況調査（練馬区・質問紙調査）から", {
-    x: 0.35, y: 1.52, w: 9.3, h: 0.32,
+  bar(s, "０　アイスブレイク", "クイズ　本校の子どもたちは、どう変わったか");
+
+  panel(s, 0.35, 1.50, 9.3, 1.00);
+  s.addText(
+    [
+      { text: "全国では、小学校から中学校にかけて下がる項目が多い。", options: { color: INK, breakLine: true } },
+      { text: "　例：「英語の勉強は好きですか」　全国　小 66.7％ → 中 51.2％　", options: { color: INK } },
+      { text: "−15.5ポイント", options: { color: KEY } },
+    ],
+    {
+      x: 0.63, y: 1.50, w: 8.74, h: 1.00,
+      fontFace: FONT, fontSize: 15, bold: true,
+      align: "left", valign: "middle", margin: 0, lineSpacingMultiple: 1.3, isTextBox: true,
+    }
+  );
+  s.addText("では、本校（旧旭丘小学校・旧旭丘中学校）はどうだったでしょうか。", {
+    x: 0.35, y: 2.60, w: 9.3, h: 0.32,
     color: GRAY, fontFace: FONT, fontSize: 13, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
+
   const quizzes = [
-    { y: 1.92, q: "「将来の夢や目標を持っていますか」", base: "小学校６年生は 80.3％。では、中学校３年生は？",
-      opts: ["① 約 80％", "② 約 73％", "③ 約 66％"] },
-    { y: 3.52, q: "「英語の勉強は好きですか」", base: "小学校６年生は 68.2％。では、中学校３年生は？",
-      opts: ["① 約 68％", "② 約 61％", "③ 約 55％"] },
+    { y: 2.98, q: "「英語の勉強は好きですか」", base: "本校の小学部６年は 51.8％。では、中学部９年は？",
+      opts: ["① 約 42％", "② 約 52％", "③ 約 62％"] },
+    { y: 4.10, q: "「自分には、よいところがあると思いますか」", base: "本校の小学部６年は 85.2％。では、中学部９年は？",
+      opts: ["① 約 85％", "② 約 88％", "③ 約 92％"] },
   ];
   quizzes.forEach((z, qi) => {
-    panel(s, 0.35, z.y, 9.3, 1.45);
+    panel(s, 0.35, z.y, 9.3, 1.00);
     s.addText(
       [
         { text: "Q" + (qi + 1) + "　", options: { color: TEAL } },
         { text: z.q, options: { color: INK } },
       ],
       {
-        x: 0.63, y: z.y + 0.12, w: 8.74, h: 0.36,
-        fontFace: FONT, fontSize: 18, bold: true,
+        x: 0.63, y: z.y + 0.06, w: 5.25, h: 0.32,
+        fontFace: FONT, fontSize: 15, bold: true,
         align: "left", valign: "middle", margin: 0, isTextBox: true,
       }
     );
     s.addText(z.base, {
-      x: 0.63, y: z.y + 0.52, w: 8.74, h: 0.3,
-      color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
+      x: 0.63, y: z.y + 0.38, w: 5.25, h: 0.28,
+      color: GRAY, fontFace: FONT, fontSize: 12, bold: true,
       align: "left", valign: "middle", margin: 0, isTextBox: true,
     });
     z.opts.forEach((o, i) => {
       s.addShape(pres.ShapeType.roundRect, {
-        x: 0.75 + i * 2.45, y: z.y + 0.90, w: 2.25, h: 0.42, rectRadius: 0.07,
+        x: 6.00 + i * 1.16, y: z.y + 0.30, w: 1.06, h: 0.40, rectRadius: 0.06,
         fill: { color: "FFFFFF" }, line: { color: TEAL, width: 1 },
       });
       s.addText(o, {
-        x: 0.75 + i * 2.45, y: z.y + 0.90, w: 2.25, h: 0.42,
-        color: INK, fontFace: FONT, fontSize: 15, bold: true,
+        x: 6.00 + i * 1.16, y: z.y + 0.30, w: 1.06, h: 0.40,
+        color: INK, fontFace: FONT, fontSize: 11, bold: true,
         align: "center", valign: "middle", margin: 0, isTextBox: true,
       });
     });
   });
   s.addNotes(
-    "はじめにクイズを２問。練馬区の令和８年度全国学力・学習状況調査、質問紙調査の結果からです。\n" +
-    "Q1「将来の夢や目標を持っていますか」。小学校６年生は80.3％が肯定的に答えています。では中学校３年生は何％でしょうか。①約80％、②約73％、③約66％。\n" +
-    "Q2「英語の勉強は好きですか」。小学校６年生は68.2％。中学校３年生は。①約68％、②約61％、③約55％。\n" +
+    "はじめにクイズを２問。令和８年度の全国学力・学習状況調査、質問紙調査の結果からです。\n" +
+    "全国では、小学校から中学校にかけて下がる項目が多くあります。たとえば「英語の勉強は好きですか」。全国では小学校66.7％から中学校51.2％へ、15.5ポイント下がります。\n" +
+    "では、本校ではどうだったでしょうか。\n" +
+    "Q1「英語の勉強は好きですか」。本校の小学部６年は51.8％。中学部９年は。①約42、②約52、③約62パーセント。\n" +
+    "Q2「自分には、よいところがあると思いますか」。本校の小学部６年は85.2％。中学部９年は。①約85、②約88、③約92パーセント。\n" +
     "（数秒、挙手や指名で予想を出してもらう）"
   );
 }
@@ -297,25 +314,31 @@ function body(slide, x, y, w, h, text, size, spacing) {
 /* ---------- スライド４　アイスブレイク　答え ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "０　アイスブレイク", "答え　小学校から中学校で、大きく下がる");
+  bar(s, "０　アイスブレイク", "答え　本校では、中学部で上がっている");
   const rows = [
-    { y: 1.60, q: "Q1　「将来の夢や目標を持っていますか」", a: "80.3", b: "65.5", d: "−14.8" },
-    { y: 3.20, q: "Q2　「英語の勉強は好きですか」", a: "68.2", b: "54.7", d: "−13.5" },
+    { y: 1.58, q: "Q1　「英語の勉強は好きですか」", a: "51.8", b: "61.7", d: "＋9.9", ref: "全国は 66.7 → 51.2　−15.5ポイント" },
+    { y: 3.18, q: "Q2　「自分には、よいところがあると思いますか」", a: "85.2", b: "91.5", d: "＋6.3", ref: "全国は 85.6 → 84.0　−1.6ポイント" },
   ];
   rows.forEach((r) => {
     panel(s, 0.35, r.y, 9.3, 1.45);
     s.addText(r.q, {
-      x: 0.63, y: r.y + 0.10, w: 8.74, h: 0.32,
+      x: 0.63, y: r.y + 0.08, w: 5.6, h: 0.30,
       color: INK, fontFace: FONT, fontSize: 16, bold: true,
       align: "left", valign: "middle", margin: 0, isTextBox: true,
     });
-    // 小学校６年生
-    s.addShape(pres.ShapeType.roundRect, {
-      x: 0.63, y: r.y + 0.56, w: 1.6, h: 0.48, rectRadius: 0.07, fill: { color: TEAL },
+    s.addText(r.ref, {
+      x: 6.20, y: r.y + 0.08, w: 3.17, h: 0.30,
+      color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
+      align: "right", valign: "middle", margin: 0, isTextBox: true,
     });
-    s.addText("小学校６年生", {
+    // 小学部
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 0.63, y: r.y + 0.56, w: 1.6, h: 0.48, rectRadius: 0.07,
+      fill: { color: TINT }, line: { color: LINE, width: 1 },
+    });
+    s.addText("小学部（６年）", {
       x: 0.63, y: r.y + 0.56, w: 1.6, h: 0.48,
-      color: "FFFFFF", fontFace: FONT, fontSize: 13, bold: true,
+      color: TEAL, fontFace: FONT, fontSize: 12, bold: true,
       align: "center", valign: "middle", margin: 0, isTextBox: true,
     });
     s.addText(
@@ -334,13 +357,13 @@ function body(slide, x, y, w, h, text, size, spacing) {
       color: GRAY, fontFace: FONT, fontSize: 26, bold: true,
       align: "center", valign: "middle", margin: 0, isTextBox: true,
     });
-    // 中学校３年生
+    // 中学部
     s.addShape(pres.ShapeType.roundRect, {
-      x: 4.46, y: r.y + 0.56, w: 1.6, h: 0.48, rectRadius: 0.07, fill: { color: KEY },
+      x: 4.46, y: r.y + 0.56, w: 1.6, h: 0.48, rectRadius: 0.07, fill: { color: TEAL },
     });
-    s.addText("中学校３年生", {
+    s.addText("中学部（９年）", {
       x: 4.46, y: r.y + 0.56, w: 1.6, h: 0.48,
-      color: "FFFFFF", fontFace: FONT, fontSize: 13, bold: true,
+      color: "FFFFFF", fontFace: FONT, fontSize: 12, bold: true,
       align: "center", valign: "middle", margin: 0, isTextBox: true,
     });
     s.addText(
@@ -354,7 +377,6 @@ function body(slide, x, y, w, h, text, size, spacing) {
         align: "left", valign: "middle", margin: 0, isTextBox: true,
       }
     );
-    // 落差
     s.addShape(pres.ShapeType.roundRect, {
       x: 7.75, y: r.y + 0.48, w: 1.62, h: 0.64, rectRadius: 0.07,
       fill: { color: KTINT }, line: { color: KLINE, width: 1 },
@@ -371,62 +393,82 @@ function body(slide, x, y, w, h, text, size, spacing) {
       }
     );
   });
-  s.addText("出典：令和８年度 全国学力・学習状況調査（練馬区）　質問紙調査　肯定的回答の割合", {
-    x: 0.35, y: 4.80, w: 9.3, h: 0.3,
-    color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
+  s.addText("全国も東京都も下がる項目で、本校は上がっている。", {
+    x: 0.35, y: 4.72, w: 9.3, h: 0.38,
+    color: INK, fontFace: FONT, fontSize: 18, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
+  s.addText("出典：令和８年度 全国学力・学習状況調査　回答結果集計表　肯定的回答の割合　本校 小学部27名・中学部47名", {
+    x: 0.35, y: 5.14, w: 9.3, h: 0.26,
+    color: GRAY, fontFace: FONT, fontSize: 9.5, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
   s.addNotes(
-    "答えは、Q1が③の65.5％、Q2が③の54.7％です。\n" +
-    "小学校から中学校へ、夢や目標をもつ子どもは14.8ポイント、英語が好きな子どもは13.5ポイント減っています。\n" +
-    "同じ子どもが、３年の間にこれだけ変わる。これがいわゆる中１ギャップと呼ばれる段差です。"
+    "答えは、いずれも③です。\n" +
+    "「英語の勉強は好きですか」は、51.8％から61.7％へ、9.9ポイント上がっています。全国は15.5ポイント下がる項目です。小学部では全国を下回っていたものが、中学部では全国を10ポイント以上、上回りました。\n" +
+    "「自分には、よいところがある」は、85.2％から91.5％へ、6.3ポイント上がっています。全国は1.6ポイント下がります。\n" +
+    "全国も東京都も下がる項目で、本校は上がっている。これが本日の出発点です。"
   );
 }
 
-/* ---------- スライド５　アイスブレイク　ギャップは必然ではない ---------- */
+/* ---------- スライド５　アイスブレイク　小中一貫教育校の強み ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "０　アイスブレイク", "この段差は、必然ではない");
-  body(s, MX, 1.58, BW, 0.85,
-    "小学校から中学校へ。多くの項目で肯定的な回答は下がる。\nしかし、[[下がらない項目]]もある。", 18);
+  bar(s, "０　アイスブレイク", "これが、小中一貫教育校の強みである");
+  s.addText("上がっているのは、この２項目だけではない。", {
+    x: 0.35, y: 1.50, w: 9.3, h: 0.34,
+    color: INK, fontFace: FONT, fontSize: 16, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
   [
-    { x: 0.35, q: "学校に行くのは楽しい", a: "88.9", b: "87.2" },
-    { x: 5.10, q: "自分と違う意見について\n考えるのは楽しい", a: "80.6", b: "79.8" },
-  ].forEach((t) => {
-    panel(s, t.x, 2.60, 4.55, 1.55);
+    { q: "友達や周りの人の考えを\n大切にして、協力しながら\n課題の解決に取り組んでいる", a: "85.1", b: "100.0", d: "＋14.9" },
+    { q: "話し合う活動を通じて、\n自分の考えを深めたり、\n新たな考え方に気付ける", a: "92.5", b: "97.9", d: "＋5.4" },
+    { q: "自分と違う意見について\n考えるのは楽しい", a: "81.4", b: "87.2", d: "＋5.8" },
+  ].forEach((t, i) => {
+    const tx = 0.35 + i * 3.18;
+    panel(s, tx, 1.92, 2.95, 2.30);
     s.addText(t.q, {
-      x: t.x + 0.22, y: 2.72, w: 4.11, h: 0.55,
-      color: INK, fontFace: FONT, fontSize: 15, bold: true,
+      x: tx + 0.18, y: 2.04, w: 2.59, h: 0.72,
+      color: INK, fontFace: FONT, fontSize: 12, bold: true,
       align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.15, isTextBox: true,
     });
     s.addText(
       [
-        { text: "小 ", options: { color: TEAL, fontSize: 14 } },
-        { text: t.a, options: { color: DARK, fontSize: 21 } },
-        { text: "％", options: { color: DARK, fontSize: 13 } },
-        { text: "　→　", options: { color: GRAY, fontSize: 16 } },
-        { text: "中 ", options: { color: KEY, fontSize: 14 } },
-        { text: t.b, options: { color: DARK, fontSize: 21 } },
-        { text: "％", options: { color: DARK, fontSize: 13 } },
+        { text: "小 ", options: { color: TEAL, fontSize: 11 } },
+        { text: t.a, options: { color: DARK, fontSize: 17 } },
+        { text: " → ", options: { color: GRAY, fontSize: 13 } },
+        { text: "中 ", options: { color: TEAL, fontSize: 11 } },
+        { text: t.b, options: { color: DARK, fontSize: 17 } },
       ],
       {
-        x: t.x + 0.22, y: 3.34, w: 4.11, h: 0.45,
+        x: tx + 0.18, y: 2.92, w: 2.59, h: 0.44,
         fontFace: FONT, bold: true,
         align: "left", valign: "middle", margin: 0, isTextBox: true,
       }
     );
-    s.addText("小・中とも東京都・全国を上回る", {
-      x: t.x + 0.22, y: 3.80, w: 4.11, h: 0.26,
-      color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
-      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    s.addShape(pres.ShapeType.roundRect, {
+      x: tx + 0.18, y: 3.46, w: 1.58, h: 0.44, rectRadius: 0.06,
+      fill: { color: KTINT }, line: { color: KLINE, width: 1 },
+    });
+    s.addText(t.d + " ポイント", {
+      x: tx + 0.18, y: 3.46, w: 1.58, h: 0.44,
+      color: KEY, fontFace: FONT, fontSize: 11, bold: true,
+      align: "center", valign: "middle", margin: 0, isTextBox: true,
     });
   });
-  body(s, MX, 4.32, BW, 0.6,
-    "段差をなだらかにするのが、[[９年間を見通した教育]]である。", 19);
+  body(s, 0.35, 4.40, 9.3, 0.6,
+    "９年間を見通した教育の成果が、[[数値に表れている]]。", 19);
+  s.addText("出典：令和８年度 全国学力・学習状況調査　回答結果集計表　肯定的回答の割合", {
+    x: 0.35, y: 5.14, w: 9.3, h: 0.26,
+    color: GRAY, fontFace: FONT, fontSize: 9.5, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
   s.addNotes(
-    "ただし、この段差は必然ではありません。\n" +
-    "練馬区では「学校に行くのは楽しい」が小88.9％、中87.2％。「自分と違う意見について考えるのは楽しい」が小80.6％、中79.8％。いずれも小・中ともに東京都・全国を上回り、落差もわずかです。\n" +
-    "つまり、つなぎ方次第で段差はなだらかにできる。その仕組みが、９年間を見通した教育、すなわち小中一貫教育です。ここから本題に入ります。"
+    "上がっているのは、この２項目だけではありません。\n" +
+    "「友達や周りの人の考えを大切にして、協力しながら課題の解決に取り組んでいますか」は、85.1％から100％へ。中学部は全員が肯定的に答えています。\n" +
+    "「話し合う活動を通じて、自分の考えを深めたり、新たな考え方に気付いたりすることができていますか」は、92.5％から97.9％へ。\n" +
+    "「自分と違う意見について考えるのは楽しい」は、81.4％から87.2％へ。\n" +
+    "９年間を見通した教育の成果が、数値に表れています。ここから本題に入ります。"
   );
 }
 
