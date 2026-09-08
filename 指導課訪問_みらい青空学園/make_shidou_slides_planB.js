@@ -875,38 +875,44 @@ LESSONS.forEach((L) => {
   );
 }
 
-/* ---------- スライド１２　今後に向けて　手だてを確かめ続ける ---------- */
+/* ---------- 今後に向けて　その言葉で、互いの授業を見合う ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "③　今後に向けて", "教師も、自らの授業を調整する");
-  s.addText("田口先生の指導案「授業観察の視点」には、こう書かれていた。", {
-    x: MX, y: 1.52, w: BW, h: 0.32,
-    color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  bar(s, "③　今後に向けて", "その言葉で、互いの授業を見合う");
+  body(s, MX, 1.52, BW, 0.8,
+    "本日の３つの授業は、保健体育の９年、道徳のＤ組、外国語の７年。\n教科も学年も違うのに、[[同じ３つの視点]]で語ることができた。", 17);
+  s.addShape(pres.ShapeType.roundRect, {
+    x: MX, y: 2.36, w: BW, h: 0.78, rectRadius: 0.07,
+    fill: { color: KTINT }, line: { color: KLINE, width: 1.5 },
   });
-  panel(s, MX, 1.92, BW, 0.80);
-  s.addText("「指導に当たっての手立ては有効であったか」", {
-    x: MX + 0.28, y: 1.92, w: BW - 0.56, h: 0.80,
+  s.addText("だから、教科を越えて見合える。", {
+    x: MX, y: 2.36, w: BW, h: 0.78,
     color: KEY, fontFace: FONT, fontSize: 22, bold: true,
-    align: "left", valign: "middle", margin: 0, isTextBox: true,
+    align: "center", valign: "middle", margin: 0, isTextBox: true,
   });
-  body(s, MX, 2.92, BW, 0.5, "子どもが学習を調整するように、教師も授業を調整する。", 17);
-  ["手だてを決める", "授業で試す", "子どもの姿を見る", "次の授業に生かす"].forEach((t, i) => {
-    chip(s, 0.35 + i * 2.4, 3.48, 2.2, 0.58, t, 13, false);
-    if (i < 3) {
-      s.addText("→", {
-        x: 0.35 + i * 2.4 + 2.2, y: 3.48, w: 0.2, h: 0.58,
-        color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
-        align: "center", valign: "middle", margin: 0, isTextBox: true,
-      });
+  panel(s, MX, 3.28, BW, 1.32);
+  s.addText(
+    [
+      { text: "施設一体型だからこそできること", options: { color: TEAL, fontSize: 14, breakLine: true } },
+      { text: "　・小学部の教員が中学部を、中学部の教員が小学部を見る", options: { color: INK, fontSize: 14, breakLine: true } },
+      { text: "　・９年後の子どもの姿と、９年前の子どもの姿を、同じ校舎で見られる", options: { color: INK, fontSize: 14, breakLine: true } },
+      { text: "　・見る観点は、Ⅰ見通し／Ⅱ違いに応じる／Ⅲ対話　の３つでよい", options: { color: INK, fontSize: 14 } },
+    ],
+    {
+      x: MX + 0.28, y: 3.40, w: BW - 0.56, h: 1.12,
+      fontFace: FONT, bold: true, align: "left", valign: "top",
+      margin: 0, lineSpacingMultiple: 1.3, isTextBox: true,
     }
-  });
-  body(s, MX, 4.32, BW, 0.9,
-    "子どもの自己調整と、教師の授業改善。\nこの[[往還]]が、９年間の学びを支えていく。", 17);
+  );
+  body(s, MX, 4.74, BW, 0.6,
+    "学校経営計画の[[「乗り入れ授業」「相互の実践に生かす」]]を、この３つで動かしたい。", 16);
   s.addNotes(
-    "もう一点。田口先生の指導案の「授業観察の視点」に、こう書かれていました。「指導に当たっての手立ては有効であったか」。\n" +
-    "子どもが学習を調整するように、教師も授業を調整する。手だてを決め、授業で試し、子どもの姿を見て、次の授業に生かす。\n" +
-    "子どもの自己調整と、教師の授業改善。この往還が、９年間の学びを支えていきます。"
+    "もう一点、今後に向けてです。\n" +
+    "本日の３つの授業は、保健体育の９年、道徳のＤ組、外国語の７年。教科も学年も違います。それでも、同じ３つの視点で語ることができました。\n" +
+    "だから、教科を越えて見合えます。ここが施設一体型のいちばんの強みだと考えます。\n" +
+    "小学部の教員が中学部を、中学部の教員が小学部を見る。９年後の子どもの姿と、９年前の子どもの姿を、同じ校舎で見られる学校です。見る観点は、見通し、違いに応じる、対話。この３つで足ります。\n" +
+    "学校経営計画に掲げられた「乗り入れ授業」「相互の実践に生かす」を、この３つの観点で動かしていただきたいと思います。\n" +
+    "子どもが学習を調整するように、教師も授業を調整する。その具体が、互いに見合うことだと考えます。"
   );
 }
 
