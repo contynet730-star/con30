@@ -710,6 +710,126 @@ LESSONS.forEach((L) => {
   );
 }
 
+/* ---------- スライド１１　手だては、子どもに何を育てるか ---------- */
+{
+  const s = pres.addSlide();
+  bar(s, "②　３人の授業から", "この手だては、子どもに何を育てるか");
+  ["Ⅰ　見通し", "Ⅱ　違いに応じる", "Ⅲ　対話"].forEach((t, i) => {
+    chip(s, 0.35 + i * 3.18, 1.48, 2.95, 0.54, t, 15, true);
+  });
+  s.addText("↓", {
+    x: 0.35, y: 2.06, w: 9.3, h: 0.34,
+    color: GRAY, fontFace: FONT, fontSize: 18, bold: true,
+    align: "center", valign: "middle", margin: 0, isTextBox: true,
+  });
+  panel(s, 0.35, 2.44, 4.55, 1.98);
+  s.addText("自己肯定感", {
+    x: 0.57, y: 2.56, w: 4.11, h: 0.36,
+    color: TEAL, fontFace: FONT, fontSize: 17, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
+  s.addText(
+    [
+      { text: "「できる子になる」ことではなく", options: { color: INK, breakLine: true } },
+      { text: "「成長できる自分を信じること」", options: { color: KEY, breakLine: true } },
+      { text: " ", options: { color: INK, fontSize: 8, breakLine: true } },
+      { text: "自分の段階で挑戦でき、考えが変わってよいと", options: { color: INK, breakLine: true } },
+      { text: "保障されることで育つ。", options: { color: INK } },
+    ],
+    {
+      x: 0.57, y: 2.96, w: 4.11, h: 1.34,
+      fontFace: FONT, fontSize: 13, bold: true,
+      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
+    }
+  );
+  panel(s, 5.10, 2.44, 4.55, 1.98);
+  s.addText("学習の自己調整", {
+    x: 5.32, y: 2.56, w: 4.11, h: 0.36,
+    color: TEAL, fontFace: FONT, fontSize: 17, bold: true,
+    align: "left", valign: "middle", margin: 0, isTextBox: true,
+  });
+  s.addText(
+    [
+      { text: "学習指導要領が示す", options: { color: INK, breakLine: true } },
+      { text: "「学びに向かう力」の中核をなす力", options: { color: KEY, breakLine: true } },
+      { text: " ", options: { color: INK, fontSize: 8, breakLine: true } },
+      { text: "見通しをもち、振り返り、次につなげる", options: { color: INK, breakLine: true } },
+      { text: "経験の積み重ねで育つ。", options: { color: INK } },
+    ],
+    {
+      x: 5.32, y: 2.96, w: 4.11, h: 1.34,
+      fontFace: FONT, fontSize: 13, bold: true,
+      align: "left", valign: "top", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
+    }
+  );
+  body(s, 0.35, 4.60, 9.3, 0.5,
+    "本日の授業には、この二つが育つ場面があった。", 17);
+  s.addNotes(
+    "３つの手だては、子どもに何を育てるのでしょうか。二つあると考えます。\n" +
+    "一つは自己肯定感です。「できる子になる」ことではなく、「成長できる自分を信じること」。自分の段階で挑戦でき、考えが変わってもよいと保障されることで育ちます。\n" +
+    "もう一つが、学習の自己調整です。学習指導要領が示す「学びに向かう力」の中核をなす力です。見通しをもち、振り返り、次につなげる経験の積み重ねで育ちます。\n" +
+    "本日の授業には、この二つが育つ場面がありました。"
+  );
+}
+
+/* ---------- スライド１２　学習の自己調整が育っていた場面 ---------- */
+{
+  const s = pres.addSlide();
+  bar(s, "②　３人の授業から", "学習の自己調整が育っていた場面");
+  panel(s, 0.35, 1.48, 9.3, 0.86);
+  s.addText(
+    [
+      { text: "「学びに向かう力」を支える「主体的に学習に取り組む態度」は、", options: { color: INK, breakLine: true } },
+      { text: "　粘り強く取り組む側面　と　", options: { color: INK } },
+      { text: "自らの学習を調整しようとする側面", options: { color: KEY } },
+      { text: "　で捉える。", options: { color: INK } },
+    ],
+    {
+      x: 0.63, y: 1.48, w: 8.74, h: 0.86,
+      fontFace: FONT, fontSize: 14, bold: true,
+      align: "left", valign: "middle", margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
+    }
+  );
+  [
+    { who: "田口　先生", a: "着替えの前に", b: "本時の目標と流れを確認", c: "学習カードで要点を振り返る" },
+    { who: "塚本　先生", a: "授業のはじめに", b: "Today’s Goal と Plan を提示", c: "振り返りをワークシートに記入" },
+    { who: "東海林　先生", a: "議論に入る前に", b: "前時のワークシートで自分の考えを確認", c: "本時の考えを書き残す" },
+  ].forEach((r, i) => {
+    const y = 2.52 + i * 0.72;
+    s.addShape(pres.ShapeType.roundRect, {
+      x: 0.35, y, w: 1.55, h: 0.62, rectRadius: 0.05, fill: { color: TEAL },
+    });
+    s.addText(r.who, {
+      x: 0.35, y, w: 1.55, h: 0.62,
+      color: "FFFFFF", fontFace: FONT, fontSize: 12, bold: true,
+      align: "center", valign: "middle", margin: 0, isTextBox: true,
+    });
+    panel(s, 1.98, y, 7.67, 0.62);
+    s.addText(
+      [
+        { text: r.a + "　", options: { color: GRAY, fontSize: 11 } },
+        { text: r.b, options: { color: INK, fontSize: 13 } },
+        { text: "　→　", options: { color: GRAY, fontSize: 12 } },
+        { text: r.c, options: { color: KEY, fontSize: 13 } },
+      ],
+      {
+        x: 2.18, y, w: 7.27, h: 0.62,
+        fontFace: FONT, bold: true,
+        align: "left", valign: "middle", margin: 0, isTextBox: true,
+      }
+    );
+  });
+  body(s, 0.35, 4.76, 9.3, 0.5,
+    "教師が管理する学習から、[[子どもが管理する学習]]へ。着実に転換が進んでいる。", 17);
+  s.addNotes(
+    "とくに学習の自己調整について申し上げます。「学びに向かう力」を支える「主体的に学習に取り組む態度」は、粘り強く取り組む側面と、自らの学習を調整しようとする側面の二つで捉えます。\n" +
+    "田口先生は、着替えの前に本時の目標と流れを確認され、学習カードで要点を振り返らせていました。\n" +
+    "塚本先生は、授業のはじめに Today’s Goal と Plan を示し、振り返りをワークシートに記入させていました。\n" +
+    "東海林先生は、議論に入る前に前時のワークシートで自分の考えを確かめさせ、本時の考えを書き残させていました。\n" +
+    "いずれも、目標と振り返りが一対で置かれています。教師が管理する学習から、子どもが管理する学習へ。着実に転換が進んでいます。"
+  );
+}
+
 /* ---------- スライド１１　今後に向けて　９年間で系統化する ---------- */
 {
   const s = pres.addSlide();
@@ -744,7 +864,7 @@ LESSONS.forEach((L) => {
 /* ---------- スライド１２　今後に向けて　手だてを確かめ続ける ---------- */
 {
   const s = pres.addSlide();
-  bar(s, "③　今後に向けて", "手だての有効性を、確かめ続ける");
+  bar(s, "③　今後に向けて", "教師も、自らの授業を調整する");
   s.addText("田口先生の指導案「授業観察の視点」には、こう書かれていた。", {
     x: MX, y: 1.52, w: BW, h: 0.32,
     color: GRAY, fontFace: FONT, fontSize: 14, bold: true,
@@ -756,7 +876,7 @@ LESSONS.forEach((L) => {
     color: KEY, fontFace: FONT, fontSize: 22, bold: true,
     align: "left", valign: "middle", margin: 0, isTextBox: true,
   });
-  body(s, MX, 2.92, BW, 0.5, "この問いを、授業のあとに必ず置く。", 17);
+  body(s, MX, 2.92, BW, 0.5, "子どもが学習を調整するように、教師も授業を調整する。", 17);
   ["手だてを決める", "授業で試す", "子どもの姿を見る", "次の授業に生かす"].forEach((t, i) => {
     chip(s, 0.35 + i * 2.4, 3.48, 2.2, 0.58, t, 13, false);
     if (i < 3) {
@@ -768,11 +888,11 @@ LESSONS.forEach((L) => {
     }
   });
   body(s, MX, 4.32, BW, 0.9,
-    "教師が管理する学習から、[[子どもが管理する学習]]へ。\nその転換を支えるのが、この振り返りである。", 17);
+    "子どもの自己調整と、教師の授業改善。\nこの[[往還]]が、９年間の学びを支えていく。", 17);
   s.addNotes(
     "もう一点。田口先生の指導案の「授業観察の視点」に、こう書かれていました。「指導に当たっての手立ては有効であったか」。\n" +
-    "この問いを、授業のあとに必ず置いていただきたい。手だてを決め、授業で試し、子どもの姿を見て、次の授業に生かす。\n" +
-    "教師が管理する学習から、子どもが管理する学習へ。その転換を支えるのが、この振り返りです。"
+    "子どもが学習を調整するように、教師も授業を調整する。手だてを決め、授業で試し、子どもの姿を見て、次の授業に生かす。\n" +
+    "子どもの自己調整と、教師の授業改善。この往還が、９年間の学びを支えていきます。"
   );
 }
 
@@ -792,16 +912,24 @@ LESSONS.forEach((L) => {
       align: "left", valign: "middle", margin: 0, isTextBox: true,
     }
   );
-  body(s, MX, 2.45, BW, 0.9,
-    "本日の３つの授業は、いずれも一人一人の差が大きい集団だった。\n３人とも、その差を[[学びの出発点]]にしていた。", 17);
+  body(s, MX, 2.40, BW, 0.5,
+    "３人とも、一人一人の差を[[学びの出発点]]にしていた。", 17);
   ["Ⅰ　見通し", "Ⅱ　違いに応じる", "Ⅲ　対話"].forEach((t, i) => {
-    chip(s, MX + i * 3.0, 3.52, 2.7, 0.62, t, 15, true);
+    chip(s, MX + i * 3.0, 2.96, 2.7, 0.56, t, 14, true);
   });
-  body(s, MX, 4.40, BW, 0.9,
-    "この３つを９年間で積み上げることが、本校の最大の強みになる。\n９年間を見通した学びの充実に期待している。", 17);
+  s.addText("↓　その先に育つのが", {
+    x: MX, y: 3.58, w: BW, h: 0.30,
+    color: GRAY, fontFace: FONT, fontSize: 12, bold: true,
+    align: "center", valign: "middle", margin: 0, isTextBox: true,
+  });
+  ["自己肯定感", "学習の自己調整"].forEach((t, i) => {
+    chip(s, MX + 0.9 + i * 3.7, 3.94, 3.4, 0.56, t, 15, false);
+  });
+  body(s, MX, 4.68, BW, 0.5,
+    "この積み重ねが、９年間を見通した学びの充実につながる。", 17);
   s.addNotes(
-    "まとめます。本日の３つの授業は、いずれも一人一人の差が大きい集団でした。そして３人とも、その差を学びの出発点にされていました。\n" +
-    "見通し、違いに応じること、対話。この３つを９年間で積み上げることが、施設一体型小中一貫教育校としての本校の最大の強みになります。\n" +
+    "まとめます。３人とも、一人一人の差を学びの出発点にされていました。\n" +
+    "見通し、違いに応じること、対話。その先に育つのが、自己肯定感と、学習の自己調整です。この積み重ねが、９年間を見通した学びの充実につながります。\n" +
     "「違い」を生かす授業が、９年間の学びをつなぐ。９年間を見通した学びの充実に期待しております。本日は誠にありがとうございました。"
   );
 }
