@@ -2,6 +2,8 @@
 // 配色・書体は指定テンプレート（テーマ「黄緑」）に準拠
 // 生成: node make_shidou_slides.js  →  指導課訪問_５校時指導助言資料_みらい青空学園.pptx
 const PptxGenJS = require("pptxgenjs");
+const fs = require("fs");
+const path = require("path");
 
 const pres = new PptxGenJS();
 pres.layout = "LAYOUT_16x9"; // 10.0 x 5.625 inch（テンプレートと同一）
@@ -51,6 +53,20 @@ const COMPARE = [
     honko: { sho: 92.6, chu: 89.4 },
     nerima: { sho: 79.0, chu: 79.0 },
   },
+];
+
+/* ============================================================
+   当日の授業写真
+   ------------------------------------------------------------
+   file に画像ファイル名（この JS と同じフォルダに置く）を書くと、
+   スライド11に自動で埋め込まれます（枠に合わせて自動トリミング）。
+   null のままだと「写真を貼付」の枠が表示されます。
+   例： file: "taguchi.jpg"
+   ============================================================ */
+const PHOTOS = [
+  { file: null, name: "田口　和磨　先生", sub: "保健体育・９年ＡＢ組／水泳" },
+  { file: null, name: "東海林　静江　先生", sub: "道徳・特別支援学級Ｄ組／うそ" },
+  { file: null, name: "塚本　瑞穂　先生", sub: "外国語・７年Ｂ組／Unit 4" },
 ];
 
 const W = 10.0;
@@ -713,6 +729,68 @@ function body(slide, x, y, w, h, text, size, spacing) {
   s.addNotes(
     "調査結果はあくまで「結果」です。大切なのは、その結果を生み出している要因です。\n" +
     "本日の３つの授業から、自己肯定感、対話・協働、学習の自己調整という３つが見えてきました。順にお話しします。"
+  );
+}
+
+/* ---------- 本日の授業から（写真） ---------- */
+{
+  const s = pres.addSlide();
+  bar(s, "２　５校時の授業について", "本日の授業から");
+
+  let missing = 0;
+  PHOTOS.forEach((ph, i) => {
+    const x = 0.35 + i * 3.18;
+    const y = 1.58, w = 2.95, h = 2.18;
+    const abs = ph.file ? path.join(__dirname, ph.file) : null;
+    if (abs && fs.existsSync(abs)) {
+      s.addImage({ path: abs, x, y, w, h, sizing: { type: "cover", w, h } });
+      s.addShape(pres.ShapeType.rect, {
+        x, y, w, h, fill: { type: "none" }, line: { color: LINE, width: 1 },
+      });
+    } else {
+      missing += 1;
+      s.addShape(pres.ShapeType.rect, {
+        x, y, w, h,
+        fill: { color: "FBFEFD" }, line: { color: TEAL, width: 1.5, dashType: "dash" },
+      });
+      s.addText(
+        [
+          { text: "授業写真", options: { color: TEAL, fontSize: 15, breakLine: true } },
+          { text: "（貼付欄）", options: { color: TEAL, fontSize: 15 } },
+        ],
+        {
+          x, y, w, h,
+          fontFace: FONT, bold: true, align: "center", valign: "middle",
+          margin: 0, lineSpacingMultiple: 1.25, isTextBox: true,
+        }
+      );
+    }
+    s.addText(ph.name, {
+      x, y: y + h + 0.08, w, h: 0.30,
+      color: TEAL, fontFace: FONT, fontSize: 15, bold: true,
+      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    });
+    s.addText(ph.sub, {
+      x, y: y + h + 0.38, w, h: 0.26,
+      color: GRAY, fontFace: FONT, fontSize: 11, bold: true,
+      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    });
+  });
+
+  body(s, 0.35, 4.60, 9.3, 0.6,
+    "３つの教室に共通していたのは、[[子どもが動き、考え、伝える時間]]の多さである。", 17);
+  if (missing > 0) {
+    s.addText("※ 点線の枠に当日の授業写真を貼り付けてご使用ください。", {
+      x: 0.35, y: 5.20, w: 9.3, h: 0.26,
+      color: GRAY, fontFace: FONT, fontSize: 9.5, bold: true,
+      align: "left", valign: "middle", margin: 0, isTextBox: true,
+    });
+  }
+  s.addNotes(
+    "ここからは、本日の授業を見ていきます。まず、３つの教室の様子です。\n" +
+    "プールでは泳力別に分かれて、道徳では車座に近い形で、外国語ではペアで。\n" +
+    "３つの教室に共通していたのは、子どもが動き、考え、伝える時間の多さでした。\n" +
+    "（※当日の写真を貼り付けて使用する）"
   );
 }
 
