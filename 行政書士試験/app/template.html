@@ -1,0 +1,817 @@
+<title>行政書士 毎日一問一答</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#eef0f4; --sheet:#ffffff; --sheet-2:#f7f8fa;
+  --ink:#161a21; --ink-2:#39404d; --muted:#5c6472; --faint:#8a91a0;
+  --line:#d3d8e1; --line-soft:#e4e8ee;
+  --kon:#1f3a6b; --kon-soft:#e5ebf6; --kon-ink:#1f3a6b;
+  --ok:#1c6349; --ok-soft:#e2f0ea;
+  --ng:#9d2f2a; --ng-soft:#f7e6e4;
+  --shadow:0 1px 2px rgba(22,26,33,.06),0 8px 24px -18px rgba(22,26,33,.5);
+  --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",YuMincho,serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
+    --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
+    --line:#2b323e; --line-soft:#232a35;
+    --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
+    --ok:#5cbd92; --ok-soft:#14261f;
+    --ng:#e28880; --ng-soft:#2a1917;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
+  --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
+  --line:#2b323e; --line-soft:#232a35;
+  --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
+  --ok:#5cbd92; --ok-soft:#14261f;
+  --ng:#e28880; --ng-soft:#2a1917;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--gothic); font-size:15px; line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:680px; margin:0 auto; padding-inline:18px; padding-block:0 64px}
+
+/* ---- header ---- */
+header{padding-block:26px 18px; border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-size:11px; letter-spacing:.22em; color:var(--muted);
+  text-transform:none; margin:0 0 6px
+}
+h1{
+  font-family:var(--mincho); font-weight:600; font-size:25px; line-height:1.35;
+  margin:0 0 14px; letter-spacing:.02em; text-wrap:balance
+}
+.meta{display:flex; flex-wrap:wrap; gap:8px 20px; align-items:baseline}
+.meta div{display:flex; gap:7px; align-items:baseline}
+.meta dt{font-size:11px; color:var(--muted); letter-spacing:.08em}
+.meta dd{margin:0; font-family:var(--mono); font-size:17px; font-weight:500;
+  font-variant-numeric:tabular-nums; color:var(--ink)}
+.meta .unit{font-size:11px; color:var(--muted); font-family:var(--gothic)}
+
+/* ---- tabs ---- */
+nav{display:flex; gap:2px; margin-block:14px 20px; border-bottom:1px solid var(--line)}
+nav button{
+  appearance:none; background:none; border:0; border-bottom:2px solid transparent;
+  font-family:var(--gothic); font-size:13.5px; font-weight:500; color:var(--muted);
+  padding:9px 13px; cursor:pointer; margin-bottom:-1px; letter-spacing:.04em
+}
+nav button[aria-selected="true"]{color:var(--kon-ink); border-bottom-color:var(--kon)}
+nav button:hover{color:var(--ink)}
+nav button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
+
+/* ---- question sheet ---- */
+.sheet{
+  background:var(--sheet); border:1px solid var(--line); border-radius:3px;
+  box-shadow:var(--shadow); padding:22px 22px 20px
+}
+.sheet-head{
+  display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center;
+  padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line-soft)
+}
+.tag{
+  font-size:11px; letter-spacing:.1em; color:var(--muted); font-family:var(--mono)
+}
+.tag.field{
+  font-family:var(--gothic); color:var(--kon-ink); background:var(--kon-soft);
+  padding:2px 8px; border-radius:2px; letter-spacing:.04em; font-weight:500
+}
+.rail{display:flex; gap:5px; margin-left:auto}
+.rail i{
+  width:16px; height:5px; background:var(--line); border-radius:1px; display:block
+}
+.rail i.done{background:var(--kon)}
+.rail i.now{background:var(--ink)}
+
+.qtype{font-size:11.5px; color:var(--muted); letter-spacing:.08em; margin:0 0 10px}
+.qtext{
+  font-family:var(--mincho); font-size:17.5px; line-height:2.0;
+  margin:0 0 6px; letter-spacing:.015em; white-space:pre-wrap
+}
+.qsub{font-size:13px; color:var(--muted); margin:12px 0 0}
+
+/* ---- answer controls ---- */
+.ox{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px}
+.ox button{
+  appearance:none; cursor:pointer; background:var(--sheet-2);
+  border:1px solid var(--line); border-radius:3px; padding:16px 0;
+  font-family:var(--mincho); font-size:30px; line-height:1; color:var(--ink);
+  transition:background .12s, border-color .12s
+}
+.ox button:hover{background:var(--kon-soft); border-color:var(--kon)}
+.ox button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.ox button small{display:block; font-family:var(--gothic); font-size:11px;
+  color:var(--muted); margin-top:7px; letter-spacing:.1em}
+
+.choices{display:flex; flex-direction:column; gap:8px; margin-top:18px}
+.choices button{
+  appearance:none; cursor:pointer; text-align:left; background:var(--sheet-2);
+  border:1px solid var(--line); border-radius:3px; padding:11px 14px;
+  font-family:var(--gothic); font-size:14.5px; line-height:1.7; color:var(--ink);
+  display:flex; gap:11px; align-items:baseline
+}
+.choices button:hover{background:var(--kon-soft); border-color:var(--kon)}
+.choices button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.choices b{font-family:var(--mono); font-size:12px; color:var(--muted); font-weight:500}
+
+.blanks{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:18px}
+.blanks label{display:flex; flex-direction:column; gap:5px; font-size:11.5px;
+  color:var(--muted); letter-spacing:.1em}
+.blanks select{
+  font-family:var(--gothic); font-size:14px; padding:8px 9px; color:var(--ink);
+  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px; width:100%
+}
+textarea{
+  width:100%; margin-top:16px; min-height:96px; resize:vertical;
+  font-family:var(--mincho); font-size:16px; line-height:1.9; color:var(--ink);
+  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px;
+  padding:12px 13px
+}
+textarea:focus-visible,select:focus-visible{outline:2px solid var(--kon); outline-offset:1px}
+.counter{
+  font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right;
+  margin-top:5px; font-variant-numeric:tabular-nums
+}
+.counter.good{color:var(--ok)}
+
+.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:16px}
+.btn{
+  appearance:none; cursor:pointer; font-family:var(--gothic); font-size:13.5px;
+  font-weight:500; padding:9px 17px; border-radius:3px; border:1px solid var(--kon);
+  background:var(--kon); color:#fff; letter-spacing:.04em
+}
+.btn.ghost{background:transparent; color:var(--kon-ink); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--kon)}
+.btn:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.btn[disabled]{opacity:.45; cursor:default}
+
+/* ---- verdict / explanation ---- */
+.verdict{
+  margin-top:20px; border-top:1px solid var(--line-soft); padding-top:18px
+}
+.mark{
+  display:inline-flex; align-items:center; gap:9px; font-family:var(--mincho);
+  font-size:15px; padding:5px 13px; border-radius:2px; letter-spacing:.06em
+}
+.mark.ok{background:var(--ok-soft); color:var(--ok)}
+.mark.ng{background:var(--ng-soft); color:var(--ng)}
+.mark span{font-size:21px; line-height:1}
+.answer{font-family:var(--mincho); font-size:16px; margin:14px 0 0; line-height:1.9}
+.exp{font-size:14px; line-height:1.95; color:var(--ink-2); margin:12px 0 0}
+.ref{
+  font-family:var(--mono); font-size:12px; color:var(--muted); margin:11px 0 0;
+  padding-left:11px; border-left:2px solid var(--line)
+}
+.grade{
+  margin-top:14px; padding:13px 14px; background:var(--sheet-2);
+  border:1px solid var(--line-soft); border-radius:3px; font-size:13.5px;
+  line-height:1.9; color:var(--ink-2); white-space:pre-wrap
+}
+.selfmark{display:flex; gap:9px; margin-top:16px; align-items:center; flex-wrap:wrap}
+.selfmark span{font-size:12px; color:var(--muted)}
+
+/* ---- done panel ---- */
+.done-panel{text-align:center; padding:34px 20px}
+.done-panel .big{
+  font-family:var(--mincho); font-size:40px; line-height:1.2; margin:0;
+  font-variant-numeric:tabular-nums
+}
+.done-panel p{color:var(--muted); font-size:13.5px; margin:10px 0 0}
+
+/* ---- plan strip ---- */
+.plan{margin-top:22px}
+.plan-head{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  padding-bottom:7px; border-bottom:1px solid var(--line)
+}
+.plan-head h3{
+  font-family:var(--mincho); font-weight:600; font-size:14px; margin:0; letter-spacing:.04em
+}
+.plan-head span{font-size:11.5px; color:var(--muted)}
+.plan-head .gauge{
+  flex:1 1 90px; min-width:90px; height:3px; background:var(--line-soft); border-radius:2px
+}
+.plan-head .gauge i{display:block; height:100%; background:var(--kon); border-radius:2px}
+.plan ol{list-style:none; margin:0; padding:0}
+.plan li button{
+  appearance:none; background:none; border:0; cursor:pointer; width:100%; text-align:left;
+  display:grid; grid-template-columns:62px 1fr auto; gap:12px; align-items:baseline;
+  padding:8px 4px; border-bottom:1px solid var(--line-soft); font-family:var(--gothic);
+  font-size:13px; color:var(--ink-2)
+}
+.plan li button:hover{background:var(--kon-soft)}
+.plan li button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
+.plan li .d{font-family:var(--mono); font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.plan li .n{font-family:var(--mono); font-size:11.5px; color:var(--faint)}
+.plan li.is-now button{color:var(--ink); font-weight:500; background:var(--kon-soft)}
+.plan li.is-now .d{color:var(--kon-ink)}
+.plan li.is-done .d::after{content:"　済"; font-family:var(--gothic); color:var(--ok)}
+
+/* ---- records ---- */
+.bars{display:flex; flex-direction:column; gap:0; margin-top:6px}
+.bar-row{
+  display:grid; grid-template-columns:1fr 62px; gap:12px; align-items:center;
+  padding:9px 0; border-bottom:1px solid var(--line-soft)
+}
+.bar-row:last-child{border-bottom:0}
+.bar-name{font-size:13px; color:var(--ink-2)}
+.track{height:4px; background:var(--line-soft); border-radius:2px; margin-top:5px}
+.track i{display:block; height:100%; background:var(--kon); border-radius:2px}
+.track i.weak{background:var(--ng)}
+.bar-num{
+  font-family:var(--mono); font-size:13px; text-align:right; color:var(--muted);
+  font-variant-numeric:tabular-nums
+}
+.bar-num em{font-style:normal; color:var(--ink); font-size:15px}
+
+h2{
+  font-family:var(--mincho); font-weight:600; font-size:17px; margin:30px 0 4px;
+  letter-spacing:.03em
+}
+h2:first-child{margin-top:4px}
+.note{font-size:12.5px; color:var(--muted); margin:4px 0 14px; line-height:1.8}
+.fields{display:grid; grid-template-columns:repeat(auto-fill,minmax(152px,1fr)); gap:8px}
+.fields button{
+  appearance:none; cursor:pointer; text-align:left; background:var(--sheet);
+  border:1px solid var(--line); border-radius:3px; padding:11px 13px;
+  font-family:var(--gothic); font-size:13.5px; color:var(--ink); line-height:1.5
+}
+.fields button:hover{border-color:var(--kon); background:var(--kon-soft)}
+.fields button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.fields small{display:block; font-family:var(--mono); font-size:11px;
+  color:var(--muted); margin-top:4px; font-variant-numeric:tabular-nums}
+footer{
+  margin-top:34px; padding-top:16px; border-top:1px solid var(--line);
+  font-size:11.5px; color:var(--faint); line-height:1.9
+}
+.linkish{
+  appearance:none; background:none; border:0; padding:0; cursor:pointer;
+  font:inherit; color:var(--muted); text-decoration:underline
+}
+.hide{display:none !important}
+@media (max-width:420px){
+  h1{font-size:21px}
+  .qtext{font-size:16.5px; line-height:1.95}
+  .blanks{grid-template-columns:1fr}
+  .sheet{padding:18px 15px 16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">令和9年度 行政書士試験</p>
+  <h1>毎日一問一答</h1>
+  <dl class="meta">
+    <div><dt>本試験まで</dt><dd id="m-days">—</dd><dd class="unit">日</dd></div>
+    <div><dt>連続</dt><dd id="m-streak">0</dd><dd class="unit">日</dd></div>
+    <div><dt>解いた問題</dt><dd id="m-seen">0</dd><dd class="unit">／336</dd></div>
+    <div><dt>正答率</dt><dd id="m-rate">—</dd><dd class="unit">％</dd></div>
+  </dl>
+</header>
+
+<nav role="tablist">
+  <button id="tab-today" role="tab" aria-selected="true" aria-controls="view-today">今日の問題</button>
+  <button id="tab-field" role="tab" aria-selected="false" aria-controls="view-field">分野別</button>
+  <button id="tab-rec" role="tab" aria-selected="false" aria-controls="view-rec">記録</button>
+</nav>
+
+<section id="view-today" role="tabpanel" aria-labelledby="tab-today"></section>
+<section id="view-field" role="tabpanel" aria-labelledby="tab-field" class="hide"></section>
+<section id="view-rec" role="tabpanel" aria-labelledby="tab-rec" class="hide"></section>
+
+<footer>
+  学習用の教材です。公式の過去問ではありません。出題の根拠となる法令は試験年度の4月1日現在施行のもの、
+  試験日程は一般財団法人行政書士試験研究センターの発表で確認してください。<br>
+  <button class="linkish" id="reset">学習記録を消去する</button>
+</footer>
+</div>
+
+<script id="qdata" type="application/json">/*__DATA__*/</script>
+<script>
+(function(){
+"use strict";
+var DATA = JSON.parse(document.getElementById("qdata").textContent);
+var QS = {}, BYFIELD = {};
+DATA.questions.forEach(function(q){
+  QS[q.id] = q;
+  (BYFIELD[q.field] = BYFIELD[q.field] || []).push(q);
+});
+var FIELDS = Object.keys(BYFIELD);
+var DAYS = DATA.days;
+var EXAM = new Date(2027, 10, 14); // 令和9年11月14日（例年どおり11月第2日曜日の場合）
+
+/* ---------- store ---------- */
+var KEY = "gyosei-r9-progress";
+var S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
+var db = null;
+
+function today(){
+  var d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function loadLocal(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){ var o = JSON.parse(raw); if(o && o.hist) S = Object.assign(S, o); }
+  }catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  if(db){ db.doc("progress/main").set(S).catch(function(){}); }
+}
+function size(o){ return o && o.hist ? Object.keys(o.hist).length : -1; }
+
+/* ---------- derived ---------- */
+function daysLeft(){
+  var t = new Date(); t.setHours(0,0,0,0);
+  return Math.max(0, Math.round((EXAM - t) / 86400000));
+}
+function streak(){
+  var set = {}; S.doneDates.forEach(function(d){ set[d] = 1; });
+  var d = new Date(), n = 0;
+  if(!set[today()]) d.setDate(d.getDate() - 1);
+  for(;;){
+    var k = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    if(!set[k]) break;
+    n++; d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+function stats(){
+  var seen = 0, ok = 0, n = 0;
+  for(var id in S.hist){ var h = S.hist[id]; seen++; ok += h.ok; n += h.n; }
+  return {seen:seen, rate: n ? Math.round(ok / n * 100) : null};
+}
+function fieldStat(f){
+  var qs = BYFIELD[f] || [], seen = 0, ok = 0, n = 0;
+  qs.forEach(function(q){
+    var h = S.hist[q.id];
+    if(h){ seen++; ok += h.ok; n += h.n; }
+  });
+  return {total:qs.length, seen:seen, rate: n ? Math.round(ok / n * 100) : null};
+}
+function record(q, correct){
+  var h = S.hist[q.id] || {n:0, ok:0, last:""};
+  h.n++; if(correct) h.ok++;
+  h.last = correct ? "o" : "x";
+  S.hist[q.id] = h;
+}
+
+/* ---------- header ---------- */
+function paintMeta(){
+  var st = stats();
+  document.getElementById("m-days").textContent = daysLeft();
+  document.getElementById("m-streak").textContent = streak();
+  document.getElementById("m-seen").textContent = st.seen;
+  document.getElementById("m-rate").textContent = st.rate === null ? "—" : st.rate;
+}
+
+/* ---------- question rendering ---------- */
+var el = function(t, cls, txt){
+  var n = document.createElement(t);
+  if(cls) n.className = cls;
+  if(txt != null) n.textContent = txt;
+  return n;
+};
+var TYPE_LABEL = {ox:"正しければ〇、誤りなら×", mc:"正しいものを一つ選ぶ", desc:"40字程度で記述する", multi:"空欄ア〜エに入る語句を選ぶ"};
+
+function renderQuestion(host, q, ctx){
+  host.innerHTML = "";
+  var sheet = el("div","sheet");
+  var head = el("div","sheet-head");
+  head.appendChild(el("span","tag", ctx.label));
+  head.appendChild(el("span","tag field", q.field));
+  head.appendChild(el("span","tag", q.topic));
+  if(ctx.rail){
+    var rail = el("div","rail");
+    for(var i=0;i<ctx.rail.total;i++){
+      var b = el("i");
+      if(i < ctx.rail.at) b.className = "done";
+      else if(i === ctx.rail.at) b.className = "now";
+      rail.appendChild(b);
+    }
+    head.appendChild(rail);
+  }
+  sheet.appendChild(head);
+  sheet.appendChild(el("p","qtype", TYPE_LABEL[q.type]));
+  sheet.appendChild(el("p","qtext", q.q));
+
+  var verdict = el("div","verdict hide");
+  var body = el("div");
+  sheet.appendChild(body);
+  sheet.appendChild(verdict);
+  host.appendChild(sheet);
+
+  function finish(correct){
+    verdict.classList.remove("hide");
+    body.classList.add("hide");
+    record(q, correct);
+    save(); paintMeta();
+    var mark = el("div", "mark " + (correct ? "ok" : "ng"));
+    mark.appendChild(el("span", null, correct ? "〇" : "×"));
+    mark.appendChild(el("b", null, correct ? "正解" : "不正解"));
+    verdict.appendChild(mark);
+    verdict.appendChild(el("p","answer", answerLine(q)));
+    verdict.appendChild(el("p","exp", q.exp));
+    if(q.ref) verdict.appendChild(el("p","ref", q.ref));
+    var act = el("div","actions");
+    var next = el("button","btn", ctx.nextLabel || "次の問題へ");
+    next.addEventListener("click", ctx.onNext);
+    act.appendChild(next);
+    verdict.appendChild(act);
+    next.focus();
+  }
+
+  if(q.type === "ox"){
+    var ox = el("div","ox");
+    [[true,"〇","正しい"],[false,"×","誤り"]].forEach(function(p){
+      var b = el("button");
+      b.appendChild(document.createTextNode(p[1]));
+      b.appendChild(el("small", null, p[2]));
+      b.addEventListener("click", function(){ finish(q.a === p[0]); });
+      ox.appendChild(b);
+    });
+    body.appendChild(ox);
+  }
+  else if(q.type === "mc"){
+    var list = el("div","choices");
+    q.choices.forEach(function(c, i){
+      var b = el("button");
+      b.appendChild(el("b", null, String(i+1)));
+      b.appendChild(el("span", null, c));
+      b.addEventListener("click", function(){ finish(q.a === i); });
+      list.appendChild(b);
+    });
+    body.appendChild(list);
+  }
+  else if(q.type === "multi"){
+    var grid = el("div","blanks");
+    var sels = [];
+    (q.blanks || ["ア","イ","ウ","エ"]).forEach(function(lb, i){
+      var lab = el("label");
+      lab.appendChild(el("span", null, "空欄 " + lb));
+      var sel = el("select");
+      sel.id = "blank-" + q.id + "-" + i;
+      var o0 = el("option", null, "選択してください"); o0.value = "";
+      sel.appendChild(o0);
+      q.choices.forEach(function(c, j){
+        var o = el("option", null, (j+1) + ". " + c); o.value = String(j);
+        sel.appendChild(o);
+      });
+      lab.appendChild(sel); grid.appendChild(lab); sels.push(sel);
+    });
+    body.appendChild(grid);
+    var act1 = el("div","actions");
+    var go = el("button","btn","答え合わせ");
+    go.addEventListener("click", function(){
+      var all = sels.every(function(s, i){ return String(q.a[i]) === s.value; });
+      finish(all);
+    });
+    act1.appendChild(go); body.appendChild(act1);
+  }
+  else if(q.type === "desc"){
+    var ta = el("textarea");
+    ta.id = "desc-" + q.id;
+    ta.placeholder = "ここに40字程度で書く";
+    var cnt = el("p","counter","0 字");
+    ta.addEventListener("input", function(){
+      var n = ta.value.replace(/\s/g,"").length;
+      cnt.textContent = n + " 字";
+      cnt.className = "counter" + (n >= 35 && n <= 45 ? " good" : "");
+    });
+    body.appendChild(ta); body.appendChild(cnt);
+    var act2 = el("div","actions");
+    var show = el("button","btn","解答例と照らす");
+    var ask = el("button","btn ghost hide","Claudeに採点してもらう");
+    act2.appendChild(show); act2.appendChild(ask);
+    body.appendChild(act2);
+
+    if(window.__sample){ ask.classList.remove("hide"); }
+    ask.addEventListener("click", function(){
+      var mine = ta.value.trim();
+      if(!mine){ ta.focus(); return; }
+      ask.disabled = true; ask.textContent = "採点中…";
+      var box = el("div","grade","採点しています…");
+      body.appendChild(box);
+      window.__sample(
+        "あなたは行政書士試験の記述式採点者です。20点満点で採点してください。\n\n" +
+        "【設問】" + q.q + "\n\n【模範解答】" + q.model + "\n\n【受験者の答案】" + mine + "\n\n" +
+        "次の形式で、日本語で簡潔に答えてください。1行目「得点：N／20点」。2行目以降に、書けている要素、" +
+        "落ちている要素、字数（40字程度が目安）についての講評を3行以内で。",
+        {modelTier:"default", onText:function(u){ box.textContent = u.text; }}
+      ).then(function(r){ box.textContent = r.text; })
+       .catch(function(){ box.textContent = "採点できませんでした。解答例と自分で照らし合わせてください。"; })
+       .finally(function(){ ask.disabled = false; ask.textContent = "もう一度採点する"; });
+    });
+
+    show.addEventListener("click", function(){
+      body.classList.add("hide");
+      verdict.classList.remove("hide");
+      verdict.appendChild(el("p","answer","解答例：" + q.model + "（" + q.model.length + "字）"));
+      if(ta.value.trim()){
+        var mineBox = el("div","grade","自分の答案：" + ta.value.trim());
+        verdict.appendChild(mineBox);
+      }
+      verdict.appendChild(el("p","exp", q.exp));
+      if(q.ref) verdict.appendChild(el("p","ref", q.ref));
+      var sm = el("div","selfmark");
+      sm.appendChild(el("span", null, "自己採点"));
+      [["書けた", true],["書けなかった", false]].forEach(function(p){
+        var b = el("button", p[1] ? "btn" : "btn ghost", p[0]);
+        b.addEventListener("click", function(){
+          record(q, p[1]); save(); paintMeta(); ctx.onNext();
+        });
+        sm.appendChild(b);
+      });
+      verdict.appendChild(sm);
+    });
+  }
+}
+
+function answerLine(q){
+  if(q.type === "ox") return "答　" + (q.a ? "〇" : "×");
+  if(q.type === "mc") return "答　" + (q.a + 1) + "．" + q.choices[q.a];
+  if(q.type === "multi"){
+    var lb = q.blanks || ["ア","イ","ウ","エ"];
+    return "答　" + q.a.map(function(i, k){ return lb[k] + "＝" + q.choices[i]; }).join("　");
+  }
+  return "";
+}
+
+
+/* ---------- plan strip ---------- */
+function planStrip(currentNo){
+  var wrap = el("div","plan");
+  var head = el("div","plan-head");
+  head.appendChild(el("h3", null, "75日の進行表"));
+  var g = el("div","gauge"), gi = el("i");
+  gi.style.width = (S.doneDays.length / DAYS.length * 100).toFixed(1) + "%";
+  g.appendChild(gi); head.appendChild(g);
+  head.appendChild(el("span", null, "済 " + S.doneDays.length + " 日 ／ 全 " + DAYS.length + " 日"));
+  wrap.appendChild(head);
+  var ol = el("ol");
+  var start = Math.max(0, Math.min(currentNo - 2, DAYS.length - 5));
+  DAYS.slice(start, start + 5).forEach(function(d){
+    var li = el("li");
+    if(d.no === currentNo) li.className = "is-now";
+    else if(S.doneDays.indexOf(d.no) >= 0) li.className = "is-done";
+    var b = el("button");
+    b.appendChild(el("span","d","Day " + String(d.no).padStart(3,"0")));
+    b.appendChild(el("span", null, d.title));
+    b.appendChild(el("span","n", d.ids.length + "問"));
+    b.addEventListener("click", function(){
+      S.day = d.no; S.pos = 0; save(); viewToday();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+    li.appendChild(b); ol.appendChild(li);
+  });
+  wrap.appendChild(ol);
+  var hint = el("p","note");
+  hint.style.marginTop = "10px";
+  hint.textContent = "1日5問、10〜20分。7日目ごとに記述式と多肢選択式を挟む週末チェックが入ります。";
+  wrap.appendChild(hint);
+  return wrap;
+}
+
+/* ---------- today view ---------- */
+function viewToday(){
+  var host = document.getElementById("view-today");
+  var day = DAYS[Math.min(S.day, DAYS.length) - 1];
+  if(!day){ host.innerHTML = ""; host.appendChild(allDone()); return; }
+  var ids = day.ids;
+  if(S.pos >= ids.length){ completeDay(host, day); return; }
+  var q = QS[ids[S.pos]];
+  renderQuestion(host, q, {
+    label: "Day " + String(day.no).padStart(3,"0"),
+    rail: {total: ids.length, at: S.pos},
+    nextLabel: S.pos === ids.length - 1 ? "今日の分を終える" : "次の問題へ",
+    onNext: function(){ S.pos++; save(); viewToday(); }
+  });
+  host.appendChild(planStrip(day.no));
+}
+function completeDay(host, day){
+  var d = today();
+  if(S.doneDates.indexOf(d) < 0) S.doneDates.push(d);
+  if(S.doneDays.indexOf(day.no) < 0) S.doneDays.push(day.no);
+  save(); paintMeta();
+  host.innerHTML = "";
+  var sheet = el("div","sheet");
+  var p = el("div","done-panel");
+  p.appendChild(el("p","big","Day " + String(day.no).padStart(3,"0") + " 終了"));
+  var st = stats();
+  p.appendChild(el("p", null, day.title));
+  p.appendChild(el("p", null, "連続 " + streak() + " 日　／　通算 " + st.seen + " 問"));
+  var act = el("div","actions");
+  act.style.justifyContent = "center";
+  if(day.no < DAYS.length){
+    var next = el("button","btn","Day " + String(day.no + 1).padStart(3,"0") + " に進む");
+    next.addEventListener("click", function(){ S.day = day.no + 1; S.pos = 0; save(); viewToday(); });
+    act.appendChild(next);
+  }
+  var again = el("button","btn ghost","この日をもう一度");
+  again.addEventListener("click", function(){ S.pos = 0; save(); viewToday(); });
+  act.appendChild(again);
+  p.appendChild(act);
+  sheet.appendChild(p);
+  host.appendChild(sheet);
+  host.appendChild(planStrip(Math.min(day.no + 1, DAYS.length)));
+}
+function allDone(){
+  var sheet = el("div","sheet");
+  var p = el("div","done-panel");
+  p.appendChild(el("p","big","1周 修了"));
+  p.appendChild(el("p", null, "全75日を終えました。2周目は間違えた問題から回すと効率が上がります。"));
+  var act = el("div","actions"); act.style.justifyContent = "center";
+  var b = el("button","btn","Day 001 から2周目へ");
+  b.addEventListener("click", function(){ S.day = 1; S.pos = 0; save(); viewToday(); });
+  act.appendChild(b); p.appendChild(act); sheet.appendChild(p);
+  return sheet;
+}
+
+/* ---------- field view ---------- */
+var drill = null;
+function viewField(){
+  var host = document.getElementById("view-field");
+  if(drill){
+    if(drill.i >= drill.ids.length){
+      host.innerHTML = "";
+      var sheet = el("div","sheet"), p = el("div","done-panel");
+      p.appendChild(el("p","big", drill.ok + " / " + drill.ids.length));
+      p.appendChild(el("p", null, drill.field + "　5問終了"));
+      var act = el("div","actions"); act.style.justifyContent = "center";
+      var more = el("button","btn","同じ分野をもう5問");
+      more.addEventListener("click", function(){ startDrill(drill.field); });
+      var back = el("button","btn ghost","分野を選び直す");
+      back.addEventListener("click", function(){ drill = null; viewField(); });
+      act.appendChild(more); act.appendChild(back);
+      p.appendChild(act); sheet.appendChild(p); host.appendChild(sheet);
+      return;
+    }
+    var q = QS[drill.ids[drill.i]];
+    var before = S.hist[q.id] ? S.hist[q.id].ok : 0;
+    renderQuestion(host, q, {
+      label: drill.field,
+      rail: {total: drill.ids.length, at: drill.i},
+      nextLabel: drill.i === drill.ids.length - 1 ? "結果を見る" : "次の問題へ",
+      onNext: function(){
+        var h = S.hist[q.id];
+        if(h && h.last === "o") drill.ok++;
+        drill.i++; viewField();
+      }
+    });
+    return;
+  }
+  host.innerHTML = "";
+  host.appendChild(el("h2", null, "分野を選ぶ"));
+  host.appendChild(el("p","note","苦手な問題と未着手の問題を優先して5問出します。"));
+  var grid = el("div","fields");
+  FIELDS.forEach(function(f){
+    var s = fieldStat(f);
+    var b = el("button");
+    b.appendChild(el("span", null, f));
+    b.appendChild(el("small", null, s.seen + "/" + s.total + " 問　" + (s.rate === null ? "未着手" : "正答率 " + s.rate + "%")));
+    b.addEventListener("click", function(){ startDrill(f); });
+    grid.appendChild(b);
+  });
+  host.appendChild(grid);
+}
+function startDrill(field){
+  var qs = (BYFIELD[field] || []).slice();
+  qs.sort(function(a, b){ return score(a) - score(b); });
+  var head = qs.slice(0, Math.min(12, qs.length));
+  for(var i = head.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = head[i]; head[i] = head[j]; head[j] = t;
+  }
+  drill = {field: field, ids: head.slice(0, 5).map(function(q){ return q.id; }), i: 0, ok: 0};
+  viewField();
+}
+function score(q){
+  var h = S.hist[q.id];
+  if(!h) return 0;                 // 未着手を最優先
+  if(h.last === "x") return 1;     // 直近で間違えた
+  return 2 + h.ok / Math.max(1, h.n);
+}
+
+/* ---------- records view ---------- */
+function viewRec(){
+  var host = document.getElementById("view-rec");
+  host.innerHTML = "";
+  host.appendChild(el("h2", null, "分野別の到達度"));
+  host.appendChild(el("p","note","正答率の低い順に並んでいます。上にあるものが次に手を入れるところです。"));
+  var rows = FIELDS.map(function(f){ return {f:f, s:fieldStat(f)}; });
+  rows.sort(function(a, b){
+    var ra = a.s.rate === null ? 999 : a.s.rate, rb = b.s.rate === null ? 999 : b.s.rate;
+    return ra - rb;
+  });
+  var bars = el("div","bars");
+  rows.forEach(function(r){
+    var row = el("div","bar-row");
+    var left = el("div");
+    left.appendChild(el("div","bar-name", r.f));
+    var track = el("div","track");
+    var fill = el("i");
+    fill.style.width = (r.s.seen / r.s.total * 100).toFixed(1) + "%";
+    if(r.s.rate !== null && r.s.rate < 60) fill.className = "weak";
+    track.appendChild(fill); left.appendChild(track);
+    var num = el("div","bar-num");
+    if(r.s.rate === null){ num.textContent = "未着手"; }
+    else{
+      num.appendChild(el("em", null, r.s.rate + "%"));
+      num.appendChild(el("div", null, r.s.seen + "/" + r.s.total));
+    }
+    row.appendChild(left); row.appendChild(num);
+    bars.appendChild(row);
+  });
+  host.appendChild(bars);
+
+  host.appendChild(el("h2", null, "直前に間違えた問題"));
+  var wrong = DATA.questions.filter(function(q){
+    var h = S.hist[q.id];
+    return h && h.last === "x";
+  });
+  if(!wrong.length){
+    host.appendChild(el("p","note","いまのところありません。"));
+  }else{
+    host.appendChild(el("p","note", wrong.length + " 問あります。分野別演習では、これらが優先して出ます。"));
+    var grid = el("div","fields");
+    wrong.slice(0, 24).forEach(function(q){
+      var b = el("button");
+      b.appendChild(el("span", null, q.topic));
+      b.appendChild(el("small", null, q.field + "　" + q.id));
+      b.addEventListener("click", function(){
+        drill = {field: q.field, ids:[q.id], i:0, ok:0};
+        selectTab("field");
+      });
+      grid.appendChild(b);
+    });
+    host.appendChild(grid);
+  }
+
+  host.appendChild(el("h2", null, "試験のしくみ"));
+  var note = el("p","note");
+  note.textContent =
+    "5肢択一式54問（法令等40・基礎知識14）、多肢選択式3問、記述式3問の計60問300点。" +
+    "合格には法令等122点以上、基礎知識24点以上、全体180点以上の3つをすべて満たす必要があります。" +
+    "基礎知識の足切りは択一6問正解が目安です。";
+  host.appendChild(note);
+}
+
+/* ---------- tabs ---------- */
+var TABS = {today:["tab-today","view-today",viewToday], field:["tab-field","view-field",viewField], rec:["tab-rec","view-rec",viewRec]};
+function selectTab(name){
+  Object.keys(TABS).forEach(function(k){
+    var t = TABS[k];
+    var on = k === name;
+    document.getElementById(t[0]).setAttribute("aria-selected", on ? "true" : "false");
+    document.getElementById(t[1]).classList.toggle("hide", !on);
+  });
+  TABS[name][2]();
+}
+Object.keys(TABS).forEach(function(k){
+  document.getElementById(TABS[k][0]).addEventListener("click", function(){ selectTab(k); });
+});
+document.getElementById("reset").addEventListener("click", function(){
+  if(!confirm("学習記録をすべて消去します。元に戻せません。")) return;
+  S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
+  save(); paintMeta(); selectTab("today");
+});
+
+/* ---------- boot ---------- */
+loadLocal();
+paintMeta();
+selectTab("today");
+
+if(window.claude && window.claude.use){
+  window.claude.use("db").then(function(x){
+    if(!x) return;
+    db = x;
+    return db.doc("progress/main").get().then(function(snap){
+      if(snap && snap.exists && size(snap.data) > size(S)){
+        S = Object.assign(S, snap.data);
+        paintMeta();
+        selectTab(document.getElementById("tab-today").getAttribute("aria-selected") === "true" ? "today" : "rec");
+      }else{
+        save();
+      }
+    });
+  }).catch(function(){});
+  window.claude.use("sample").then(function(fn){
+    if(fn) window.__sample = fn;
+  }).catch(function(){});
+}
+})();
+</script>

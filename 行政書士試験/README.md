@@ -4,7 +4,8 @@
 
 ## まずここから
 
-- [学習カレンダー（75日分の目次）](daily/INDEX.md)
+- **[Webアプリ版（毎日一問一答）](https://claude.ai/code/artifact/02acb16d-e12e-4eee-9197-21fb88016722)** — 〇×をタップして進める形式。学習記録と連続日数、分野別の正答率が残ります。スマートフォンでもそのまま使えます。
+- [学習カレンダー（75日分の目次）](daily/INDEX.md) — 紙に印刷したい場合や、GitHub上で読みたい場合
 - [Day 001 から始める](daily/day-001.md)
 
 各日のファイルは、問題 → 折りたたみの解答・解説、という並びです。先に全問解いてから解答を開いてください。
@@ -99,12 +100,21 @@
 ├── README.md              この文書
 ├── daily/                 日割りの問題（INDEX.md が目次）
 ├── data/                  問題データ（分野別JSON）
-├── scripts/build.py       daily/ を生成するスクリプト
-└── questions_all.json     全問題を統合したデータ（Webアプリ用）
+├── app/
+│   ├── template.html      Webアプリの元ファイル
+│   └── 毎日一問一答.html    問題データを埋め込んだ公開用ファイル
+├── scripts/
+│   ├── build.py           daily/ と questions_all.json を生成
+│   └── build_app.py       app/毎日一問一答.html を生成
+└── questions_all.json     全問題を統合したデータ
 ```
 
 問題を追加・修正するときは `data/` のJSONを編集してから次を実行します。
 
 ```
 python3 scripts/build.py
+python3 scripts/build_app.py
 ```
+
+Webアプリは学習記録をブラウザに保存します。claude.ai上で開いた場合は記録がサーバ側にも保存されるため、
+端末をまたいで続きから再開できます。記述式は書いた答案をClaudeに採点させることもできます。

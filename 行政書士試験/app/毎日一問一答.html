@@ -1,0 +1,817 @@
+<title>行政書士 毎日一問一答</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+:root{
+  --bg:#eef0f4; --sheet:#ffffff; --sheet-2:#f7f8fa;
+  --ink:#161a21; --ink-2:#39404d; --muted:#5c6472; --faint:#8a91a0;
+  --line:#d3d8e1; --line-soft:#e4e8ee;
+  --kon:#1f3a6b; --kon-soft:#e5ebf6; --kon-ink:#1f3a6b;
+  --ok:#1c6349; --ok-soft:#e2f0ea;
+  --ng:#9d2f2a; --ng-soft:#f7e6e4;
+  --shadow:0 1px 2px rgba(22,26,33,.06),0 8px 24px -18px rgba(22,26,33,.5);
+  --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",YuMincho,serif;
+  --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
+    --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
+    --line:#2b323e; --line-soft:#232a35;
+    --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
+    --ok:#5cbd92; --ok-soft:#14261f;
+    --ng:#e28880; --ng-soft:#2a1917;
+    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
+  --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
+  --line:#2b323e; --line-soft:#232a35;
+  --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
+  --ok:#5cbd92; --ok-soft:#14261f;
+  --ng:#e28880; --ng-soft:#2a1917;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--gothic); font-size:15px; line-height:1.75;
+  -webkit-text-size-adjust:100%;
+}
+.wrap{max-width:680px; margin:0 auto; padding-inline:18px; padding-block:0 64px}
+
+/* ---- header ---- */
+header{padding-block:26px 18px; border-bottom:1px solid var(--line)}
+.eyebrow{
+  font-size:11px; letter-spacing:.22em; color:var(--muted);
+  text-transform:none; margin:0 0 6px
+}
+h1{
+  font-family:var(--mincho); font-weight:600; font-size:25px; line-height:1.35;
+  margin:0 0 14px; letter-spacing:.02em; text-wrap:balance
+}
+.meta{display:flex; flex-wrap:wrap; gap:8px 20px; align-items:baseline}
+.meta div{display:flex; gap:7px; align-items:baseline}
+.meta dt{font-size:11px; color:var(--muted); letter-spacing:.08em}
+.meta dd{margin:0; font-family:var(--mono); font-size:17px; font-weight:500;
+  font-variant-numeric:tabular-nums; color:var(--ink)}
+.meta .unit{font-size:11px; color:var(--muted); font-family:var(--gothic)}
+
+/* ---- tabs ---- */
+nav{display:flex; gap:2px; margin-block:14px 20px; border-bottom:1px solid var(--line)}
+nav button{
+  appearance:none; background:none; border:0; border-bottom:2px solid transparent;
+  font-family:var(--gothic); font-size:13.5px; font-weight:500; color:var(--muted);
+  padding:9px 13px; cursor:pointer; margin-bottom:-1px; letter-spacing:.04em
+}
+nav button[aria-selected="true"]{color:var(--kon-ink); border-bottom-color:var(--kon)}
+nav button:hover{color:var(--ink)}
+nav button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
+
+/* ---- question sheet ---- */
+.sheet{
+  background:var(--sheet); border:1px solid var(--line); border-radius:3px;
+  box-shadow:var(--shadow); padding:22px 22px 20px
+}
+.sheet-head{
+  display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center;
+  padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line-soft)
+}
+.tag{
+  font-size:11px; letter-spacing:.1em; color:var(--muted); font-family:var(--mono)
+}
+.tag.field{
+  font-family:var(--gothic); color:var(--kon-ink); background:var(--kon-soft);
+  padding:2px 8px; border-radius:2px; letter-spacing:.04em; font-weight:500
+}
+.rail{display:flex; gap:5px; margin-left:auto}
+.rail i{
+  width:16px; height:5px; background:var(--line); border-radius:1px; display:block
+}
+.rail i.done{background:var(--kon)}
+.rail i.now{background:var(--ink)}
+
+.qtype{font-size:11.5px; color:var(--muted); letter-spacing:.08em; margin:0 0 10px}
+.qtext{
+  font-family:var(--mincho); font-size:17.5px; line-height:2.0;
+  margin:0 0 6px; letter-spacing:.015em; white-space:pre-wrap
+}
+.qsub{font-size:13px; color:var(--muted); margin:12px 0 0}
+
+/* ---- answer controls ---- */
+.ox{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px}
+.ox button{
+  appearance:none; cursor:pointer; background:var(--sheet-2);
+  border:1px solid var(--line); border-radius:3px; padding:16px 0;
+  font-family:var(--mincho); font-size:30px; line-height:1; color:var(--ink);
+  transition:background .12s, border-color .12s
+}
+.ox button:hover{background:var(--kon-soft); border-color:var(--kon)}
+.ox button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.ox button small{display:block; font-family:var(--gothic); font-size:11px;
+  color:var(--muted); margin-top:7px; letter-spacing:.1em}
+
+.choices{display:flex; flex-direction:column; gap:8px; margin-top:18px}
+.choices button{
+  appearance:none; cursor:pointer; text-align:left; background:var(--sheet-2);
+  border:1px solid var(--line); border-radius:3px; padding:11px 14px;
+  font-family:var(--gothic); font-size:14.5px; line-height:1.7; color:var(--ink);
+  display:flex; gap:11px; align-items:baseline
+}
+.choices button:hover{background:var(--kon-soft); border-color:var(--kon)}
+.choices button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.choices b{font-family:var(--mono); font-size:12px; color:var(--muted); font-weight:500}
+
+.blanks{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:18px}
+.blanks label{display:flex; flex-direction:column; gap:5px; font-size:11.5px;
+  color:var(--muted); letter-spacing:.1em}
+.blanks select{
+  font-family:var(--gothic); font-size:14px; padding:8px 9px; color:var(--ink);
+  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px; width:100%
+}
+textarea{
+  width:100%; margin-top:16px; min-height:96px; resize:vertical;
+  font-family:var(--mincho); font-size:16px; line-height:1.9; color:var(--ink);
+  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px;
+  padding:12px 13px
+}
+textarea:focus-visible,select:focus-visible{outline:2px solid var(--kon); outline-offset:1px}
+.counter{
+  font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right;
+  margin-top:5px; font-variant-numeric:tabular-nums
+}
+.counter.good{color:var(--ok)}
+
+.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:16px}
+.btn{
+  appearance:none; cursor:pointer; font-family:var(--gothic); font-size:13.5px;
+  font-weight:500; padding:9px 17px; border-radius:3px; border:1px solid var(--kon);
+  background:var(--kon); color:#fff; letter-spacing:.04em
+}
+.btn.ghost{background:transparent; color:var(--kon-ink); border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--kon)}
+.btn:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.btn[disabled]{opacity:.45; cursor:default}
+
+/* ---- verdict / explanation ---- */
+.verdict{
+  margin-top:20px; border-top:1px solid var(--line-soft); padding-top:18px
+}
+.mark{
+  display:inline-flex; align-items:center; gap:9px; font-family:var(--mincho);
+  font-size:15px; padding:5px 13px; border-radius:2px; letter-spacing:.06em
+}
+.mark.ok{background:var(--ok-soft); color:var(--ok)}
+.mark.ng{background:var(--ng-soft); color:var(--ng)}
+.mark span{font-size:21px; line-height:1}
+.answer{font-family:var(--mincho); font-size:16px; margin:14px 0 0; line-height:1.9}
+.exp{font-size:14px; line-height:1.95; color:var(--ink-2); margin:12px 0 0}
+.ref{
+  font-family:var(--mono); font-size:12px; color:var(--muted); margin:11px 0 0;
+  padding-left:11px; border-left:2px solid var(--line)
+}
+.grade{
+  margin-top:14px; padding:13px 14px; background:var(--sheet-2);
+  border:1px solid var(--line-soft); border-radius:3px; font-size:13.5px;
+  line-height:1.9; color:var(--ink-2); white-space:pre-wrap
+}
+.selfmark{display:flex; gap:9px; margin-top:16px; align-items:center; flex-wrap:wrap}
+.selfmark span{font-size:12px; color:var(--muted)}
+
+/* ---- done panel ---- */
+.done-panel{text-align:center; padding:34px 20px}
+.done-panel .big{
+  font-family:var(--mincho); font-size:40px; line-height:1.2; margin:0;
+  font-variant-numeric:tabular-nums
+}
+.done-panel p{color:var(--muted); font-size:13.5px; margin:10px 0 0}
+
+/* ---- plan strip ---- */
+.plan{margin-top:22px}
+.plan-head{
+  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
+  padding-bottom:7px; border-bottom:1px solid var(--line)
+}
+.plan-head h3{
+  font-family:var(--mincho); font-weight:600; font-size:14px; margin:0; letter-spacing:.04em
+}
+.plan-head span{font-size:11.5px; color:var(--muted)}
+.plan-head .gauge{
+  flex:1 1 90px; min-width:90px; height:3px; background:var(--line-soft); border-radius:2px
+}
+.plan-head .gauge i{display:block; height:100%; background:var(--kon); border-radius:2px}
+.plan ol{list-style:none; margin:0; padding:0}
+.plan li button{
+  appearance:none; background:none; border:0; cursor:pointer; width:100%; text-align:left;
+  display:grid; grid-template-columns:62px 1fr auto; gap:12px; align-items:baseline;
+  padding:8px 4px; border-bottom:1px solid var(--line-soft); font-family:var(--gothic);
+  font-size:13px; color:var(--ink-2)
+}
+.plan li button:hover{background:var(--kon-soft)}
+.plan li button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
+.plan li .d{font-family:var(--mono); font-size:12px; color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.plan li .n{font-family:var(--mono); font-size:11.5px; color:var(--faint)}
+.plan li.is-now button{color:var(--ink); font-weight:500; background:var(--kon-soft)}
+.plan li.is-now .d{color:var(--kon-ink)}
+.plan li.is-done .d::after{content:"　済"; font-family:var(--gothic); color:var(--ok)}
+
+/* ---- records ---- */
+.bars{display:flex; flex-direction:column; gap:0; margin-top:6px}
+.bar-row{
+  display:grid; grid-template-columns:1fr 62px; gap:12px; align-items:center;
+  padding:9px 0; border-bottom:1px solid var(--line-soft)
+}
+.bar-row:last-child{border-bottom:0}
+.bar-name{font-size:13px; color:var(--ink-2)}
+.track{height:4px; background:var(--line-soft); border-radius:2px; margin-top:5px}
+.track i{display:block; height:100%; background:var(--kon); border-radius:2px}
+.track i.weak{background:var(--ng)}
+.bar-num{
+  font-family:var(--mono); font-size:13px; text-align:right; color:var(--muted);
+  font-variant-numeric:tabular-nums
+}
+.bar-num em{font-style:normal; color:var(--ink); font-size:15px}
+
+h2{
+  font-family:var(--mincho); font-weight:600; font-size:17px; margin:30px 0 4px;
+  letter-spacing:.03em
+}
+h2:first-child{margin-top:4px}
+.note{font-size:12.5px; color:var(--muted); margin:4px 0 14px; line-height:1.8}
+.fields{display:grid; grid-template-columns:repeat(auto-fill,minmax(152px,1fr)); gap:8px}
+.fields button{
+  appearance:none; cursor:pointer; text-align:left; background:var(--sheet);
+  border:1px solid var(--line); border-radius:3px; padding:11px 13px;
+  font-family:var(--gothic); font-size:13.5px; color:var(--ink); line-height:1.5
+}
+.fields button:hover{border-color:var(--kon); background:var(--kon-soft)}
+.fields button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
+.fields small{display:block; font-family:var(--mono); font-size:11px;
+  color:var(--muted); margin-top:4px; font-variant-numeric:tabular-nums}
+footer{
+  margin-top:34px; padding-top:16px; border-top:1px solid var(--line);
+  font-size:11.5px; color:var(--faint); line-height:1.9
+}
+.linkish{
+  appearance:none; background:none; border:0; padding:0; cursor:pointer;
+  font:inherit; color:var(--muted); text-decoration:underline
+}
+.hide{display:none !important}
+@media (max-width:420px){
+  h1{font-size:21px}
+  .qtext{font-size:16.5px; line-height:1.95}
+  .blanks{grid-template-columns:1fr}
+  .sheet{padding:18px 15px 16px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">令和9年度 行政書士試験</p>
+  <h1>毎日一問一答</h1>
+  <dl class="meta">
+    <div><dt>本試験まで</dt><dd id="m-days">—</dd><dd class="unit">日</dd></div>
+    <div><dt>連続</dt><dd id="m-streak">0</dd><dd class="unit">日</dd></div>
+    <div><dt>解いた問題</dt><dd id="m-seen">0</dd><dd class="unit">／336</dd></div>
+    <div><dt>正答率</dt><dd id="m-rate">—</dd><dd class="unit">％</dd></div>
+  </dl>
+</header>
+
+<nav role="tablist">
+  <button id="tab-today" role="tab" aria-selected="true" aria-controls="view-today">今日の問題</button>
+  <button id="tab-field" role="tab" aria-selected="false" aria-controls="view-field">分野別</button>
+  <button id="tab-rec" role="tab" aria-selected="false" aria-controls="view-rec">記録</button>
+</nav>
+
+<section id="view-today" role="tabpanel" aria-labelledby="tab-today"></section>
+<section id="view-field" role="tabpanel" aria-labelledby="tab-field" class="hide"></section>
+<section id="view-rec" role="tabpanel" aria-labelledby="tab-rec" class="hide"></section>
+
+<footer>
+  学習用の教材です。公式の過去問ではありません。出題の根拠となる法令は試験年度の4月1日現在施行のもの、
+  試験日程は一般財団法人行政書士試験研究センターの発表で確認してください。<br>
+  <button class="linkish" id="reset">学習記録を消去する</button>
+</footer>
+</div>
+
+<script id="qdata" type="application/json">{"days":[{"no":1,"kind":"drill","title":"基礎法学","ids":["KIS-001","KIS-002","KIS-003","KIS-004","KIS-005"]},{"no":2,"kind":"drill","title":"基礎法学","ids":["KIS-006","KIS-007","KIS-008","KIS-009","KIS-010"]},{"no":3,"kind":"drill","title":"基礎法学 / 憲法","ids":["KIS-011","KIS-012","KEN-001","KEN-002","KEN-003"]},{"no":4,"kind":"drill","title":"憲法","ids":["KEN-004","KEN-005","KEN-006","KEN-007","KEN-008"]},{"no":5,"kind":"drill","title":"憲法","ids":["KEN-009","KEN-010","KEN-011","KEN-012","KEN-013"]},{"no":6,"kind":"drill","title":"憲法","ids":["KEN-014","KEN-015","KEN-016","KEN-017","KEN-018"]},{"no":7,"kind":"review","title":"週末チェック","ids":["KJT-001","TSN-001","KIS-001","KIS-011","KEN-009"]},{"no":8,"kind":"drill","title":"憲法","ids":["KEN-019","KEN-020","KEN-021","KEN-022","KEN-023"]},{"no":9,"kind":"drill","title":"憲法","ids":["KEN-024","KEN-025","KEN-026","KEN-027","KEN-028"]},{"no":10,"kind":"drill","title":"憲法","ids":["KEN-029","KEN-030","KEN-031","KEN-032","KEN-033"]},{"no":11,"kind":"drill","title":"憲法","ids":["KEN-034","KEN-035","KEN-036","KEN-037","KEN-038"]},{"no":12,"kind":"drill","title":"憲法","ids":["KEN-039","KEN-040","KEN-041","KEN-042","KEN-043"]},{"no":13,"kind":"drill","title":"憲法 / 行政法総論","ids":["KEN-044","KEN-045","GYS-001","GYS-002","GYS-003"]},{"no":14,"kind":"review","title":"週末チェック","ids":["KJT-002","TSN-002","KEN-019","KEN-029","KEN-039"]},{"no":15,"kind":"drill","title":"行政法総論","ids":["GYS-004","GYS-005","GYS-006","GYS-007","GYS-008"]},{"no":16,"kind":"drill","title":"行政法総論","ids":["GYS-009","GYS-010","GYS-011","GYS-012","GYS-013"]},{"no":17,"kind":"drill","title":"行政法総論","ids":["GYS-014","GYS-015","GYS-016","GYS-017","GYS-018"]},{"no":18,"kind":"drill","title":"行政法総論 / 行政手続法","ids":["GYS-019","GYS-020","GYS-021","GYS-022","TTZ-001"]},{"no":19,"kind":"drill","title":"行政手続法","ids":["TTZ-002","TTZ-003","TTZ-004","TTZ-005","TTZ-006"]},{"no":20,"kind":"drill","title":"行政手続法","ids":["TTZ-007","TTZ-008","TTZ-009","TTZ-010","TTZ-011"]},{"no":21,"kind":"review","title":"週末チェック","ids":["KJT-003","TSN-003","GYS-004","GYS-014","TTZ-002"]},{"no":22,"kind":"drill","title":"行政手続法","ids":["TTZ-012","TTZ-013","TTZ-014","TTZ-015","TTZ-016"]},{"no":23,"kind":"drill","title":"行政手続法 / 行政不服審査法","ids":["TTZ-017","TTZ-018","TTZ-019","TTZ-020","FFK-001"]},{"no":24,"kind":"drill","title":"行政不服審査法","ids":["FFK-002","FFK-003","FFK-004","FFK-005","FFK-006"]},{"no":25,"kind":"drill","title":"行政不服審査法","ids":["FFK-007","FFK-008","FFK-009","FFK-010","FFK-011"]},{"no":26,"kind":"drill","title":"行政不服審査法","ids":["FFK-012","FFK-013","FFK-014","FFK-015","FFK-016"]},{"no":27,"kind":"drill","title":"行政不服審査法 / 行政事件訴訟法","ids":["FFK-017","FFK-018","JKS-001","JKS-002","JKS-003"]},{"no":28,"kind":"review","title":"週末チェック","ids":["KJT-004","TSN-004","TTZ-012","FFK-002","FFK-012"]},{"no":29,"kind":"drill","title":"行政事件訴訟法","ids":["JKS-004","JKS-005","JKS-006","JKS-007","JKS-008"]},{"no":30,"kind":"drill","title":"行政事件訴訟法","ids":["JKS-009","JKS-010","JKS-011","JKS-012","JKS-013"]},{"no":31,"kind":"drill","title":"行政事件訴訟法","ids":["JKS-014","JKS-015","JKS-016","JKS-017","JKS-018"]},{"no":32,"kind":"drill","title":"行政事件訴訟法 / 国家賠償・損失補償","ids":["JKS-019","JKS-020","KBS-001","KBS-002","KBS-003"]},{"no":33,"kind":"drill","title":"国家賠償・損失補償","ids":["KBS-004","KBS-005","KBS-006","KBS-007","KBS-008"]},{"no":34,"kind":"drill","title":"国家賠償・損失補償 / 地方自治法","ids":["KBS-009","KBS-010","KBS-011","KBS-012","CHJ-001"]},{"no":35,"kind":"review","title":"週末チェック","ids":["KJT-005","TSN-005","JKS-004","JKS-014","KBS-004"]},{"no":36,"kind":"drill","title":"地方自治法","ids":["CHJ-002","CHJ-003","CHJ-004","CHJ-005","CHJ-006"]},{"no":37,"kind":"drill","title":"地方自治法","ids":["CHJ-007","CHJ-008","CHJ-009","CHJ-010","CHJ-011"]},{"no":38,"kind":"drill","title":"地方自治法","ids":["CHJ-012","CHJ-013","CHJ-014","CHJ-015","CHJ-016"]},{"no":39,"kind":"drill","title":"地方自治法 / 民法（総則・物権）","ids":["CHJ-017","CHJ-018","MSB-001","MSB-002","MSB-003"]},{"no":40,"kind":"drill","title":"民法（総則・物権）","ids":["MSB-004","MSB-005","MSB-006","MSB-007","MSB-008"]},{"no":41,"kind":"drill","title":"民法（総則・物権）","ids":["MSB-009","MSB-010","MSB-011","MSB-012","MSB-013"]},{"no":42,"kind":"review","title":"週末チェック","ids":["KJT-006","TSN-006","CHJ-002","CHJ-012","MSB-004"]},{"no":43,"kind":"drill","title":"民法（総則・物権）","ids":["MSB-014","MSB-015","MSB-016","MSB-017","MSB-018"]},{"no":44,"kind":"drill","title":"民法（総則・物権）","ids":["MSB-019","MSB-020","MSB-021","MSB-022","MSB-023"]},{"no":45,"kind":"drill","title":"民法（総則・物権）","ids":["MSB-024","MSB-025","MSB-026","MSB-027","MSB-028"]},{"no":46,"kind":"drill","title":"民法（総則・物権） / 民法（債権）","ids":["MSB-029","MSB-030","MSK-001","MSK-002","MSK-003"]},{"no":47,"kind":"drill","title":"民法（債権）","ids":["MSK-004","MSK-005","MSK-006","MSK-007","MSK-008"]},{"no":48,"kind":"drill","title":"民法（債権）","ids":["MSK-009","MSK-010","MSK-011","MSK-012","MSK-013"]},{"no":49,"kind":"review","title":"週末チェック","ids":["KJT-007","MSB-014","MSB-024","MSK-004"]},{"no":50,"kind":"drill","title":"民法（債権）","ids":["MSK-014","MSK-015","MSK-016","MSK-017","MSK-018"]},{"no":51,"kind":"drill","title":"民法（債権）","ids":["MSK-019","MSK-020","MSK-021","MSK-022","MSK-023"]},{"no":52,"kind":"drill","title":"民法（債権）","ids":["MSK-024","MSK-025","MSK-026","MSK-027","MSK-028"]},{"no":53,"kind":"drill","title":"民法（債権） / 民法（親族・相続）","ids":["MSK-029","MSK-030","MSS-001","MSS-002","MSS-003"]},{"no":54,"kind":"drill","title":"民法（親族・相続）","ids":["MSS-004","MSS-005","MSS-006","MSS-007","MSS-008"]},{"no":55,"kind":"drill","title":"民法（親族・相続）","ids":["MSS-009","MSS-010","MSS-011","MSS-012","MSS-013"]},{"no":56,"kind":"review","title":"週末チェック","ids":["KJT-008","MSK-014","MSK-024","MSS-004"]},{"no":57,"kind":"drill","title":"民法（親族・相続） / 商法・会社法","ids":["MSS-014","MSS-015","MSS-016","SHO-001","SHO-002"]},{"no":58,"kind":"drill","title":"商法・会社法","ids":["SHO-003","SHO-004","SHO-005","SHO-006","SHO-007"]},{"no":59,"kind":"drill","title":"商法・会社法","ids":["SHO-008","SHO-009","SHO-010","SHO-011","SHO-012"]},{"no":60,"kind":"drill","title":"商法・会社法","ids":["SHO-013","SHO-014","SHO-015","SHO-016","SHO-017"]},{"no":61,"kind":"drill","title":"商法・会社法","ids":["SHO-018","SHO-019","SHO-020","SHO-021","SHO-022"]},{"no":62,"kind":"drill","title":"商法・会社法 / 基礎知識（行政書士法等）","ids":["SHO-023","SHO-024","GSH-001","GSH-002","GSH-003"]},{"no":63,"kind":"review","title":"週末チェック","ids":["KJT-009","MSS-014","SHO-008","SHO-018"]},{"no":64,"kind":"drill","title":"基礎知識（行政書士法等）","ids":["GSH-004","GSH-005","GSH-006","GSH-007","GSH-008"]},{"no":65,"kind":"drill","title":"基礎知識（行政書士法等）","ids":["GSH-009","GSH-010","GSH-011","GSH-012","GSH-013"]},{"no":66,"kind":"drill","title":"基礎知識（行政書士法等） / 基礎知識（情報通信・個人情報保護）","ids":["GSH-014","GSH-015","GSH-016","JHK-001","JHK-002"]},{"no":67,"kind":"drill","title":"基礎知識（情報通信・個人情報保護）","ids":["JHK-003","JHK-004","JHK-005","JHK-006","JHK-007"]},{"no":68,"kind":"drill","title":"基礎知識（情報通信・個人情報保護）","ids":["JHK-008","JHK-009","JHK-010","JHK-011","JHK-012"]},{"no":69,"kind":"drill","title":"基礎知識（情報通信・個人情報保護） / 基礎知識（一般知識）","ids":["JHK-013","JHK-014","JHK-015","JHK-016","IPN-001"]},{"no":70,"kind":"review","title":"週末チェック","ids":["KJT-010","GSH-004","GSH-014","JHK-008"]},{"no":71,"kind":"drill","title":"基礎知識（一般知識）","ids":["IPN-002","IPN-003","IPN-004","IPN-005","IPN-006"]},{"no":72,"kind":"drill","title":"基礎知識（一般知識）","ids":["IPN-007","IPN-008","IPN-009","IPN-010","IPN-011"]},{"no":73,"kind":"drill","title":"基礎知識（一般知識） / 基礎知識（文章理解）","ids":["IPN-012","IPN-013","IPN-014","BNR-001","BNR-002"]},{"no":74,"kind":"drill","title":"基礎知識（文章理解）","ids":["BNR-003","BNR-004","BNR-005"]},{"no":75,"kind":"review","title":"記述式・多肢選択式 総仕上げ","ids":["KJT-011","KJT-012"]}],"questions":[{"id":"KIS-001","topic":"法の分類","type":"ox","q":"一般法と特別法が競合する場合、一般法が特別法に優先して適用される。","a":false,"exp":"逆である。特別法は一般法に優先する（特別法優先の原理）。たとえば民法（一般法）と商法（特別法）では商法が優先して適用される。","ref":"特別法優先の原理","field":"基礎法学"},{"id":"KIS-002","topic":"法の分類","type":"ox","q":"公法と私法の区別において、行政事件訴訟法が定める当事者訴訟は、公法上の法律関係に関する訴訟である。","a":true,"exp":"行政事件訴訟法4条の当事者訴訟は「公法上の法律関係に関する訴訟」であり、公法私法二分論の名残をとどめる制度である。","ref":"行政事件訴訟法4条","field":"基礎法学"},{"id":"KIS-003","topic":"法源","type":"ox","q":"政令には、法律の委任がある場合を除き、罰則を設けることができない。","a":true,"exp":"憲法73条6号ただし書は「政令には、特にその法律の委任がある場合を除いては、罰則を設けることができない」と定める。","ref":"憲法73条6号ただし書","field":"基礎法学"},{"id":"KIS-004","topic":"法源","type":"ox","q":"公の秩序または善良の風俗に反しない慣習は、法令の規定により認められたものまたは法令に規定されていない事項に関するものに限り、法律と同一の効力を有する。","a":true,"exp":"法の適用に関する通則法3条の内容である。慣習法が成文法を補充する形で法源となることを示す。","ref":"法の適用に関する通則法3条","field":"基礎法学"},{"id":"KIS-005","topic":"裁判制度","type":"ox","q":"最高裁判所が従前の自らの判例を変更するには、大法廷で裁判しなければならない。","a":true,"exp":"裁判所法10条3号により、憲法違反の判断をする場合と判例変更をする場合は小法廷では裁判できず、大法廷の審理を要する。","ref":"裁判所法10条","field":"基礎法学"},{"id":"KIS-006","topic":"裁判制度","type":"ox","q":"民事訴訟において簡易裁判所が第一審となった事件の控訴審は、高等裁判所が担当する。","a":false,"exp":"民事では簡易裁判所が第一審の場合、控訴審は地方裁判所、上告審は高等裁判所となる。なお刑事では簡裁が第一審でも控訴審は高裁である。","ref":"裁判所法16条・24条","field":"基礎法学"},{"id":"KIS-007","topic":"裁判制度","type":"ox","q":"内乱罪に関する訴訟は、高等裁判所が第一審となる。","a":true,"exp":"裁判所法16条4号により、内乱に関する罪の訴訟は高等裁判所が第一審の裁判権を有する（三審制の例外で二審制となる）。","ref":"裁判所法16条4号","field":"基礎法学"},{"id":"KIS-008","topic":"法令用語","type":"ox","q":"法令上「みなす」とされた場合、反証を挙げてその効果を覆すことができる。","a":false,"exp":"「みなす」は反証を許さず法的効果を確定させる。反証によって覆せるのは「推定する」である。","ref":"法令用語","field":"基礎法学"},{"id":"KIS-009","topic":"法令用語","type":"ox","q":"法令上の「善意」とは、ある事実を知らないことをいい、道徳的な善し悪しとは関係がない。","a":true,"exp":"法令用語の「善意」は不知、「悪意」は知っていることを意味する。倫理的評価とは無関係である。","ref":"法令用語","field":"基礎法学"},{"id":"KIS-010","topic":"法令用語","type":"ox","q":"「A、Bその他のC」という表記では、AとBはCの例示であり、Cに含まれる。","a":true,"exp":"「その他の」は包括的例示で前の語が後の語に含まれる。これに対し「その他」は並列で、前後の語は対等の関係に立つ。","ref":"法令用語","field":"基礎法学"},{"id":"KIS-011","topic":"法の効力","type":"ox","q":"実行の時に適法であった行為について、事後に制定された法律により刑事上の責任を問うことは憲法上許されない。","a":true,"exp":"憲法39条前段が遡及処罰を禁止している（事後法の禁止）。一事不再理・二重処罰の禁止も同条が定める。","ref":"憲法39条","field":"基礎法学"},{"id":"KIS-012","topic":"紛争解決","type":"ox","q":"裁判外紛争解決手続の利用の促進に関する法律に基づく認証紛争解決手続によって紛争が解決しなかった場合、一定の要件の下で時効の完成猶予の効力が認められる。","a":true,"exp":"ADR法25条により、認証紛争解決手続の実施の依頼をし、解決に至らず1か月以内に訴えを提起したときは、依頼時に訴えの提起があったものとみなされ、時効の完成猶予が認められる。","ref":"ADR法25条","field":"基礎法学"},{"id":"KEN-001","topic":"人権総論","type":"ox","q":"外国人にも権利の性質上日本国民のみを対象とすると解されるものを除き人権の保障が及ぶが、外国人の政治活動の自由は在留制度の枠内で与えられているにすぎない。","a":true,"exp":"マクリーン事件。在留期間の更新の際に、在留中の合憲・合法な政治活動を消極的な事情として考慮することも許されるとした。","ref":"最大判昭53.10.4（マクリーン事件）","field":"憲法"},{"id":"KEN-002","topic":"人権総論","type":"ox","q":"永住者等の定住外国人に地方公共団体の選挙権を法律で付与することは、憲法上禁止されている。","a":false,"exp":"憲法上保障されてはいないが、法律で付与することは憲法上禁止されているものではないとした（許容説）。","ref":"最判平7.2.28","field":"憲法"},{"id":"KEN-003","topic":"人権総論","type":"ox","q":"地方公共団体が管理職選考の受験資格を日本国籍を有する職員に限ることは、憲法14条1項に違反する。","a":false,"exp":"東京都管理職試験事件。公権力行使等地方公務員への昇任が想定される管理職選考について国籍要件を設けることは、合理的な理由に基づく区別であり14条1項に違反しないとした。","ref":"最大判平17.1.26","field":"憲法"},{"id":"KEN-004","topic":"人権総論","type":"ox","q":"会社は、自然人と等しく国や政党の特定の政策を支持・推進するために政治資金を寄附する自由を有する。","a":true,"exp":"八幡製鉄事件。会社は自然人たる国民と同様、国や政党の特定の政策を支持、推進しまたは反対するなどの政治的行為をなす自由を有するとした。","ref":"最大判昭45.6.24（八幡製鉄事件）","field":"憲法"},{"id":"KEN-005","topic":"人権総論","type":"ox","q":"税理士会が政治団体に寄付するために会員から特別会費を徴収する旨の決議は、税理士会の目的の範囲外の行為であり無効である。","a":true,"exp":"南九州税理士会事件。強制加入団体であることを重視し、政治献金は目的の範囲外とした。他方、群馬司法書士会が震災復興支援拠出金を寄付する決議は目的の範囲内とされた（最判平14.4.25）。","ref":"最判平8.3.19（南九州税理士会事件）","field":"憲法"},{"id":"KEN-006","topic":"私人間効力","type":"ox","q":"憲法の人権規定は私人相互の関係を直接規律するものではなく、私的自治に対する一般的制限規定である民法1条、90条等の適切な運用によって調整を図るべきである。","a":true,"exp":"三菱樹脂事件。いわゆる間接適用説に立つ判示である。企業が特定の思想信条を理由に雇入れを拒んでも当然に違法とはいえないとした。","ref":"最大判昭48.12.12（三菱樹脂事件）","field":"憲法"},{"id":"KEN-007","topic":"幸福追求権","type":"ox","q":"何人も、その承諾なしにみだりに容ぼう・姿態を撮影されない自由を有するが、犯罪捜査上の必要があり、証拠保全の必要性・緊急性があって、その方法が相当な場合には、令状がなくても撮影は許される。","a":true,"exp":"京都府学連事件。憲法13条から肖像権的利益を導きつつ、現行犯的状況等の要件の下で無令状撮影を許容した。","ref":"最大判昭44.12.24（京都府学連事件）","field":"憲法"},{"id":"KEN-008","topic":"幸福追求権","type":"ox","q":"住民基本台帳ネットワークシステムによる本人確認情報の管理・利用は、個人に関する情報をみだりに第三者に開示・公表されない自由を侵害し憲法13条に違反する。","a":false,"exp":"住基ネット訴訟。本人確認情報は個人の内面に関わる秘匿性の高い情報とはいえず、法令等による保護措置も講じられているとして13条に違反しないとした。","ref":"最判平20.3.6（住基ネット訴訟）","field":"憲法"},{"id":"KEN-009","topic":"平等","type":"ox","q":"尊属殺人に関する旧刑法200条を違憲とした判例は、尊属に対する加重処罰という立法目的そのものが不合理であることを理由とした。","a":false,"exp":"多数意見は立法目的自体は合理性を欠くとはいえないとしつつ、法定刑が死刑または無期懲役に限られる点で目的達成の手段として著しく不合理であるとして違憲とした。","ref":"最大判昭48.4.4","field":"憲法"},{"id":"KEN-010","topic":"平等","type":"ox","q":"嫡出でない子の相続分を嫡出子の2分の1とする民法の規定は、遅くとも平成13年7月当時において憲法14条1項に違反していたとされた。","a":true,"exp":"最高裁は家族形態の多様化等の変化を踏まえ、当該規定を違憲と判断した。これを受けて民法900条4号ただし書前段は削除された。","ref":"最大決平25.9.4","field":"憲法"},{"id":"KEN-011","topic":"平等","type":"ox","q":"女性にのみ6か月の再婚禁止期間を課していた民法の規定について、最高裁はその全部を違憲と判断した。","a":false,"exp":"父性推定の重複を回避するための100日の部分は合理性があるが、100日を超える部分は合理性を欠き違憲とした。なお同規定はその後改正され、現在は再婚禁止期間自体が廃止されている。","ref":"最大判平27.12.16","field":"憲法"},{"id":"KEN-012","topic":"平等","type":"ox","q":"夫婦が婚姻の際に定めるところに従い夫または妻の氏を称すると定める民法750条は、憲法24条に違反しないとされた。","a":true,"exp":"平成27年大法廷判決および令和3年大法廷決定のいずれも合憲と判断し、制度のあり方は国会で論ぜられ判断されるべき事柄であるとした。","ref":"最大判平27.12.16、最大決令3.6.23","field":"憲法"},{"id":"KEN-013","topic":"思想・良心の自由","type":"ox","q":"名誉毀損の加害者に対し、裁判所が単に事態の真相を告白し陳謝の意を表明する程度の謝罪広告を命じることは、良心の自由を侵害し違憲である。","a":false,"exp":"謝罪広告事件。単に事態の真相を告白し陳謝の意を表明するにとどまる程度のものであれば代替執行も可能であり、良心の自由を侵害しないとした。","ref":"最大判昭31.7.4","field":"憲法"},{"id":"KEN-014","topic":"思想・良心の自由","type":"ox","q":"公立学校の式典において教員に国歌斉唱の際の起立斉唱を命じる職務命令は、個人の歴史観・世界観を直ちに否定するものではないが、思想・良心の自由についての間接的な制約となる面がある。","a":true,"exp":"最高裁は間接的制約を認めつつ、制約を許容しうる程度の必要性・合理性があるとして職務命令を合憲とした。","ref":"最判平23.5.30","field":"憲法"},{"id":"KEN-015","topic":"信教の自由","type":"ox","q":"信仰上の理由から剣道実技の履修を拒否した学生に対し代替措置を一切考慮せずに退学処分をした校長の措置は、裁量権の範囲を超える違法なものとされた。","a":true,"exp":"神戸高専剣道実技拒否事件。信教の自由への配慮として代替措置を検討することが政教分離に反するともいえないとした。","ref":"最判平8.3.8","field":"憲法"},{"id":"KEN-016","topic":"政教分離","type":"ox","q":"県が靖國神社等に対し玉串料等を公金から支出した行為は、その目的が宗教的意義をもち、その効果が特定の宗教に対する援助・助長・促進になると認められ、憲法20条3項に違反する。","a":true,"exp":"愛媛玉串料訴訟。目的効果基準により違憲とされた初の最高裁判決である。これに対し津地鎮祭事件（最大判昭52.7.13）は合憲とした。","ref":"最大判平9.4.2（愛媛玉串料訴訟）","field":"憲法"},{"id":"KEN-017","topic":"政教分離","type":"ox","q":"市が孔子等を祀る施設の敷地の使用料を全額免除した行為は、憲法20条3項に違反しないとされた。","a":false,"exp":"孔子廟訴訟。最高裁は施設の性格、免除の経緯・態様等の諸般の事情を考慮し、社会通念に照らして総合的に判断した上で違憲とした。空知太神社事件（最大判平22.1.20）も同様の判断枠組みで違憲とした。","ref":"最大判令3.2.24（孔子廟訴訟）","field":"憲法"},{"id":"KEN-018","topic":"表現の自由","type":"ox","q":"憲法21条2項前段にいう検閲とは、行政権が主体となって、思想内容等の表現物を対象とし、その全部または一部の発表の禁止を目的として、対象とされる表現物を網羅的一般的に発表前に審査し、不適当と認めるものの発表を禁止することをいう。","a":true,"exp":"税関検査事件の定義である。検閲は絶対的に禁止されるが、この定義に当てはまらない税関検査や裁判所による出版差止めの仮処分は検閲に当たらない。","ref":"最大判昭59.12.12（税関検査事件）","field":"憲法"},{"id":"KEN-019","topic":"表現の自由","type":"ox","q":"裁判所が名誉侵害を理由に出版物の事前差止めを命じる仮処分は検閲に当たらないが、その対象が公務員または公職選挙の候補者に対する評価等に関するものである場合には、原則として許されない。","a":true,"exp":"北方ジャーナル事件。例外的に、表現内容が真実でなくまたは専ら公益を図る目的のものでないことが明白であって、かつ被害者が重大で著しく回復困難な損害を被るおそれがあるときに限り差止めが許される。","ref":"最大判昭61.6.11（北方ジャーナル事件）","field":"憲法"},{"id":"KEN-020","topic":"表現の自由","type":"ox","q":"報道機関の報道の自由は憲法21条の保障のもとにあり、取材の自由も21条の精神に照らし十分尊重に値する。","a":true,"exp":"博多駅テレビフィルム提出命令事件。取材の自由は「十分尊重に値する」とされるにとどまり、公正な裁判の実現のため一定の制約を受けうる。","ref":"最大決昭44.11.26（博多駅事件）","field":"憲法"},{"id":"KEN-021","topic":"表現の自由","type":"ox","q":"公共施設である市民会館の使用許可申請に対し、集会が開かれることによって人の生命・身体・財産が侵害され公共の安全が損なわれる明らかな差し迫った危険の発生が具体的に予見される場合には、不許可とすることが許される。","a":true,"exp":"泉佐野市民会館事件。単なる危険性の抽象的なおそれでは足りず、明白かつ現在の危険に近い厳格な基準を要求した。","ref":"最判平7.3.7（泉佐野市民会館事件）","field":"憲法"},{"id":"KEN-022","topic":"学問の自由","type":"ox","q":"大学において学生が行う集会が、真に学問的な研究またはその結果の発表のためのものでなく、実社会の政治的社会的活動に当たる場合、大学の有する学問の自由と自治は享有しない。","a":true,"exp":"東大ポポロ事件。学生の集会が政治的社会的活動である以上、警察官の立入りも大学の自治を侵すものではないとした。","ref":"最大判昭38.5.22（東大ポポロ事件）","field":"憲法"},{"id":"KEN-023","topic":"経済的自由","type":"ox","q":"薬局開設の距離制限規定について、最高裁は、国民の生命・健康に対する危険の防止という消極的・警察的目的の規制であるとしたうえで、必要かつ合理的な規制とはいえないとして違憲とした。","a":true,"exp":"薬事法距離制限違憲判決。これに対し小売市場距離制限事件（最大判昭47.11.22）は、積極的な社会経済政策目的の規制につき明白の原則を用いて合憲とした。","ref":"最大判昭50.4.30","field":"憲法"},{"id":"KEN-024","topic":"財産権","type":"ox","q":"共有林について持分価額2分の1以下の共有者に分割請求を認めなかった森林法の規定は、森林の細分化を防止して森林経営の安定を図るという立法目的との関係で合理性・必要性があり合憲とされた。","a":false,"exp":"森林法共有林事件。最高裁は立法目的との間に合理的関連性がなく、規制手段として必要な限度を超えるとして違憲とした。","ref":"最大判昭62.4.22","field":"憲法"},{"id":"KEN-025","topic":"財産権","type":"ox","q":"ため池の堤とうでの耕作を禁止する条例による制限は、財産権を有する者が当然受忍しなければならない責務であり、憲法29条3項の損失補償を必要としない。","a":true,"exp":"奈良県ため池条例事件。災害防止という社会生活上やむを得ない制約であり、補償なしに条例で制限できるとした。","ref":"最大判昭38.6.26（奈良県ため池条例事件）","field":"憲法"},{"id":"KEN-026","topic":"人身の自由","type":"ox","q":"憲法31条の定める法定手続の保障は行政手続には一切及ばない。","a":false,"exp":"成田新法事件。行政手続についても、その性質上当然に31条の保障の枠外にあるわけではないとしつつ、常に事前の告知・弁解・防御の機会を与えることが必要とはいえないとした。","ref":"最大判平4.7.1（成田新法事件）","field":"憲法"},{"id":"KEN-027","topic":"人身の自由","type":"ox","q":"車両に使用者の承諾なく秘かにGPS端末を取り付けて位置情報を検索・把握する捜査は、任意捜査として令状なしに行うことができる。","a":false,"exp":"最高裁は、私的領域に侵入する捜査手法であり個人の意思を制圧して憲法の保障する重要な法的利益を侵害するものとして強制の処分に当たり、令状がなければ行うことができないとした。","ref":"最大判平29.3.15（GPS捜査事件）","field":"憲法"},{"id":"KEN-028","topic":"社会権","type":"ox","q":"憲法25条1項は国の責務を宣言したにとどまり、直接個々の国民に対して具体的権利を賦与したものではない。","a":true,"exp":"朝日訴訟。何が健康で文化的な最低限度の生活かの認定判断は厚生大臣の合目的的な裁量に委ねられるとした。堀木訴訟（最大判昭57.7.7）も広範な立法裁量を認めた。","ref":"最大判昭42.5.24（朝日訴訟）","field":"憲法"},{"id":"KEN-029","topic":"社会権","type":"ox","q":"子どもの教育内容を決定する権能は親および教師に全面的に帰属し、国は教育内容に関与することが一切許されない。","a":false,"exp":"旭川学力テスト事件。国は必要かつ相当と認められる範囲において教育内容についても決定する権能を有するが、子どもの自由かつ独立の人格として成長することを妨げるような介入は許されないとした。","ref":"最大判昭51.5.21（旭川学テ事件）","field":"憲法"},{"id":"KEN-030","topic":"参政権","type":"ox","q":"在外国民に対して国政選挙における選挙権の行使を認めていなかった公職選挙法の規定は違憲とされたが、最高裁判所裁判官の国民審査については在外国民の審査権を認めない立法不作為は合憲とされた。","a":false,"exp":"在外邦人選挙権訴訟（最大判平17.9.14）が違憲としたのに続き、在外国民審査権訴訟（最大判令4.5.25）も、在外国民に審査権の行使を全く認めていないことは憲法15条1項、79条2項等に違反するとした。","ref":"最大判令4.5.25","field":"憲法"},{"id":"KEN-031","topic":"国会","type":"ox","q":"憲法41条にいう「国権の最高機関」とは、国会が内閣や裁判所に対して法的に優越する地位にあることを意味する。","a":false,"exp":"通説は政治的美称説に立ち、国民の代表機関として国政の中心的地位を占めることを強調した政治的美称にすぎないと解する。","ref":"憲法41条","field":"憲法"},{"id":"KEN-032","topic":"国会","type":"ox","q":"予算について参議院が衆議院と異なった議決をした場合、両院協議会を開いても意見が一致しないときは、衆議院の議決が国会の議決となる。","a":true,"exp":"憲法60条2項。参議院が受け取った後30日以内に議決しないときも同様である。条約の承認（61条）・内閣総理大臣の指名（67条2項、ただし10日以内）も同様の仕組みである。","ref":"憲法60条2項","field":"憲法"},{"id":"KEN-033","topic":"国会","type":"ox","q":"いずれかの議院の総議員の4分の1以上の要求があれば、内閣は臨時会の召集を決定しなければならない。","a":true,"exp":"憲法53条後段。なお参議院の緊急集会は内閣のみが求めることができ、そこで採られた措置は次の国会開会後10日以内に衆議院の同意がない場合には効力を失う（54条3項）。","ref":"憲法53条","field":"憲法"},{"id":"KEN-034","topic":"国会","type":"ox","q":"国会議員は、院外における現行犯の場合を除いて、会期中は逮捕されず、会期前に逮捕された議員は、その議院の要求があれば会期中これを釈放しなければならない。","a":true,"exp":"憲法50条および国会法33条。院外の現行犯のほか、その議院の許諾がある場合も逮捕できる。","ref":"憲法50条、国会法33条","field":"憲法"},{"id":"KEN-035","topic":"国会","type":"ox","q":"国会議員が議院で行った演説・討論・表決について院外で責任を問われないとする免責特権により、所属議院による懲罰も免れる。","a":false,"exp":"憲法51条の免責は院外での民事・刑事責任等を対象とし、議院内部の懲罰権（58条2項）や政党による責任追及は及ばない。","ref":"憲法51条・58条2項","field":"憲法"},{"id":"KEN-036","topic":"内閣","type":"ox","q":"内閣総理大臣は、任意に国務大臣を罷免することができるが、その際には閣議の決定を経なければならない。","a":false,"exp":"憲法68条2項により内閣総理大臣は任意に国務大臣を罷免できる。閣議決定は不要であり、内閣総理大臣の専権である。","ref":"憲法68条2項","field":"憲法"},{"id":"KEN-037","topic":"内閣","type":"ox","q":"内閣は、衆議院で不信任決議案が可決されたときは、10日以内に衆議院が解散されない限り、総辞職をしなければならない。","a":true,"exp":"憲法69条。このほか内閣総理大臣が欠けたとき、衆議院議員総選挙後に初めて国会の召集があったときも総辞職する（70条）。","ref":"憲法69条・70条","field":"憲法"},{"id":"KEN-038","topic":"統治行為","type":"ox","q":"衆議院の解散のような直接国家統治の基本に関する高度に政治性のある国家行為については、裁判所の審査権が及ばない。","a":true,"exp":"苫米地事件。統治行為論を正面から認めた判例である。砂川事件（最大判昭34.12.16）も日米安全保障条約について一見極めて明白に違憲無効でない限り司法審査の範囲外とした。","ref":"最大判昭35.6.8（苫米地事件）","field":"憲法"},{"id":"KEN-039","topic":"裁判所","type":"ox","q":"最高裁判所は、具体的な事件を離れて抽象的に法律等が憲法に適合するかを判断する権限を有する。","a":false,"exp":"警察予備隊違憲訴訟。わが国の違憲審査制は具体的事件を前提とする付随的審査制であり、抽象的審査は認められないとした。","ref":"最大判昭27.10.8（警察予備隊違憲訴訟）","field":"憲法"},{"id":"KEN-040","topic":"裁判所","type":"ox","q":"大学が行う単位授与（認定）行為は、一般市民法秩序と直接の関係を有しない内部的な問題であるから、特段の事情のない限り司法審査の対象とならない。","a":true,"exp":"富山大学事件。部分社会の法理の適用例である。他方、専攻科修了の認定は一般市民法秩序に関わるとして司法審査の対象とされた。","ref":"最判昭52.3.15（富山大学事件）","field":"憲法"},{"id":"KEN-041","topic":"裁判所","type":"ox","q":"裁判官は、公の弾劾によらなければ罷免されないが、心身の故障のために職務を執ることができないと裁判により決定された場合も罷免される。","a":true,"exp":"憲法78条。行政機関は裁判官の懲戒処分を行うことができない。最高裁判所裁判官には国民審査による罷免もある（79条2項・3項）。","ref":"憲法78条","field":"憲法"},{"id":"KEN-042","topic":"財政","type":"ox","q":"市町村が行う国民健康保険の保険料は、憲法84条にいう租税に当たるため、その賦課要件はすべて条例で明確に定めなければならない。","a":false,"exp":"旭川市国民健康保険条例事件。保険料は対価性があり租税には当たらないが、賦課徴収の強制の度合いに照らし84条の趣旨が及ぶとしたうえで、賦課要件の一部を告示に委任することも許されるとした。","ref":"最大判平18.3.1","field":"憲法"},{"id":"KEN-043","topic":"財政","type":"ox","q":"予見し難い予算の不足に充てるため国会の議決に基づいて予備費を設けることができるが、その支出については事後に国会の承諾を得なければならない。","a":true,"exp":"憲法87条。承諾が得られなくても支出自体の法的効力は失われないが、内閣の政治的責任が生じる。","ref":"憲法87条","field":"憲法"},{"id":"KEN-044","topic":"地方自治","type":"ox","q":"条例が国の法令に違反するかどうかは、両者の対象事項と規定文言を対比するのみでなく、それぞれの趣旨、目的、内容および効果を比較して矛盾抵触があるかどうかによって決すべきである。","a":true,"exp":"徳島市公安条例事件。法令と同一目的でも法令が全国一律の規制を施す趣旨でない場合や、目的が異なる場合には上乗せ・横出し条例も許される。","ref":"最大判昭50.9.10（徳島市公安条例事件）","field":"憲法"},{"id":"KEN-045","topic":"憲法改正","type":"ox","q":"憲法改正は、各議院の出席議員の3分の2以上の賛成で国会が発議し、国民投票において過半数の賛成を得なければならない。","a":false,"exp":"憲法96条1項は「各議院の総議員の三分の二以上の賛成」と定める。出席議員ではない点に注意。","ref":"憲法96条1項","field":"憲法"},{"id":"GYS-001","topic":"法律による行政","type":"ox","q":"法律の留保に関する侵害留保説によれば、国民の権利を制限し義務を課す行政作用には法律の根拠が必要であるが、給付行政には必ずしも法律の根拠を要しない。","a":true,"exp":"侵害留保説は実務上の通説的立場である。これに対し全部留保説、権力留保説、重要事項留保説（本質性理論）などの見解がある。","ref":"法律による行政の原理","field":"行政法総論"},{"id":"GYS-002","topic":"行政組織","type":"ox","q":"権限の委任があった場合、委任を受けた者が自己の名と責任で権限を行使し、委任した行政庁はその権限を失う。","a":true,"exp":"委任は権限が移動する点で、権限が移動しない代理や専決・代決と区別される。委任には法律の根拠が必要である。","ref":"権限の委任","field":"行政法総論"},{"id":"GYS-003","topic":"行政組織","type":"ox","q":"専決は、補助機関が行政庁の名で権限を行使するものであり、対外的には行政庁の行為として現れる。","a":true,"exp":"専決・代決は行政内部の事務処理方式にすぎず、法律の根拠を要しない。対外的な権限の帰属に変動はない。","ref":"専決・代決","field":"行政法総論"},{"id":"GYS-004","topic":"行政立法","type":"ox","q":"法規命令のうち委任命令は、法律の委任に基づいて国民の権利義務に関する新たな定めをするものであり、委任の範囲を超えた部分は無効となる。","a":true,"exp":"銃砲刀剣類登録規則事件、医薬品ネット販売規制事件など、委任の範囲の逸脱を理由に省令を違法・無効とした判例がある。","ref":"委任命令","field":"行政法総論"},{"id":"GYS-005","topic":"行政立法","type":"ox","q":"通達は行政組織内部における命令にすぎず、原則として国民に対する法的拘束力を有さないから、通達そのものの取消しを求める訴えは原則として不適法である。","a":true,"exp":"墓地埋葬法通達事件。通達は行政規則であり原則として処分性を欠く。ただし通達に基づく取扱いによって具体的な不利益が生じる場合は、当該処分を争うことになる。","ref":"最判昭43.12.24（墓地埋葬法通達事件）","field":"行政法総論"},{"id":"GYS-006","topic":"行政行為","type":"ox","q":"行政行為に瑕疵があっても、それが重大かつ明白でない限り、権限ある機関が取り消すまでは有効なものとして扱われる。","a":true,"exp":"公定力の説明である。重大かつ明白な瑕疵がある場合は無効となり、公定力も出訴期間の制限も及ばない。","ref":"公定力・無効の瑕疵","field":"行政法総論"},{"id":"GYS-007","topic":"行政行為","type":"ox","q":"課税処分に対する取消訴訟を提起せずに、直ちに国家賠償請求訴訟を提起して当該課税処分の違法を主張することはできない。","a":false,"exp":"最高裁は、行政処分が違法であることを理由とする国家賠償請求をするについて、あらかじめ当該行政処分の取消しまたは無効確認の判決を得る必要はないとしている。","ref":"最判昭36.4.21","field":"行政法総論"},{"id":"GYS-008","topic":"行政行為","type":"ox","q":"行政行為の職権取消しは行為時に遡って効力を失わせるのに対し、撤回は将来に向かって効力を失わせるのが原則である。","a":true,"exp":"取消しは原始的瑕疵を理由とし遡及効を有する。撤回は後発的事情を理由とし将来効を有する。撤回は処分庁のみが行いうる。","ref":"取消しと撤回","field":"行政法総論"},{"id":"GYS-009","topic":"行政行為","type":"ox","q":"授益的行政行為の撤回には、常に法律上の明文の根拠が必要である。","a":false,"exp":"菊田医師事件において最高裁は、実子あっせん行為を行った医師の優生保護法指定医師の指定について、法令上の直接の明文がなくても撤回しうるとした。","ref":"最判昭63.6.17（菊田医師事件）","field":"行政法総論"},{"id":"GYS-010","topic":"行政行為の附款","type":"ox","q":"行政行為の附款のうち、行政行為の効力の発生を将来発生することが確実な事実にかからしめるものを条件という。","a":false,"exp":"発生が確実な事実にかからしめるものは期限である。発生が不確実な事実にかからしめるものが条件である。ほかに負担、撤回権の留保、法律効果の一部除外がある。","ref":"行政行為の附款","field":"行政法総論"},{"id":"GYS-011","topic":"瑕疵の治癒・違法性の承継","type":"ox","q":"先行する行政行為の違法性が後行の行政行為に承継されるのは、両者が結合して一つの法効果の実現を目指す場合である。","a":true,"exp":"安全認定と建築確認の関係について違法性の承継を認めたたぬきの森事件（最判平21.12.17）がある。課税処分と滞納処分のように目的を異にする場合は承継されない。","ref":"違法性の承継","field":"行政法総論"},{"id":"GYS-012","topic":"行政裁量","type":"ox","q":"行政庁の裁量処分については、裁量権の範囲を超えまたはその濫用があった場合に限り、裁判所はこれを取り消すことができる。","a":true,"exp":"行政事件訴訟法30条の内容である。判断過程の合理性審査（日光太郎杉事件）や社会観念審査（神戸税関事件）などの審査手法がある。","ref":"行政事件訴訟法30条","field":"行政法総論"},{"id":"GYS-013","topic":"行政上の強制執行","type":"ox","q":"行政代執行の対象となるのは他人が代わってなすことのできる作為義務であり、金銭納付義務や不作為義務は直接の対象とならない。","a":true,"exp":"行政代執行法2条。不作為義務については、法令等により代替的作為義務に転換されない限り代執行はできない。","ref":"行政代執行法2条","field":"行政法総論"},{"id":"GYS-014","topic":"行政上の強制執行","type":"ox","q":"代執行を行うには、原則としてあらかじめ相当の履行期限を定めて戒告し、その期限までに履行がないときは代執行令書により通知しなければならない。","a":true,"exp":"行政代執行法3条1項・2項。非常の場合または危険切迫の場合で緊急の必要があるときは、これらの手続を経ないことができる（同条3項）。","ref":"行政代執行法3条","field":"行政法総論"},{"id":"GYS-015","topic":"行政上の強制執行","type":"ox","q":"代執行に要した費用は、国税滞納処分の例により強制徴収することができる。","a":true,"exp":"行政代執行法6条1項。費用について義務者に納付を命じ（5条）、納付がないときは強制徴収する。","ref":"行政代執行法5条・6条","field":"行政法総論"},{"id":"GYS-016","topic":"行政上の強制執行","type":"ox","q":"執行罰は、義務の履行があるまで反復して科すことができる。","a":true,"exp":"執行罰は将来の義務履行を強制する手段であり、一事不再理は妥当せず反復科料が可能である。現行法上は砂防法36条に例が残るのみである。","ref":"砂防法36条","field":"行政法総論"},{"id":"GYS-017","topic":"即時強制","type":"ox","q":"即時強制は、あらかじめ義務を命じることなく直接に身体・財産に実力を行使するものであり、義務の存在を前提としない点で強制執行と異なる。","a":true,"exp":"消防法29条の破壊消防、警察官職務執行法3条の保護などが例である。","ref":"即時強制","field":"行政法総論"},{"id":"GYS-018","topic":"行政罰","type":"ox","q":"行政刑罰と秩序罰としての過料は、目的・性質を異にするため、同一の行為に対して併科しても憲法39条に違反しない。","a":true,"exp":"最高裁は、行政刑罰と過料の併科は二重処罰の禁止に反しないとしている。なお条例違反の過料は地方公共団体の長が行政処分として科す。","ref":"最判昭39.6.5","field":"行政法総論"},{"id":"GYS-019","topic":"行政指導","type":"ox","q":"行政指導は相手方の任意の協力によって実現されるものであるから、これに従わなかったことを理由に不利益な取扱いをしてはならない。","a":true,"exp":"行政手続法32条2項。品川マンション事件（最判昭60.7.16）は、任意の協力を得られない場合に建築確認を留保し続けることは国家賠償法上違法となりうるとした。","ref":"行政手続法32条2項","field":"行政法総論"},{"id":"GYS-020","topic":"行政契約","type":"ox","q":"地方公共団体が水道事業者として給水契約の締結を拒むことは、正当の理由がある場合に限られる。","a":true,"exp":"水道法15条1項。志免町給水拒否事件（最判平11.1.21）は、水道需要の著しい増加を招くマンション建設に対する給水拒否に正当の理由があるとした。","ref":"水道法15条1項","field":"行政法総論"},{"id":"GYS-021","topic":"行政調査","type":"ox","q":"質問検査権の行使にあたり、裁判官の令状を要しないとすることは、刑事責任追及を目的とするものでない限り、憲法35条に違反しない。","a":true,"exp":"川崎民商事件。ただし実質上刑事責任追及のための資料収集に直接結びつく作用を一般的に有する場合には、令状主義の保障が及びうる。","ref":"最大判昭47.11.22（川崎民商事件）","field":"行政法総論"},{"id":"GYS-022","topic":"情報公開","type":"ox","q":"行政機関情報公開法に基づく開示請求は、日本国民に限られ、外国人は請求することができない。","a":false,"exp":"同法3条は「何人も」開示を請求することができると定めており、国籍・住所・年齢を問わない。法人も請求できる。","ref":"行政機関情報公開法3条","field":"行政法総論"},{"id":"TTZ-001","topic":"総則","type":"ox","q":"行政手続法は、処分、行政指導、届出および命令等制定の手続に関する共通的事項を定めるが、行政計画の策定手続については定めていない。","a":true,"exp":"行政手続法1条1項が対象とするのは処分・行政指導・届出・命令等制定手続の4つである。行政契約・行政計画・行政調査の手続は対象外である。","ref":"行政手続法1条","field":"行政手続法"},{"id":"TTZ-002","topic":"適用除外","type":"ox","q":"地方公共団体の機関がする処分のうち、その根拠となる規定が条例・規則に置かれているものには、行政手続法の処分に関する規定は適用されない。","a":true,"exp":"行政手続法3条3項。根拠が法律に置かれている処分には適用される。届出も同様である。行政指導と命令等制定手続については、地方公共団体の機関がするものは一律に適用除外となる。","ref":"行政手続法3条3項","field":"行政手続法"},{"id":"TTZ-003","topic":"適用除外","type":"ox","q":"行政手続法の適用が除外される処分について、地方公共団体は行政手続条例を定める努力義務を負う。","a":true,"exp":"行政手続法46条は、この法律の規定の趣旨にのっとり必要な措置を講ずるよう努めなければならないと定める。","ref":"行政手続法46条","field":"行政手続法"},{"id":"TTZ-004","topic":"申請に対する処分","type":"ox","q":"行政庁は、申請により求められた許認可等をするかどうかを法令の定めに従って判断するために必要とされる審査基準を定めなければならず、これは法的義務である。","a":true,"exp":"行政手続法5条1項。公にしておくことも義務である（同条3項）。これに対し標準処理期間の設定は努力義務で、定めた場合の公表は義務である（6条）。","ref":"行政手続法5条・6条","field":"行政手続法"},{"id":"TTZ-005","topic":"申請に対する処分","type":"ox","q":"申請が形式上の要件に適合しない場合、行政庁は申請を受理せずに返戻することができる。","a":false,"exp":"行政手続法7条は到達主義を採り、申請が事務所に到達したときは遅滞なく審査を開始しなければならないとする。形式上の要件に適合しないときは、相当の期間を定めて補正を求めるか、許認可等を拒否しなければならない。","ref":"行政手続法7条","field":"行政手続法"},{"id":"TTZ-006","topic":"申請に対する処分","type":"ox","q":"申請により求められた許認可等を拒否する処分をする場合、行政庁は原則として同時にその理由を示さなければならない。","a":true,"exp":"行政手続法8条1項。法令に定められた許認可等の要件が数量的指標等で明確に定められ、申請書の記載等から明らかなときは理由の提示を要しないが、この場合も要求があれば示さなければならない。","ref":"行政手続法8条","field":"行政手続法"},{"id":"TTZ-007","topic":"申請に対する処分","type":"ox","q":"行政庁は、申請者以外の者の利害を考慮すべきことが法令において許認可等の要件とされているものを行う場合には、必要に応じ公聴会の開催等により申請者以外の者の意見を聴く機会を設けるよう努めなければならない。","a":true,"exp":"行政手続法10条。努力義務である点に注意。","ref":"行政手続法10条","field":"行政手続法"},{"id":"TTZ-008","topic":"申請に対する処分","type":"ox","q":"行政庁は、申請の処理をするにあたり、他の行政庁において同一の申請者からされた関連する申請が審査中であることをもって、自らすべき許認可等をするかどうかの審査または判断を殊更に遅延させてはならない。","a":true,"exp":"行政手続法11条1項。複数の行政庁が関与する場合の相互の連絡・迅速処理の規定である。","ref":"行政手続法11条","field":"行政手続法"},{"id":"TTZ-009","topic":"不利益処分","type":"ox","q":"行政庁は、不利益処分をするかどうかを法令の定めに従って判断するために必要とされる処分基準を定め、これを公にしておかなければならない。","a":false,"exp":"行政手続法12条1項は処分基準の設定・公表をいずれも努力義務としている。審査基準が義務であるのと対照的である。","ref":"行政手続法12条1項","field":"行政手続法"},{"id":"TTZ-010","topic":"不利益処分","type":"ox","q":"許認可等を取り消す不利益処分をしようとする場合には、弁明の機会の付与の手続を執らなければならない。","a":false,"exp":"行政手続法13条1項1号イにより、許認可等を取り消す不利益処分をしようとするときは聴聞の手続を執らなければならない。弁明の機会の付与は聴聞以外の場合である。","ref":"行政手続法13条","field":"行政手続法"},{"id":"TTZ-011","topic":"不利益処分","type":"ox","q":"名あて人の資格または地位を直接にはく奪する不利益処分をしようとするときは、聴聞を行わなければならない。","a":true,"exp":"行政手続法13条1項1号ロ。ほかに、法人の役員等の解任を命じる処分（同号ハ）や、行政庁が相当と認めるとき（同号ニ）も聴聞による。","ref":"行政手続法13条1項1号","field":"行政手続法"},{"id":"TTZ-012","topic":"聴聞","type":"ox","q":"聴聞の当事者または参加人は、聴聞の通知があった時から聴聞が終結する時までの間、行政庁に対し、当該事案についてした調査の結果に係る調書その他の当該不利益処分の原因となる事実を証する資料の閲覧を求めることができる。","a":true,"exp":"行政手続法18条1項（文書等の閲覧）。行政庁は第三者の利益を害するおそれがあるときその他正当な理由があるときでなければ閲覧を拒めない。","ref":"行政手続法18条","field":"行政手続法"},{"id":"TTZ-013","topic":"聴聞","type":"ox","q":"聴聞は、行政庁が指名する職員その他政令で定める者が主宰し、当事者は主宰者に対し質問を発することができる。","a":false,"exp":"前段は正しい（19条1項）。当事者は主宰者の許可を得て行政庁の職員に対して質問を発することができる（20条2項）のであり、主宰者に対してではない。","ref":"行政手続法19条・20条","field":"行政手続法"},{"id":"TTZ-014","topic":"聴聞","type":"ox","q":"聴聞を経てされた不利益処分については、行政不服審査法による審査請求をすることができない。","a":true,"exp":"行政手続法27条。慎重な事前手続を経ているため事後の審査請求が制限される。ただし取消訴訟の提起は妨げられない。","ref":"行政手続法27条","field":"行政手続法"},{"id":"TTZ-015","topic":"弁明の機会の付与","type":"ox","q":"弁明は、行政庁が口頭ですることを認めたときを除き、弁明を記載した書面を提出してする。","a":true,"exp":"行政手続法29条1項。弁明手続は書面審理が原則である点で、口頭主義を基本とする聴聞と異なる。","ref":"行政手続法29条1項","field":"行政手続法"},{"id":"TTZ-016","topic":"行政指導","type":"ox","q":"行政指導に携わる者は、その相手方に対して、当該行政指導の趣旨および内容ならびに責任者を明確に示さなければならない。","a":true,"exp":"行政手続法35条1項。行政指導が口頭でされた場合、相手方から書面の交付を求められたときは、行政上特別の支障がない限り交付しなければならない（同条3項）。","ref":"行政手続法35条","field":"行政手続法"},{"id":"TTZ-017","topic":"行政指導","type":"ox","q":"法令に違反する行為の是正を求める行政指導の相手方は、当該行政指導が法律に規定する要件に適合しないと思料するときは、行政指導をした行政機関に対し、その中止その他必要な措置をとることを求めることができる。","a":true,"exp":"行政手続法36条の2（行政指導の中止等の求め）。平成26年改正で新設された。法令に違反する行為の是正を求める行政指導で、その根拠となる規定が法律に置かれているものが対象である。","ref":"行政手続法36条の2","field":"行政手続法"},{"id":"TTZ-018","topic":"処分等の求め","type":"ox","q":"何人も、法令に違反する事実がある場合において、その是正のためにされるべき処分または行政指導がされていないと思料するときは、当該処分をする権限を有する行政庁等に対し、その旨を申し出て処分等をすることを求めることができる。","a":true,"exp":"行政手続法36条の3（処分等の求め）。申出を受けた行政庁等は必要な調査を行い、必要があると認めるときは処分等をしなければならない。","ref":"行政手続法36条の3","field":"行政手続法"},{"id":"TTZ-019","topic":"意見公募手続","type":"ox","q":"命令等制定機関は、命令等を定めようとする場合には、当該命令等の案および関連資料をあらかじめ公示し、意見の提出先および意見の提出のための期間を定めて広く一般の意見を求めなければならず、その期間は原則として公示の日から30日以上でなければならない。","a":true,"exp":"行政手続法39条。30日以上の期間を定めることができないやむを得ない理由があるときは、理由を明らかにして短縮できる（40条1項）。","ref":"行政手続法39条・40条","field":"行政手続法"},{"id":"TTZ-020","topic":"意見公募手続","type":"ox","q":"命令等制定機関は、意見公募手続を実施して命令等を定めた場合には、当該命令等の公布と同時期に、提出意見および提出意見を考慮した結果とその理由を公示しなければならない。","a":true,"exp":"行政手続法43条1項。意見公募手続を実施しなかった場合も、その旨および理由を公示しなければならない（同条4項・5項）。","ref":"行政手続法43条","field":"行政手続法"},{"id":"FFK-001","topic":"総則","type":"ox","q":"行政不服審査法の目的には、国民の権利利益の救済のほか、行政の適正な運営を確保することが含まれる。","a":true,"exp":"行政不服審査法1条1項。簡易迅速かつ公正な手続の下で国民の権利利益の救済を図るとともに、行政の適正な運営を確保することを目的とする。","ref":"行政不服審査法1条","field":"行政不服審査法"},{"id":"FFK-002","topic":"不服申立ての種類","type":"ox","q":"行政庁の処分に不服がある者は、原則として審査請求をすることができ、再調査の請求や再審査請求は個別法に定めがある場合に限り認められる。","a":true,"exp":"平成26年全部改正により審査請求への一元化が図られた。再調査の請求（5条）・再審査請求（6条）は法律に定めがある場合にのみ可能である。","ref":"行政不服審査法2条・5条・6条","field":"行政不服審査法"},{"id":"FFK-003","topic":"審査庁","type":"ox","q":"処分庁に上級行政庁がない場合、審査請求は原則として当該処分庁に対してする。","a":true,"exp":"行政不服審査法4条1号。上級行政庁があるときは最上級行政庁が審査庁となるのが原則である（同条4号）。","ref":"行政不服審査法4条","field":"行政不服審査法"},{"id":"FFK-004","topic":"対象","type":"ox","q":"行政庁の不作為についても、法令に基づき行政庁に対して処分についての申請をした者に限り、審査請求をすることができる。","a":true,"exp":"行政不服審査法3条。不作為についての審査請求ができるのは申請をした者だけであり、処分についての審査請求のように「不服がある者」一般には広がらない。","ref":"行政不服審査法3条","field":"行政不服審査法"},{"id":"FFK-005","topic":"審査請求期間","type":"ox","q":"処分についての審査請求は、正当な理由があるときを除き、処分があったことを知った日の翌日から起算して3か月を経過したときはすることができない。","a":true,"exp":"行政不服審査法18条1項。また処分があった日の翌日から起算して1年を経過したときもできない（同条2項）。再調査の請求は3か月・1年である。不作為についての審査請求には期間の制限がない。","ref":"行政不服審査法18条","field":"行政不服審査法"},{"id":"FFK-006","topic":"審査請求の方式","type":"ox","q":"審査請求は、他の法律または条例に口頭ですることができる旨の定めがある場合を除き、書面でしなければならない。","a":true,"exp":"行政不服審査法19条1項。書面主義が原則である。","ref":"行政不服審査法19条1項","field":"行政不服審査法"},{"id":"FFK-007","topic":"審理員","type":"ox","q":"審査庁は、審査請求がされたときは、審査庁に所属する職員のうちから審理手続を行う者を指名しなければならないが、処分に関与した者を指名することはできない。","a":true,"exp":"行政不服審査法9条1項・2項。審理員制度は平成26年改正で導入された審理の公正性確保の仕組みである。","ref":"行政不服審査法9条","field":"行政不服審査法"},{"id":"FFK-008","topic":"審理員","type":"ox","q":"行政不服審査会等が審査庁となる場合や、条例に基づく処分について地方公共団体の議会の議決を経て行われる処分の場合など、審理員による審理手続の規定が適用されない場合がある。","a":true,"exp":"行政不服審査法9条1項ただし書に適用除外が列挙されている。","ref":"行政不服審査法9条1項ただし書","field":"行政不服審査法"},{"id":"FFK-009","topic":"審理手続","type":"ox","q":"審査請求人または参加人の申立てがあった場合には、審理員は、当該申立てをした者に口頭で審査請求に係る事件に関する意見を述べる機会を与えなければならない。","a":true,"exp":"行政不服審査法31条1項。当該申立人の所在その他の事情により当該意見を述べる機会を与えることが困難であると認められる場合を除く。口頭意見陳述は審理関係人を招集してする（同条2項）。","ref":"行政不服審査法31条","field":"行政不服審査法"},{"id":"FFK-010","topic":"審理手続","type":"ox","q":"口頭意見陳述において、申立人は審理員の許可を得て処分庁等に対し質問を発することができる。","a":true,"exp":"行政不服審査法31条5項。平成26年改正で明文化された対審的構造の一つである。","ref":"行政不服審査法31条5項","field":"行政不服審査法"},{"id":"FFK-011","topic":"審理手続","type":"ox","q":"審査請求人または参加人は、審理手続が終結するまでの間、審理員に対し提出書類等の閲覧または写しの交付を求めることができる。","a":true,"exp":"行政不服審査法38条1項。旧法では閲覧のみであったが、改正により写しの交付も認められるようになった。","ref":"行政不服審査法38条","field":"行政不服審査法"},{"id":"FFK-012","topic":"執行停止","type":"ox","q":"審査請求は、処分の効力、処分の執行または手続の続行を妨げない。","a":true,"exp":"行政不服審査法25条1項が定める執行不停止の原則である。行政事件訴訟法25条1項と同じ立場である。","ref":"行政不服審査法25条1項","field":"行政不服審査法"},{"id":"FFK-013","topic":"執行停止","type":"ox","q":"処分庁の上級行政庁または処分庁のいずれでもない審査庁は、審査請求人の申立てがなくても職権で執行停止をすることができる。","a":false,"exp":"行政不服審査法25条3項により、処分庁の上級行政庁でも処分庁でもない審査庁は、審査請求人の申立てがあった場合に限り執行停止をすることができ、職権による執行停止はできない。また処分の効力等以外の措置をとることもできない。","ref":"行政不服審査法25条2項・3項","field":"行政不服審査法"},{"id":"FFK-014","topic":"執行停止","type":"ox","q":"審査請求人の申立てがあった場合において、処分、処分の執行または手続の続行により生ずる重大な損害を避けるために緊急の必要があると認めるときは、審査庁は原則として執行停止をしなければならない。","a":true,"exp":"行政不服審査法25条4項の義務的執行停止。ただし公共の福祉に重大な影響を及ぼすおそれがあるとき、または本案について理由がないとみえるときはこの限りでない。","ref":"行政不服審査法25条4項","field":"行政不服審査法"},{"id":"FFK-015","topic":"裁決","type":"ox","q":"審査請求が不適法である場合、審査庁は裁決で当該審査請求を棄却する。","a":false,"exp":"不適法な審査請求は却下裁決となる（行政不服審査法45条1項）。理由がない場合が棄却（同条2項）である。","ref":"行政不服審査法45条","field":"行政不服審査法"},{"id":"FFK-016","topic":"裁決","type":"ox","q":"処分についての審査請求に理由がある場合であっても、処分を取り消すことが公共の福祉に適合しないと認めるときは、審査庁は裁決で当該審査請求を棄却することができ、この場合は裁決の主文で当該処分が違法または不当であることを宣言しなければならない。","a":true,"exp":"行政不服審査法45条3項の事情裁決である。行政事件訴訟法31条の事情判決に対応する。","ref":"行政不服審査法45条3項","field":"行政不服審査法"},{"id":"FFK-017","topic":"裁決","type":"ox","q":"審査庁が処分庁の上級行政庁または処分庁である場合、審査請求に理由があるときは、当該処分を変更することができるが、審査請求人の不利益に変更することはできない。","a":true,"exp":"行政不服審査法46条1項および48条（不利益変更の禁止）。なお上級行政庁でも処分庁でもない審査庁は、処分を変更することができない。","ref":"行政不服審査法46条・48条","field":"行政不服審査法"},{"id":"FFK-018","topic":"教示","type":"ox","q":"行政庁は、審査請求をすることができる処分を書面でする場合には、処分の相手方に対し、審査請求をすることができる旨、審査請求をすべき行政庁および審査請求をすることができる期間を書面で教示しなければならない。","a":true,"exp":"行政不服審査法82条1項。誤って教示した場合や教示しなかった場合の救済規定（22条・83条）も重要である。","ref":"行政不服審査法82条","field":"行政不服審査法"},{"id":"JKS-001","topic":"訴訟類型","type":"ox","q":"行政事件訴訟法が定める抗告訴訟には、処分の取消しの訴え、裁決の取消しの訴え、無効等確認の訴え、不作為の違法確認の訴え、義務付けの訴えおよび差止めの訴えの6類型がある。","a":true,"exp":"行政事件訴訟法3条。これらは法定抗告訴訟であり、これ以外に無名抗告訴訟（法定外抗告訴訟）が認められる余地がある。","ref":"行政事件訴訟法3条","field":"行政事件訴訟法"},{"id":"JKS-002","topic":"訴訟類型","type":"ox","q":"民衆訴訟および機関訴訟は、法律に定める場合において、法律に定める者に限り提起することができる。","a":true,"exp":"行政事件訴訟法42条。これらは客観訴訟であり、自己の法律上の利益に関わらない資格で提起する。住民訴訟や選挙訴訟が民衆訴訟の例である。","ref":"行政事件訴訟法42条","field":"行政事件訴訟法"},{"id":"JKS-003","topic":"処分性","type":"ox","q":"公共施設の管理者である行政機関等が行う開発許可に関する協議の同意の拒否は、抗告訴訟の対象となる処分に当たる。","a":false,"exp":"最判平7.3.23は、協議不同意は開発行為を禁止・制限する効果をもつものではないとして処分性を否定した。","ref":"最判平7.3.23","field":"行政事件訴訟法"},{"id":"JKS-004","topic":"処分性","type":"ox","q":"土地区画整理事業の事業計画の決定は、施行地区内の宅地所有者等の法的地位に直接的な影響を及ぼすものであり、抗告訴訟の対象となる処分に当たる。","a":true,"exp":"最大判平20.9.10は、いわゆる青写真判決（最大判昭41.2.23）を変更し、事業計画決定の処分性を認めた。","ref":"最大判平20.9.10","field":"行政事件訴訟法"},{"id":"JKS-005","topic":"処分性","type":"ox","q":"病院開設中止の勧告は、行政指導として定められているものであるから、抗告訴訟の対象となる処分には当たらない。","a":false,"exp":"最判平17.7.15は、勧告に従わない場合には相当程度の確実さをもって保険医療機関の指定を受けられなくなるという法的効果を重視し、処分性を認めた。","ref":"最判平17.7.15","field":"行政事件訴訟法"},{"id":"JKS-006","topic":"原告適格","type":"ox","q":"処分の取消しの訴えは、当該処分の取消しを求めるにつき法律上の利益を有する者に限り提起することができる。","a":true,"exp":"行政事件訴訟法9条1項。法律上の利益とは、当該処分により自己の権利もしくは法律上保護された利益を侵害されまたは必然的に侵害されるおそれのある者の利益をいう（法律上保護された利益説）。","ref":"行政事件訴訟法9条1項","field":"行政事件訴訟法"},{"id":"JKS-007","topic":"原告適格","type":"ox","q":"処分の相手方以外の者の原告適格を判断するにあたっては、当該処分の根拠となる法令の規定の文言のみによることなく、当該法令の趣旨・目的および当該処分において考慮されるべき利益の内容・性質を考慮しなければならない。","a":true,"exp":"行政事件訴訟法9条2項。平成16年改正で追加され、関係法令の趣旨・目的や侵害される利益の内容・性質、侵害の態様・程度も考慮するものとされた。小田急高架訴訟（最大判平17.12.7）が代表例である。","ref":"行政事件訴訟法9条2項","field":"行政事件訴訟法"},{"id":"JKS-008","topic":"訴えの利益","type":"ox","q":"建築確認の取消しを求める訴えは、当該建築工事が完了した後においても訴えの利益が失われない。","a":false,"exp":"最判昭59.10.26は、工事完了後は建築確認の有する法的効果が消滅するとして訴えの利益を否定した。これに対し土地改良事業施行認可については、原状回復が社会通念上不可能でも訴えの利益は失われないとされた（最判平4.1.24）。","ref":"最判昭59.10.26","field":"行政事件訴訟法"},{"id":"JKS-009","topic":"被告適格","type":"ox","q":"処分の取消しの訴えは、当該処分をした行政庁を被告として提起しなければならない。","a":false,"exp":"平成16年改正により、処分をした行政庁の所属する国または公共団体を被告とする（行政事件訴訟法11条1項）。行政庁を被告とするのは、国または公共団体に所属しない行政庁の場合である（同条2項）。","ref":"行政事件訴訟法11条","field":"行政事件訴訟法"},{"id":"JKS-010","topic":"出訴期間","type":"ox","q":"取消訴訟は、正当な理由があるときを除き、処分または裁決があったことを知った日から6か月を経過したときは提起することができない。","a":true,"exp":"行政事件訴訟法14条1項。また処分または裁決の日から1年を経過したときも提起できない（同条2項）。行政不服審査法の3か月・1年と混同しないこと。","ref":"行政事件訴訟法14条","field":"行政事件訴訟法"},{"id":"JKS-011","topic":"審査請求との関係","type":"ox","q":"処分の取消しの訴えは、法律に審査請求に対する裁決を経た後でなければ提起できない旨の定めがあるときを除き、審査請求をすることができる場合であっても直ちに提起することができる。","a":true,"exp":"行政事件訴訟法8条1項（自由選択主義）。審査請求前置が法定されている場合でも、審査請求から3か月を経過しても裁決がないとき等は直ちに出訴できる（同条2項）。","ref":"行政事件訴訟法8条","field":"行政事件訴訟法"},{"id":"JKS-012","topic":"原処分主義","type":"ox","q":"処分の取消しの訴えとその処分についての審査請求を棄却した裁決の取消しの訴えを提起できる場合、裁決の取消しの訴えにおいては処分の違法を理由として取消しを求めることができない。","a":true,"exp":"行政事件訴訟法10条2項（原処分主義）。裁決取消訴訟では裁決固有の瑕疵のみを主張できる。","ref":"行政事件訴訟法10条2項","field":"行政事件訴訟法"},{"id":"JKS-013","topic":"執行停止","type":"ox","q":"処分の取消しの訴えの提起があった場合において、処分により生ずる重大な損害を避けるため緊急の必要があるときは、裁判所は申立てにより執行停止をすることができるが、職権で執行停止をすることはできない。","a":true,"exp":"行政事件訴訟法25条2項。申立てが要件である。また処分の効力の停止は、処分の執行または手続の続行の停止によって目的を達することができる場合にはできない（同条2項ただし書）。","ref":"行政事件訴訟法25条","field":"行政事件訴訟法"},{"id":"JKS-014","topic":"内閣総理大臣の異議","type":"ox","q":"執行停止の決定があった後においても、内閣総理大臣は裁判所に対し異議を述べることができ、異議があったときは裁判所は執行停止をすることができず、既にした執行停止を取り消さなければならない。","a":true,"exp":"行政事件訴訟法27条。内閣総理大臣は異議に理由を付さなければならず、やむを得ない場合でなければ異議を述べてはならず、次の常会において国会に報告しなければならない。","ref":"行政事件訴訟法27条","field":"行政事件訴訟法"},{"id":"JKS-015","topic":"義務付け訴訟","type":"ox","q":"申請型義務付け訴訟は、当該申請または審査請求に対する不作為の違法確認の訴えまたは拒否処分の取消訴訟等を併合提起しなければならない。","a":true,"exp":"行政事件訴訟法37条の3第3項。非申請型（直接型）義務付け訴訟は、重大な損害を生ずるおそれがあり、かつ他に適当な方法がないときに限り提起できる（37条の2）。","ref":"行政事件訴訟法37条の2・37条の3","field":"行政事件訴訟法"},{"id":"JKS-016","topic":"差止訴訟","type":"ox","q":"差止めの訴えは、一定の処分または裁決がされることにより重大な損害を生ずるおそれがある場合に限り提起することができるが、その損害を避けるため他に適当な方法があるときはこの限りでない。","a":true,"exp":"行政事件訴訟法37条の4第1項。重大な損害の判断にあたっては、損害の回復の困難の程度を考慮し、損害の性質・程度および処分の内容・性質をも勘案する（同条2項）。","ref":"行政事件訴訟法37条の4","field":"行政事件訴訟法"},{"id":"JKS-017","topic":"仮の救済","type":"ox","q":"義務付けの訴えの提起があった場合、償うことのできない損害を避けるため緊急の必要があり、かつ本案について理由があるとみえるときは、裁判所は申立てにより仮の義務付けを命ずることができる。","a":true,"exp":"行政事件訴訟法37条の5第1項。仮の差止め（同条2項）も同様の要件である。執行停止の「重大な損害」より厳しい「償うことのできない損害」が要件である点に注意。","ref":"行政事件訴訟法37条の5","field":"行政事件訴訟法"},{"id":"JKS-018","topic":"判決の効力","type":"ox","q":"処分または裁決を取り消す判決は、第三者に対しても効力を有する。","a":true,"exp":"行政事件訴訟法32条1項（対世効・第三者効）。また取消判決は当事者たる行政庁その他の関係行政庁を拘束する（33条1項、拘束力）。","ref":"行政事件訴訟法32条・33条","field":"行政事件訴訟法"},{"id":"JKS-019","topic":"事情判決","type":"ox","q":"処分が違法であっても、これを取り消すことにより公の利益に著しい障害を生ずる場合において、原告の受ける損害の程度等一切の事情を考慮して取消しが公共の福祉に適合しないと認めるときは、裁判所は請求を棄却することができ、この場合は判決の主文において処分が違法であることを宣言しなければならない。","a":true,"exp":"行政事件訴訟法31条1項の事情判決である。無効等確認訴訟には準用されない。","ref":"行政事件訴訟法31条1項","field":"行政事件訴訟法"},{"id":"JKS-020","topic":"当事者訴訟","type":"ox","q":"公法上の法律関係に関する確認の訴えは、行政事件訴訟法上の当事者訴訟に含まれる。","a":true,"exp":"平成16年改正で4条に「公法上の法律関係に関する確認の訴え」が例示として明記された。在外邦人選挙権訴訟における地位確認が代表例である。","ref":"行政事件訴訟法4条","field":"行政事件訴訟法"},{"id":"KBS-001","topic":"国賠1条","type":"ox","q":"国家賠償法1条1項にいう「公権力の行使」には、行政指導のような非権力的作用も含まれるが、純粋な私経済作用や国家賠償法2条の対象となる作用は含まれない。","a":true,"exp":"判例・通説は広義説を採り、公立学校の教育活動なども公権力の行使に含める。私経済作用には民法715条が適用される。","ref":"国家賠償法1条1項","field":"国家賠償・損失補償"},{"id":"KBS-002","topic":"国賠1条","type":"ox","q":"公務員が職務の執行につき違法に他人に損害を加えた場合、被害者は当該公務員個人に対して直接損害賠償を請求することができる。","a":false,"exp":"最判昭30.4.19等は、公務員個人は被害者に対して直接責任を負わないとする。故意または重大な過失があるときに国・公共団体が求償できるにとどまる（国家賠償法1条2項）。","ref":"最判昭30.4.19","field":"国家賠償・損失補償"},{"id":"KBS-003","topic":"国賠1条","type":"ox","q":"公務員が主観的には自己の利益を図る意図で職務行為の外形を備える行為をした場合であっても、国または公共団体は損害賠償責任を負う。","a":true,"exp":"外形標準説（外形理論）。非番の警察官が制服を着用して強盗殺人を行った事件で責任を認めた（最判昭31.11.30）。","ref":"最判昭31.11.30","field":"国家賠償・損失補償"},{"id":"KBS-004","topic":"国賠1条","type":"ox","q":"国会議員の立法行為は、立法の内容が憲法の一義的な文言に違反しているにもかかわらず国会があえて立法を行うというような例外的な場合でない限り、国家賠償法上違法の評価を受けない。","a":true,"exp":"在宅投票制度廃止事件（最判昭60.11.21）の枠組み。もっとも在外邦人選挙権訴訟（最大判平17.9.14）は、立法不作為が違法となる場合をより広く認めた。","ref":"最判昭60.11.21、最大判平17.9.14","field":"国家賠償・損失補償"},{"id":"KBS-005","topic":"国賠1条","type":"ox","q":"裁判官がした争訟の裁判に国家賠償法1条1項の違法が認められるためには、当該裁判に上訴等による是正すべき瑕疵が存在するだけで足りる。","a":false,"exp":"最判昭57.3.12は、裁判官が違法または不当な目的をもって裁判をしたなど、付与された権限の趣旨に明らかに背いてこれを行使したと認めうるような特別の事情が必要とした。","ref":"最判昭57.3.12","field":"国家賠償・損失補償"},{"id":"KBS-006","topic":"国賠1条","type":"ox","q":"規制権限の不行使（不作為）は、その権限を定めた法令の趣旨・目的に照らし著しく合理性を欠くと認められるときは、国家賠償法1条1項の適用上違法となる。","a":true,"exp":"筑豊じん肺訴訟（最判平16.4.27）、関西水俣病訴訟（最判平16.10.15）などが規制権限不行使の違法を認めた。","ref":"最判平16.4.27","field":"国家賠償・損失補償"},{"id":"KBS-007","topic":"国賠2条","type":"ox","q":"国家賠償法2条1項の営造物の設置または管理の瑕疵とは、営造物が通常有すべき安全性を欠いていることをいい、その責任は無過失責任と解されている。","a":true,"exp":"高知落石事件（最判昭45.8.20）は、道路管理に瑕疵があったとし、予算不足は免責事由とならないとした。","ref":"最判昭45.8.20（高知落石事件）","field":"国家賠償・損失補償"},{"id":"KBS-008","topic":"国賠2条","type":"ox","q":"営造物が供用目的に沿って利用されることにより第三者に被害を生じさせる場合（機能的瑕疵）にも、設置管理の瑕疵が認められうる。","a":true,"exp":"大阪国際空港訴訟（最大判昭56.12.16）は、空港の騒音等について供用関連瑕疵を認めた。国道43号線訴訟（最判平7.7.7）も同様である。","ref":"最大判昭56.12.16（大阪国際空港訴訟）","field":"国家賠償・損失補償"},{"id":"KBS-009","topic":"国賠3条","type":"ox","q":"公務員の選任・監督にあたる者と俸給等の費用を負担する者が異なるときは、費用を負担する者も損害賠償の責めに任じる。","a":true,"exp":"国家賠償法3条1項。被害者はいずれに対しても請求でき、内部関係では損害賠償の責任のある者に求償できる（同条2項）。","ref":"国家賠償法3条","field":"国家賠償・損失補償"},{"id":"KBS-010","topic":"国賠4条・6条","type":"ox","q":"国家賠償法に定めのない事項については民法の規定によるが、外国人が被害者である場合には相互の保証があるときに限り同法が適用される。","a":true,"exp":"国家賠償法4条（民法の補充的適用）および6条（相互保証主義）。失火責任法も4条の「民法の規定」に含まれるとされる（最判昭53.7.17）。","ref":"国家賠償法4条・6条","field":"国家賠償・損失補償"},{"id":"KBS-011","topic":"損失補償","type":"ox","q":"憲法29条3項を根拠として、法令に補償規定がない場合でも直接同項に基づいて損失補償を請求する余地がある。","a":true,"exp":"河川附近地制限令事件（最大判昭43.11.27）は、法令に損失補償に関する規定がないからといって直ちに違憲無効となるものではなく、憲法29条3項に基づき補償請求をする余地があるとした。","ref":"最大判昭43.11.27（河川附近地制限令事件）","field":"国家賠償・損失補償"},{"id":"KBS-012","topic":"損失補償","type":"ox","q":"土地収用法に基づく収用の場合の「正当な補償」について、判例は収用の前後を通じて被収用者の財産価値が等しくなるような補償を要するとしている。","a":true,"exp":"最判平14.6.11は、土地収用法における補償は完全な補償を要するとした。他方、自作農創設特別措置法に関する最大判昭28.12.23は相当補償で足りるとしていた。","ref":"最判平14.6.11","field":"国家賠償・損失補償"},{"id":"CHJ-001","topic":"地方公共団体の種類","type":"ox","q":"特別区、地方公共団体の組合および財産区は、いずれも特別地方公共団体である。","a":true,"exp":"地方自治法1条の3。普通地方公共団体は都道府県および市町村である。かつての地方開発事業団は廃止されている。","ref":"地方自治法1条の3","field":"地方自治法"},{"id":"CHJ-002","topic":"事務","type":"ox","q":"法定受託事務とは、国が本来果たすべき役割に係るものであって国においてその適正な処理を特に確保する必要があるものとして法律または政令に特に定めるものをいう。","a":true,"exp":"地方自治法2条9項。都道府県が本来果たすべき役割に係るものは第2号法定受託事務である。自治事務は、地方公共団体が処理する事務のうち法定受託事務以外のものをいう（2条8項）。","ref":"地方自治法2条8項・9項","field":"地方自治法"},{"id":"CHJ-003","topic":"条例","type":"ox","q":"普通地方公共団体は、法令に特別の定めがあるものを除くほか、条例中に、条例に違反した者に対し、2年以下の拘禁刑、100万円以下の罰金、拘留、科料もしくは没収の刑または5万円以下の過料を科す旨の規定を設けることができる。","a":true,"exp":"地方自治法14条3項。義務を課し、または権利を制限するには、法令に特別の定めがある場合を除くほか、条例によらなければならない（同条2項）。","ref":"地方自治法14条","field":"地方自治法"},{"id":"CHJ-004","topic":"条例・規則","type":"ox","q":"普通地方公共団体の長は、法令に違反しない限りにおいてその権限に属する事務に関し規則を制定することができ、規則中に5万円以下の過料を科す旨の規定を設けることができる。","a":true,"exp":"地方自治法15条。規則には刑罰を定めることができず、過料のみである点が条例との違いである。","ref":"地方自治法15条","field":"地方自治法"},{"id":"CHJ-005","topic":"直接請求","type":"ox","q":"条例の制定改廃請求は、選挙権を有する者の総数の50分の1以上の者の連署をもって、その代表者から普通地方公共団体の長に対して行う。ただし地方税の賦課徴収ならびに分担金、使用料および手数料の徴収に関するものは除かれる。","a":true,"exp":"地方自治法74条1項。長は請求を受理した日から20日以内に議会を招集し、意見を付けて付議しなければならない。","ref":"地方自治法74条","field":"地方自治法"},{"id":"CHJ-006","topic":"直接請求","type":"ox","q":"事務の監査請求は、選挙権を有する者の3分の1以上の者の連署をもって監査委員に対して行う。","a":false,"exp":"事務の監査請求は選挙権を有する者の50分の1以上の連署で足りる（地方自治法75条1項）。3分の1以上（一定数を超える部分は要件が緩和される）を要するのは、議会の解散請求、議員・長の解職請求、主要公務員の解職請求である。","ref":"地方自治法75条","field":"地方自治法"},{"id":"CHJ-007","topic":"住民監査請求","type":"ox","q":"住民監査請求は、当該普通地方公共団体の住民であれば1人でも行うことができ、選挙権の有無を問わない。","a":true,"exp":"地方自治法242条1項。国籍・年齢・法人格を問わない点が直接請求と異なる。原則として当該行為のあった日または終わった日から1年を経過したときはできない（同条2項）。","ref":"地方自治法242条","field":"地方自治法"},{"id":"CHJ-008","topic":"住民訴訟","type":"ox","q":"住民訴訟を提起するには、あらかじめ住民監査請求を経ていなければならない。","a":true,"exp":"地方自治法242条の2第1項（監査請求前置主義）。住民訴訟は民衆訴訟であり、財務会計上の行為または怠る事実を対象とする。","ref":"地方自治法242条の2","field":"地方自治法"},{"id":"CHJ-009","topic":"議会","type":"ox","q":"普通地方公共団体は、条例で議会を置かず、選挙権を有する者の総会を設けることができる。","a":true,"exp":"地方自治法94条が定める町村総会である。町村に限られる。","ref":"地方自治法94条","field":"地方自治法"},{"id":"CHJ-010","topic":"議会と長","type":"ox","q":"普通地方公共団体の議会の議決について異議があるときは、長は理由を示してこれを再議に付すことができるが、条例の制定改廃または予算に関する議決についてこれを再議に付した場合、議会が出席議員の3分の2以上の者の同意により再び同じ議決をしたときは、その議決は確定する。","a":true,"exp":"地方自治法176条1項〜3項（一般的拒否権）。法令違反の議決等については再議に付さなければならない（義務的再議、同条4項）。","ref":"地方自治法176条","field":"地方自治法"},{"id":"CHJ-011","topic":"議会と長","type":"ox","q":"議会において長の不信任の議決がされたときは、長は通知を受けた日から10日以内に議会を解散することができ、解散しないときまたは解散後初めて招集された議会において再び不信任の議決があったときは、長はその職を失う。","a":true,"exp":"地方自治法178条。最初の不信任議決は議員数の3分の2以上の者が出席し、その4分の3以上の者の同意を要する。解散後の再度の不信任は過半数の同意で足りる。","ref":"地方自治法178条","field":"地方自治法"},{"id":"CHJ-012","topic":"専決処分","type":"ox","q":"議会が成立しないとき、議会において議決すべき事件を議決しないときなどには、長は議会の議決すべき事件を処分することができ、この場合は次の会議において議会に報告し承認を求めなければならない。","a":true,"exp":"地方自治法179条（法定代理的専決処分）。条例の制定改廃または予算に関する専決処分について承認が得られなかったときは、長は速やかに必要と認める措置を講じ、議会に報告しなければならない（同条4項）。","ref":"地方自治法179条","field":"地方自治法"},{"id":"CHJ-013","topic":"執行機関","type":"ox","q":"普通地方公共団体には、法律の定めるところにより委員会または委員を置くこととされており、教育委員会、選挙管理委員会、人事委員会、監査委員は都道府県および市町村の双方に置かれる。","a":true,"exp":"地方自治法180条の5。公安委員会、労働委員会、収用委員会などは都道府県のみ、農業委員会、固定資産評価審査委員会などは市町村のみに置かれる。","ref":"地方自治法180条の5","field":"地方自治法"},{"id":"CHJ-014","topic":"公の施設","type":"ox","q":"普通地方公共団体は、正当な理由がない限り、住民が公の施設を利用することを拒んではならず、また住民が公の施設を利用することについて不当な差別的取扱いをしてはならない。","a":true,"exp":"地方自治法244条2項・3項。公の施設の設置および管理に関する事項は条例で定める（同法244条の2第1項）。指定管理者制度は同条3項以下に定めがある。","ref":"地方自治法244条","field":"地方自治法"},{"id":"CHJ-015","topic":"国と地方の関係","type":"ox","q":"国は、普通地方公共団体が処理する事務について、その目的を達成するために必要な最小限度のものとするとともに、普通地方公共団体の自主性および自立性に配慮しなければならない。","a":true,"exp":"地方自治法245条の3第1項（関与の基本原則）。関与は法律またはこれに基づく政令によらなければならない（245条の2、関与の法定主義）。","ref":"地方自治法245条の2・245条の3","field":"地方自治法"},{"id":"CHJ-016","topic":"係争処理","type":"ox","q":"普通地方公共団体の長その他の執行機関は、国の関与に不服があるときは、国地方係争処理委員会に対し審査の申出をすることができる。","a":true,"exp":"地方自治法250条の13。都道府県の関与に対しては自治紛争処理委員に審査を申し立てる。審査結果に不服があるときは高等裁判所に関与の取消し等を求める訴えを提起できる（251条の5）。","ref":"地方自治法250条の13・251条の5","field":"地方自治法"},{"id":"CHJ-017","topic":"財務","type":"ox","q":"普通地方公共団体の決算は、会計管理者が調製し、長に提出するが、長は監査委員の審査に付したうえで議会の認定に付さなければならない。","a":true,"exp":"地方自治法233条。議会が決算を認定しなかった場合でも、決算の効力に影響はない。","ref":"地方自治法233条","field":"地方自治法"},{"id":"CHJ-018","topic":"大都市制度","type":"ox","q":"指定都市は政令で指定する人口50万以上の市であり、中核市は政令で指定する人口20万以上の市である。","a":true,"exp":"地方自治法252条の19、252条の22。特例市制度は平成27年の法改正により廃止され中核市に統合された。","ref":"地方自治法252条の19・252条の22","field":"地方自治法"},{"id":"MSB-001","topic":"制限行為能力者","type":"ox","q":"未成年者が法定代理人の同意を得ないでした法律行為は取り消すことができるが、単に権利を得または義務を免れる法律行為についてはこの限りでない。","a":true,"exp":"民法5条1項ただし書・2項。負担のない贈与を受ける行為や債務免除を受ける行為は単独でできる。","ref":"民法5条","field":"民法（総則・物権）"},{"id":"MSB-002","topic":"制限行為能力者","type":"ox","q":"成年被後見人が行った法律行為は、日用品の購入その他日常生活に関する行為を除き、取り消すことができる。","a":true,"exp":"民法9条。成年後見人の同意を得て行った行為であっても取り消すことができる点が、被保佐人・被補助人と異なる。","ref":"民法9条","field":"民法（総則・物権）"},{"id":"MSB-003","topic":"制限行為能力者","type":"ox","q":"制限行為能力者が行為能力者であることを信じさせるため詐術を用いたときは、その行為を取り消すことができない。","a":true,"exp":"民法21条。単に制限行為能力者であることを黙秘していただけでは詐術に当たらないが、他の言動と相まって相手方を誤信させた場合には詐術に当たりうる（最判昭44.2.13）。","ref":"民法21条","field":"民法（総則・物権）"},{"id":"MSB-004","topic":"意思表示","type":"ox","q":"意思表示は、表意者が真意ではないことを知ってしたときであっても効力を妨げられないが、相手方がその意思表示が表意者の真意ではないことを知り、または知ることができたときは無効となる。","a":true,"exp":"民法93条1項（心裡留保）。無効は善意の第三者に対抗できない（同条2項）。","ref":"民法93条","field":"民法（総則・物権）"},{"id":"MSB-005","topic":"意思表示","type":"ox","q":"錯誤による意思表示は無効であり、誰でもその無効を主張することができる。","a":false,"exp":"平成29年改正により、錯誤の効果は無効から取消しに変更された（民法95条1項）。取消しは表意者等に限られる。動機の錯誤は、その事情が法律行為の基礎とされていることが表示されていたときに限り取消し可能である（同条2項）。","ref":"民法95条","field":"民法（総則・物権）"},{"id":"MSB-006","topic":"意思表示","type":"ox","q":"第三者が詐欺を行った場合、相手方がその事実を知り、または知ることができたときに限り、意思表示を取り消すことができる。","a":true,"exp":"民法96条2項。第三者強迫の場合は相手方の善意悪意を問わず常に取り消すことができる。詐欺による取消しは善意無過失の第三者に対抗できない（同条3項）。","ref":"民法96条","field":"民法（総則・物権）"},{"id":"MSB-007","topic":"代理","type":"ox","q":"代理人が本人のためにすることを示さないでした意思表示は、原則として代理人自身のためにしたものとみなされる。","a":true,"exp":"民法100条（顕名主義）。ただし相手方が本人のためにすることを知り、または知ることができたときは、本人に対して直接効力を生ずる。","ref":"民法100条","field":"民法（総則・物権）"},{"id":"MSB-008","topic":"代理","type":"ox","q":"代理人が自己または第三者の利益を図る目的で代理権の範囲内の行為をした場合、相手方がその目的を知りまたは知ることができたときは、その行為は無権代理行為とみなされる。","a":true,"exp":"民法107条（代理権の濫用）。平成29年改正で明文化された。旧判例は93条ただし書を類推適用していた。","ref":"民法107条","field":"民法（総則・物権）"},{"id":"MSB-009","topic":"代理","type":"ox","q":"代理人が本人の許諾を得ずに復代理人を選任した場合であっても、任意代理人は復代理人の行為について責任を負わない。","a":false,"exp":"任意代理人は本人の許諾を得たときまたはやむを得ない事由があるときでなければ復代理人を選任できない（民法104条）。無断選任は債務不履行となる。法定代理人は自己の責任で復代理人を選任できる（105条）。","ref":"民法104条・105条","field":"民法（総則・物権）"},{"id":"MSB-010","topic":"表見代理","type":"ox","q":"代理権消滅後に代理人であった者が代理行為をした場合、相手方が代理権の消滅の事実を知らず、かつ知らないことに過失がなかったときは、本人は責任を負う。","a":true,"exp":"民法112条1項（代理権消滅後の表見代理）。ほかに代理権授与表示による表見代理（109条）、権限外の行為の表見代理（110条）がある。","ref":"民法112条","field":"民法（総則・物権）"},{"id":"MSB-011","topic":"無権代理","type":"ox","q":"無権代理人の相手方は、本人が追認しない間は契約を取り消すことができるが、契約時に代理権がないことを知っていた場合は取り消すことができない。","a":true,"exp":"民法115条。催告権（114条）は善意悪意を問わず行使できるが、取消権は善意の相手方に限られる点に注意。","ref":"民法114条・115条","field":"民法（総則・物権）"},{"id":"MSB-012","topic":"無権代理と相続","type":"ox","q":"無権代理人が本人を単独相続した場合、無権代理人は本人の資格で追認を拒絶することができる。","a":false,"exp":"最判昭40.6.18は、無権代理人が本人を相続した場合、本人自ら法律行為をしたのと同様の地位を生じ、追認拒絶は信義則上許されないとした。逆に本人が無権代理人を相続した場合は追認拒絶できる（最判昭37.4.20）。","ref":"最判昭40.6.18","field":"民法（総則・物権）"},{"id":"MSB-013","topic":"時効","type":"ox","q":"債権は、債権者が権利を行使することができることを知った時から5年間、または権利を行使することができる時から10年間行使しないときは、時効によって消滅する。","a":true,"exp":"民法166条1項。人の生命または身体の侵害による損害賠償請求権の消滅時効は5年・20年である（167条、724条の2）。","ref":"民法166条","field":"民法（総則・物権）"},{"id":"MSB-014","topic":"時効","type":"ox","q":"裁判上の請求がされた場合、その事由が終了するまでの間は時効は完成せず、確定判決等によって権利が確定したときは、その終了の時から新たに時効が進行する。","a":true,"exp":"民法147条。平成29年改正で「中断・停止」から「更新・完成猶予」へ概念整理された。協議を行う旨の合意による完成猶予（151条）も新設された。","ref":"民法147条","field":"民法（総則・物権）"},{"id":"MSB-015","topic":"時効","type":"ox","q":"20年間、所有の意思をもって平穏かつ公然と他人の物を占有した者は、その所有権を取得する。占有開始の時に善意無過失であった場合は10年である。","a":true,"exp":"民法162条。占有の開始時に善意無過失であればよく、途中で悪意になっても10年で足りる。","ref":"民法162条","field":"民法（総則・物権）"},{"id":"MSB-016","topic":"物権変動","type":"ox","q":"不動産に関する物権の得喪および変更は、登記をしなければ第三者に対抗することができないが、ここにいう第三者には背信的悪意者は含まれない。","a":true,"exp":"民法177条。単なる悪意者は第三者に含まれるが、信義則に反する背信的悪意者は含まれない（最判昭43.8.2）。","ref":"民法177条","field":"民法（総則・物権）"},{"id":"MSB-017","topic":"物権変動","type":"ox","q":"不動産の取得時効が完成した後に原所有者から当該不動産を譲り受けて登記を備えた者に対し、時効取得者は登記なくして時効取得を対抗することができる。","a":false,"exp":"時効完成後の第三者との関係は対抗問題となり、登記がなければ対抗できない（最判昭33.8.28）。時効完成前の第三者に対しては登記なくして対抗できる（最判昭41.11.22）。","ref":"最判昭33.8.28","field":"民法（総則・物権）"},{"id":"MSB-018","topic":"即時取得","type":"ox","q":"取引行為によって平穏かつ公然と動産の占有を始めた者は、善意かつ無過失であるときは、即時にその動産について行使する権利を取得する。","a":true,"exp":"民法192条。占有取得が占有改定による場合には即時取得は成立しない（最判昭35.2.11）。盗品・遺失物については2年間の回復請求が認められる（193条）。","ref":"民法192条","field":"民法（総則・物権）"},{"id":"MSB-019","topic":"相隣関係","type":"ox","q":"土地の所有者は、境界またはその付近において障壁等を築造・修繕するため必要な範囲内で、隣地を使用することができるが、住家については居住者の承諾がなければ立ち入ることができない。","a":true,"exp":"民法209条。令和3年改正（令和5年4月1日施行）により、隣地使用権の要件・手続が整備された。ライフラインの設備設置権（213条の2）も新設された。","ref":"民法209条","field":"民法（総則・物権）"},{"id":"MSB-020","topic":"相隣関係","type":"ox","q":"隣地の竹木の枝が境界線を越える場合、土地所有者は常に自らその枝を切り取ることができる。","a":false,"exp":"原則として竹木の所有者に切除させることができるにとどまるが、令和3年改正により、催告しても相当期間内に切除しないとき、所有者を知ることができないとき、急迫の事情があるときは自ら切り取ることができる（民法233条3項）。根は常に自ら切り取れる（同条4項）。","ref":"民法233条","field":"民法（総則・物権）"},{"id":"MSB-021","topic":"共有","type":"ox","q":"共有物の変更（その形状または効用の著しい変更を伴わないものを除く）は、他の共有者全員の同意がなければすることができない。","a":true,"exp":"民法251条1項。令和3年改正により「軽微変更」は持分の価格の過半数で決せられることとなった（252条1項）。保存行為は各共有者が単独でできる（252条5項）。","ref":"民法251条・252条","field":"民法（総則・物権）"},{"id":"MSB-022","topic":"共有","type":"ox","q":"各共有者はいつでも共有物の分割を請求できるが、5年を超えない期間内は分割をしない旨の契約をすることができる。","a":true,"exp":"民法256条1項。令和3年改正により、裁判による共有物分割において賠償分割が明文化された（258条2項）。所在等不明共有者の持分取得・譲渡の制度（262条の2・262条の3）も新設された。","ref":"民法256条","field":"民法（総則・物権）"},{"id":"MSB-023","topic":"留置権","type":"ox","q":"他人の物の占有者は、その物に関して生じた債権を有するときは、その債権の弁済を受けるまでその物を留置することができるが、占有が不法行為によって始まった場合はこの限りでない。","a":true,"exp":"民法295条。留置権には物上代位性がなく、優先弁済権もない。債務者は相当の担保を供して留置権の消滅を請求できる（301条）。","ref":"民法295条","field":"民法（総則・物権）"},{"id":"MSB-024","topic":"抵当権","type":"ox","q":"抵当権の効力は、抵当地の上に存する建物を除き、その目的である不動産に付加して一体となっている物に及ぶ。","a":true,"exp":"民法370条。従物についても、抵当権設定時に存在したものには効力が及ぶ（最判昭44.3.28）。抵当権設定後の従物にも及ぶと解されている。","ref":"民法370条","field":"民法（総則・物権）"},{"id":"MSB-025","topic":"抵当権","type":"ox","q":"抵当権者は、その目的物の売却、賃貸、滅失または損傷によって債務者が受けるべき金銭その他の物に対しても行使することができるが、その払渡しまたは引渡しの前に差押えをしなければならない。","a":true,"exp":"民法372条・304条（物上代位）。賃料への物上代位も認められる（最判平元.10.27）。","ref":"民法372条・304条","field":"民法（総則・物権）"},{"id":"MSB-026","topic":"法定地上権","type":"ox","q":"抵当権設定当時に土地と建物が同一の所有者に属していた場合において、競売により土地と建物の所有者が異なるに至ったときは、建物について地上権が設定されたものとみなされる。","a":true,"exp":"民法388条（法定地上権）。抵当権設定当時に建物が存在することと、土地・建物が同一所有者に属することが要件である。更地に抵当権を設定した後に建物が築造された場合には成立しない。","ref":"民法388条","field":"民法（総則・物権）"},{"id":"MSB-027","topic":"抵当権","type":"ox","q":"抵当権の目的である建物の賃借人は、競売により買受人が買い受けた場合、賃貸借が抵当権に対抗できないときであっても、明渡しまで6か月の猶予が認められる。","a":true,"exp":"民法395条（抵当建物使用者の引渡しの猶予）。平成15年改正で短期賃貸借保護制度が廃止された代わりに設けられた。","ref":"民法395条","field":"民法（総則・物権）"},{"id":"MSB-028","topic":"根抵当権","type":"ox","q":"根抵当権の極度額の変更は、後順位抵当権者その他の第三者の承諾を得なければすることができない。","a":true,"exp":"民法398条の5。これに対し被担保債権の範囲や債務者の変更は、元本確定前であれば後順位抵当権者等の承諾を要しない（398条の4）。","ref":"民法398条の4・398条の5","field":"民法（総則・物権）"},{"id":"MSB-029","topic":"用益物権","type":"ox","q":"地役権は要役地の所有権に従たるものとして、要役地の所有権とともに移転し、要役地について存する他の権利の目的となる。","a":true,"exp":"民法281条1項（付従性・随伴性）。地役権は継続的かつ表現的なものに限り時効取得できる（283条）。","ref":"民法281条","field":"民法（総則・物権）"},{"id":"MSB-030","topic":"占有","type":"ox","q":"占有者が占有物について行使する権利は、適法に有するものと推定される。","a":true,"exp":"民法188条。占有訴権として占有保持の訴え、占有保全の訴え、占有回収の訴えがある（197条以下）。占有回収の訴えは占有を侵奪された場合に限られ、詐取された場合には認められない。","ref":"民法188条","field":"民法（総則・物権）"},{"id":"MSK-001","topic":"債務不履行","type":"ox","q":"債務者がその債務の本旨に従った履行をしないときは債権者は損害賠償を請求できるが、その不履行が契約その他の債務の発生原因および取引上の社会通念に照らして債務者の責めに帰することができない事由によるものであるときは、この限りでない。","a":true,"exp":"民法415条1項。平成29年改正により帰責事由の判断基準が「契約その他の債務の発生原因及び取引上の社会通念」に照らして定まることが明示された。","ref":"民法415条1項","field":"民法（債権）"},{"id":"MSK-002","topic":"債務不履行","type":"ox","q":"債務の履行が不能であるときは、債権者は履行の請求をすることができる。","a":false,"exp":"民法412条の2第1項により、契約その他の債務の発生原因および取引上の社会通念に照らして不能であるときは、債権者は履行を請求することができない。","ref":"民法412条の2","field":"民法（債権）"},{"id":"MSK-003","topic":"損害賠償の範囲","type":"ox","q":"債務不履行による損害賠償の請求は通常生ずべき損害の賠償をさせることを目的とし、特別の事情によって生じた損害についても、当事者がその事情を予見すべきであったときは請求することができる。","a":true,"exp":"民法416条。改正により「予見し、又は予見することができたとき」から「予見すべきであったとき」と規範的な表現に改められた。","ref":"民法416条","field":"民法（債権）"},{"id":"MSK-004","topic":"債権者代位権","type":"ox","q":"債権者は、自己の債権を保全するため必要があるときは債務者に属する権利を行使することができるが、債務者の一身に専属する権利および差押えを禁じられた権利は行使できない。","a":true,"exp":"民法423条1項。被代位権利の目的が可分であるときは、自己の債権の額の限度においてのみ行使できる（423条の2）。","ref":"民法423条","field":"民法（債権）"},{"id":"MSK-005","topic":"詐害行為取消権","type":"ox","q":"詐害行為取消請求に係る訴えは、債務者が債権者を害することを知って行為をしたことを債権者が知った時から2年、行為の時から10年を経過したときは提起できない。","a":true,"exp":"民法426条。詐害行為取消訴訟の被告は受益者または転得者であり、債務者は被告とならないが、債権者は債務者に訴訟告知をしなければならない（424条の7）。","ref":"民法424条の7・426条","field":"民法（債権）"},{"id":"MSK-006","topic":"連帯債務","type":"ox","q":"連帯債務者の一人について生じた事由のうち、更改、相殺および混同は他の連帯債務者に対しても効力を生ずる。","a":true,"exp":"民法438条〜440条。平成29年改正により、履行の請求・免除・時効の完成は相対効となった（441条）。","ref":"民法438条〜441条","field":"民法（債権）"},{"id":"MSK-007","topic":"保証","type":"ox","q":"保証契約は、書面でしなければその効力を生じない。","a":true,"exp":"民法446条2項。電磁的記録によってされたときも書面によるものとみなされる（同条3項）。保証債務には付従性・随伴性・補充性がある。","ref":"民法446条","field":"民法（債権）"},{"id":"MSK-008","topic":"保証","type":"ox","q":"事業のために負担した貸金等債務を主たる債務とする個人の保証契約は、契約締結の日前1か月以内に作成された公正証書で保証人になろうとする者が保証債務を履行する意思を表示していなければ効力を生じない。","a":true,"exp":"民法465条の6。平成29年改正で新設。主たる債務者の経営者等については適用除外がある（465条の9）。","ref":"民法465条の6","field":"民法（債権）"},{"id":"MSK-009","topic":"債権譲渡","type":"ox","q":"当事者が債権の譲渡を禁止し、または制限する旨の意思表示をしたときは、債権の譲渡は効力を生じない。","a":false,"exp":"民法466条2項により、譲渡制限の意思表示がされても債権譲渡は効力を妨げられない。ただし悪意または重過失の譲受人等に対しては、債務者は履行を拒み、譲渡人への弁済等をもって対抗できる（同条3項）。","ref":"民法466条","field":"民法（債権）"},{"id":"MSK-010","topic":"債権譲渡","type":"ox","q":"債権譲渡を債務者以外の第三者に対抗するためには、確定日付のある証書による通知または承諾が必要である。","a":true,"exp":"民法467条2項。債務者に対する対抗要件は、譲渡人からの通知または債務者の承諾である（同条1項）。","ref":"民法467条","field":"民法（債権）"},{"id":"MSK-011","topic":"弁済","type":"ox","q":"受領権者としての外観を有する者に対してした弁済は、弁済をした者が善意であり、かつ過失がなかったときに限り効力を有する。","a":true,"exp":"民法478条。改正前の「債権の準占有者に対する弁済」が表現を改めたものである。","ref":"民法478条","field":"民法（債権）"},{"id":"MSK-012","topic":"弁済","type":"ox","q":"弁済をするについて正当な利益を有する者でない第三者は、債務者の意思に反して弁済をすることができない。","a":true,"exp":"民法474条2項。ただし債務者の意思に反することを債権者が知らなかったときは有効となる。また債権者の意思に反する弁済も原則としてできない（同条3項）。","ref":"民法474条","field":"民法（債権）"},{"id":"MSK-013","topic":"相殺","type":"ox","q":"二人が互いに同種の目的を有する債務を負担する場合において、双方の債務が弁済期にあるときは、各債務者はその対当額について相殺によって債務を免れることができる。","a":true,"exp":"民法505条1項。自働債権は弁済期にあることを要するが、受働債権については期限の利益を放棄できるので弁済期未到来でも相殺できる。悪意による不法行為に基づく損害賠償債務等を受働債権とする相殺は禁止される（509条）。","ref":"民法505条・509条","field":"民法（債権）"},{"id":"MSK-014","topic":"契約の成立","type":"ox","q":"承諾の期間を定めてした申込みは撤回することができないが、申込者が撤回する権利を留保したときはこの限りでない。","a":true,"exp":"民法523条1項。改正により、意思表示は到達によって効力を生ずるという原則が徹底され、隔地者間の契約も承諾の到達時に成立する（97条1項）。","ref":"民法523条","field":"民法（債権）"},{"id":"MSK-015","topic":"危険負担","type":"ox","q":"当事者双方の責めに帰することができない事由によって債務を履行することができなくなったときは、債権者は反対給付の履行を拒むことができる。","a":true,"exp":"民法536条1項。改正により、債権者主義を定めていた旧534条は削除され、効果は「反対給付の履行拒絶」と整理された。","ref":"民法536条1項","field":"民法（債権）"},{"id":"MSK-016","topic":"解除","type":"ox","q":"当事者の一方がその債務を履行しない場合、相手方が相当の期間を定めて履行の催告をし、その期間内に履行がないときは契約を解除できるが、その期間を経過した時における債務の不履行が軽微であるときはこの限りでない。","a":true,"exp":"民法541条。改正により解除に債務者の帰責事由は不要となった。他方、不履行が債権者の責めに帰すべき事由によるときは解除できない（543条）。","ref":"民法541条・543条","field":"民法（債権）"},{"id":"MSK-017","topic":"契約不適合責任","type":"ox","q":"引き渡された目的物が種類、品質または数量に関して契約の内容に適合しないものであるときは、買主は売主に対し、目的物の修補、代替物の引渡しまたは不足分の引渡しによる履行の追完を請求できる。","a":true,"exp":"民法562条1項。ほかに代金減額請求（563条）、損害賠償請求・解除（564条）が認められる。種類・品質の不適合については、買主は不適合を知った時から1年以内に売主に通知しなければならない（566条）。","ref":"民法562条・566条","field":"民法（債権）"},{"id":"MSK-018","topic":"賃貸借","type":"ox","q":"賃借人は、賃借物について賃貸人の負担に属する必要費を支出したときは、賃貸人に対し直ちにその償還を請求することができる。","a":true,"exp":"民法608条1項。有益費は賃貸借終了時に価格の増加が現存する場合に限り、賃貸人の選択に従い支出額または増価額の償還を請求できる（同条2項）。","ref":"民法608条","field":"民法（債権）"},{"id":"MSK-019","topic":"賃貸借","type":"ox","q":"賃借人は賃貸人の承諾を得なければ賃借権を譲渡し、または賃借物を転貸することができず、無断で第三者に使用収益させたときは賃貸人は契約を解除することができる。","a":true,"exp":"民法612条。もっとも判例は、賃貸人に対する背信的行為と認めるに足りない特段の事情があるときは解除できないとする（最判昭28.9.25、信頼関係破壊の法理）。","ref":"民法612条","field":"民法（債権）"},{"id":"MSK-020","topic":"賃貸借","type":"ox","q":"賃貸人が賃貸物の所有権を譲渡した場合、賃借人が対抗要件を備えているときは、賃貸人たる地位は原則として譲受人に移転する。","a":true,"exp":"民法605条の2第1項。改正で明文化された。譲受人が賃料を請求するには所有権移転登記が必要である（同条3項）。敷金返還債務も譲受人に承継される（同条4項）。","ref":"民法605条の2","field":"民法（債権）"},{"id":"MSK-021","topic":"請負","type":"ox","q":"請負人が仕事を完成しない間は、注文者はいつでも損害を賠償して契約の解除をすることができる。","a":true,"exp":"民法641条。また注文者が破産手続開始の決定を受けたときは、請負人または破産管財人は契約の解除をすることができる（642条）。","ref":"民法641条","field":"民法（債権）"},{"id":"MSK-022","topic":"委任","type":"ox","q":"受任者は、委任の本旨に従い、善良な管理者の注意をもって委任事務を処理する義務を負うが、報酬の有無によりその注意義務の程度が異なる。","a":false,"exp":"民法644条は報酬の有無を問わず善管注意義務を課している。無償委任であっても注意義務は軽減されない。","ref":"民法644条","field":"民法（債権）"},{"id":"MSK-023","topic":"委任","type":"ox","q":"委任は各当事者がいつでも解除することができるが、相手方に不利な時期に解除したときは、やむを得ない事由があった場合を除き損害を賠償しなければならない。","a":true,"exp":"民法651条。受任者の利益をも目的とする委任を委任者が解除した場合も同様である（同条2項2号）。","ref":"民法651条","field":"民法（債権）"},{"id":"MSK-024","topic":"事務管理","type":"ox","q":"義務なく他人のために事務の管理を始めた者は、その事務の性質に従い最も本人の利益に適合する方法によって管理をしなければならず、原則として報酬を請求することはできない。","a":true,"exp":"民法697条。管理者は有益費用の償還を請求できる（702条）が、報酬請求権はない。また本人の意思に反することが明らかな場合は管理を始めてはならない。","ref":"民法697条・702条","field":"民法（債権）"},{"id":"MSK-025","topic":"不当利得","type":"ox","q":"債務の弁済として給付をした者は、その時において債務の存在しないことを知っていたときは、給付したものの返還を請求することができない。","a":true,"exp":"民法705条（非債弁済）。不法原因給付については、不法な原因が受益者についてのみ存したときは返還請求できる（708条ただし書）。","ref":"民法705条・708条","field":"民法（債権）"},{"id":"MSK-026","topic":"不法行為","type":"ox","q":"不法行為による損害賠償請求権は、被害者またはその法定代理人が損害および加害者を知った時から3年間行使しないときは時効によって消滅し、不法行為の時から20年を経過したときも同様である。","a":true,"exp":"民法724条。人の生命または身体を害する不法行為の場合は、主観的起算点からの期間が5年に伸長される（724条の2）。","ref":"民法724条・724条の2","field":"民法（債権）"},{"id":"MSK-027","topic":"使用者責任","type":"ox","q":"ある事業のために他人を使用する者は、被用者が事業の執行について第三者に加えた損害を賠償する責任を負うが、被用者の選任および事業の監督について相当の注意をしたときは免責される。","a":true,"exp":"民法715条1項ただし書。もっとも裁判実務上この免責が認められることはほとんどない。使用者は被用者に求償できるが、信義則上相当と認められる限度に制限される（最判昭51.7.8）。","ref":"民法715条","field":"民法（債権）"},{"id":"MSK-028","topic":"工作物責任","type":"ox","q":"土地の工作物の設置または保存に瑕疵があることによって他人に損害を生じたときは、まず占有者が責任を負い、占有者が損害の発生を防止するのに必要な注意をしたときは所有者が責任を負う。","a":true,"exp":"民法717条1項。所有者の責任は無過失責任である。","ref":"民法717条","field":"民法（債権）"},{"id":"MSK-029","topic":"共同不法行為","type":"ox","q":"数人が共同の不法行為によって他人に損害を加えたときは、各自が連帯してその損害を賠償する責任を負う。","a":true,"exp":"民法719条1項。共同行為者のうちいずれの者が損害を加えたかを知ることができないときも同様である。教唆者・幇助者も共同行為者とみなされる（同条2項）。","ref":"民法719条","field":"民法（債権）"},{"id":"MSK-030","topic":"損害賠償","type":"ox","q":"不法行為による損害賠償について被害者に過失があったときは、裁判所はこれを考慮して損害賠償の額を定めることができる。","a":true,"exp":"民法722条2項。債務不履行における過失相殺（418条）が必要的であるのに対し、不法行為では裁量的であり、また責任の減免まではできず賠償額の減額にとどまる。","ref":"民法722条2項","field":"民法（債権）"},{"id":"MSS-001","topic":"婚姻","type":"ox","q":"婚姻は、戸籍法の定めるところにより届け出ることによって効力を生ずる。","a":true,"exp":"民法739条1項（届出婚主義）。婚姻適齢は男女とも18歳である（731条、令和4年4月1日施行）。成年年齢引下げに伴い、未成年者の婚姻に関する父母の同意の規定（旧737条）は削除された。","ref":"民法739条・731条","field":"民法（親族・相続）"},{"id":"MSS-002","topic":"婚姻","type":"ox","q":"女は、前婚の解消または取消しの日から100日を経過した後でなければ再婚をすることができない。","a":false,"exp":"再婚禁止期間を定めていた民法733条は、嫡出推定制度の見直しを内容とする令和4年改正（令和6年4月1日施行）により削除された。現在は再婚禁止期間の定めはない。","ref":"旧民法733条（削除）","field":"民法（親族・相続）"},{"id":"MSS-003","topic":"嫡出推定","type":"ox","q":"妻が婚姻中に懐胎した子は当該婚姻における夫の子と推定され、女が婚姻前に懐胎した子であって婚姻が成立した後に生まれたものも同様である。","a":true,"exp":"民法772条1項（令和6年4月1日施行）。婚姻の解消等の日から300日以内に生まれた子であっても、母が前婚の解消等の日後に再婚していたときは、再婚後の夫の子と推定される（同条3項）。","ref":"民法772条","field":"民法（親族・相続）"},{"id":"MSS-004","topic":"嫡出否認","type":"ox","q":"嫡出否認の訴えを提起できるのは夫に限られ、その出訴期間は夫が子の出生を知った時から1年以内である。","a":false,"exp":"令和4年改正（令和6年4月1日施行）により、否認権者は父のほか子、母、前夫に拡大され、出訴期間は原則として3年に伸長された（民法774条・777条）。","ref":"民法774条・777条","field":"民法（親族・相続）"},{"id":"MSS-005","topic":"離婚","type":"ox","q":"協議上の離婚をした者の一方は、相手方に対して財産の分与を請求することができるが、離婚の時から2年を経過したときは家庭裁判所に協議に代わる処分を請求することができない。","a":true,"exp":"民法768条。財産分与は清算的要素、扶養的要素、慰謝料的要素を含むとされる。","ref":"民法768条","field":"民法（親族・相続）"},{"id":"MSS-006","topic":"親権","type":"ox","q":"父母が協議上の離婚をするときは、必ずその一方を親権者と定めなければならない。","a":false,"exp":"令和6年改正（令和8年4月1日施行）により、協議離婚の際は父母の双方または一方を親権者と定めることとされ、離婚後の共同親権が可能となった（民法819条1項）。協議が調わないときは家庭裁判所が定める。改正内容は出題可能性が高いので最新の条文で確認すること。","ref":"民法819条（令和6年改正）","field":"民法（親族・相続）"},{"id":"MSS-007","topic":"養子","type":"ox","q":"特別養子縁組が成立すると、養子と実方の父母およびその血族との親族関係は終了する。","a":true,"exp":"民法817条の9。特別養子となる者の年齢は、令和元年改正により原則として15歳未満に引き上げられた（817条の5）。","ref":"民法817条の9","field":"民法（親族・相続）"},{"id":"MSS-008","topic":"相続人","type":"ox","q":"被相続人の子が相続の開始以前に死亡したときはその子が代襲して相続人となるが、兄弟姉妹の代襲相続は一代限りである。","a":true,"exp":"民法887条2項・889条2項。子の場合は再代襲が認められるが、兄弟姉妹の子（甥・姪）の子には代襲しない。","ref":"民法887条・889条","field":"民法（親族・相続）"},{"id":"MSS-009","topic":"相続分","type":"ox","q":"配偶者と直系尊属が相続人であるときの法定相続分は、配偶者3分の2、直系尊属3分の1である。","a":true,"exp":"民法900条2号。配偶者と子の場合は各2分の1（1号）、配偶者と兄弟姉妹の場合は配偶者4分の3・兄弟姉妹4分の1（3号）である。","ref":"民法900条","field":"民法（親族・相続）"},{"id":"MSS-010","topic":"相続の承認・放棄","type":"ox","q":"相続人は、自己のために相続の開始があったことを知った時から3か月以内に、単純承認、限定承認または放棄をしなければならない。","a":true,"exp":"民法915条1項（熟慮期間）。限定承認は相続人全員が共同してしなければならない（923条）。相続放棄をした者は初めから相続人とならなかったものとみなされ、代襲原因ともならない。","ref":"民法915条・923条","field":"民法（親族・相続）"},{"id":"MSS-011","topic":"遺産分割","type":"ox","q":"相続開始の時から10年を経過した後にする遺産の分割については、原則として特別受益および寄与分の規定は適用されない。","a":true,"exp":"民法904条の3（令和3年改正、令和5年4月1日施行）。遺産分割の長期未了状態を解消するために新設された。","ref":"民法904条の3","field":"民法（親族・相続）"},{"id":"MSS-012","topic":"配偶者居住権","type":"ox","q":"被相続人の配偶者は、相続開始の時に被相続人所有の建物に居住していた場合において、遺産分割または遺贈等により配偶者居住権を取得することができ、原則として終身その建物を無償で使用収益できる。","a":true,"exp":"民法1028条以下（令和2年4月1日施行）。配偶者居住権は登記することができ、登記があれば第三者に対抗できる（1031条）。短期のものとして配偶者短期居住権（1037条）もある。","ref":"民法1028条・1031条","field":"民法（親族・相続）"},{"id":"MSS-013","topic":"遺言","type":"ox","q":"自筆証書遺言に相続財産の目録を添付する場合、その目録については自書することを要しないが、目録の毎葉に署名し印を押さなければならない。","a":true,"exp":"民法968条2項（平成31年1月13日施行）。また法務局における自筆証書遺言書保管制度を利用した場合、家庭裁判所の検認は不要となる。","ref":"民法968条2項","field":"民法（親族・相続）"},{"id":"MSS-014","topic":"遺留分","type":"ox","q":"遺留分を侵害された者は、受遺者または受贈者に対し、遺留分侵害額に相当する金銭の支払を請求することができる。","a":true,"exp":"民法1046条（令和元年7月1日施行）。改正前の遺留分減殺請求は物権的効果を生じたが、改正により金銭債権化された。遺留分の割合は直系尊属のみが相続人である場合は3分の1、それ以外は2分の1である（1042条）。","ref":"民法1046条・1042条","field":"民法（親族・相続）"},{"id":"MSS-015","topic":"特別の寄与","type":"ox","q":"被相続人に対して無償で療養看護その他の労務の提供をしたことにより被相続人の財産の維持または増加について特別の寄与をした被相続人の親族は、相続人でなくても相続人に対して特別寄与料の支払を請求することができる。","a":true,"exp":"民法1050条（令和元年7月1日施行）。請求できるのは相続人以外の親族であり、相続の開始および相続人を知った時から6か月または相続開始の時から1年を経過すると請求できなくなる。","ref":"民法1050条","field":"民法（親族・相続）"},{"id":"MSS-016","topic":"相続登記","type":"ox","q":"相続により不動産の所有権を取得した者は、自己のために相続の開始があったことを知り、かつその所有権を取得したことを知った日から3年以内に所有権移転の登記を申請しなければならない。","a":true,"exp":"不動産登記法76条の2（令和6年4月1日施行）。正当な理由なく怠ると10万円以下の過料の対象となる。簡易な手続として相続人申告登記（76条の3）が設けられている。","ref":"不動産登記法76条の2","field":"民法（親族・相続）"},{"id":"SHO-001","topic":"商法総則","type":"ox","q":"商人とは自己の名をもって商行為をすることを業とする者をいい、店舗その他これに類似する設備によって物品を販売することを業とする者は、商行為を行うことを業としない者であっても商人とみなされる。","a":true,"exp":"商法4条1項・2項。後段は擬制商人である。商行為には絶対的商行為（501条）、営業的商行為（502条）、附属的商行為（503条）がある。","ref":"商法4条","field":"商法・会社法"},{"id":"SHO-002","topic":"商号","type":"ox","q":"自己の商号を使用して営業または事業を行うことを他人に許諾した商人は、その商人が当該営業を行うものと誤認して取引をした者に対し、その取引によって生じた債務を弁済する責任を負う。","a":true,"exp":"商法14条（名板貸人の責任）。会社法9条にも同旨の規定がある。","ref":"商法14条、会社法9条","field":"商法・会社法"},{"id":"SHO-003","topic":"商業登記","type":"ox","q":"登記すべき事項は、登記の後でなければ善意の第三者に対抗することができず、登記の後であっても第三者が正当な事由によりその登記があることを知らなかったときは対抗できない。","a":true,"exp":"商法9条1項、会社法908条1項（商業登記の消極的公示力・積極的公示力）。故意または過失により不実の事項を登記した者は、その事項が不実であることを善意の第三者に対抗できない（同条2項）。","ref":"商法9条、会社法908条","field":"商法・会社法"},{"id":"SHO-004","topic":"支配人","type":"ox","q":"支配人は、商人に代わってその事業に関する一切の裁判上または裁判外の行為をする権限を有し、その代理権に加えた制限は善意の第三者に対抗することができない。","a":true,"exp":"商法21条。支配人は競業避止義務および営業避止義務を負う（23条）。","ref":"商法21条・23条","field":"商法・会社法"},{"id":"SHO-005","topic":"商行為","type":"ox","q":"商人がその営業の範囲内において他人のために行為をしたときは、相当な報酬を請求することができる。","a":true,"exp":"商法512条。民法では原則として特約がなければ報酬を請求できないのと対照的である。商事法定利率の規定（旧514条）は民法改正に伴い削除された。","ref":"商法512条","field":"商法・会社法"},{"id":"SHO-006","topic":"商行為","type":"ox","q":"商人である債務者が数人ある場合において、その債務が商行為によって生じたものであるときは、その債務は連帯債務となる。","a":true,"exp":"商法511条1項。民法では分割債務が原則である（427条）のと異なる。保証も商行為によるものは連帯保証となる（商法511条2項）。","ref":"商法511条","field":"商法・会社法"},{"id":"SHO-007","topic":"会社の設立","type":"ox","q":"株式会社の定款は公証人の認証を受けなければ効力を生じないが、持分会社の定款には認証は不要である。","a":true,"exp":"会社法30条1項。定款の絶対的記載事項は、目的、商号、本店の所在地、設立に際して出資される財産の価額またはその最低額、発起人の氏名または名称および住所である（27条）。","ref":"会社法30条・27条","field":"商法・会社法"},{"id":"SHO-008","topic":"会社の設立","type":"ox","q":"発起設立の場合、発起人は設立時発行株式の全部を引き受けるが、募集設立の場合は設立時発行株式を引き受ける者の募集をする。","a":true,"exp":"会社法25条1項。募集設立では創立総会を開催しなければならない（65条）。","ref":"会社法25条","field":"商法・会社法"},{"id":"SHO-009","topic":"株式","type":"ox","q":"株式会社は、その発行する全部の株式の内容として譲渡による当該株式の取得について当該株式会社の承認を要する旨を定款で定めることができる。","a":true,"exp":"会社法107条1項1号（譲渡制限株式）。全部の株式が譲渡制限株式である会社を非公開会社という。種類株式として剰余金配当、議決権制限、取得請求権付株式等がある（108条）。","ref":"会社法107条・108条","field":"商法・会社法"},{"id":"SHO-010","topic":"株主の権利","type":"ox","q":"株主は、その有する株式につき、剰余金の配当を受ける権利、残余財産の分配を受ける権利および株主総会における議決権を有するが、これらの権利の全部を与えない旨の定款の定めは効力を有しない。","a":true,"exp":"会社法105条2項。剰余金配当請求権と残余財産分配請求権の全部を与えない定めは無効である。","ref":"会社法105条","field":"商法・会社法"},{"id":"SHO-011","topic":"株主総会","type":"ox","q":"取締役会設置会社においては、株主総会は会社法に規定する事項および定款で定めた事項に限り決議をすることができる。","a":true,"exp":"会社法295条2項。取締役会を設置しない会社では、株主総会は会社に関する一切の事項について決議できる（同条1項）。","ref":"会社法295条","field":"商法・会社法"},{"id":"SHO-012","topic":"株主総会","type":"ox","q":"定款の変更、事業の全部の譲渡、資本金の額の減少および解散は、いずれも株主総会の特別決議を要する。","a":true,"exp":"会社法309条2項。特別決議は議決権の過半数を有する株主が出席し、出席株主の議決権の3分の2以上の多数による。","ref":"会社法309条2項","field":"商法・会社法"},{"id":"SHO-013","topic":"株主総会","type":"ox","q":"総株主の議決権の100分の3以上の議決権を6か月前から引き続き有する株主は、取締役に対し株主総会の招集を請求することができる。","a":true,"exp":"会社法297条1項。公開会社でない株式会社では6か月の保有期間要件は不要である（同条2項）。","ref":"会社法297条","field":"商法・会社法"},{"id":"SHO-014","topic":"機関設計","type":"ox","q":"公開会社は取締役会を置かなければならず、監査役会設置会社および監査等委員会設置会社も取締役会を置かなければならない。","a":true,"exp":"会社法327条1項。公開会社は原則として監査役を置かなければならないが、監査等委員会設置会社および指名委員会等設置会社はこの限りでない（327条2項）。","ref":"会社法327条","field":"商法・会社法"},{"id":"SHO-015","topic":"取締役","type":"ox","q":"取締役の任期は、原則として選任後2年以内に終了する事業年度のうち最終のものに関する定時株主総会の終結の時までであるが、非公開会社（監査等委員会設置会社および指名委員会等設置会社を除く）では定款により10年まで伸長できる。","a":true,"exp":"会社法332条。監査役の任期は原則4年で、非公開会社では10年まで伸長できる（336条）。","ref":"会社法332条・336条","field":"商法・会社法"},{"id":"SHO-016","topic":"取締役","type":"ox","q":"取締役が自己または第三者のために株式会社の事業の部類に属する取引をしようとするときは、株主総会（取締役会設置会社では取締役会）において重要な事実を開示し、その承認を受けなければならない。","a":true,"exp":"会社法356条1項1号（競業取引）、同項2号・3号（利益相反取引）。取締役会設置会社では取引後遅滞なく重要な事実を取締役会に報告しなければならない（365条2項）。","ref":"会社法356条・365条","field":"商法・会社法"},{"id":"SHO-017","topic":"取締役の責任","type":"ox","q":"取締役がその任務を怠ったときは会社に対し損害賠償責任を負い、この責任は総株主の同意がなければ免除することができない。","a":true,"exp":"会社法423条1項・424条。一部免除の制度（425条〜427条）もある。第三者に対しては悪意または重大な過失があるときに責任を負う（429条）。","ref":"会社法423条・424条・429条","field":"商法・会社法"},{"id":"SHO-018","topic":"株主代表訴訟","type":"ox","q":"6か月前から引き続き株式を有する株主は、株式会社に対し書面その他の方法により取締役の責任を追及する訴えの提起を請求することができ、請求の日から60日以内に会社が訴えを提起しないときは自ら訴えを提起することができる。","a":true,"exp":"会社法847条。公開会社でない株式会社では6か月の保有期間要件は不要である。多重代表訴訟（847条の3）の制度もある。","ref":"会社法847条","field":"商法・会社法"},{"id":"SHO-019","topic":"監査役","type":"ox","q":"監査役は取締役の職務の執行を監査するが、非公開会社（監査役会設置会社および会計監査人設置会社を除く）では、定款で監査役の監査の範囲を会計に関するものに限定することができる。","a":true,"exp":"会社法389条1項。監査役は取締役・支配人その他の使用人を兼ねることができない（335条2項）。","ref":"会社法389条・335条","field":"商法・会社法"},{"id":"SHO-020","topic":"募集株式","type":"ox","q":"公開会社が募集株式を引き受ける者の募集をする場合、募集事項の決定は原則として取締役会の決議による。","a":true,"exp":"会社法201条1項。ただし払込金額が募集株式を引き受ける者に特に有利な金額である場合は株主総会の特別決議を要する（199条3項、309条2項5号）。非公開会社では原則として株主総会の特別決議による。","ref":"会社法199条・201条","field":"商法・会社法"},{"id":"SHO-021","topic":"剰余金の配当","type":"ox","q":"株式会社は、純資産額が300万円を下回る場合には、剰余金の配当をすることができない。","a":true,"exp":"会社法458条。分配可能額を超える配当はできず（461条）、違反した場合、業務執行者等は交付を受けた金銭等の帳簿価額に相当する金銭を支払う義務を負う（462条）。","ref":"会社法458条・461条","field":"商法・会社法"},{"id":"SHO-022","topic":"持分会社","type":"ox","q":"合同会社の社員は、全員が有限責任社員である。","a":true,"exp":"会社法576条4項。合名会社は無限責任社員のみ、合資会社は無限責任社員と有限責任社員からなる。持分会社の業務執行は原則として社員が行う（590条）。","ref":"会社法576条・590条","field":"商法・会社法"},{"id":"SHO-023","topic":"組織再編","type":"ox","q":"吸収合併において消滅会社の権利義務は存続会社に包括的に承継され、消滅会社は清算手続を経ることなく解散する。","a":true,"exp":"会社法750条1項。組織再編には債権者異議手続が必要となる場合がある（789条等）。反対株主には株式買取請求権が認められる（785条等）。","ref":"会社法750条","field":"商法・会社法"},{"id":"SHO-024","topic":"設立の瑕疵","type":"ox","q":"株式会社の設立の無効は、会社成立の日から2年以内に訴えをもってのみ主張することができる。","a":true,"exp":"会社法828条1項1号。設立無効判決には対世効があるが遡及効はない（838条・839条）。","ref":"会社法828条・839条","field":"商法・会社法"},{"id":"GSH-001","topic":"業務","type":"ox","q":"行政書士は、他人の依頼を受け報酬を得て、官公署に提出する書類その他権利義務または事実証明に関する書類を作成することを業とする。","a":true,"exp":"行政書士法1条の2第1項。ただし他の法律において制限されているものについては業務を行うことができない（同条2項）。","ref":"行政書士法1条の2","field":"基礎知識（行政書士法等）"},{"id":"GSH-002","topic":"業務","type":"ox","q":"行政書士は、行政書士が作成した官公署に提出する書類に係る許認可等に関する審査請求等について、すべての行政書士が代理することができる。","a":false,"exp":"行政書士法1条の3第1項1号の不服申立て代理は、日本行政書士会連合会が実施する研修課程を修了した行政書士（特定行政書士）に限られる（同条2項）。","ref":"行政書士法1条の3","field":"基礎知識（行政書士法等）"},{"id":"GSH-003","topic":"業務の制限","type":"ox","q":"行政書士でない者は、業として行政書士法1条の2に規定する業務を行うことができないが、他の法律に別段の定めがある場合はこの限りでない。","a":true,"exp":"行政書士法19条1項（業務の制限）。違反すると1年以下の拘禁刑または100万円以下の罰金に処せられる（21条2号）。","ref":"行政書士法19条・21条","field":"基礎知識（行政書士法等）"},{"id":"GSH-004","topic":"資格","type":"ox","q":"行政書士試験に合格した者のほか、弁護士、弁理士、公認会計士、税理士となる資格を有する者は行政書士となる資格を有する。","a":true,"exp":"行政書士法2条。国または地方公共団体の公務員として行政事務を担当した期間が通算して20年（高等学校卒業者等は17年）以上になる者も資格を有する。","ref":"行政書士法2条","field":"基礎知識（行政書士法等）"},{"id":"GSH-005","topic":"登録","type":"ox","q":"行政書士となる資格を有する者が行政書士となるには、日本行政書士会連合会に備える行政書士名簿に登録を受けなければならない。","a":true,"exp":"行政書士法6条1項。登録の申請は事務所の所在地の都道府県の行政書士会を経由して行う（6条の2）。登録を受けた者は当然にその都道府県の行政書士会の会員となる（16条の5）。","ref":"行政書士法6条","field":"基礎知識（行政書士法等）"},{"id":"GSH-006","topic":"事務所","type":"ox","q":"行政書士は、その業務を行うための事務所を二以上設けることができる。","a":false,"exp":"行政書士法8条3項により、行政書士は二以上の事務所を設けてはならない。行政書士法人にはこの制限はなく、従たる事務所を設けることができる。","ref":"行政書士法8条","field":"基礎知識（行政書士法等）"},{"id":"GSH-007","topic":"義務","type":"ox","q":"行政書士は、正当な事由がある場合でなければ、依頼を拒むことができない。","a":true,"exp":"行政書士法11条（依頼に応ずる義務）。違反した場合、懲戒処分の対象となりうる。","ref":"行政書士法11条","field":"基礎知識（行政書士法等）"},{"id":"GSH-008","topic":"義務","type":"ox","q":"行政書士は、正当な理由がなく、その業務上取り扱った事項について知り得た秘密を漏らしてはならないが、行政書士でなくなった後はこの義務を負わない。","a":false,"exp":"行政書士法12条は「行政書士でなくなつた後も、また同様とする」と定めており、資格を失った後も守秘義務は存続する。違反には罰則がある（22条、親告罪）。","ref":"行政書士法12条・22条","field":"基礎知識（行政書士法等）"},{"id":"GSH-009","topic":"義務","type":"ox","q":"行政書士は、業務に関する帳簿を備え、これに事件の名称、年月日、受けた報酬の額、依頼者の住所氏名等を記載し、帳簿を閉鎖した後2年間保存しなければならない。","a":true,"exp":"行政書士法9条。また依頼に応じて作成した書類の写しの保存義務も同条に定められている。","ref":"行政書士法9条","field":"基礎知識（行政書士法等）"},{"id":"GSH-010","topic":"義務","type":"ox","q":"行政書士は、その業務に関し依頼人から受ける報酬の額を事務所の見やすい場所に掲示しなければならない。","a":true,"exp":"行政書士法10条の2第1項。報酬額は各行政書士が自由に定めるが、掲示は義務である。","ref":"行政書士法10条の2","field":"基礎知識（行政書士法等）"},{"id":"GSH-011","topic":"義務","type":"ox","q":"行政書士は、依頼人の求めがあったときは、その業務上作成した書類に職印を押さなければならない。","a":false,"exp":"行政書士法施行規則11条は、行政書士が作成した書類には記名し職印を押さなければならないと定めており、依頼人の求めの有無にかかわらず押印が必要である。","ref":"行政書士法施行規則11条","field":"基礎知識（行政書士法等）"},{"id":"GSH-012","topic":"行政書士法人","type":"ox","q":"行政書士法人の社員は、行政書士でなければならない。","a":true,"exp":"行政書士法13条の5第1項。社員は原則として法人の業務について競業避止義務を負い（13条の16）、法人の債務については無限連帯責任を負う（13条の21）。","ref":"行政書士法13条の5","field":"基礎知識（行政書士法等）"},{"id":"GSH-013","topic":"懲戒","type":"ox","q":"行政書士が行政書士法その他行政書士の業務に関する法令に違反したときは、都道府県知事は戒告、2年以内の業務の停止または業務の禁止の処分をすることができる。","a":true,"exp":"行政書士法14条。何人も違反の事実があると認めるときは都道府県知事に対し適当な措置をとることを求めることができる（14条の3）。業務の停止または禁止の処分をするには聴聞を行わなければならない（14条の4）。","ref":"行政書士法14条","field":"基礎知識（行政書士法等）"},{"id":"GSH-014","topic":"名称","type":"ox","q":"行政書士でない者は、行政書士またはこれと紛らわしい名称を用いてはならない。","a":true,"exp":"行政書士法19条の2（名称の使用制限）。違反すると100万円以下の罰金に処せられる（22条の4）。","ref":"行政書士法19条の2","field":"基礎知識（行政書士法等）"},{"id":"GSH-015","topic":"戸籍法","type":"ox","q":"出生の届出は、出生の日から14日以内（国外で出生があったときは3か月以内）にしなければならない。","a":true,"exp":"戸籍法49条1項。死亡の届出は死亡の事実を知った日から7日以内（国外にあるときは3か月以内）である（86条1項）。令和6年3月1日から戸籍に氏名の振り仮名を記載する制度が段階的に導入されている。","ref":"戸籍法49条・86条","field":"基礎知識（行政書士法等）"},{"id":"GSH-016","topic":"住民基本台帳法","type":"ox","q":"転入をした者は、転入をした日から14日以内に、転入届を市町村長に提出しなければならない。","a":true,"exp":"住民基本台帳法22条。転出届は転出をする前にあらかじめ（24条）、転居届は転居をした日から14日以内（23条）である。","ref":"住民基本台帳法22条〜24条","field":"基礎知識（行政書士法等）"},{"id":"JHK-001","topic":"個人情報の定義","type":"ox","q":"個人情報とは生存する個人に関する情報であって、当該情報に含まれる氏名、生年月日その他の記述等により特定の個人を識別することができるもの、または個人識別符号が含まれるものをいう。","a":true,"exp":"個人情報保護法2条1項。他の情報と容易に照合することができ、それにより特定の個人を識別できるものも含まれる。死者に関する情報は原則として個人情報に当たらない。","ref":"個人情報保護法2条1項","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-002","topic":"個人識別符号","type":"ox","q":"旅券番号、基礎年金番号、運転免許証番号、マイナンバーはいずれも個人識別符号に当たる。","a":true,"exp":"個人情報保護法2条2項2号および政令。指紋データ、顔認識データ、DNAの塩基配列などの身体的特徴を変換した符号も個人識別符号である（同項1号）。","ref":"個人情報保護法2条2項","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-003","topic":"要配慮個人情報","type":"ox","q":"要配慮個人情報には、人種、信条、社会的身分、病歴、犯罪の経歴、犯罪により害を被った事実が含まれるが、本籍地は含まれない。","a":true,"exp":"個人情報保護法2条3項。本籍地や国籍は要配慮個人情報に当たらない。要配慮個人情報の取得には原則として本人の同意が必要であり、オプトアウトによる第三者提供もできない。","ref":"個人情報保護法2条3項・20条2項","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-004","topic":"利用目的","type":"ox","q":"個人情報取扱事業者は、個人情報を取り扱うにあたってはその利用目的をできる限り特定しなければならず、変更前の利用目的と関連性を有すると合理的に認められる範囲を超えて変更してはならない。","a":true,"exp":"個人情報保護法17条。あらかじめ本人の同意を得ないで特定された利用目的の達成に必要な範囲を超えて取り扱ってはならない（18条1項）。","ref":"個人情報保護法17条・18条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-005","topic":"第三者提供","type":"ox","q":"個人情報取扱事業者は、法令に基づく場合や人の生命・身体・財産の保護のために必要がある場合で本人の同意を得ることが困難であるときなどを除き、あらかじめ本人の同意を得ないで個人データを第三者に提供してはならない。","a":true,"exp":"個人情報保護法27条1項。委託先への提供、事業の承継に伴う提供、共同利用は第三者提供に当たらない（同条5項）。","ref":"個人情報保護法27条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-006","topic":"オプトアウト","type":"ox","q":"要配慮個人情報および不正取得された個人データは、オプトアウトの手続によって第三者に提供することができない。","a":true,"exp":"令和2年改正により、オプトアウトによる第三者提供の対象から、要配慮個人情報に加え、不正取得された個人データおよびオプトアウトにより提供された個人データが除外された（個人情報保護法27条2項）。","ref":"個人情報保護法27条2項","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-007","topic":"仮名加工情報","type":"ox","q":"仮名加工情報は、他の情報と照合しない限り特定の個人を識別することができないように加工した個人に関する情報であり、原則として第三者提供が禁止される。","a":true,"exp":"個人情報保護法2条5項・41条・42条。これに対し匿名加工情報は特定の個人を識別することができず、かつ個人情報を復元できないように加工したもので、一定の手続の下で第三者提供が可能である。","ref":"個人情報保護法2条5項・41条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-008","topic":"本人の権利","type":"ox","q":"本人は、個人情報取扱事業者に対し、保有個人データの電磁的記録の提供による方法その他事業者の定める方法による開示を請求することができる。","a":true,"exp":"個人情報保護法33条1項。令和2年改正により、開示方法を本人が指示できることとされ、第三者提供記録の開示請求も認められた（同条5項）。","ref":"個人情報保護法33条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-009","topic":"本人の権利","type":"ox","q":"本人は、保有個人データを個人情報取扱事業者が利用する必要がなくなった場合や、本人の権利または正当な利益が害されるおそれがある場合にも、利用停止等を請求することができる。","a":true,"exp":"個人情報保護法35条5項。令和2年改正により利用停止・消去等の請求権の要件が緩和された。","ref":"個人情報保護法35条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-010","topic":"漏えい報告","type":"ox","q":"個人情報取扱事業者は、個人データの漏えい等が生じ、個人の権利利益を害するおそれが大きいものとして規則で定めるものが生じたときは、個人情報保護委員会に報告するとともに本人に通知しなければならない。","a":true,"exp":"個人情報保護法26条。令和2年改正で義務化された。要配慮個人情報の漏えい、財産的被害のおそれがあるもの、不正目的によるもの、1000人を超える漏えいが対象である。","ref":"個人情報保護法26条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-011","topic":"行政機関等","type":"ox","q":"令和3年改正により、行政機関個人情報保護法および独立行政法人等個人情報保護法は個人情報保護法に統合され、地方公共団体の個人情報保護制度についても同法に共通ルールが定められた。","a":true,"exp":"デジタル社会形成整備法による令和3年改正。監督権限は個人情報保護委員会に一元化された。行政機関等については第5章に規定が置かれている。","ref":"個人情報保護法第5章","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-012","topic":"情報公開法","type":"ox","q":"行政機関情報公開法に基づく開示決定等は、開示請求があった日から30日以内にしなければならない。","a":true,"exp":"行政機関情報公開法10条1項。事務処理上の困難その他正当な理由があるときは30日以内に限り延長でき（同条2項）、著しく大量である場合の特例もある（11条）。","ref":"行政機関情報公開法10条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-013","topic":"情報公開法","type":"ox","q":"開示請求に係る行政文書に不開示情報が記録されている場合であっても、公益上特に必要があると認めるときは、行政機関の長は当該文書を開示することができる。","a":true,"exp":"行政機関情報公開法7条（公益上の理由による裁量的開示）。文書の存否を答えるだけで不開示情報を開示することとなるときは、存否を明らかにしないで拒否できる（8条、グローマー拒否）。","ref":"行政機関情報公開法7条・8条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-014","topic":"公文書管理法","type":"ox","q":"行政機関の職員は、行政機関における経緯も含めた意思決定に至る過程等を合理的に跡付け、検証することができるよう文書を作成しなければならない。","a":true,"exp":"公文書管理法4条。保存期間満了後は国立公文書館等への移管または廃棄が行われ、廃棄には内閣総理大臣の同意が必要である（8条2項）。","ref":"公文書管理法4条・8条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-015","topic":"マイナンバー","type":"ox","q":"個人番号は、社会保障、税および災害対策の分野で法律または条例に定められた事務に限って利用することができる。","a":true,"exp":"番号法9条。本人の同意があっても法定された利用目的以外に利用することはできない点が個人情報保護法と異なる。特定個人情報の提供も原則として禁止される（19条）。","ref":"番号法9条・19条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"JHK-016","topic":"情報通信用語","type":"ox","q":"電子署名法により、電磁的記録は本人による一定の要件を満たす電子署名が行われているときは、真正に成立したものと推定される。","a":true,"exp":"電子署名法3条。ほかにデジタル社会形成基本法、官民データ活用推進基本法、プロバイダ責任制限法を改組した情報流通プラットフォーム対処法などが出題範囲となる。","ref":"電子署名法3条","field":"基礎知識（情報通信・個人情報保護）"},{"id":"IPN-001","topic":"選挙制度","type":"ox","q":"衆議院議員総選挙は小選挙区比例代表並立制で行われ、小選挙区と比例代表への重複立候補が認められている。","a":true,"exp":"重複立候補者の比例名簿順位が同一の場合、小選挙区での惜敗率により当選順位が決まる。参議院は選挙区制と非拘束名簿式比例代表制（特定枠を含む）である。","ref":"公職選挙法","field":"基礎知識（一般知識）"},{"id":"IPN-002","topic":"選挙制度","type":"ox","q":"選挙権は満18歳以上の日本国民に認められ、被選挙権は衆議院議員および市町村長が満25歳以上、参議院議員および都道府県知事が満30歳以上である。","a":true,"exp":"公職選挙法9条・10条。平成27年改正により選挙権年齢が18歳以上に引き下げられた。","ref":"公職選挙法9条・10条","field":"基礎知識（一般知識）"},{"id":"IPN-003","topic":"国際機構","type":"ox","q":"国際連合の安全保障理事会は常任理事国5か国と非常任理事国10か国からなり、実質事項の決定には常任理事国すべてを含む9か国以上の賛成が必要である。","a":true,"exp":"常任理事国はアメリカ、イギリス、フランス、ロシア、中国である。常任理事国の反対（拒否権）があれば決議は成立しない。手続事項は9か国以上の賛成で足りる。","ref":"国連憲章27条","field":"基礎知識（一般知識）"},{"id":"IPN-004","topic":"国際関係","type":"ox","q":"世界貿易機関（WTO）は関税及び貿易に関する一般協定（GATT）を発展的に引き継いで1995年に設立され、紛争解決手続を備えている。","a":true,"exp":"WTOはサービス貿易（GATS）や知的財産（TRIPS）も対象とする。地域的な枠組みとしてCPTPP、RCEP、日EU経済連携協定などがある。","ref":"国際経済","field":"基礎知識（一般知識）"},{"id":"IPN-005","topic":"社会保障","type":"ox","q":"日本の公的年金は国民年金（基礎年金）と厚生年金の二階建てであり、20歳以上60歳未満のすべての居住者が国民年金の被保険者となる。","a":true,"exp":"第1号被保険者は自営業者等、第2号は被用者、第3号は第2号の被扶養配偶者である。年金財政は基本的に賦課方式で運営されている。","ref":"国民年金法","field":"基礎知識（一般知識）"},{"id":"IPN-006","topic":"社会保障","type":"ox","q":"介護保険の保険者は都道府県であり、被保険者は40歳以上の者である。","a":false,"exp":"介護保険の保険者は市町村および特別区である（介護保険法3条）。被保険者は65歳以上の第1号被保険者と、40歳以上65歳未満の医療保険加入者である第2号被保険者に分かれる。","ref":"介護保険法3条・9条","field":"基礎知識（一般知識）"},{"id":"IPN-007","topic":"財政","type":"ox","q":"日本の国の予算は一般会計と特別会計からなり、歳入不足を補うための特例公債（赤字国債）の発行には特例法の制定が必要である。","a":true,"exp":"財政法4条は原則として公債発行を禁じ、公共事業費等に充てる建設公債のみを例外的に認めている。日銀引受けも原則禁止である（財政法5条）。","ref":"財政法4条・5条","field":"基礎知識（一般知識）"},{"id":"IPN-008","topic":"租税","type":"ox","q":"消費税は間接税であり、その使途は法律上、年金、医療、介護および少子化対策の社会保障4経費に充てるものとされている。","a":true,"exp":"消費税法1条2項。所得税・法人税は直接税、酒税・たばこ税・関税は間接税である。","ref":"消費税法1条","field":"基礎知識（一般知識）"},{"id":"IPN-009","topic":"経済","type":"ox","q":"日本銀行の金融政策は政策委員会の金融政策決定会合で決定され、その目的は物価の安定を図ることを通じて国民経済の健全な発展に資することにある。","a":true,"exp":"日本銀行法1条・2条。日本銀行の役割は発券銀行、銀行の銀行、政府の銀行の三つである。","ref":"日本銀行法1条・2条","field":"基礎知識（一般知識）"},{"id":"IPN-010","topic":"環境","type":"ox","q":"パリ協定は、産業革命前からの世界の平均気温上昇を2度より十分低く保ち、1.5度に抑える努力を追求することを目標として掲げ、すべての締約国が削減目標を提出・更新する義務を負う。","a":true,"exp":"2015年に採択され2016年発効。先進国のみに削減義務を課した京都議定書と異なる。日本は2050年カーボンニュートラルを表明している。","ref":"パリ協定","field":"基礎知識（一般知識）"},{"id":"IPN-011","topic":"環境","type":"ox","q":"環境影響評価法に基づく環境アセスメントは、事業の実施前に環境への影響を調査・予測・評価し、その結果を公表して意見を聴く手続である。","a":true,"exp":"平成23年改正により、事業の位置・規模等の検討段階における配慮書手続が導入された。方法書、準備書、評価書、報告書の各段階がある。","ref":"環境影響評価法","field":"基礎知識（一般知識）"},{"id":"IPN-012","topic":"社会","type":"ox","q":"日本の人口は2008年をピークに減少局面に入っており、65歳以上人口の割合が21パーセントを超える超高齢社会に該当する。","a":true,"exp":"高齢化率7パーセント超で高齢化社会、14パーセント超で高齢社会、21パーセント超で超高齢社会と呼ばれる。合計特殊出生率の低下と生産年齢人口の減少が課題である。","ref":"人口統計","field":"基礎知識（一般知識）"},{"id":"IPN-013","topic":"行政改革","type":"ox","q":"独立行政法人は中期目標管理法人、国立研究開発法人および行政執行法人の三つに分類される。","a":true,"exp":"独立行政法人通則法。行政執行法人の役職員は国家公務員の身分を有する。指定管理者制度、PFI、市場化テストなども行政の民間活用の手法である。","ref":"独立行政法人通則法","field":"基礎知識（一般知識）"},{"id":"IPN-014","topic":"デジタル行政","type":"ox","q":"デジタル手続法（情報通信技術を活用した行政の推進等に関する法律）は、デジタルファースト、ワンスオンリー、コネクテッド・ワンストップを基本原則としている。","a":true,"exp":"令和元年制定。デジタル庁は令和3年9月にデジタル庁設置法に基づき設置された。デジタル社会形成基本法が基本理念を定めている。","ref":"デジタル手続法","field":"基礎知識（一般知識）"},{"id":"BNR-001","topic":"並べ替え","type":"mc","q":"次の文章を並べ替えて意味の通る文章にするとき、3番目にくるものはどれか。\nア　しかし、その前提には、住民が行政の活動を知りうるという条件が欠かせない。\nイ　地方自治は、住民が自らの地域のことを自ら決めるという理念に支えられている。\nウ　情報公開制度が地方公共団体において先行して整備されたのは、こうした事情による。\nエ　情報が行政の側に偏在したままでは、参加は形だけのものに終わるからである。","choices":["ア","イ","ウ","エ"],"a":3,"exp":"イ（理念の提示）→ア（しかし、前提条件）→エ（その理由）→ウ（結論）の順となる。3番目はエである。接続語「しかし」「からである」「こうした事情」が手がかりになる。","ref":"文章理解・並べ替え","field":"基礎知識（文章理解）"},{"id":"BNR-002","topic":"空欄補充","type":"mc","q":"次の文章の空欄に入る語として最も適切なものはどれか。\n「法律による行政の原理は、行政権の恣意を抑え、国民の予測可能性を確保することに意義がある。もっとも、社会の複雑化に伴い、法律ですべてを一義的に定めることは困難となり、行政に一定の（　　）を認めざるをえない場面が増えている。」","choices":["裁量","義務","責任","権限"],"a":0,"exp":"法律が一義的に定めきれない場合に行政の判断余地を認めるという文脈であるから「裁量」が入る。行政裁量の存在理由を述べた典型的な記述である。","ref":"文章理解・空欄補充","field":"基礎知識（文章理解）"},{"id":"BNR-003","topic":"要旨把握","type":"mc","q":"次の文章の趣旨として最も適切なものはどれか。\n「行政手続の整備は、処分の内容そのものを直ちに適正にするわけではない。しかし、判断の過程を可視化し、相手方に反論の機会を与えることによって、結果としてより妥当な判断が導かれる可能性を高める。手続の価値は、この間接的な作用にこそ求められるべきである。」","choices":["行政手続の整備は処分内容を直接適正化する点に価値がある","行政手続は判断過程を可視化することで結果の妥当性を高める点に価値がある","行政手続の整備は行政の負担を増やすだけで実益に乏しい","行政手続よりも事後の救済手続を充実させるべきである"],"a":1,"exp":"筆者は手続の価値を「間接的な作用」に求めている。直接適正化を否定し、可視化と反論機会を通じた結果の妥当性向上を述べているので2番目が適切である。","ref":"文章理解・要旨把握","field":"基礎知識（文章理解）"},{"id":"BNR-004","topic":"空欄補充","type":"mc","q":"次の文章の空欄に入る接続語として最も適切なものはどれか。\n「行政不服審査は簡易迅速な救済手段である。（　　）、審理の公正さを欠けば、その簡易迅速さはかえって国民の不信を招くことになる。」","choices":["したがって","ところが","もっとも","たとえば"],"a":2,"exp":"前段の長所を認めつつ留保を付け加える文脈であるから「もっとも」が適切である。「ところが」は予想外の事実を述べる場合、「したがって」は順接の帰結を述べる場合に用いる。","ref":"文章理解・接続語","field":"基礎知識（文章理解）"},{"id":"BNR-005","topic":"並べ替え","type":"mc","q":"次の文章を並べ替えて意味の通る文章にするとき、最後にくるものはどれか。\nア　その結果、権利の実現までに長い時間を要することになる。\nイ　行政処分の取消しを求める者は、まず出訴期間内に訴えを提起しなければならない。\nウ　仮の救済制度が用意されているのは、このような不都合に対処するためである。\nエ　しかも、訴えを提起しても処分の効力は当然には停止されない。","choices":["ア","イ","ウ","エ"],"a":2,"exp":"イ（前提）→エ（しかも、追加の不利益）→ア（その結果）→ウ（制度の趣旨）の順である。最後はウとなる。「このような不都合」が前文を受けている点が手がかりである。","ref":"文章理解・並べ替え","field":"基礎知識（文章理解）"},{"id":"KJT-001","topic":"行政法","type":"desc","q":"Aは、B県知事から営業許可の取消処分を受けた。Aがこの処分の効力を争いたい場合、行政事件訴訟法上、判決が確定するまでの間に処分の効力を暫定的に止めるにはどのような申立てをすればよいか。制度の名称、申立先、および認められるための中心的な要件を40字程度で記述しなさい。","model":"裁判所に執行停止を申し立て、重大な損害を避けるため緊急の必要があると認められることを要する。","exp":"行政事件訴訟法25条2項。職権ではできず申立てが必要である点、「重大な損害」「緊急の必要」が要件である点を落とさないこと。処分の効力の停止は、執行または手続の続行の停止で目的を達しうる場合にはできない（補充性）。","ref":"行政事件訴訟法25条","field":"記述式"},{"id":"KJT-002","topic":"行政法","type":"desc","q":"行政手続法によれば、行政庁が申請により求められた許認可等を拒否する処分をする場合、当該処分について何をしなければならないか。例外に触れつつ40字程度で記述しなさい。","model":"申請者に対し、原則として同時に当該処分の理由を示さなければならない。","exp":"行政手続法8条1項。理由提示の趣旨は、行政庁の判断の慎重・合理性を担保して恣意を抑制するとともに、不服申立ての便宜を図る点にある（最判昭60.1.22等）。","ref":"行政手続法8条","field":"記述式"},{"id":"KJT-003","topic":"行政法","type":"desc","q":"行政代執行法に基づく代執行の要件について、対象となる義務の性質を含め40字程度で記述しなさい。","model":"代替的作為義務の不履行を放置することが著しく公益に反し、他の手段で履行確保が困難な場合に行う。","exp":"行政代執行法2条。1 法律により直接命ぜられまたは法律に基づき行政庁により命ぜられた代替的作為義務であること、2 他の手段によってその履行を確保することが困難であること、3 その不履行を放置することが著しく公益に反すると認められること。","ref":"行政代執行法2条","field":"記述式"},{"id":"KJT-004","topic":"行政法","type":"desc","q":"Aは、市長に対し情報公開条例に基づく公文書の開示請求をしたが、相当期間が経過しても何らの応答がない。Aが行政事件訴訟法上とりうる訴訟として、どのような訴訟をどのように提起すべきか、40字程度で記述しなさい。","model":"不作為の違法確認訴訟と申請型義務付け訴訟を併合して提起すべきである。","exp":"行政事件訴訟法3条5項、37条の3第1項1号・第3項1号。申請型義務付け訴訟は、不作為の違法確認訴訟または拒否処分の取消訴訟等を併合提起しなければならない。","ref":"行政事件訴訟法37条の3","field":"記述式"},{"id":"KJT-005","topic":"行政法","type":"desc","q":"行政不服審査法における執行停止について、処分庁の上級行政庁でも処分庁でもない審査庁が執行停止をする場合の特徴を、職権の可否に触れて40字程度で記述しなさい。","model":"審査請求人の申立てがある場合に限られ、職権による執行停止をすることはできない。","exp":"行政不服審査法25条3項。この場合、処分の効力・執行・手続の続行の全部または一部の停止に限られ、それ以外の措置をとることもできない。","ref":"行政不服審査法25条3項","field":"記述式"},{"id":"KJT-006","topic":"行政法","type":"desc","q":"取消訴訟における原告適格について、行政事件訴訟法9条2項が処分の相手方以外の者について定める考慮事項を、40字程度で記述しなさい。","model":"当該法令の趣旨目的および処分で考慮されるべき利益の内容性質を考慮して判断する。","exp":"行政事件訴訟法9条2項。趣旨目的の考慮にあたっては当該法令と目的を共通にする関係法令の趣旨目的をも参酌し、利益の内容・性質の考慮にあたっては害される態様・程度をも勘案する。","ref":"行政事件訴訟法9条2項","field":"記述式"},{"id":"KJT-007","topic":"行政法","type":"desc","q":"国家賠償法1条1項に基づく損害賠償責任が認められるための要件を、40字程度で記述しなさい。","model":"公権力の行使に当たる公務員が職務を行うにつき故意過失により違法に損害を加えたこと。","exp":"国家賠償法1条1項。公務員個人は被害者に対し直接責任を負わず、故意または重過失があるときに国等が求償できるにとどまる（同条2項）。","ref":"国家賠償法1条","field":"記述式"},{"id":"KJT-008","topic":"民法","type":"desc","q":"AはBに対する債権を有するが、Bは無資力であるにもかかわらずCに対する債権を行使しない。Aがとりうる民法上の手段の名称と、行使できる範囲について40字程度で記述しなさい。","model":"債権者代位権を行使でき、目的が可分なときは自己の債権額の限度に限られる。","exp":"民法423条、423条の2。被保全債権が金銭債権の場合は債務者の無資力が要件となる。登記請求権の代位のような転用型では無資力要件は不要である。","ref":"民法423条・423条の2","field":"記述式"},{"id":"KJT-009","topic":"民法","type":"desc","q":"買主が引渡しを受けた目的物が種類または品質に関して契約の内容に適合しない場合、買主が売主に対して請求できる内容を40字程度で記述しなさい。","model":"修補や代替物引渡しによる履行の追完、代金減額、損害賠償および契約の解除を請求できる。","exp":"民法562条〜564条。追完請求が原則で、催告しても追完がないときに代金減額請求ができる。種類・品質の不適合は不適合を知った時から1年以内の通知が必要である（566条）。","ref":"民法562条〜566条","field":"記述式"},{"id":"KJT-010","topic":"民法","type":"desc","q":"Aが所有する甲土地をBが20年間占有した。Bが取得時効を主張するための要件を、善意無過失の場合との違いを含め40字程度で記述しなさい。","model":"所有の意思で平穏公然に20年占有すること。占有開始時に善意無過失なら10年で足りる。","exp":"民法162条。所有の意思、平穏・公然、占有の継続が要件であり、これらは186条により推定される。善意無過失は占有開始時に存すれば足りる。","ref":"民法162条・186条","field":"記述式"},{"id":"KJT-011","topic":"民法","type":"desc","q":"無権代理人Aが本人Bの代理人と称してCと契約した。Bが追認も追認拒絶もしない間に、Cがとりうる手段を二つ挙げ、それぞれの要件に触れて40字程度で記述しなさい。","model":"相当期間を定めて本人に催告でき、善意であれば契約を取り消すこともできる。","exp":"民法114条（催告権、善意悪意を問わない。確答がなければ追認拒絶とみなされる）、115条（取消権、契約時に善意であることが必要）。ほかに無権代理人への責任追及（117条）がある。","ref":"民法114条・115条","field":"記述式"},{"id":"KJT-012","topic":"民法","type":"desc","q":"Aが所有する建物の外壁が落下して通行人Bが負傷した。この建物をAから賃借して居住しているCがいる場合、民法上誰がどのような責任を負うか、40字程度で記述しなさい。","model":"まず占有者Cが責任を負い、必要な注意をしたときは所有者Aが無過失責任を負う。","exp":"民法717条1項。占有者は損害の発生を防止するのに必要な注意をしたことを立証すれば免責されるが、所有者の責任は免責事由のない無過失責任である。","ref":"民法717条","field":"記述式"},{"id":"TSN-001","topic":"憲法（検閲）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「憲法21条2項にいう『検閲』とは、［ア］が主体となって、思想内容等の表現物を対象とし、その全部または一部の発表の禁止を目的として、対象とされる表現物を［イ］に発表前に審査したうえ、不適当と認めるものの発表を禁止することを、その特質として備えるものを指すと解すべきである。そして、憲法21条2項前段は、検閲の禁止について［ウ］を認めない趣旨を明らかにしたものと解される。これに対し、裁判所の仮処分による事前差止めは、［エ］が主体となるものであるから検閲に当たらない。」","blanks":["ア","イ","ウ","エ"],"choices":["行政権","立法権","司法権","国民","網羅的一般的","個別具体的","例外","制限","公共の福祉","私人","裁判所","警察","事後的","部分的","一切の例外","原則","国会","内閣","抽象的","選択的"],"a":[0,4,14,10],"exp":"税関検査事件（最大判昭59.12.12）。検閲の主体は行政権、審査は網羅的一般的、禁止は絶対的で一切の例外を認めない。裁判所が主体の事前差止めは検閲に当たらない（北方ジャーナル事件）。","ref":"最大判昭59.12.12","field":"多肢選択式"},{"id":"TSN-002","topic":"行政法（取消しと撤回）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「行政行為の［ア］とは、行政行為に当初から瑕疵があることを理由に、その効力を行為時に［イ］して失わせることをいう。これに対し［ウ］とは、当初は適法であった行政行為について、その後に生じた事情を理由に［エ］に向かってその効力を失わせることをいい、原則として処分庁のみがこれを行うことができる。」","blanks":["ア","イ","ウ","エ"],"choices":["職権取消し","撤回","無効確認","失効","遡及","停止","将来","過去","上級庁","処分庁","変更","更新","追認","確認","中止","現在","一部","全部","公示","代執行"],"a":[0,4,1,6],"exp":"取消しは原始的瑕疵を理由とし遡及効を有し、撤回は後発的事情を理由とし将来効を有する。撤回は処分庁のみが行いうる。","ref":"行政行為の取消しと撤回","field":"多肢選択式"},{"id":"TSN-003","topic":"行政法（処分性）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「行政事件訴訟法3条2項にいう行政庁の処分とは、公権力の主体たる国または公共団体が行う行為のうち、その行為によって直接［ア］の権利義務を形成しまたはその範囲を確定することが法律上認められているものをいう。この要件は一般に［イ］と呼ばれる。土地区画整理事業の事業計画の決定については、かつて［ウ］にすぎないとしてこれを否定する判例があったが、最高裁は平成20年の大法廷判決でこれを［エ］し、施行地区内の宅地所有者等の法的地位に直接的な影響が生ずることを理由に肯定した。」","blanks":["ア","イ","ウ","エ"],"choices":["国民","行政機関","原告適格","処分性","訴えの利益","青写真","確定計画","変更","維持","拡張","被告適格","公定力","抽象的","第三者","事業者","住民","否定","承認","覊束行為","裁量行為"],"a":[0,3,5,7],"exp":"処分性の定義は最判昭39.10.29（東京都ごみ焼却場事件）による。土地区画整理事業計画については最大判平20.9.10が青写真判決（最大判昭41.2.23）を変更した。","ref":"最大判平20.9.10","field":"多肢選択式"},{"id":"TSN-004","topic":"行政法（国家賠償）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「国家賠償法2条1項にいう営造物の設置または管理の［ア］とは、営造物が通常有すべき［イ］を欠いていることをいい、同項の責任は［ウ］責任であると解されている。したがって、道路の管理について予算が不足していたことは［エ］とならない。」","blanks":["ア","イ","ウ","エ"],"choices":["瑕疵","欠陥","安全性","効用","無過失","過失","免責事由","違法性","故意","減額事由","抗弁","責任原因","中間責任","無過失責任の例外","不可抗力","相当性","経済性","公共性","正当事由","比例原則"],"a":[0,2,4,6],"exp":"高知落石事件（最判昭45.8.20）。営造物責任は無過失責任であり、予算不足は免責事由とならない。機能的瑕疵（供用関連瑕疵）も認められる。","ref":"最判昭45.8.20","field":"多肢選択式"},{"id":"TSN-005","topic":"憲法（違憲審査）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「わが国の違憲審査制は、［ア］を前提としてその解決に必要な限度で法令の違憲審査を行う［イ］審査制であると解されている。したがって、［ウ］に法令の合憲性を判断する権限は認められない。この点を明らかにしたのが［エ］である。」","blanks":["ア","イ","ウ","エ"],"choices":["具体的事件","抽象的紛争","付随的","抽象的","客観的","抽象的一般的","警察予備隊違憲訴訟","苫米地事件","砂川事件","朝日訴訟","憲法訴訟","憲法裁判所","国民審査","統治行為","部分社会","事情判決","主観訴訟","客観訴訟","司法権","立法権"],"a":[0,2,5,6],"exp":"警察予備隊違憲訴訟（最大判昭27.10.8）。わが国の違憲審査制は具体的事件を前提とする付随的審査制であり、抽象的一般的に法令の合憲性を判断することはできない。","ref":"最大判昭27.10.8","field":"多肢選択式"},{"id":"TSN-006","topic":"行政法（行政裁量）","type":"multi","q":"次の文章の空欄ア〜エに当てはまる語句を選びなさい。\n「行政庁の裁量処分については、裁量権の範囲をこえまたはその［ア］があった場合に限り、裁判所はその処分を取り消すことができる（行政事件訴訟法30条）。裁量統制の手法としては、考慮すべき事項を考慮せず、考慮すべきでない事項を考慮したかを問う［イ］審査と、処分が社会通念上著しく妥当性を欠くかを問う［ウ］審査が知られている。前者の代表例が［エ］である。」","blanks":["ア","イ","ウ","エ"],"choices":["濫用","逸脱","懈怠","判断過程","手続","社会観念","比例原則","日光太郎杉事件","マクリーン事件","神戸税関事件","伊方原発訴訟","実体","形式","目的","効果","裁量基準","平等原則","信義則","明白性","合理性"],"a":[0,3,5,7],"exp":"行政事件訴訟法30条。判断過程統制の代表例が日光太郎杉事件（東京高判昭48.7.13）、社会観念審査の代表例が神戸税関事件（最判昭52.12.20）である。","ref":"行政事件訴訟法30条","field":"多肢選択式"}]}</script>
+<script>
+(function(){
+"use strict";
+var DATA = JSON.parse(document.getElementById("qdata").textContent);
+var QS = {}, BYFIELD = {};
+DATA.questions.forEach(function(q){
+  QS[q.id] = q;
+  (BYFIELD[q.field] = BYFIELD[q.field] || []).push(q);
+});
+var FIELDS = Object.keys(BYFIELD);
+var DAYS = DATA.days;
+var EXAM = new Date(2027, 10, 14); // 令和9年11月14日（例年どおり11月第2日曜日の場合）
+
+/* ---------- store ---------- */
+var KEY = "gyosei-r9-progress";
+var S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
+var db = null;
+
+function today(){
+  var d = new Date();
+  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
+}
+function loadLocal(){
+  try{
+    var raw = localStorage.getItem(KEY);
+    if(raw){ var o = JSON.parse(raw); if(o && o.hist) S = Object.assign(S, o); }
+  }catch(e){}
+}
+function save(){
+  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
+  if(db){ db.doc("progress/main").set(S).catch(function(){}); }
+}
+function size(o){ return o && o.hist ? Object.keys(o.hist).length : -1; }
+
+/* ---------- derived ---------- */
+function daysLeft(){
+  var t = new Date(); t.setHours(0,0,0,0);
+  return Math.max(0, Math.round((EXAM - t) / 86400000));
+}
+function streak(){
+  var set = {}; S.doneDates.forEach(function(d){ set[d] = 1; });
+  var d = new Date(), n = 0;
+  if(!set[today()]) d.setDate(d.getDate() - 1);
+  for(;;){
+    var k = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+    if(!set[k]) break;
+    n++; d.setDate(d.getDate() - 1);
+  }
+  return n;
+}
+function stats(){
+  var seen = 0, ok = 0, n = 0;
+  for(var id in S.hist){ var h = S.hist[id]; seen++; ok += h.ok; n += h.n; }
+  return {seen:seen, rate: n ? Math.round(ok / n * 100) : null};
+}
+function fieldStat(f){
+  var qs = BYFIELD[f] || [], seen = 0, ok = 0, n = 0;
+  qs.forEach(function(q){
+    var h = S.hist[q.id];
+    if(h){ seen++; ok += h.ok; n += h.n; }
+  });
+  return {total:qs.length, seen:seen, rate: n ? Math.round(ok / n * 100) : null};
+}
+function record(q, correct){
+  var h = S.hist[q.id] || {n:0, ok:0, last:""};
+  h.n++; if(correct) h.ok++;
+  h.last = correct ? "o" : "x";
+  S.hist[q.id] = h;
+}
+
+/* ---------- header ---------- */
+function paintMeta(){
+  var st = stats();
+  document.getElementById("m-days").textContent = daysLeft();
+  document.getElementById("m-streak").textContent = streak();
+  document.getElementById("m-seen").textContent = st.seen;
+  document.getElementById("m-rate").textContent = st.rate === null ? "—" : st.rate;
+}
+
+/* ---------- question rendering ---------- */
+var el = function(t, cls, txt){
+  var n = document.createElement(t);
+  if(cls) n.className = cls;
+  if(txt != null) n.textContent = txt;
+  return n;
+};
+var TYPE_LABEL = {ox:"正しければ〇、誤りなら×", mc:"正しいものを一つ選ぶ", desc:"40字程度で記述する", multi:"空欄ア〜エに入る語句を選ぶ"};
+
+function renderQuestion(host, q, ctx){
+  host.innerHTML = "";
+  var sheet = el("div","sheet");
+  var head = el("div","sheet-head");
+  head.appendChild(el("span","tag", ctx.label));
+  head.appendChild(el("span","tag field", q.field));
+  head.appendChild(el("span","tag", q.topic));
+  if(ctx.rail){
+    var rail = el("div","rail");
+    for(var i=0;i<ctx.rail.total;i++){
+      var b = el("i");
+      if(i < ctx.rail.at) b.className = "done";
+      else if(i === ctx.rail.at) b.className = "now";
+      rail.appendChild(b);
+    }
+    head.appendChild(rail);
+  }
+  sheet.appendChild(head);
+  sheet.appendChild(el("p","qtype", TYPE_LABEL[q.type]));
+  sheet.appendChild(el("p","qtext", q.q));
+
+  var verdict = el("div","verdict hide");
+  var body = el("div");
+  sheet.appendChild(body);
+  sheet.appendChild(verdict);
+  host.appendChild(sheet);
+
+  function finish(correct){
+    verdict.classList.remove("hide");
+    body.classList.add("hide");
+    record(q, correct);
+    save(); paintMeta();
+    var mark = el("div", "mark " + (correct ? "ok" : "ng"));
+    mark.appendChild(el("span", null, correct ? "〇" : "×"));
+    mark.appendChild(el("b", null, correct ? "正解" : "不正解"));
+    verdict.appendChild(mark);
+    verdict.appendChild(el("p","answer", answerLine(q)));
+    verdict.appendChild(el("p","exp", q.exp));
+    if(q.ref) verdict.appendChild(el("p","ref", q.ref));
+    var act = el("div","actions");
+    var next = el("button","btn", ctx.nextLabel || "次の問題へ");
+    next.addEventListener("click", ctx.onNext);
+    act.appendChild(next);
+    verdict.appendChild(act);
+    next.focus();
+  }
+
+  if(q.type === "ox"){
+    var ox = el("div","ox");
+    [[true,"〇","正しい"],[false,"×","誤り"]].forEach(function(p){
+      var b = el("button");
+      b.appendChild(document.createTextNode(p[1]));
+      b.appendChild(el("small", null, p[2]));
+      b.addEventListener("click", function(){ finish(q.a === p[0]); });
+      ox.appendChild(b);
+    });
+    body.appendChild(ox);
+  }
+  else if(q.type === "mc"){
+    var list = el("div","choices");
+    q.choices.forEach(function(c, i){
+      var b = el("button");
+      b.appendChild(el("b", null, String(i+1)));
+      b.appendChild(el("span", null, c));
+      b.addEventListener("click", function(){ finish(q.a === i); });
+      list.appendChild(b);
+    });
+    body.appendChild(list);
+  }
+  else if(q.type === "multi"){
+    var grid = el("div","blanks");
+    var sels = [];
+    (q.blanks || ["ア","イ","ウ","エ"]).forEach(function(lb, i){
+      var lab = el("label");
+      lab.appendChild(el("span", null, "空欄 " + lb));
+      var sel = el("select");
+      sel.id = "blank-" + q.id + "-" + i;
+      var o0 = el("option", null, "選択してください"); o0.value = "";
+      sel.appendChild(o0);
+      q.choices.forEach(function(c, j){
+        var o = el("option", null, (j+1) + ". " + c); o.value = String(j);
+        sel.appendChild(o);
+      });
+      lab.appendChild(sel); grid.appendChild(lab); sels.push(sel);
+    });
+    body.appendChild(grid);
+    var act1 = el("div","actions");
+    var go = el("button","btn","答え合わせ");
+    go.addEventListener("click", function(){
+      var all = sels.every(function(s, i){ return String(q.a[i]) === s.value; });
+      finish(all);
+    });
+    act1.appendChild(go); body.appendChild(act1);
+  }
+  else if(q.type === "desc"){
+    var ta = el("textarea");
+    ta.id = "desc-" + q.id;
+    ta.placeholder = "ここに40字程度で書く";
+    var cnt = el("p","counter","0 字");
+    ta.addEventListener("input", function(){
+      var n = ta.value.replace(/\s/g,"").length;
+      cnt.textContent = n + " 字";
+      cnt.className = "counter" + (n >= 35 && n <= 45 ? " good" : "");
+    });
+    body.appendChild(ta); body.appendChild(cnt);
+    var act2 = el("div","actions");
+    var show = el("button","btn","解答例と照らす");
+    var ask = el("button","btn ghost hide","Claudeに採点してもらう");
+    act2.appendChild(show); act2.appendChild(ask);
+    body.appendChild(act2);
+
+    if(window.__sample){ ask.classList.remove("hide"); }
+    ask.addEventListener("click", function(){
+      var mine = ta.value.trim();
+      if(!mine){ ta.focus(); return; }
+      ask.disabled = true; ask.textContent = "採点中…";
+      var box = el("div","grade","採点しています…");
+      body.appendChild(box);
+      window.__sample(
+        "あなたは行政書士試験の記述式採点者です。20点満点で採点してください。\n\n" +
+        "【設問】" + q.q + "\n\n【模範解答】" + q.model + "\n\n【受験者の答案】" + mine + "\n\n" +
+        "次の形式で、日本語で簡潔に答えてください。1行目「得点：N／20点」。2行目以降に、書けている要素、" +
+        "落ちている要素、字数（40字程度が目安）についての講評を3行以内で。",
+        {modelTier:"default", onText:function(u){ box.textContent = u.text; }}
+      ).then(function(r){ box.textContent = r.text; })
+       .catch(function(){ box.textContent = "採点できませんでした。解答例と自分で照らし合わせてください。"; })
+       .finally(function(){ ask.disabled = false; ask.textContent = "もう一度採点する"; });
+    });
+
+    show.addEventListener("click", function(){
+      body.classList.add("hide");
+      verdict.classList.remove("hide");
+      verdict.appendChild(el("p","answer","解答例：" + q.model + "（" + q.model.length + "字）"));
+      if(ta.value.trim()){
+        var mineBox = el("div","grade","自分の答案：" + ta.value.trim());
+        verdict.appendChild(mineBox);
+      }
+      verdict.appendChild(el("p","exp", q.exp));
+      if(q.ref) verdict.appendChild(el("p","ref", q.ref));
+      var sm = el("div","selfmark");
+      sm.appendChild(el("span", null, "自己採点"));
+      [["書けた", true],["書けなかった", false]].forEach(function(p){
+        var b = el("button", p[1] ? "btn" : "btn ghost", p[0]);
+        b.addEventListener("click", function(){
+          record(q, p[1]); save(); paintMeta(); ctx.onNext();
+        });
+        sm.appendChild(b);
+      });
+      verdict.appendChild(sm);
+    });
+  }
+}
+
+function answerLine(q){
+  if(q.type === "ox") return "答　" + (q.a ? "〇" : "×");
+  if(q.type === "mc") return "答　" + (q.a + 1) + "．" + q.choices[q.a];
+  if(q.type === "multi"){
+    var lb = q.blanks || ["ア","イ","ウ","エ"];
+    return "答　" + q.a.map(function(i, k){ return lb[k] + "＝" + q.choices[i]; }).join("　");
+  }
+  return "";
+}
+
+
+/* ---------- plan strip ---------- */
+function planStrip(currentNo){
+  var wrap = el("div","plan");
+  var head = el("div","plan-head");
+  head.appendChild(el("h3", null, "75日の進行表"));
+  var g = el("div","gauge"), gi = el("i");
+  gi.style.width = (S.doneDays.length / DAYS.length * 100).toFixed(1) + "%";
+  g.appendChild(gi); head.appendChild(g);
+  head.appendChild(el("span", null, "済 " + S.doneDays.length + " 日 ／ 全 " + DAYS.length + " 日"));
+  wrap.appendChild(head);
+  var ol = el("ol");
+  var start = Math.max(0, Math.min(currentNo - 2, DAYS.length - 5));
+  DAYS.slice(start, start + 5).forEach(function(d){
+    var li = el("li");
+    if(d.no === currentNo) li.className = "is-now";
+    else if(S.doneDays.indexOf(d.no) >= 0) li.className = "is-done";
+    var b = el("button");
+    b.appendChild(el("span","d","Day " + String(d.no).padStart(3,"0")));
+    b.appendChild(el("span", null, d.title));
+    b.appendChild(el("span","n", d.ids.length + "問"));
+    b.addEventListener("click", function(){
+      S.day = d.no; S.pos = 0; save(); viewToday();
+      window.scrollTo({top:0, behavior:"smooth"});
+    });
+    li.appendChild(b); ol.appendChild(li);
+  });
+  wrap.appendChild(ol);
+  var hint = el("p","note");
+  hint.style.marginTop = "10px";
+  hint.textContent = "1日5問、10〜20分。7日目ごとに記述式と多肢選択式を挟む週末チェックが入ります。";
+  wrap.appendChild(hint);
+  return wrap;
+}
+
+/* ---------- today view ---------- */
+function viewToday(){
+  var host = document.getElementById("view-today");
+  var day = DAYS[Math.min(S.day, DAYS.length) - 1];
+  if(!day){ host.innerHTML = ""; host.appendChild(allDone()); return; }
+  var ids = day.ids;
+  if(S.pos >= ids.length){ completeDay(host, day); return; }
+  var q = QS[ids[S.pos]];
+  renderQuestion(host, q, {
+    label: "Day " + String(day.no).padStart(3,"0"),
+    rail: {total: ids.length, at: S.pos},
+    nextLabel: S.pos === ids.length - 1 ? "今日の分を終える" : "次の問題へ",
+    onNext: function(){ S.pos++; save(); viewToday(); }
+  });
+  host.appendChild(planStrip(day.no));
+}
+function completeDay(host, day){
+  var d = today();
+  if(S.doneDates.indexOf(d) < 0) S.doneDates.push(d);
+  if(S.doneDays.indexOf(day.no) < 0) S.doneDays.push(day.no);
+  save(); paintMeta();
+  host.innerHTML = "";
+  var sheet = el("div","sheet");
+  var p = el("div","done-panel");
+  p.appendChild(el("p","big","Day " + String(day.no).padStart(3,"0") + " 終了"));
+  var st = stats();
+  p.appendChild(el("p", null, day.title));
+  p.appendChild(el("p", null, "連続 " + streak() + " 日　／　通算 " + st.seen + " 問"));
+  var act = el("div","actions");
+  act.style.justifyContent = "center";
+  if(day.no < DAYS.length){
+    var next = el("button","btn","Day " + String(day.no + 1).padStart(3,"0") + " に進む");
+    next.addEventListener("click", function(){ S.day = day.no + 1; S.pos = 0; save(); viewToday(); });
+    act.appendChild(next);
+  }
+  var again = el("button","btn ghost","この日をもう一度");
+  again.addEventListener("click", function(){ S.pos = 0; save(); viewToday(); });
+  act.appendChild(again);
+  p.appendChild(act);
+  sheet.appendChild(p);
+  host.appendChild(sheet);
+  host.appendChild(planStrip(Math.min(day.no + 1, DAYS.length)));
+}
+function allDone(){
+  var sheet = el("div","sheet");
+  var p = el("div","done-panel");
+  p.appendChild(el("p","big","1周 修了"));
+  p.appendChild(el("p", null, "全75日を終えました。2周目は間違えた問題から回すと効率が上がります。"));
+  var act = el("div","actions"); act.style.justifyContent = "center";
+  var b = el("button","btn","Day 001 から2周目へ");
+  b.addEventListener("click", function(){ S.day = 1; S.pos = 0; save(); viewToday(); });
+  act.appendChild(b); p.appendChild(act); sheet.appendChild(p);
+  return sheet;
+}
+
+/* ---------- field view ---------- */
+var drill = null;
+function viewField(){
+  var host = document.getElementById("view-field");
+  if(drill){
+    if(drill.i >= drill.ids.length){
+      host.innerHTML = "";
+      var sheet = el("div","sheet"), p = el("div","done-panel");
+      p.appendChild(el("p","big", drill.ok + " / " + drill.ids.length));
+      p.appendChild(el("p", null, drill.field + "　5問終了"));
+      var act = el("div","actions"); act.style.justifyContent = "center";
+      var more = el("button","btn","同じ分野をもう5問");
+      more.addEventListener("click", function(){ startDrill(drill.field); });
+      var back = el("button","btn ghost","分野を選び直す");
+      back.addEventListener("click", function(){ drill = null; viewField(); });
+      act.appendChild(more); act.appendChild(back);
+      p.appendChild(act); sheet.appendChild(p); host.appendChild(sheet);
+      return;
+    }
+    var q = QS[drill.ids[drill.i]];
+    var before = S.hist[q.id] ? S.hist[q.id].ok : 0;
+    renderQuestion(host, q, {
+      label: drill.field,
+      rail: {total: drill.ids.length, at: drill.i},
+      nextLabel: drill.i === drill.ids.length - 1 ? "結果を見る" : "次の問題へ",
+      onNext: function(){
+        var h = S.hist[q.id];
+        if(h && h.last === "o") drill.ok++;
+        drill.i++; viewField();
+      }
+    });
+    return;
+  }
+  host.innerHTML = "";
+  host.appendChild(el("h2", null, "分野を選ぶ"));
+  host.appendChild(el("p","note","苦手な問題と未着手の問題を優先して5問出します。"));
+  var grid = el("div","fields");
+  FIELDS.forEach(function(f){
+    var s = fieldStat(f);
+    var b = el("button");
+    b.appendChild(el("span", null, f));
+    b.appendChild(el("small", null, s.seen + "/" + s.total + " 問　" + (s.rate === null ? "未着手" : "正答率 " + s.rate + "%")));
+    b.addEventListener("click", function(){ startDrill(f); });
+    grid.appendChild(b);
+  });
+  host.appendChild(grid);
+}
+function startDrill(field){
+  var qs = (BYFIELD[field] || []).slice();
+  qs.sort(function(a, b){ return score(a) - score(b); });
+  var head = qs.slice(0, Math.min(12, qs.length));
+  for(var i = head.length - 1; i > 0; i--){
+    var j = Math.floor(Math.random() * (i + 1));
+    var t = head[i]; head[i] = head[j]; head[j] = t;
+  }
+  drill = {field: field, ids: head.slice(0, 5).map(function(q){ return q.id; }), i: 0, ok: 0};
+  viewField();
+}
+function score(q){
+  var h = S.hist[q.id];
+  if(!h) return 0;                 // 未着手を最優先
+  if(h.last === "x") return 1;     // 直近で間違えた
+  return 2 + h.ok / Math.max(1, h.n);
+}
+
+/* ---------- records view ---------- */
+function viewRec(){
+  var host = document.getElementById("view-rec");
+  host.innerHTML = "";
+  host.appendChild(el("h2", null, "分野別の到達度"));
+  host.appendChild(el("p","note","正答率の低い順に並んでいます。上にあるものが次に手を入れるところです。"));
+  var rows = FIELDS.map(function(f){ return {f:f, s:fieldStat(f)}; });
+  rows.sort(function(a, b){
+    var ra = a.s.rate === null ? 999 : a.s.rate, rb = b.s.rate === null ? 999 : b.s.rate;
+    return ra - rb;
+  });
+  var bars = el("div","bars");
+  rows.forEach(function(r){
+    var row = el("div","bar-row");
+    var left = el("div");
+    left.appendChild(el("div","bar-name", r.f));
+    var track = el("div","track");
+    var fill = el("i");
+    fill.style.width = (r.s.seen / r.s.total * 100).toFixed(1) + "%";
+    if(r.s.rate !== null && r.s.rate < 60) fill.className = "weak";
+    track.appendChild(fill); left.appendChild(track);
+    var num = el("div","bar-num");
+    if(r.s.rate === null){ num.textContent = "未着手"; }
+    else{
+      num.appendChild(el("em", null, r.s.rate + "%"));
+      num.appendChild(el("div", null, r.s.seen + "/" + r.s.total));
+    }
+    row.appendChild(left); row.appendChild(num);
+    bars.appendChild(row);
+  });
+  host.appendChild(bars);
+
+  host.appendChild(el("h2", null, "直前に間違えた問題"));
+  var wrong = DATA.questions.filter(function(q){
+    var h = S.hist[q.id];
+    return h && h.last === "x";
+  });
+  if(!wrong.length){
+    host.appendChild(el("p","note","いまのところありません。"));
+  }else{
+    host.appendChild(el("p","note", wrong.length + " 問あります。分野別演習では、これらが優先して出ます。"));
+    var grid = el("div","fields");
+    wrong.slice(0, 24).forEach(function(q){
+      var b = el("button");
+      b.appendChild(el("span", null, q.topic));
+      b.appendChild(el("small", null, q.field + "　" + q.id));
+      b.addEventListener("click", function(){
+        drill = {field: q.field, ids:[q.id], i:0, ok:0};
+        selectTab("field");
+      });
+      grid.appendChild(b);
+    });
+    host.appendChild(grid);
+  }
+
+  host.appendChild(el("h2", null, "試験のしくみ"));
+  var note = el("p","note");
+  note.textContent =
+    "5肢択一式54問（法令等40・基礎知識14）、多肢選択式3問、記述式3問の計60問300点。" +
+    "合格には法令等122点以上、基礎知識24点以上、全体180点以上の3つをすべて満たす必要があります。" +
+    "基礎知識の足切りは択一6問正解が目安です。";
+  host.appendChild(note);
+}
+
+/* ---------- tabs ---------- */
+var TABS = {today:["tab-today","view-today",viewToday], field:["tab-field","view-field",viewField], rec:["tab-rec","view-rec",viewRec]};
+function selectTab(name){
+  Object.keys(TABS).forEach(function(k){
+    var t = TABS[k];
+    var on = k === name;
+    document.getElementById(t[0]).setAttribute("aria-selected", on ? "true" : "false");
+    document.getElementById(t[1]).classList.toggle("hide", !on);
+  });
+  TABS[name][2]();
+}
+Object.keys(TABS).forEach(function(k){
+  document.getElementById(TABS[k][0]).addEventListener("click", function(){ selectTab(k); });
+});
+document.getElementById("reset").addEventListener("click", function(){
+  if(!confirm("学習記録をすべて消去します。元に戻せません。")) return;
+  S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
+  save(); paintMeta(); selectTab("today");
+});
+
+/* ---------- boot ---------- */
+loadLocal();
+paintMeta();
+selectTab("today");
+
+if(window.claude && window.claude.use){
+  window.claude.use("db").then(function(x){
+    if(!x) return;
+    db = x;
+    return db.doc("progress/main").get().then(function(snap){
+      if(snap && snap.exists && size(snap.data) > size(S)){
+        S = Object.assign(S, snap.data);
+        paintMeta();
+        selectTab(document.getElementById("tab-today").getAttribute("aria-selected") === "true" ? "today" : "rec");
+      }else{
+        save();
+      }
+    });
+  }).catch(function(){});
+  window.claude.use("sample").then(function(fn){
+    if(fn) window.__sample = fn;
+  }).catch(function(){});
+}
+})();
+</script>
