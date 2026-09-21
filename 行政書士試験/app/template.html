@@ -36,12 +36,17 @@
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
 }
 *{box-sizing:border-box}
+button,select,textarea,a{touch-action:manipulation}
+button{-webkit-tap-highlight-color:rgba(31,58,107,.12)}
 body{
   margin:0; background:var(--bg); color:var(--ink);
   font-family:var(--gothic); font-size:15px; line-height:1.75;
   -webkit-text-size-adjust:100%;
 }
-.wrap{max-width:680px; margin:0 auto; padding-inline:18px; padding-block:0 64px}
+.wrap{
+  max-width:680px; margin:0 auto; padding-inline:18px;
+  padding-block:0; padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))
+}
 
 /* ---- header ---- */
 header{padding-block:26px 18px; border-bottom:1px solid var(--line)}
@@ -107,8 +112,12 @@ nav button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
   appearance:none; cursor:pointer; background:var(--sheet-2);
   border:1px solid var(--line); border-radius:3px; padding:16px 0;
   font-family:var(--mincho); font-size:30px; line-height:1; color:var(--ink);
-  transition:background .12s, border-color .12s
+  transition:background .12s, border-color .12s; -webkit-user-select:none; user-select:none
 }
+.ox button:active,.choices button:active,.fields button:active,.plan li button:active{
+  background:var(--kon-soft); border-color:var(--kon)
+}
+.btn:active{filter:brightness(.92)}
 .ox button:hover{background:var(--kon-soft); border-color:var(--kon)}
 .ox button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
 .ox button small{display:block; font-family:var(--gothic); font-size:11px;
@@ -129,7 +138,7 @@ nav button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
 .blanks label{display:flex; flex-direction:column; gap:5px; font-size:11.5px;
   color:var(--muted); letter-spacing:.1em}
 .blanks select{
-  font-family:var(--gothic); font-size:14px; padding:8px 9px; color:var(--ink);
+  font-family:var(--gothic); font-size:16px; padding:8px 9px; color:var(--ink);
   background:var(--sheet-2); border:1px solid var(--line); border-radius:3px; width:100%
 }
 textarea{
@@ -261,11 +270,31 @@ footer{
   font:inherit; color:var(--muted); text-decoration:underline
 }
 .hide{display:none !important}
-@media (max-width:420px){
-  h1{font-size:21px}
+@media (max-width:560px){
+  .wrap{padding-inline:14px}
+  header{padding-block:18px 12px}
+  h1{font-size:21px; margin-bottom:11px}
+  .meta{display:grid; grid-template-columns:1fr 1fr; gap:3px 14px}
+  .meta dd{font-size:16px}
+  nav{margin-block:10px 14px; gap:0}
+  nav button{flex:1; text-align:center; padding:12px 4px; font-size:13px}
+  .sheet{padding:17px 14px 14px; border-radius:2px}
+  .sheet-head{gap:5px 9px}
   .qtext{font-size:16.5px; line-height:1.95}
+  .ox button{padding:19px 0; font-size:32px}
+  .choices button{padding:13px 13px}
   .blanks{grid-template-columns:1fr}
-  .sheet{padding:18px 15px 16px}
+  .fields{grid-template-columns:1fr 1fr; gap:7px}
+  .plan li button{grid-template-columns:58px 1fr auto; padding:11px 4px}
+  /* 解説を読み終えた位置に「次へ」を置いておく */
+  .verdict .actions{
+    position:sticky; bottom:0; z-index:2;
+    margin:18px -14px -14px; padding:11px 14px calc(11px + env(safe-area-inset-bottom,0px));
+    background:var(--sheet); border-top:1px solid var(--line-soft)
+  }
+  .verdict .actions .btn{flex:1; padding:13px 17px; font-size:14.5px}
+  .selfmark{gap:7px}
+  .selfmark .btn{flex:1 1 40%; padding:13px 10px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
 </style>
@@ -277,7 +306,7 @@ footer{
   <dl class="meta">
     <div><dt>本試験まで</dt><dd id="m-days">—</dd><dd class="unit">日</dd></div>
     <div><dt>連続</dt><dd id="m-streak">0</dd><dd class="unit">日</dd></div>
-    <div><dt>解いた問題</dt><dd id="m-seen">0</dd><dd class="unit">／336</dd></div>
+    <div><dt>解答数</dt><dd id="m-seen">0</dd><dd class="unit">／336</dd></div>
     <div><dt>正答率</dt><dd id="m-rate">—</dd><dd class="unit">％</dd></div>
   </dl>
 </header>
@@ -295,6 +324,7 @@ footer{
 <footer>
   学習用の教材です。公式の過去問ではありません。出題の根拠となる法令は試験年度の4月1日現在施行のもの、
   試験日程は一般財団法人行政書士試験研究センターの発表で確認してください。<br>
+  <span id="ver"></span><br>
   <button class="linkish" id="reset">学習記録を消去する</button>
 </footer>
 </div>
@@ -380,6 +410,18 @@ function paintMeta(){
 }
 
 /* ---------- question rendering ---------- */
+var SOFT = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+function scrollTo(node){
+  if(!node) return;
+  try{ node.scrollIntoView({block:"start", behavior: SOFT ? "smooth" : "auto"}); }
+  catch(e){ node.scrollIntoView(true); }
+}
+var wantTop = false;
+function afterRender(host){
+  if(!wantTop) return;
+  wantTop = false;
+  scrollTo(host.querySelector(".sheet"));
+}
 var el = function(t, cls, txt){
   var n = document.createElement(t);
   if(cls) n.className = cls;
@@ -432,7 +474,8 @@ function renderQuestion(host, q, ctx){
     next.addEventListener("click", ctx.onNext);
     act.appendChild(next);
     verdict.appendChild(act);
-    next.focus();
+    scrollTo(mark);
+    next.focus({preventScroll:true});
   }
 
   if(q.type === "ox"){
@@ -537,6 +580,7 @@ function renderQuestion(host, q, ctx){
         sm.appendChild(b);
       });
       verdict.appendChild(sm);
+      scrollTo(verdict);
     });
   }
 }
@@ -598,9 +642,10 @@ function viewToday(){
     label: "Day " + String(day.no).padStart(3,"0"),
     rail: {total: ids.length, at: S.pos},
     nextLabel: S.pos === ids.length - 1 ? "今日の分を終える" : "次の問題へ",
-    onNext: function(){ S.pos++; save(); viewToday(); }
+    onNext: function(){ S.pos++; wantTop = true; save(); viewToday(); }
   });
   host.appendChild(planStrip(day.no));
+  afterRender(host);
 }
 function completeDay(host, day){
   var d = today();
@@ -669,9 +714,10 @@ function viewField(){
       onNext: function(){
         var h = S.hist[q.id];
         if(h && h.last === "o") drill.ok++;
-        drill.i++; viewField();
+        drill.i++; wantTop = true; viewField();
       }
     });
+    afterRender(host);
     return;
   }
   host.innerHTML = "";
@@ -791,6 +837,9 @@ document.getElementById("reset").addEventListener("click", function(){
 });
 
 /* ---------- boot ---------- */
+document.getElementById("ver").textContent =
+  "収録 " + DATA.questions.length + " 問　データ更新 " + (DATA.generated || "") +
+  "　このリンクは常に最新版を開きます。";
 loadLocal();
 paintMeta();
 selectTab("today");
