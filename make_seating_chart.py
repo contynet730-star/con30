@@ -29,80 +29,82 @@ FILL = {'幼': 'CCECFF', '小': 'CCFFCC', '中': 'FFCCE5'}
 red = Side(style='thick', color='FF0000')
 from openpyxl.utils import column_index_from_string as ci
 
-# placement: (group, [(row, col_from, col_to), ...]) 1-based seat numbers; seats filled left->right, top->bottom
+# placement: group -> halves, each half = list of (row, col_from, col_to), 1-based; filled left->right, top->bottom
 PLACE = [
- ('小 開進地区',    [(1, 1, 9)]),
- ('小 大泉西地区',  [(2, 1, 9)]),
- ('小 豊玉地区',    [(3, 1, 8)]),
- ('小 練馬地区',    [(4, 1, 8)]),
- ('小 光が丘地区',  [(3, 9, 12), (4, 9, 12)]),
- ('小 石神井東地区',[(5, 1, 8)]),
- ('小 石神井西地区',[(6, 1, 8)]),
- ('小 大泉東地区',  [(5, 9, 12), (6, 9, 12)]),
- ('中 Ｂ地区',      [(7, 1, 8)]),
- ('中 Ｃ地区',      [(8, 1, 8)]),
- ('中 Ｄ地区',      [(7, 9, 12), (8, 9, 12)]),
- ('中 Ａ地区',      [(9, 1, 9)]),
- ('幼稚園',         [(9, 10, 12)]),
+ ('幼稚園',         [[(1, 1, 3)]]),
+ ('小 開進地区',    [[(1, 4, 8)], [(1, 9, 12)]]),
+ ('小 豊玉地区',    [[(2, 1, 4)], [(2, 5, 8)]]),
+ ('小 練馬地区',    [[(2, 9, 12)], [(3, 9, 12)]]),
+ ('小 石神井東地区',[[(3, 1, 4)], [(3, 5, 8)]]),
+ ('小 石神井西地区',[[(4, 1, 4)], [(4, 5, 8)]]),
+ ('小 光が丘地区',  [[(4, 9, 12)], [(5, 10, 12)]]),
+ ('小 大泉西地区',  [[(5, 1, 5)], [(5, 6, 9)]]),
+ ('小 大泉東地区',  [[(6, 1, 4)], [(6, 5, 8)]]),
+ ('中 Ｂ地区',      [[(6, 9, 12)], [(7, 9, 12)]]),
+ ('中 Ｃ地区',      [[(7, 1, 4)], [(7, 5, 8)]]),
+ ('中 Ａ地区',      [[(8, 1, 4)], [(9, 1, 5)]]),
+ ('中 Ｄ地区',      [[(8, 5, 8)], [(8, 9, 12)]]),
 ]
 owner, seatname, listing = {}, {}, []
-for g, spans in PLACE:
+for g, halves in PLACE:
     names = G[g][1]; k = 0
-    seats = [(r-1, c-1) for r, c1, c2 in spans for c in range(c1, c2+1)]
-    seats.sort()
-    assert len(seats) >= len(names), g
-    for (r, c) in seats:
-        assert (r, c) not in owner
-        owner[(r, c)] = g
-        if k < len(names):
+    for hi, spans in enumerate(halves):
+        seats = sorted((r-1, c-1) for r, c1, c2 in spans for c in range(c1, c2+1))
+        for (r, c) in seats:
+            assert (r, c) not in owner
+            owner[(r, c)] = (g, hi)
             seatname[(r, c)] = names[k]
-            listing.append((g, k+1, names[k], "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"[c] + '列', "①②③④⑤⑥⑦⑧⑨"[r] + '番'))
-        k += 1
+            listing.append((g, hi, k+1, names[k], "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"[c] + '列', "①②③④⑤⑥⑦⑧⑨"[r] + '番'))
+            k += 1
+    assert k == len(names), g
 assert len(listing) == 101
+# empty seats only in the back row, front row full
+assert all((r, c) in owner for r in range(8) for c in range(12))
 
+split = Side(style='mediumDashed', color='FF0000')     # line between the two halves of one group
 def setb(cell, **kw):
     o = cell.border
     d = dict(left=o.left, right=o.right, top=o.top, bottom=o.bottom); d.update(kw)
     cell.border = Border(**d)
 own = lambda r, c: owner.get((r, c)) if 0 <= r < 9 and 0 <= c < 12 else None
+def side(a, b):            # border between subgroup a and neighbour b (a not None)
+    if b == a: return None
+    if b is not None and b[0] == a[0]: return split
+    return red
 
 for r in range(9):
     for c in range(12):
-        col = COLS[c]; row = ROWS[r]; g = own(r, c); name = seatname.get((r, c))
+        col = COLS[c]; row = ROWS[r]; o = own(r, c); name = seatname.get((r, c))
         top = ws[f'{col}{row}']
         top.value = name
         top.font = Font(name='ＭＳ ゴシック', size=11)
         top.alignment = Alignment(horizontal='center', vertical='center', shrink_to_fit=True)
         for cell in (top, ws[f'{col}{row+1}']):
-            cell.fill = PatternFill('solid', fgColor=FILL[G[g][0]]) if name else PatternFill(fill_type=None)
-        if g is None: continue
-        el, er = own(r, c-1) != g, own(r, c+1) != g
-        et, eb = own(r-1, c) != g, own(r+1, c) != g
+            cell.fill = PatternFill('solid', fgColor=FILL[G[o[0]][0]]) if o else PatternFill(fill_type=None)
+        if o is None: continue
+        sl, sr = side(o, own(r, c-1)), side(o, own(r, c+1))
+        st, sb = side(o, own(r-1, c)), side(o, own(r+1, c))
         ccol = ci(col)
         for k, rr in enumerate((row, row+1)):
             kw = {}
-            if el: kw['left'] = red; setb(ws.cell(rr, ccol-1), right=red)
-            if er: kw['right'] = red; setb(ws.cell(rr, ccol+1), left=red)
-            if et and k == 0: kw['top'] = red
-            if eb: kw['bottom'] = red
+            if sl: kw['left'] = sl; setb(ws.cell(rr, ccol-1), right=sl)
+            if sr: kw['right'] = sr; setb(ws.cell(rr, ccol+1), left=sr)
+            if st and k == 0: kw['top'] = st
+            if sb: kw['bottom'] = sb
             setb(ws.cell(rr, ccol), **kw)
-        if et: setb(ws.cell(row-1, ccol), bottom=red)
-        if eb: setb(ws.cell(row+2, ccol), top=red)
-        # group continues across an aisle column to the right
-        if c < 11 and own(r, c+1) == g and ci(COLS[c+1]) - ccol == 2:
+        if st: setb(ws.cell(row-1, ccol), bottom=st)
+        if sb: setb(ws.cell(row+2, ccol), top=sb)
+        gfill = PatternFill('solid', fgColor=FILL[G[o[0]][0]])
+        if c < 11 and own(r, c+1) == o and ci(COLS[c+1]) - ccol == 2:   # half continues across an aisle column
             acol = ccol + 1
-            if et and own(r-1, c+1) != g: setb(ws.cell(row, acol), top=red); setb(ws.cell(row-1, acol), bottom=red)
-            if eb and own(r+1, c+1) != g: setb(ws.cell(row+1, acol), bottom=red); setb(ws.cell(row+2, acol), top=red)
-        # group continues across an aisle row below
-        if r < 8 and own(r+1, c) == g and ROWS[r+1] - row == 3:
-            arow = row + 2
-            if el: setb(ws.cell(arow, ccol), left=red); setb(ws.cell(arow, ccol-1), right=red)
-            if er: setb(ws.cell(arow, ccol), right=red); setb(ws.cell(arow, ccol+1), left=red)
+            for rr in (row, row+1): ws.cell(rr, acol).fill = gfill
+            if st: setb(ws.cell(row, acol), top=st); setb(ws.cell(row-1, acol), bottom=st)
+            if sb: setb(ws.cell(row+1, acol), bottom=sb); setb(ws.cell(row+2, acol), top=sb)
 
 for c in 'CDEGHIKLMOPQ':
     ws.column_dimensions[c].width = 13.0
 
-ws['B28'].value = '赤枠＝グループ（横並び）　青：幼稚園　緑：小学校　桃：中学校　白：空席'
+ws['B28'].value = '太い赤枠＝グループ／赤点線＝グループ内の２班（①班・②班）　青：幼稚園　緑：小学校　桃：中学校　白：空席（最後尾）'
 ws['B28'].font = Font(name='ＭＳ ゴシック', size=10, color='FF0000')
 ws['B28'].alignment = Alignment(horizontal='left', vertical='center')
 
@@ -116,12 +118,12 @@ NUM = {'幼稚園':'１ 幼稚園','小 豊玉地区':'２ 小学校 豊玉地�
        '小 大泉東地区':'８ 小学校 大泉東地区','小 大泉西地区':'９ 小学校 大泉西地区','中 Ａ地区':'10 中学校 Ａ地区',
        '中 Ｂ地区':'11 中学校 Ｂ地区','中 Ｃ地区':'12 中学校 Ｃ地区','中 Ｄ地区':'13 中学校 Ｄ地区'}
 order = list(G.keys())
-listing.sort(key=lambda t: (order.index(t[0]), t[1]))
+listing.sort(key=lambda t: (order.index(t[0]), t[2]))
 ls = wb.create_sheet('グループ別一覧', 1)
 ls['A1'] = '11月26日（木）座席表　グループ別一覧'
 ls['A1'].font = Font(name='ＭＳ ゴシック', size=12, bold=True)
 ls.append([])
-ls.append(['グループ', '№', '学校・園名', '座席（列）', '座席（番）'])
+ls.append(['グループ', '班', '№', '学校・園名', '座席（列）', '座席（番）'])
 H = 3
 thin = Side(style='thin')
 for c in ls[H]:
@@ -132,17 +134,18 @@ for gi, g in enumerate(order):
     rows = [t for t in listing if t[0] == g]
     start = r
     for t in rows:
-        vals = [NUM[g], t[1], t[2], t[3], t[4]]
+        vals = [NUM[g], ('－' if g == '幼稚園' else '①②'[t[1]]), t[2], t[3], t[4], t[5]]
         for j, v in enumerate(vals, 1):
             c = ls.cell(r, j, v if (j > 1 or r == start) else None)
             c.font = Font(name='ＭＳ ゴシック', size=11)
             c.fill = PatternFill('solid', fgColor=FILL[G[g][0]])
-            c.alignment = Alignment(horizontal='left' if j == 3 else 'center', vertical='center', wrap_text=(j == 1))
-            c.border = Border(left=red if j == 1 else thin, right=red if j == 5 else thin,
-                              top=red if r == start else thin, bottom=red if r == start + len(rows) - 1 else thin)
+            c.alignment = Alignment(horizontal='left' if j == 4 else 'center', vertical='center', wrap_text=(j == 1))
+            c.border = Border(left=red if j == 1 else thin, right=red if j == 6 else thin,
+                              top=red if r == start else (split if t[1] == 1 and rows[r-start-1][1] == 0 else thin),
+                              bottom=red if r == start + len(rows) - 1 else thin)
         r += 1
     ls.merge_cells(start_row=start, start_column=1, end_row=r - 1, end_column=1)
-for col, w in zip('ABCDE', [24, 5, 24, 11, 11]): ls.column_dimensions[col].width = w
+for col, w in zip('ABCDEF', [24, 5, 5, 24, 11, 11]): ls.column_dimensions[col].width = w
 ls.freeze_panes = 'A4'
 ls.page_setup.orientation = 'portrait'; ls.page_setup.paperSize = 9
 ls.page_setup.fitToWidth = 1; ls.page_setup.fitToHeight = 0
