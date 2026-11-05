@@ -1,6 +1,8 @@
 import sys, copy
 import openpyxl
 from openpyxl.styles import Border, Side, PatternFill, Font, Alignment
+from openpyxl.cell.rich_text import CellRichText, TextBlock
+from openpyxl.cell.text import InlineFont
 src, out = sys.argv[1], sys.argv[2]
 wb = openpyxl.load_workbook(src)
 ws = wb['座席表CS入力済']
@@ -61,56 +63,92 @@ assert len(listing) == 101
 # empty seats only in the back row, front row full
 assert all((r, c) in owner for r in range(8) for c in range(12))
 
+SHORT = {'幼稚園':'幼稚園','小 豊玉地区':'2 豊玉地区','小 開進地区':'3 開進地区','小 練馬地区':'4 練馬地区',
+         '小 光が丘地区':'5 光が丘地区','小 石神井東地区':'6 石神井東地区','小 石神井西地区':'7 石神井西地区',
+         '小 大泉東地区':'8 大泉東地区','小 大泉西地区':'9 大泉西地区','中 Ａ地区':'10 中Ａ地区',
+         '中 Ｂ地区':'11 中Ｂ地区','中 Ｃ地区':'12 中Ｃ地区','中 Ｄ地区':'13 中Ｄ地区'}
 split = Side(style='mediumDashed', color='FF0000')     # line between the two halves of one group
 def setb(cell, **kw):
     o = cell.border
     d = dict(left=o.left, right=o.right, top=o.top, bottom=o.bottom); d.update(kw)
     cell.border = Border(**d)
-own = lambda r, c: owner.get((r, c)) if 0 <= r < 9 and 0 <= c < 12 else None
-def side(a, b):            # border between subgroup a and neighbour b (a not None)
-    if b == a: return None
-    if b is not None and b[0] == a[0]: return split
-    return red
 
-for r in range(9):
-    for c in range(12):
-        col = COLS[c]; row = ROWS[r]; o = own(r, c); name = seatname.get((r, c))
-        top = ws[f'{col}{row}']
-        top.value = name
-        top.font = Font(name='ＭＳ ゴシック', size=11)
-        top.alignment = Alignment(horizontal='center', vertical='center', shrink_to_fit=True)
-        for cell in (top, ws[f'{col}{row+1}']):
-            cell.fill = PatternFill('solid', fgColor=FILL[G[o[0]][0]]) if o else PatternFill(fill_type=None)
-        if o is None: continue
-        sl, sr = side(o, own(r, c-1)), side(o, own(r, c+1))
-        st, sb = side(o, own(r-1, c)), side(o, own(r+1, c))
-        ccol = ci(col)
-        for k, rr in enumerate((row, row+1)):
-            kw = {}
-            if sl: kw['left'] = sl; setb(ws.cell(rr, ccol-1), right=sl)
-            if sr: kw['right'] = sr; setb(ws.cell(rr, ccol+1), left=sr)
-            if st and k == 0: kw['top'] = st
-            if sb: kw['bottom'] = sb
-            setb(ws.cell(rr, ccol), **kw)
-        if st: setb(ws.cell(row-1, ccol), bottom=st)
-        if sb: setb(ws.cell(row+2, ccol), top=sb)
-        gfill = PatternFill('solid', fgColor=FILL[G[o[0]][0]])
-        if c < 11 and own(r, c+1) == o and ci(COLS[c+1]) - ccol == 2:   # half continues across an aisle column
-            acol = ccol + 1
-            for rr in (row, row+1): ws.cell(rr, acol).fill = gfill
-            if st: setb(ws.cell(row, acol), top=st); setb(ws.cell(row-1, acol), bottom=st)
-            if sb: setb(ws.cell(row+1, acol), bottom=sb); setb(ws.cell(row+2, acol), top=sb)
+def draw(ws, mode, title, legend):
+    """mode 'normal': one red box per group / 'half': each group split into two halves (dashed line)."""
+    unit = (lambda o: o) if mode == 'half' else (lambda o: o and o[0])
+    own = lambda r, c: unit(owner.get((r, c))) if 0 <= r < 9 and 0 <= c < 12 else None
+    def side(a, b):
+        if b == a: return None
+        if mode == 'half' and b is not None and b[0] == a[0]: return split
+        return red
+    def grp(u): return u if isinstance(u, str) else u[0]
+    for r in range(9):
+        for c in range(12):
+            col = COLS[c]; row = ROWS[r]; u = own(r, c); name = seatname.get((r, c))
+            top = ws[f'{col}{row}']
+            if name:
+                o = owner[(r, c)]
+                label = SHORT[o[0]] + ('' if o[0] == '幼稚園' or mode == 'normal' else '①②'[o[1]] + '班')
+                n = len(name); fs = 11 if n <= 6 else 10 if n == 7 else 9 if n == 8 else 7
+                top.value = CellRichText(
+                    TextBlock(InlineFont(rFont='ＭＳ ゴシック', sz=fs), name + '\n'),
+                    TextBlock(InlineFont(rFont='ＭＳ ゴシック', sz=8, color='FFC00000', b=True), label))
+            else:
+                top.value = None
+            top.font = Font(name='ＭＳ ゴシック', size=11)
+            top.alignment = Alignment(horizontal='center', vertical='center', wrap_text=True)
+            for cell in (top, ws[f'{col}{row+1}']):
+                cell.fill = PatternFill('solid', fgColor=FILL[G[grp(u)][0]]) if u else PatternFill(fill_type=None)
+            if u is None: continue
+            sl, sr = side(u, own(r, c-1)), side(u, own(r, c+1))
+            st, sb = side(u, own(r-1, c)), side(u, own(r+1, c))
+            ccol = ci(col)
+            for k, rr in enumerate((row, row+1)):
+                kw = {}
+                if sl: kw['left'] = sl; setb(ws.cell(rr, ccol-1), right=sl)
+                if sr: kw['right'] = sr; setb(ws.cell(rr, ccol+1), left=sr)
+                if st and k == 0: kw['top'] = st
+                if sb: kw['bottom'] = sb
+                setb(ws.cell(rr, ccol), **kw)
+            if st: setb(ws.cell(row-1, ccol), bottom=st)
+            if sb: setb(ws.cell(row+2, ccol), top=sb)
+            gfill = PatternFill('solid', fgColor=FILL[G[grp(u)][0]])
+            # unit continues across an aisle column to the right
+            if c < 11 and own(r, c+1) == u and ci(COLS[c+1]) - ccol == 2:
+                acol = ccol + 1
+                for rr in (row, row+1): ws.cell(rr, acol).fill = gfill
+                if st: setb(ws.cell(row, acol), top=st); setb(ws.cell(row-1, acol), bottom=st)
+                if sb: setb(ws.cell(row+1, acol), bottom=sb); setb(ws.cell(row+2, acol), top=sb)
+            # unit continues across an aisle row below
+            if r < 8 and own(r+1, c) == u and ROWS[r+1] - row == 3:
+                arow = row + 2
+                ws.cell(arow, ccol).fill = gfill
+                if c < 11 and ci(COLS[c+1]) - ccol == 2 and own(r, c+1) == u and own(r+1, c+1) == u:
+                    ws.cell(arow, ccol+1).fill = gfill
+                lb = side(u, own(r, c-1)) or side(u, own(r+1, c-1))
+                rb = side(u, own(r, c+1)) or side(u, own(r+1, c+1))
+                if lb: setb(ws.cell(arow, ccol), left=lb); setb(ws.cell(arow, ccol-1), right=lb)
+                if rb: setb(ws.cell(arow, ccol), right=rb); setb(ws.cell(arow, ccol+1), left=rb)
+    for c in 'CDEGHIKLMOPQ':
+        ws.column_dimensions[c].width = 14.0
+    ws['B1'].value = title
+    ws['B28'].value = legend
+    ws['B28'].font = Font(name='ＭＳ ゴシック', size=10, color='FF0000')
+    ws['B28'].alignment = Alignment(horizontal='left', vertical='center')
+    ws.print_area = 'A1:R29'
+    ws.page_setup.orientation = 'landscape'; ws.page_setup.paperSize = 9
+    ws.page_setup.fitToWidth = 1; ws.page_setup.fitToHeight = 1
+    ws.sheet_properties.pageSetUpPr.fitToPage = True
 
-for c in 'CDEGHIKLMOPQ':
-    ws.column_dimensions[c].width = 13.0
-
-ws['B28'].value = '太い赤枠＝グループ／赤点線＝グループ内の２班（①班・②班）　青：幼稚園　緑：小学校　桃：中学校　白：空席（最後尾）'
-ws['B28'].font = Font(name='ＭＳ ゴシック', size=10, color='FF0000')
-ws['B28'].alignment = Alignment(horizontal='left', vertical='center')
-
-ws.page_setup.orientation = 'landscape'
-ws.page_setup.fitToWidth = 1; ws.page_setup.fitToHeight = 1
-ws.sheet_properties.pageSetUpPr.fitToPage = True
+base_title = ws['B1'].value.strip()
+ws_half = wb.copy_worksheet(ws)
+ws.title = '座席表（普通）'
+ws_half.title = '座席表（半分）'
+wb.move_sheet(ws_half, offset=-(len(wb.sheetnames) - 2))
+draw(ws, 'normal', base_title + '　グループ別',
+     '赤枠＝グループ　青：幼稚園　緑：小学校　桃：中学校　白：空席（最後尾）')
+draw(ws_half, 'half', base_title + '　グループ別（半分）',
+     '太い赤枠＝グループ／赤点線＝グループ内の２班（①班・②班）　青：幼稚園　緑：小学校　桃：中学校　白：空席（最後尾）')
 
 # group summary sheet
 NUM = {'幼稚園':'１ 幼稚園','小 豊玉地区':'２ 小学校 豊玉地区','小 開進地区':'３ 小学校 開進地区','小 練馬地区':'４ 小学校 練馬地区',
@@ -119,7 +157,7 @@ NUM = {'幼稚園':'１ 幼稚園','小 豊玉地区':'２ 小学校 豊玉地�
        '中 Ｂ地区':'11 中学校 Ｂ地区','中 Ｃ地区':'12 中学校 Ｃ地区','中 Ｄ地区':'13 中学校 Ｄ地区'}
 order = list(G.keys())
 listing.sort(key=lambda t: (order.index(t[0]), t[2]))
-ls = wb.create_sheet('グループ別一覧', 1)
+ls = wb.create_sheet('グループ別一覧', 2)
 ls['A1'] = '11月26日（木）座席表　グループ別一覧'
 ls['A1'].font = Font(name='ＭＳ ゴシック', size=12, bold=True)
 ls.append([])
