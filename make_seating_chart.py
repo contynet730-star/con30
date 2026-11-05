@@ -89,10 +89,10 @@ def draw(ws, mode, title, legend):
             if name:
                 o = owner[(r, c)]
                 label = SHORT[o[0]] + ('' if o[0] == '幼稚園' or mode == 'normal' else '①②'[o[1]] + '班')
-                n = len(name); fs = 11 if n <= 6 else 10 if n == 7 else 9 if n == 8 else 7
+                n = len(name); fs = 10 if n <= 7 else 9 if n == 8 else 7
                 top.value = CellRichText(
                     TextBlock(InlineFont(rFont='ＭＳ ゴシック', sz=fs), name + '\n'),
-                    TextBlock(InlineFont(rFont='ＭＳ ゴシック', sz=10, color='FFFF0000', b=True), label))
+                    TextBlock(InlineFont(rFont='ＭＳ ゴシック', sz=12, color='FFFF0000', b=True), label))
             else:
                 top.value = None
             top.font = Font(name='ＭＳ ゴシック', size=11)
@@ -130,7 +130,7 @@ def draw(ws, mode, title, legend):
                 if lb: setb(ws.cell(arow, ccol), left=lb); setb(ws.cell(arow, ccol-1), right=lb)
                 if rb: setb(ws.cell(arow, ccol), right=rb); setb(ws.cell(arow, ccol+1), left=rb)
     for c in 'CDEGHIKLMOPQ':
-        ws.column_dimensions[c].width = 16.5
+        ws.column_dimensions[c].width = 19.0
     ws['B1'].value = title
     ws['B28'].value = legend
     ws['B28'].font = Font(name='ＭＳ ゴシック', size=10, color='FF0000')
