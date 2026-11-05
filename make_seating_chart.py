@@ -31,34 +31,28 @@ FILL = {'幼': 'CCECFF', '小': 'CCFFCC', '中': 'FFCCE5'}
 red = Side(style='thick', color='FF0000')
 from openpyxl.utils import column_index_from_string as ci
 
-# placement: group -> halves, each half = list of (row, col_from, col_to), 1-based; filled left->right, top->bottom
-PLACE = [
- ('幼稚園',         [[(1, 1, 3)]]),
- ('小 開進地区',    [[(1, 4, 8)], [(1, 9, 12)]]),
- ('小 豊玉地区',    [[(2, 1, 4)], [(2, 5, 8)]]),
- ('小 練馬地区',    [[(2, 9, 12)], [(3, 9, 12)]]),
- ('小 石神井東地区',[[(3, 1, 4)], [(3, 5, 8)]]),
- ('小 石神井西地区',[[(4, 1, 4)], [(4, 5, 8)]]),
- ('小 光が丘地区',  [[(4, 9, 12)], [(5, 10, 12)]]),
- ('小 大泉西地区',  [[(5, 1, 5)], [(5, 6, 9)]]),
- ('小 大泉東地区',  [[(6, 1, 4)], [(6, 5, 8)]]),
- ('中 Ｂ地区',      [[(6, 9, 12)], [(7, 9, 12)]]),
- ('中 Ｃ地区',      [[(7, 1, 4)], [(7, 5, 8)]]),
- ('中 Ａ地区',      [[(8, 1, 4)], [(9, 1, 5)]]),
- ('中 Ｄ地区',      [[(8, 5, 8)], [(8, 9, 12)]]),
+# placement (like 地下多目): each group sits together inside ONE 3-seat-wide block (no aisle to cross),
+# stacked front -> back, seats filled left->right then next row. Empty seats fall at the back of the block.
+BLOCK_PLAN = [
+ ['幼稚園', '中 Ｂ地区', '中 Ｃ地区', '中 Ｄ地区'],            # ①②③
+ ['中 Ａ地区', '小 石神井東地区', '小 石神井西地区'],          # ④⑤⑥
+ ['小 大泉西地区', '小 練馬地区', '小 光が丘地区'],            # ⑦⑧⑨
+ ['小 開進地区', '小 豊玉地区', '小 大泉東地区'],              # ⑩⑪⑫
 ]
 owner, seatname, listing = {}, {}, []
-for g, halves in PLACE:
-    names = G[g][1]; k = 0
-    for hi, spans in enumerate(halves):
-        seats = sorted((r-1, c-1) for r, c1, c2 in spans for c in range(c1, c2+1))
-        for (r, c) in seats:
-            assert (r, c) not in owner
+for bi, groups in enumerate(BLOCK_PLAN):
+    i = 0
+    for g in groups:
+        names = G[g][1]
+        h1 = (len(names) + 1) // 2 if g != '幼稚園' else len(names)
+        for k, nm in enumerate(names):
+            r, c = i // 3, bi * 3 + i % 3
+            hi = 0 if k < h1 else 1
             owner[(r, c)] = (g, hi)
-            seatname[(r, c)] = names[k]
-            listing.append((g, hi, k+1, names[k], "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"[c] + '列', "①②③④⑤⑥⑦⑧⑨"[r] + '番'))
-            k += 1
-    assert k == len(names), g
+            seatname[(r, c)] = nm
+            listing.append((g, hi, k+1, nm, "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"[c] + '列', "①②③④⑤⑥⑦⑧⑨"[r] + '番'))
+            i += 1
+    assert i <= 27, (bi, i)
 assert len(listing) == 101
 # empty seats only in the back row, front row full
 assert all((r, c) in owner for r in range(8) for c in range(12))
