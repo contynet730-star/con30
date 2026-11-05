@@ -1,0 +1,153 @@
+import sys, copy
+import openpyxl
+from openpyxl.styles import Border, Side, PatternFill, Font, Alignment
+src, out = sys.argv[1], sys.argv[2]
+wb = openpyxl.load_workbook(src)
+ws = wb['座席表CS入力済']
+
+# group definitions: order follows グループ一覧 (08), names as in 地下多目 (10)
+G = {
+ '幼稚園':        ('幼', ['北大泉','光が丘むらさき','光が丘さくら']),
+ '小 豊玉地区':   ('小', ['みらい青空学園（小）','小竹小','豊玉小','豊玉第二小','豊玉東小','豊玉南小','中村小','中村西小']),
+ '小 開進地区':   ('小', ['早宮小','開進第一小','開進第二小','開進第三小','開進第四小','仲町小','南町小','北町小','北町西小']),
+ '小 練馬地区':   ('小', ['練馬小','練馬第二小','練馬第三小','練馬東小','田柄小','田柄第二小','向山小','春日小']),
+ '小 光が丘地区': ('小', ['旭町小','高松小','光が丘四季小','光が丘春風小','光が丘夏雲小','光が丘秋陽小','光が丘第八小']),
+ '小 石神井東地区':('小', ['石神井東小','下石神井小','光和小','谷原小','北原小','南田中小','南が丘小','富士見台小']),
+ '小 石神井西地区':('小', ['石神井小','石神井西小','石神井台小','上石神井小','上石北小','立野小','関町小','関町北小']),
+ '小 大泉東地区': ('小', ['豊溪小','大泉第一小','大泉東小','大泉北小','大泉学園小','泉新小','橋戸小','八坂小']),
+ '小 大泉西地区': ('小', ['大泉小','大泉第二小','大泉第三小','大泉第四小','大泉第六小','大泉西小','大泉南小','大泉学園緑小','大泉桜学園（小）']),
+ '中 Ａ地区':     ('中', ['みらい青空学園（中）','豊玉中','豊玉第二中','中村中','開進第一中','開進第二中','開進第三中','開進第四中','北町中']),
+ '中 Ｂ地区':     ('中', ['練馬中','練馬東中','貫井中','田柄中','豊渓中','光が丘第一中','光が丘第二中','光が丘第三中']),
+ '中 Ｃ地区':     ('中', ['谷原中','三原台中','大泉中','大泉西中','大泉北中','大泉学園中','大泉桜学園（中）','八坂中']),
+ '中 Ｄ地区':     ('中', ['石神井中','石神井東中','石神井西中','石神井南中','上石神井中','南が丘中','大泉第二中','関中']),
+}
+assert sum(len(v[1]) for v in G.values()) == 101
+
+COLS = ['C','D','E','G','H','I','K','L','M','O','P','Q']   # seat columns ①..⑫
+ROWS = [5,7,10,12,15,17,20,22,25]                           # anchor rows of seat rows ①..⑨
+FILL = {'幼': 'CCECFF', '小': 'CCFFCC', '中': 'FFCCE5'}
+red = Side(style='thick', color='FF0000')
+from openpyxl.utils import column_index_from_string as ci
+
+# placement: (group, [(row, col_from, col_to), ...]) 1-based seat numbers; seats filled left->right, top->bottom
+PLACE = [
+ ('小 開進地区',    [(1, 1, 9)]),
+ ('小 大泉西地区',  [(2, 1, 9)]),
+ ('小 豊玉地区',    [(3, 1, 8)]),
+ ('小 練馬地区',    [(4, 1, 8)]),
+ ('小 光が丘地区',  [(3, 9, 12), (4, 9, 12)]),
+ ('小 石神井東地区',[(5, 1, 8)]),
+ ('小 石神井西地区',[(6, 1, 8)]),
+ ('小 大泉東地区',  [(5, 9, 12), (6, 9, 12)]),
+ ('中 Ｂ地区',      [(7, 1, 8)]),
+ ('中 Ｃ地区',      [(8, 1, 8)]),
+ ('中 Ｄ地区',      [(7, 9, 12), (8, 9, 12)]),
+ ('中 Ａ地区',      [(9, 1, 9)]),
+ ('幼稚園',         [(9, 10, 12)]),
+]
+owner, seatname, listing = {}, {}, []
+for g, spans in PLACE:
+    names = G[g][1]; k = 0
+    seats = [(r-1, c-1) for r, c1, c2 in spans for c in range(c1, c2+1)]
+    seats.sort()
+    assert len(seats) >= len(names), g
+    for (r, c) in seats:
+        assert (r, c) not in owner
+        owner[(r, c)] = g
+        if k < len(names):
+            seatname[(r, c)] = names[k]
+            listing.append((g, k+1, names[k], "①②③④⑤⑥⑦⑧⑨⑩⑪⑫"[c] + '列', "①②③④⑤⑥⑦⑧⑨"[r] + '番'))
+        k += 1
+assert len(listing) == 101
+
+def setb(cell, **kw):
+    o = cell.border
+    d = dict(left=o.left, right=o.right, top=o.top, bottom=o.bottom); d.update(kw)
+    cell.border = Border(**d)
+own = lambda r, c: owner.get((r, c)) if 0 <= r < 9 and 0 <= c < 12 else None
+
+for r in range(9):
+    for c in range(12):
+        col = COLS[c]; row = ROWS[r]; g = own(r, c); name = seatname.get((r, c))
+        top = ws[f'{col}{row}']
+        top.value = name
+        top.font = Font(name='ＭＳ ゴシック', size=11)
+        top.alignment = Alignment(horizontal='center', vertical='center', shrink_to_fit=True)
+        for cell in (top, ws[f'{col}{row+1}']):
+            cell.fill = PatternFill('solid', fgColor=FILL[G[g][0]]) if name else PatternFill(fill_type=None)
+        if g is None: continue
+        el, er = own(r, c-1) != g, own(r, c+1) != g
+        et, eb = own(r-1, c) != g, own(r+1, c) != g
+        ccol = ci(col)
+        for k, rr in enumerate((row, row+1)):
+            kw = {}
+            if el: kw['left'] = red; setb(ws.cell(rr, ccol-1), right=red)
+            if er: kw['right'] = red; setb(ws.cell(rr, ccol+1), left=red)
+            if et and k == 0: kw['top'] = red
+            if eb: kw['bottom'] = red
+            setb(ws.cell(rr, ccol), **kw)
+        if et: setb(ws.cell(row-1, ccol), bottom=red)
+        if eb: setb(ws.cell(row+2, ccol), top=red)
+        # group continues across an aisle column to the right
+        if c < 11 and own(r, c+1) == g and ci(COLS[c+1]) - ccol == 2:
+            acol = ccol + 1
+            if et and own(r-1, c+1) != g: setb(ws.cell(row, acol), top=red); setb(ws.cell(row-1, acol), bottom=red)
+            if eb and own(r+1, c+1) != g: setb(ws.cell(row+1, acol), bottom=red); setb(ws.cell(row+2, acol), top=red)
+        # group continues across an aisle row below
+        if r < 8 and own(r+1, c) == g and ROWS[r+1] - row == 3:
+            arow = row + 2
+            if el: setb(ws.cell(arow, ccol), left=red); setb(ws.cell(arow, ccol-1), right=red)
+            if er: setb(ws.cell(arow, ccol), right=red); setb(ws.cell(arow, ccol+1), left=red)
+
+for c in 'CDEGHIKLMOPQ':
+    ws.column_dimensions[c].width = 13.0
+
+ws['B28'].value = '赤枠＝グループ（横並び）　青：幼稚園　緑：小学校　桃：中学校　白：空席'
+ws['B28'].font = Font(name='ＭＳ ゴシック', size=10, color='FF0000')
+ws['B28'].alignment = Alignment(horizontal='left', vertical='center')
+
+ws.page_setup.orientation = 'landscape'
+ws.page_setup.fitToWidth = 1; ws.page_setup.fitToHeight = 1
+ws.sheet_properties.pageSetUpPr.fitToPage = True
+
+# group summary sheet
+NUM = {'幼稚園':'１ 幼稚園','小 豊玉地区':'２ 小学校 豊玉地区','小 開進地区':'３ 小学校 開進地区','小 練馬地区':'４ 小学校 練馬地区',
+       '小 光が丘地区':'５ 小学校 光が丘地区','小 石神井東地区':'６ 小学校 石神井東地区','小 石神井西地区':'７ 小学校 石神井西地区',
+       '小 大泉東地区':'８ 小学校 大泉東地区','小 大泉西地区':'９ 小学校 大泉西地区','中 Ａ地区':'10 中学校 Ａ地区',
+       '中 Ｂ地区':'11 中学校 Ｂ地区','中 Ｃ地区':'12 中学校 Ｃ地区','中 Ｄ地区':'13 中学校 Ｄ地区'}
+order = list(G.keys())
+listing.sort(key=lambda t: (order.index(t[0]), t[1]))
+ls = wb.create_sheet('グループ別一覧', 1)
+ls['A1'] = '11月26日（木）座席表　グループ別一覧'
+ls['A1'].font = Font(name='ＭＳ ゴシック', size=12, bold=True)
+ls.append([])
+ls.append(['グループ', '№', '学校・園名', '座席（列）', '座席（番）'])
+H = 3
+thin = Side(style='thin')
+for c in ls[H]:
+    c.font = Font(name='ＭＳ ゴシック', size=11, bold=True); c.fill = PatternFill('solid', fgColor='DDDDDD')
+    c.border = Border(left=thin, right=thin, top=thin, bottom=thin); c.alignment = Alignment(horizontal='center', vertical='center')
+r = H + 1
+for gi, g in enumerate(order):
+    rows = [t for t in listing if t[0] == g]
+    start = r
+    for t in rows:
+        vals = [NUM[g], t[1], t[2], t[3], t[4]]
+        for j, v in enumerate(vals, 1):
+            c = ls.cell(r, j, v if (j > 1 or r == start) else None)
+            c.font = Font(name='ＭＳ ゴシック', size=11)
+            c.fill = PatternFill('solid', fgColor=FILL[G[g][0]])
+            c.alignment = Alignment(horizontal='left' if j == 3 else 'center', vertical='center', wrap_text=(j == 1))
+            c.border = Border(left=red if j == 1 else thin, right=red if j == 5 else thin,
+                              top=red if r == start else thin, bottom=red if r == start + len(rows) - 1 else thin)
+        r += 1
+    ls.merge_cells(start_row=start, start_column=1, end_row=r - 1, end_column=1)
+for col, w in zip('ABCDE', [24, 5, 24, 11, 11]): ls.column_dimensions[col].width = w
+ls.freeze_panes = 'A4'
+ls.page_setup.orientation = 'portrait'; ls.page_setup.paperSize = 9
+ls.page_setup.fitToWidth = 1; ls.page_setup.fitToHeight = 0
+ls.sheet_properties.pageSetUpPr.fitToPage = True
+ls.print_title_rows = '3:3'
+wb.active = 0
+wb.save(out)
+print(len(listing), 'seats filled')
