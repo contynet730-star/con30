@@ -683,6 +683,53 @@ function ansLine(q){
   return "";
 }
 
+
+/* ===== 聴くモード ===== */
+var LS=null;
+function startListen(hostName,ids,onDone){
+  LS={ids:ids,i:0,host:hostName,onDone:onDone};
+  renderListen();
+}
+function renderListen(){
+  var host=document.getElementById("view-"+LS.host);
+  if(LS.i>=LS.ids.length){
+    if(window.speechSynthesis)speechSynthesis.cancel();
+    var f=LS.onDone;LS=null;if(f)f();return;
+  }
+  var q=QS[LS.ids[LS.i]];
+  host.innerHTML="";
+  var sh=el("div","sheet");
+  var head=el("div","sheet-head");
+  head.appendChild(el("span","tag","聴く "+(LS.i+1)+"／"+LS.ids.length));
+  head.appendChild(el("span","tag field",q.cat||q.field));
+  head.appendChild(el("span","tag",q.topic));
+  sh.appendChild(head);
+  sh.appendChild(el("p","qtype","聴いたあと、同じことを自分の言葉で言ってみてください"));
+  sh.appendChild(el("p","qtext",q.q));
+  sh.appendChild(el("div","grade",q.model));
+  var text=q.q+"。"+q.model;
+  var act=el("div","actions");
+  var play=el("button","btn ghost","もう一度聴く");
+  var next=el("button","btn",LS.i===LS.ids.length-1?"終わる":"次を聴く");
+  function say(){
+    if(!window.speechSynthesis)return;
+    speechSynthesis.cancel();
+    var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=1.05;
+    speechSynthesis.speak(u);
+  }
+  play.addEventListener("click",say);
+  next.addEventListener("click",function(){
+    if(window.speechSynthesis)speechSynthesis.cancel();
+    LS.i++;renderListen();window.scrollTo(0,0);});
+  act.appendChild(play);act.appendChild(next);
+  sh.appendChild(act);
+  if(!window.speechSynthesis){
+    sh.appendChild(el("p","note","この端末では読み上げが使えません。文章を声に出して読んでください。"));
+  }
+  host.appendChild(sh);
+  say();
+}
+
 /* ===== 今日 ===== */
 function poolFor(mode){
   if(mode==="desc")return BYT.desc||[];
@@ -692,6 +739,17 @@ function poolFor(mode){
   if(mode==="ox"||mode==="fast")return (BYT.ox||[]).concat(BYT.mc||[]);
   if(mode==="wrong")return wrongList();
   return [];
+}
+function weakField(){
+  var best=null,br=2;
+  FIELDS.forEach(function(f){
+    if(f.indexOf("文章理解")>=0||f.indexOf("口頭")>=0||f==="記述式"||f==="多肢選択式")return;
+    var r=rate(BYF[f]);
+    var v=(r==null)?0.5:r;
+    if(v<br){br=v;best=f;}
+  });
+  if(!best)return null;
+  return best.replace(/^5肢択一（|^基礎知識（|）$/g,"").replace(/（.*?）/g,"");
 }
 function slotNow(){var h=new Date().getHours();return (h>=4&&h<13)?"m":"e";}
 function doneSet(slot){var d=S.done[today()]||{};return d[slot]||[];}
@@ -750,14 +808,30 @@ function startBlock(slot,b){
     host.innerHTML="";
     var sh=el("div","sheet");
     sh.appendChild(el("p","eyebrow","インプット"));
-    sh.appendChild(el("p","qtext","YouTubeで1単元を見てください。"));
-    sh.appendChild(el("p","exp","見るだけで終わらせないことがすべてです。動画を閉じたらこの画面に戻り、同じ分野の一問一答をすぐ解いてください。見た直後に解くと定着率が大きく変わります。チャンネルは1つに絞ってください。複数を行き来すると網羅性が不安になり時間だけが減ります。1.5倍速、1単元30分以内のものを選びます。"));
+    sh.appendChild(el("p","qtext","今日の単元を頭に入れる"));
+    sh.appendChild(el("p","exp","動画はこのアプリの中では再生できません。外部の動画を埋め込めない仕組みのためです。YouTubeを使う場合は、アプリをいったん離れて見てから戻ってきてください。見たら必ずその場で同じ分野を解きます。見るだけで終わらせないことがすべてです。"));
+    var weak=weakField();
+    if(weak){
+      var k=el("div","kata");
+      k.appendChild(el("b",null,"いま弱い分野　検索はこの言葉で"));
+      k.appendChild(document.createTextNode("行政書士 "+weak+" 解説"));
+      sh.appendChild(k);
+      sh.appendChild(el("p","note","長押しでコピーできます。チャンネルは1つに絞ってください。"));
+    }
+    sh.appendChild(el("p","exp","YouTubeが見られないときは、下の「アプリの中で聴く」を使ってください。口頭再現の模範説明を読み上げます。通勤中でも、画面を見ずに耳だけで進められます。"));
     var act=el("div","actions");
-    var d1=el("button","btn","見終えた");
+    var lb=el("button","btn","アプリの中で聴く");
+    lb.addEventListener("click",function(){
+      var pool=(BYT.talk||[]);
+      var ids=pick(pool,Math.min(4,pool.length)).map(function(q){return q.id;});
+      startListen("today",ids,function(){markDone(slot,b.k);viewToday();window.scrollTo(0,0);});
+    });
+    var d1=el("button","btn ghost","動画を見終えた");
     d1.addEventListener("click",function(){markDone(slot,b.k);viewToday();window.scrollTo(0,0);});
-    var d2=el("button","btn ghost","戻る");
-    d2.addEventListener("click",function(){viewToday();});
-    act.appendChild(d1);act.appendChild(d2);sh.appendChild(act);
+    var d2=el("button","btn ghost","とばす");
+    d2.addEventListener("click",function(){markDone(slot,b.k);viewToday();window.scrollTo(0,0);});
+    act.appendChild(lb);act.appendChild(d1);act.appendChild(d2);
+    sh.appendChild(act);
     host.appendChild(sh);window.scrollTo(0,0);return;
   }
   var pool=poolFor(b.mode);
@@ -776,7 +850,8 @@ function startBlock(slot,b){
 var MODES=[["mc5","5肢択一","本番形式。1問2分30秒",10],["ox","一問一答","〇×で高速に回す",20],
   ["fast","高速一問一答","1問15秒。反射で答える",20],["desc","記述式","型を見て書く",3],
   ["talk","口頭再現","声に出して説明する",3],["multi","多肢選択式","空欄補充",2],
-  ["wrong","間違えた問題","直近の誤答だけ",10]];
+  ["wrong","間違えた問題","直近の誤答だけ",10],
+  ["listen","聴く","模範説明を読み上げる。耳だけで進む",4]];
 function viewDrill(){
   var host=document.getElementById("view-drill");
   if(run&&run.host==="drill"){renderRun();return;}
@@ -785,7 +860,7 @@ function viewDrill(){
   host.appendChild(el("p","note","未着手と直近で間違えた問題が優先的に出ます。"));
   var m=el("div","menu");
   MODES.forEach(function(x){
-    var pool=poolFor(x[0]);
+    var pool=x[0]==="listen"?(BYT.talk||[]):poolFor(x[0]);
     var btn=el("button");
     btn.appendChild(el("span","no",""));
     var ti=el("span","ti");
@@ -796,6 +871,7 @@ function viewDrill(){
     if(!pool.length)btn.disabled=true;
     btn.addEventListener("click",function(){
       var ids=pick(pool,Math.min(x[3],pool.length)).map(function(q){return q.id;});
+      if(x[0]==="listen"){startListen("drill",ids,function(){viewDrill();window.scrollTo(0,0);});return;}
       run={host:"drill"};
       startRun(ids,x[1],function(){viewDrill();window.scrollTo(0,0);},{fast:x[0]==="fast"});
       run.host="drill";renderRun();
@@ -1042,6 +1118,7 @@ var TABS={today:["tab-today","view-today",viewToday],drill:["tab-drill","view-dr
   rec:["tab-rec","view-rec",viewRec],plan:["tab-plan","view-plan",viewPlan]};
 function selectTab(name){
   if(run&&run.host&&run.host!==name)run=null;
+  if(LS&&LS.host!==name){LS=null;if(window.speechSynthesis)speechSynthesis.cancel();}
   Object.keys(TABS).forEach(function(k){
     var t=TABS[k],on=k===name;
     document.getElementById(t[0]).setAttribute("aria-selected",on?"true":"false");
