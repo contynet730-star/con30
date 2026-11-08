@@ -1,325 +1,287 @@
-<title>行政書士 毎日一問一答</title>
+<title>行政書士 合格ドリル</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@600&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
 <style>
 :root{
-  --bg:#eef0f4; --sheet:#ffffff; --sheet-2:#f7f8fa;
-  --ink:#161a21; --ink-2:#39404d; --muted:#5c6472; --faint:#8a91a0;
-  --line:#d3d8e1; --line-soft:#e4e8ee;
+  --bg:#eef0f4; --sheet:#fff; --sheet-2:#f6f8fa; --ink:#161a21; --ink-2:#39404d;
+  --muted:#5c6472; --faint:#8a91a0; --line:#d3d8e1; --line-soft:#e4e8ee;
   --kon:#1f3a6b; --kon-soft:#e5ebf6; --kon-ink:#1f3a6b;
-  --ok:#1c6349; --ok-soft:#e2f0ea;
-  --ng:#9d2f2a; --ng-soft:#f7e6e4;
+  --ok:#1c6349; --ok-soft:#e2f0ea; --ng:#9d2f2a; --ng-soft:#f7e6e4;
+  --warn:#8a5a10; --warn-soft:#fbf0dc;
   --shadow:0 1px 2px rgba(22,26,33,.06),0 8px 24px -18px rgba(22,26,33,.5);
   --mincho:"Shippori Mincho","Hiragino Mincho ProN","Yu Mincho",YuMincho,serif;
   --gothic:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",Meiryo,sans-serif;
   --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
 }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
-    --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
-    --line:#2b323e; --line-soft:#232a35;
-    --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
-    --ok:#5cbd92; --ok-soft:#14261f;
-    --ng:#e28880; --ng-soft:#2a1917;
-    --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
-  }
-}
-:root[data-theme="dark"]{
-  --bg:#11141a; --sheet:#191d25; --sheet-2:#141821;
-  --ink:#e7eaf0; --ink-2:#c3c9d4; --muted:#98a1b2; --faint:#6f7889;
-  --line:#2b323e; --line-soft:#232a35;
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#11141a; --sheet:#191d25; --sheet-2:#141821; --ink:#e7eaf0; --ink-2:#c3c9d4;
+  --muted:#98a1b2; --faint:#6f7889; --line:#2b323e; --line-soft:#232a35;
   --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
-  --ok:#5cbd92; --ok-soft:#14261f;
-  --ng:#e28880; --ng-soft:#2a1917;
+  --ok:#5cbd92; --ok-soft:#14261f; --ng:#e28880; --ng-soft:#2a1917;
+  --warn:#d7a954; --warn-soft:#2a2316;
+  --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
+}}
+:root[data-theme="dark"]{
+  --bg:#11141a; --sheet:#191d25; --sheet-2:#141821; --ink:#e7eaf0; --ink-2:#c3c9d4;
+  --muted:#98a1b2; --faint:#6f7889; --line:#2b323e; --line-soft:#232a35;
+  --kon:#87a8e2; --kon-soft:#1a2333; --kon-ink:#a8c1ee;
+  --ok:#5cbd92; --ok-soft:#14261f; --ng:#e28880; --ng-soft:#2a1917;
+  --warn:#d7a954; --warn-soft:#2a2316;
   --shadow:0 1px 2px rgba(0,0,0,.4),0 10px 30px -20px rgba(0,0,0,.9);
 }
 *{box-sizing:border-box}
-button,select,textarea,a{touch-action:manipulation}
+button,select,textarea,input{touch-action:manipulation}
 button{-webkit-tap-highlight-color:rgba(31,58,107,.12)}
-body{
-  margin:0; background:var(--bg); color:var(--ink);
-  font-family:var(--gothic); font-size:15px; line-height:1.75;
-  -webkit-text-size-adjust:100%;
-}
-.wrap{
-  max-width:680px; margin:0 auto; padding-inline:18px;
-  padding-block:0; padding-bottom:calc(64px + env(safe-area-inset-bottom,0px))
-}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--gothic);
+  font-size:15px;line-height:1.75;-webkit-text-size-adjust:100%}
+.wrap{max-width:680px;margin:0 auto;padding-inline:16px;
+  padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
 
-/* ---- header ---- */
-header{padding-block:26px 18px; border-bottom:1px solid var(--line)}
-.eyebrow{
-  font-size:11px; letter-spacing:.22em; color:var(--muted);
-  text-transform:none; margin:0 0 6px
-}
-h1{
-  font-family:var(--mincho); font-weight:600; font-size:25px; line-height:1.35;
-  margin:0 0 14px; letter-spacing:.02em; text-wrap:balance
-}
-.meta{display:flex; flex-wrap:wrap; gap:8px 20px; align-items:baseline}
-.meta div{display:flex; gap:7px; align-items:baseline}
-.meta dt{font-size:11px; color:var(--muted); letter-spacing:.08em}
-.meta dd{margin:0; font-family:var(--mono); font-size:17px; font-weight:500;
-  font-variant-numeric:tabular-nums; color:var(--ink)}
-.meta .unit{font-size:11px; color:var(--muted); font-family:var(--gothic)}
-
-/* ---- tabs ---- */
-nav{display:flex; gap:2px; margin-block:14px 20px; border-bottom:1px solid var(--line)}
-nav button{
-  appearance:none; background:none; border:0; border-bottom:2px solid transparent;
-  font-family:var(--gothic); font-size:13.5px; font-weight:500; color:var(--muted);
-  padding:9px 13px; cursor:pointer; margin-bottom:-1px; letter-spacing:.04em
-}
-nav button[aria-selected="true"]{color:var(--kon-ink); border-bottom-color:var(--kon)}
-nav button:hover{color:var(--ink)}
-nav button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
-
-/* ---- question sheet ---- */
-.sheet{
-  background:var(--sheet); border:1px solid var(--line); border-radius:3px;
-  box-shadow:var(--shadow); padding:22px 22px 20px
-}
-.sheet-head{
-  display:flex; flex-wrap:wrap; gap:6px 12px; align-items:center;
-  padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line-soft)
-}
-.tag{
-  font-size:11px; letter-spacing:.1em; color:var(--muted); font-family:var(--mono)
-}
-.tag.field{
-  font-family:var(--gothic); color:var(--kon-ink); background:var(--kon-soft);
-  padding:2px 8px; border-radius:2px; letter-spacing:.04em; font-weight:500
-}
-.rail{display:flex; gap:5px; margin-left:auto}
-.rail i{
-  width:16px; height:5px; background:var(--line); border-radius:1px; display:block
-}
-.rail i.done{background:var(--kon)}
-.rail i.now{background:var(--ink)}
-
-.qtype{font-size:11.5px; color:var(--muted); letter-spacing:.08em; margin:0 0 10px}
-.qtext{
-  font-family:var(--mincho); font-size:17.5px; line-height:2.0;
-  margin:0 0 6px; letter-spacing:.015em; white-space:pre-wrap
-}
-.qsub{font-size:13px; color:var(--muted); margin:12px 0 0}
-
-/* ---- answer controls ---- */
-.ox{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:20px}
-.ox button{
-  appearance:none; cursor:pointer; background:var(--sheet-2);
-  border:1px solid var(--line); border-radius:3px; padding:16px 0;
-  font-family:var(--mincho); font-size:30px; line-height:1; color:var(--ink);
-  transition:background .12s, border-color .12s; -webkit-user-select:none; user-select:none
-}
-.ox button:active,.choices button:active,.fields button:active,.plan li button:active{
-  background:var(--kon-soft); border-color:var(--kon)
-}
-.btn:active{filter:brightness(.92)}
-.ox button:hover{background:var(--kon-soft); border-color:var(--kon)}
-.ox button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
-.ox button small{display:block; font-family:var(--gothic); font-size:11px;
-  color:var(--muted); margin-top:7px; letter-spacing:.1em}
-
-.choices{display:flex; flex-direction:column; gap:8px; margin-top:18px}
-.choices button{
-  appearance:none; cursor:pointer; text-align:left; background:var(--sheet-2);
-  border:1px solid var(--line); border-radius:3px; padding:11px 14px;
-  font-family:var(--gothic); font-size:14.5px; line-height:1.7; color:var(--ink);
-  display:flex; gap:11px; align-items:baseline
-}
-.choices button:hover{background:var(--kon-soft); border-color:var(--kon)}
-.choices button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
-.choices b{font-family:var(--mono); font-size:12px; color:var(--muted); font-weight:500}
-
-.blanks{display:grid; grid-template-columns:repeat(2,1fr); gap:10px; margin-top:18px}
-.blanks label{display:flex; flex-direction:column; gap:5px; font-size:11.5px;
-  color:var(--muted); letter-spacing:.1em}
-.blanks select{
-  font-family:var(--gothic); font-size:16px; padding:8px 9px; color:var(--ink);
-  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px; width:100%
-}
-textarea{
-  width:100%; margin-top:16px; min-height:96px; resize:vertical;
-  font-family:var(--mincho); font-size:16px; line-height:1.9; color:var(--ink);
-  background:var(--sheet-2); border:1px solid var(--line); border-radius:3px;
-  padding:12px 13px
-}
-textarea:focus-visible,select:focus-visible{outline:2px solid var(--kon); outline-offset:1px}
-.counter{
-  font-family:var(--mono); font-size:12px; color:var(--muted); text-align:right;
-  margin-top:5px; font-variant-numeric:tabular-nums
-}
-.counter.good{color:var(--ok)}
-
-.actions{display:flex; flex-wrap:wrap; gap:9px; margin-top:16px}
-.btn{
-  appearance:none; cursor:pointer; font-family:var(--gothic); font-size:13.5px;
-  font-weight:500; padding:9px 17px; border-radius:3px; border:1px solid var(--kon);
-  background:var(--kon); color:#fff; letter-spacing:.04em
-}
-.btn.ghost{background:transparent; color:var(--kon-ink); border-color:var(--line)}
-.btn.ghost:hover{border-color:var(--kon)}
-.btn:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
-.btn[disabled]{opacity:.45; cursor:default}
-
-/* ---- verdict / explanation ---- */
-.verdict{
-  margin-top:20px; border-top:1px solid var(--line-soft); padding-top:18px
-}
-.mark{
-  display:inline-flex; align-items:center; gap:9px; font-family:var(--mincho);
-  font-size:15px; padding:5px 13px; border-radius:2px; letter-spacing:.06em
-}
-.mark.ok{background:var(--ok-soft); color:var(--ok)}
-.mark.ng{background:var(--ng-soft); color:var(--ng)}
-.mark span{font-size:21px; line-height:1}
-.answer{font-family:var(--mincho); font-size:16px; margin:14px 0 0; line-height:1.9}
-.exp{font-size:14px; line-height:1.95; color:var(--ink-2); margin:12px 0 0}
-.ref{
-  font-family:var(--mono); font-size:12px; color:var(--muted); margin:11px 0 0;
-  padding-left:11px; border-left:2px solid var(--line)
-}
-.grade{
-  margin-top:14px; padding:13px 14px; background:var(--sheet-2);
-  border:1px solid var(--line-soft); border-radius:3px; font-size:13.5px;
-  line-height:1.9; color:var(--ink-2); white-space:pre-wrap
-}
-.selfmark{display:flex; gap:9px; margin-top:16px; align-items:center; flex-wrap:wrap}
-.selfmark span{font-size:12px; color:var(--muted)}
-
-/* ---- done panel ---- */
-.done-panel{text-align:center; padding:34px 20px}
-.done-panel .big{
-  font-family:var(--mincho); font-size:40px; line-height:1.2; margin:0;
-  font-variant-numeric:tabular-nums
-}
-.done-panel p{color:var(--muted); font-size:13.5px; margin:10px 0 0}
-
-/* ---- plan strip ---- */
-.plan{margin-top:22px}
-.plan-head{
-  display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;
-  padding-bottom:7px; border-bottom:1px solid var(--line)
-}
-.plan-head h3{
-  font-family:var(--mincho); font-weight:600; font-size:14px; margin:0; letter-spacing:.04em
-}
-.plan-head span{font-size:11.5px; color:var(--muted)}
-.plan-head .gauge{
-  flex:1 1 90px; min-width:90px; height:3px; background:var(--line-soft); border-radius:2px
-}
-.plan-head .gauge i{display:block; height:100%; background:var(--kon); border-radius:2px}
-.plan ol{list-style:none; margin:0; padding:0}
-.plan li button{
-  appearance:none; background:none; border:0; cursor:pointer; width:100%; text-align:left;
-  display:grid; grid-template-columns:62px 1fr auto; gap:12px; align-items:baseline;
-  padding:8px 4px; border-bottom:1px solid var(--line-soft); font-family:var(--gothic);
-  font-size:13px; color:var(--ink-2)
-}
-.plan li button:hover{background:var(--kon-soft)}
-.plan li button:focus-visible{outline:2px solid var(--kon); outline-offset:-2px}
-.plan li .d{font-family:var(--mono); font-size:12px; color:var(--muted);
+header{padding-block:16px 10px}
+.eyebrow{font-size:11px;letter-spacing:.2em;color:var(--muted);margin:0 0 4px}
+h1{font-family:var(--mincho);font-weight:600;font-size:22px;line-height:1.3;
+  margin:0 0 10px;letter-spacing:.02em}
+.meta{display:grid;grid-template-columns:1fr 1fr;gap:2px 14px}
+.meta div{display:flex;gap:6px;align-items:baseline}
+.meta dt{font-size:11px;color:var(--muted);letter-spacing:.06em}
+.meta dd{margin:0;font-family:var(--mono);font-size:16px;font-weight:500;
   font-variant-numeric:tabular-nums}
-.plan li .n{font-family:var(--mono); font-size:11.5px; color:var(--faint)}
-.plan li.is-now button{color:var(--ink); font-weight:500; background:var(--kon-soft)}
-.plan li.is-now .d{color:var(--kon-ink)}
-.plan li.is-done .d::after{content:"　済"; font-family:var(--gothic); color:var(--ok)}
+.meta .unit{font-size:11px;color:var(--muted);font-family:var(--gothic)}
+.meta dd.hot{color:var(--ng)}
 
-/* ---- records ---- */
-.bars{display:flex; flex-direction:column; gap:0; margin-top:6px}
-.bar-row{
-  display:grid; grid-template-columns:1fr 62px; gap:12px; align-items:center;
-  padding:9px 0; border-bottom:1px solid var(--line-soft)
-}
+nav{display:flex;margin-block:12px 16px;border-bottom:1px solid var(--line)}
+nav button{flex:1;appearance:none;background:none;border:0;
+  border-bottom:2px solid transparent;font-family:var(--gothic);font-size:13px;
+  font-weight:500;color:var(--muted);padding:11px 2px;cursor:pointer;
+  margin-bottom:-1px;letter-spacing:.03em}
+nav button[aria-selected="true"]{color:var(--kon-ink);border-bottom-color:var(--kon)}
+nav button:focus-visible{outline:2px solid var(--kon);outline-offset:-2px}
+
+.sheet{background:var(--sheet);border:1px solid var(--line);border-radius:3px;
+  box-shadow:var(--shadow);padding:18px 16px 15px}
+.sheet+.sheet{margin-top:12px}
+.sheet-head{display:flex;flex-wrap:wrap;gap:5px 9px;align-items:center;
+  padding-bottom:12px;margin-bottom:14px;border-bottom:1px solid var(--line-soft)}
+.tag{font-size:11px;letter-spacing:.08em;color:var(--muted);font-family:var(--mono)}
+.tag.field{font-family:var(--gothic);color:var(--kon-ink);background:var(--kon-soft);
+  padding:2px 8px;border-radius:2px;letter-spacing:.03em;font-weight:500}
+.clock{margin-left:auto;font-family:var(--mono);font-size:13px;
+  font-variant-numeric:tabular-nums;color:var(--muted)}
+.clock.over{color:var(--ng);font-weight:500}
+.rail{display:flex;gap:4px;margin-left:auto}
+.rail i{width:14px;height:4px;background:var(--line);border-radius:1px;display:block}
+.rail i.done{background:var(--kon)} .rail i.now{background:var(--ink)}
+
+.qtype{font-size:11.5px;color:var(--muted);letter-spacing:.06em;margin:0 0 9px}
+.qtext{font-family:var(--mincho);font-size:16.5px;line-height:1.95;margin:0;
+  letter-spacing:.015em;white-space:pre-wrap}
+
+.ox{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:18px}
+.ox button{appearance:none;cursor:pointer;background:var(--sheet-2);
+  border:1px solid var(--line);border-radius:3px;padding:19px 0;
+  font-family:var(--mincho);font-size:31px;line-height:1;color:var(--ink);
+  -webkit-user-select:none;user-select:none}
+.ox button small{display:block;font-family:var(--gothic);font-size:11px;
+  color:var(--muted);margin-top:6px;letter-spacing:.08em}
+.choices{display:flex;flex-direction:column;gap:7px;margin-top:16px}
+.choices button{appearance:none;cursor:pointer;text-align:left;background:var(--sheet-2);
+  border:1px solid var(--line);border-radius:3px;padding:12px 13px;
+  font-family:var(--gothic);font-size:14px;line-height:1.7;color:var(--ink);
+  display:flex;gap:10px;align-items:baseline}
+.choices b{font-family:var(--mono);font-size:12px;color:var(--muted);font-weight:500;flex:0 0 auto}
+.ox button:active,.choices button:active,.menu button:active,.grid button:active{
+  background:var(--kon-soft);border-color:var(--kon)}
+.ox button:focus-visible,.choices button:focus-visible{outline:2px solid var(--kon);outline-offset:2px}
+.blanks{display:grid;gap:9px;margin-top:16px}
+.blanks label{display:flex;flex-direction:column;gap:4px;font-size:11.5px;
+  color:var(--muted);letter-spacing:.08em}
+select{font-family:var(--gothic);font-size:16px;padding:9px;color:var(--ink);
+  background:var(--sheet-2);border:1px solid var(--line);border-radius:3px;width:100%}
+textarea{width:100%;min-height:92px;resize:vertical;font-family:var(--mincho);
+  font-size:16px;line-height:1.9;color:var(--ink);background:var(--sheet-2);
+  border:1px solid var(--line);border-radius:3px;padding:11px 12px}
+textarea:focus-visible,select:focus-visible{outline:2px solid var(--kon);outline-offset:1px}
+.counter{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;
+  margin-top:4px;font-variant-numeric:tabular-nums}
+.counter.good{color:var(--ok)}
+.kata{margin-top:14px;padding:10px 12px;background:var(--kon-soft);border-radius:3px;
+  font-size:13px;line-height:1.8;color:var(--kon-ink)}
+.kata b{display:block;font-size:10.5px;letter-spacing:.12em;margin-bottom:3px;opacity:.75}
+.dictate{font-size:11.5px;color:var(--muted);margin:8px 0 0;line-height:1.7}
+
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:15px}
+.btn{appearance:none;cursor:pointer;font-family:var(--gothic);font-size:13.5px;
+  font-weight:500;padding:11px 17px;border-radius:3px;border:1px solid var(--kon);
+  background:var(--kon);color:#fff;letter-spacing:.03em}
+:root[data-theme="dark"] .btn{color:#11141a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .btn{color:#11141a}}
+.btn.ghost{background:transparent;color:var(--kon-ink);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--kon)}
+.btn:focus-visible{outline:2px solid var(--kon);outline-offset:2px}
+.btn[disabled]{opacity:.45;cursor:default}
+.btn.wide{flex:1 1 100%;text-align:center}
+
+.verdict{margin-top:18px;border-top:1px solid var(--line-soft);padding-top:16px}
+.mark{display:inline-flex;align-items:center;gap:8px;font-family:var(--mincho);
+  font-size:15px;padding:5px 13px;border-radius:2px;letter-spacing:.05em}
+.mark.ok{background:var(--ok-soft);color:var(--ok)}
+.mark.ng{background:var(--ng-soft);color:var(--ng)}
+.mark span{font-size:20px;line-height:1}
+.took{font-family:var(--mono);font-size:12px;color:var(--muted);margin-left:9px;
+  font-variant-numeric:tabular-nums}
+.answer{font-family:var(--mincho);font-size:16px;margin:13px 0 0;line-height:1.9}
+.exp{font-size:13.5px;line-height:1.95;color:var(--ink-2);margin:11px 0 0}
+.each{margin:12px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:7px}
+.each li{font-size:12.5px;line-height:1.8;color:var(--ink-2);padding-left:24px;
+  position:relative;text-indent:0}
+.each li b{position:absolute;left:0;top:0;font-family:var(--mono);font-size:11px;
+  color:var(--muted);font-weight:500}
+.each li.hit{color:var(--ink)} .each li.hit b{color:var(--kon-ink)}
+.readtip{margin:13px 0 0;padding:11px 12px;background:var(--warn-soft);
+  border-radius:3px;font-size:12.5px;line-height:1.85;color:var(--warn)}
+.readtip b{display:block;font-size:10.5px;letter-spacing:.12em;margin-bottom:3px;opacity:.8}
+.ref{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin:10px 0 0;
+  padding-left:10px;border-left:2px solid var(--line)}
+.grade{margin-top:12px;padding:12px 13px;background:var(--sheet-2);
+  border:1px solid var(--line-soft);border-radius:3px;font-size:13px;
+  line-height:1.9;color:var(--ink-2);white-space:pre-wrap}
+.why{margin-top:14px}
+.why p{font-size:11.5px;color:var(--muted);margin:0 0 7px;letter-spacing:.04em}
+.why .grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.grid button{appearance:none;cursor:pointer;background:var(--sheet-2);
+  border:1px solid var(--line);border-radius:3px;padding:10px 8px;font-size:12.5px;
+  font-family:var(--gothic);color:var(--ink-2);text-align:center}
+.checks{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.checks li button{width:100%;display:flex;gap:9px;align-items:flex-start;text-align:left;
+  appearance:none;cursor:pointer;background:var(--sheet-2);border:1px solid var(--line);
+  border-radius:3px;padding:10px 12px;font-family:var(--gothic);font-size:13px;
+  line-height:1.65;color:var(--ink-2)}
+.checks li button[aria-pressed="true"]{background:var(--ok-soft);border-color:var(--ok);color:var(--ok)}
+.checks li button i{font-style:normal;font-family:var(--mono);flex:0 0 auto}
+
+.menu{display:flex;flex-direction:column;gap:8px;margin-top:4px}
+.menu button{appearance:none;cursor:pointer;text-align:left;background:var(--sheet);
+  border:1px solid var(--line);border-radius:3px;padding:13px 14px;
+  font-family:var(--gothic);color:var(--ink);display:grid;
+  grid-template-columns:26px 1fr auto;gap:11px;align-items:center}
+.menu button .no{font-family:var(--mono);font-size:12px;color:var(--muted)}
+.menu button .ti{font-size:14px;font-weight:500;line-height:1.5}
+.menu button .ti em{display:block;font-style:normal;font-size:11.5px;
+  color:var(--muted);font-weight:400;margin-top:2px}
+.menu button .mn{font-family:var(--mono);font-size:11.5px;color:var(--faint)}
+.menu button.done{background:var(--ok-soft);border-color:var(--ok)}
+.menu button.done .no::before{content:"✓";color:var(--ok)}
+.menu button.done .no{font-size:14px}
+.menu button.done .ti{color:var(--ok)}
+.menu button.next{border-color:var(--kon);border-width:2px;padding:12px 13px}
+
+.slot{display:flex;align-items:baseline;gap:9px;margin:20px 0 8px}
+.slot h2{font-family:var(--mincho);font-weight:600;font-size:16px;margin:0;letter-spacing:.04em}
+.slot span{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+.slot .bar{flex:1;height:3px;background:var(--line-soft);border-radius:2px;min-width:30px}
+.slot .bar i{display:block;height:100%;background:var(--kon);border-radius:2px}
+h2{font-family:var(--mincho);font-weight:600;font-size:16px;margin:24px 0 4px;letter-spacing:.03em}
+h2:first-child{margin-top:2px}
+h3{font-family:var(--gothic);font-size:13px;font-weight:700;margin:16px 0 5px;
+  letter-spacing:.04em;color:var(--kon-ink)}
+.note{font-size:12.5px;color:var(--muted);margin:4px 0 12px;line-height:1.85}
+p.body{font-size:13.5px;line-height:1.95;color:var(--ink-2);margin:8px 0}
+ul.body{font-size:13.5px;line-height:1.9;color:var(--ink-2);margin:8px 0;padding-left:20px}
+ul.body li{margin-bottom:5px}
+
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:8px}
+.cal div{aspect-ratio:1;border-radius:2px;background:var(--line-soft);position:relative;
+  display:flex;flex-direction:column;overflow:hidden}
+.cal div i{flex:1;display:block}
+.cal div i.m{background:var(--kon)} .cal div i.e{background:var(--ok)}
+.cal div.today{outline:2px solid var(--ink);outline-offset:1px}
+.legend{display:flex;gap:14px;margin-top:9px;font-size:11.5px;color:var(--muted);flex-wrap:wrap}
+.legend span{display:flex;align-items:center;gap:5px}
+.legend b{width:11px;height:11px;border-radius:2px;display:block}
+
+.score{margin-top:6px}
+.score .tot{font-family:var(--mono);font-size:34px;font-weight:500;
+  font-variant-numeric:tabular-nums;line-height:1.1}
+.score .tot.pass{color:var(--ok)} .score .tot.fail{color:var(--ng)}
+.score .tot small{font-size:14px;color:var(--muted);margin-left:5px}
+.score .gauge{height:9px;background:var(--line-soft);border-radius:3px;margin-top:10px;
+  position:relative;overflow:hidden}
+.score .gauge i{display:block;height:100%;background:var(--kon)}
+.score .gauge u{position:absolute;top:-3px;bottom:-3px;width:2px;background:var(--ink);
+  left:60%;text-decoration:none}
+.sline{display:grid;grid-template-columns:1fr auto;gap:10px;padding:8px 0;
+  border-bottom:1px solid var(--line-soft);font-size:13px}
+.sline:last-child{border-bottom:0}
+.sline span{color:var(--ink-2)}
+.sline b{font-family:var(--mono);font-variant-numeric:tabular-nums;font-weight:500}
+.bar-row{display:grid;grid-template-columns:1fr 58px;gap:11px;align-items:center;
+  padding:8px 0;border-bottom:1px solid var(--line-soft)}
 .bar-row:last-child{border-bottom:0}
-.bar-name{font-size:13px; color:var(--ink-2)}
-.track{height:4px; background:var(--line-soft); border-radius:2px; margin-top:5px}
-.track i{display:block; height:100%; background:var(--kon); border-radius:2px}
+.bar-name{font-size:12.5px;color:var(--ink-2)}
+.track{height:4px;background:var(--line-soft);border-radius:2px;margin-top:4px}
+.track i{display:block;height:100%;background:var(--kon);border-radius:2px}
 .track i.weak{background:var(--ng)}
-.bar-num{
-  font-family:var(--mono); font-size:13px; text-align:right; color:var(--muted);
-  font-variant-numeric:tabular-nums
-}
-.bar-num em{font-style:normal; color:var(--ink); font-size:15px}
+.bar-num{font-family:var(--mono);font-size:12.5px;text-align:right;color:var(--muted);
+  font-variant-numeric:tabular-nums}
+.bar-num em{font-style:normal;color:var(--ink);font-size:14px}
 
-h2{
-  font-family:var(--mincho); font-weight:600; font-size:17px; margin:30px 0 4px;
-  letter-spacing:.03em
-}
-h2:first-child{margin-top:4px}
-.note{font-size:12.5px; color:var(--muted); margin:4px 0 14px; line-height:1.8}
-.fields{display:grid; grid-template-columns:repeat(auto-fill,minmax(152px,1fr)); gap:8px}
-.fields button{
-  appearance:none; cursor:pointer; text-align:left; background:var(--sheet);
-  border:1px solid var(--line); border-radius:3px; padding:11px 13px;
-  font-family:var(--gothic); font-size:13.5px; color:var(--ink); line-height:1.5
-}
-.fields button:hover{border-color:var(--kon); background:var(--kon-soft)}
-.fields button:focus-visible{outline:2px solid var(--kon); outline-offset:2px}
-.fields small{display:block; font-family:var(--mono); font-size:11px;
-  color:var(--muted); margin-top:4px; font-variant-numeric:tabular-nums}
-footer{
-  margin-top:34px; padding-top:16px; border-top:1px solid var(--line);
-  font-size:11.5px; color:var(--faint); line-height:1.9
-}
-.linkish{
-  appearance:none; background:none; border:0; padding:0; cursor:pointer;
-  font:inherit; color:var(--muted); text-decoration:underline
-}
+.plans{display:flex;flex-direction:column;gap:9px;margin-top:8px}
+.plan{border:1px solid var(--line);border-radius:3px;padding:14px;background:var(--sheet)}
+.plan.on{border-color:var(--kon);border-width:2px;padding:13px}
+.plan h4{margin:0 0 3px;font-family:var(--mincho);font-size:15.5px;font-weight:600}
+.plan .sub{font-size:11.5px;color:var(--muted);margin:0 0 9px;letter-spacing:.04em}
+.plan p{font-size:13px;line-height:1.85;color:var(--ink-2);margin:0 0 9px}
+.plan .tgt{font-family:var(--mono);font-size:12px;color:var(--kon-ink);
+  background:var(--kon-soft);padding:7px 10px;border-radius:3px;margin-bottom:10px;
+  line-height:1.7;font-variant-numeric:tabular-nums}
+.badge{display:inline-block;font-size:10.5px;letter-spacing:.1em;padding:2px 7px;
+  border-radius:2px;background:var(--ok-soft);color:var(--ok);margin-left:7px;
+  vertical-align:middle}
+.alert{margin-top:10px;padding:11px 12px;border-radius:3px;background:var(--warn-soft);
+  color:var(--warn);font-size:12.5px;line-height:1.8}
+.alert.bad{background:var(--ng-soft);color:var(--ng)}
+footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
+  font-size:11px;color:var(--faint);line-height:1.85}
+.linkish{appearance:none;background:none;border:0;padding:0;cursor:pointer;font:inherit;
+  color:var(--muted);text-decoration:underline}
 .hide{display:none !important}
+.speak{appearance:none;background:var(--sheet-2);border:1px solid var(--line);
+  border-radius:3px;cursor:pointer;font-family:var(--gothic);font-size:12px;
+  color:var(--muted);padding:6px 11px;margin-top:11px}
+.speak[aria-pressed="true"]{border-color:var(--kon);color:var(--kon-ink)}
 @media (max-width:560px){
-  .wrap{padding-inline:14px}
-  header{padding-block:18px 12px}
-  h1{font-size:21px; margin-bottom:11px}
-  .meta{display:grid; grid-template-columns:1fr 1fr; gap:3px 14px}
-  .meta dd{font-size:16px}
-  nav{margin-block:10px 14px; gap:0}
-  nav button{flex:1; text-align:center; padding:12px 4px; font-size:13px}
-  .sheet{padding:17px 14px 14px; border-radius:2px}
-  .sheet-head{gap:5px 9px}
-  .qtext{font-size:16.5px; line-height:1.95}
-  .ox button{padding:19px 0; font-size:32px}
-  .choices button{padding:13px 13px}
-  .blanks{grid-template-columns:1fr}
-  .fields{grid-template-columns:1fr 1fr; gap:7px}
-  .plan li button{grid-template-columns:58px 1fr auto; padding:11px 4px}
-  /* 解説を読み終えた位置に「次へ」を置いておく */
-  .verdict .actions{
-    position:sticky; bottom:0; z-index:2;
-    margin:18px -14px -14px; padding:11px 14px calc(11px + env(safe-area-inset-bottom,0px));
-    background:var(--sheet); border-top:1px solid var(--line-soft)
-  }
-  .verdict .actions .btn{flex:1; padding:13px 17px; font-size:14.5px}
-  .selfmark{gap:7px}
-  .selfmark .btn{flex:1 1 40%; padding:13px 10px}
+  .verdict .actions{position:sticky;bottom:0;z-index:2;margin:16px -16px -15px;
+    padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));
+    background:var(--sheet);border-top:1px solid var(--line-soft)}
+  .verdict .actions .btn{flex:1;padding:13px 10px;font-size:14px}
 }
-@media (prefers-reduced-motion:reduce){*{transition:none !important; animation:none !important}}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 
 <div class="wrap">
 <header>
   <p class="eyebrow">令和9年度 行政書士試験</p>
-  <h1>毎日一問一答</h1>
+  <h1>合格ドリル</h1>
   <dl class="meta">
     <div><dt>本試験まで</dt><dd id="m-days">—</dd><dd class="unit">日</dd></div>
     <div><dt>連続</dt><dd id="m-streak">0</dd><dd class="unit">日</dd></div>
-    <div><dt>解答数</dt><dd id="m-seen">0</dd><dd class="unit">／336</dd></div>
-    <div><dt>正答率</dt><dd id="m-rate">—</dd><dd class="unit">％</dd></div>
+    <div><dt>予想得点</dt><dd id="m-score">—</dd><dd class="unit">／300</dd></div>
+    <div><dt>解答数</dt><dd id="m-seen">0</dd><dd class="unit">問</dd></div>
   </dl>
 </header>
 
 <nav role="tablist">
-  <button id="tab-today" role="tab" aria-selected="true" aria-controls="view-today">今日の問題</button>
-  <button id="tab-field" role="tab" aria-selected="false" aria-controls="view-field">分野別</button>
-  <button id="tab-rec" role="tab" aria-selected="false" aria-controls="view-rec">記録</button>
+  <button id="tab-today" role="tab" aria-selected="true">今日</button>
+  <button id="tab-drill" role="tab" aria-selected="false">演習</button>
+  <button id="tab-rec" role="tab" aria-selected="false">記録</button>
+  <button id="tab-plan" role="tab" aria-selected="false">指南</button>
 </nav>
 
-<section id="view-today" role="tabpanel" aria-labelledby="tab-today"></section>
-<section id="view-field" role="tabpanel" aria-labelledby="tab-field" class="hide"></section>
-<section id="view-rec" role="tabpanel" aria-labelledby="tab-rec" class="hide"></section>
+<section id="view-today" role="tabpanel"></section>
+<section id="view-drill" role="tabpanel" class="hide"></section>
+<section id="view-rec" role="tabpanel" class="hide"></section>
+<section id="view-plan" role="tabpanel" class="hide"></section>
 
 <footer>
   学習用の教材です。公式の過去問ではありません。出題の根拠となる法令は試験年度の4月1日現在施行のもの、
@@ -333,534 +295,776 @@ footer{
 <script>
 (function(){
 "use strict";
-var DATA = JSON.parse(document.getElementById("qdata").textContent);
-var QS = {}, BYFIELD = {};
+var DATA=JSON.parse(document.getElementById("qdata").textContent);
+var QS={},BYF={},BYT={};
 DATA.questions.forEach(function(q){
-  QS[q.id] = q;
-  (BYFIELD[q.field] = BYFIELD[q.field] || []).push(q);
+  QS[q.id]=q;
+  (BYF[q.field]=BYF[q.field]||[]).push(q);
+  (BYT[q.type]=BYT[q.type]||[]).push(q);
 });
-var FIELDS = Object.keys(BYFIELD);
-var DAYS = DATA.days;
-var EXAM = new Date(2027, 10, 14); // 令和9年11月14日（例年どおり11月第2日曜日の場合）
+var FIELDS=Object.keys(BYF);
+var KISO=["基礎知識（行政書士法等）","基礎知識（情報通信・個人情報保護）","基礎知識（一般知識）","基礎知識（文章理解）","5肢択一（民法・商法・基礎知識）"];
+var EXAM=new Date(2027,10,14);
+var SOFT=!(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches);
 
-/* ---------- store ---------- */
-var KEY = "gyosei-r9-progress";
-var S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
-var db = null;
-
-function today(){
-  var d = new Date();
-  return d.getFullYear() + "-" + String(d.getMonth()+1).padStart(2,"0") + "-" + String(d.getDate()).padStart(2,"0");
-}
-function loadLocal(){
-  try{
-    var raw = localStorage.getItem(KEY);
-    if(raw){ var o = JSON.parse(raw); if(o && o.hist) S = Object.assign(S, o); }
-  }catch(e){}
-}
-function save(){
-  try{ localStorage.setItem(KEY, JSON.stringify(S)); }catch(e){}
-  if(db){ db.doc("progress/main").set(S).catch(function(){}); }
-}
-function size(o){ return o && o.hist ? Object.keys(o.hist).length : -1; }
-
-/* ---------- derived ---------- */
-function daysLeft(){
-  var t = new Date(); t.setHours(0,0,0,0);
-  return Math.max(0, Math.round((EXAM - t) / 86400000));
-}
-function streak(){
-  var set = {}; S.doneDates.forEach(function(d){ set[d] = 1; });
-  var d = new Date(), n = 0;
-  if(!set[today()]) d.setDate(d.getDate() - 1);
-  for(;;){
-    var k = d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
-    if(!set[k]) break;
-    n++; d.setDate(d.getDate() - 1);
-  }
-  return n;
-}
-function stats(){
-  var seen = 0, ok = 0, n = 0;
-  for(var id in S.hist){ var h = S.hist[id]; seen++; ok += h.ok; n += h.n; }
-  return {seen:seen, rate: n ? Math.round(ok / n * 100) : null};
-}
-function fieldStat(f){
-  var qs = BYFIELD[f] || [], seen = 0, ok = 0, n = 0;
-  qs.forEach(function(q){
-    var h = S.hist[q.id];
-    if(h){ seen++; ok += h.ok; n += h.n; }
-  });
-  return {total:qs.length, seen:seen, rate: n ? Math.round(ok / n * 100) : null};
-}
-function record(q, correct){
-  var h = S.hist[q.id] || {n:0, ok:0, last:""};
-  h.n++; if(correct) h.ok++;
-  h.last = correct ? "o" : "x";
-  S.hist[q.id] = h;
-}
-
-/* ---------- header ---------- */
-function paintMeta(){
-  var st = stats();
-  document.getElementById("m-days").textContent = daysLeft();
-  document.getElementById("m-streak").textContent = streak();
-  document.getElementById("m-seen").textContent = st.seen;
-  document.getElementById("m-rate").textContent = st.rate === null ? "—" : st.rate;
-}
-
-/* ---------- question rendering ---------- */
-var SOFT = !(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
-function scrollTo(node){
-  if(!node) return;
-  try{ node.scrollIntoView({block:"start", behavior: SOFT ? "smooth" : "auto"}); }
-  catch(e){ node.scrollIntoView(true); }
-}
-var wantTop = false;
-function afterRender(host){
-  if(!wantTop) return;
-  wantTop = false;
-  scrollTo(host.querySelector(".sheet"));
-}
-var el = function(t, cls, txt){
-  var n = document.createElement(t);
-  if(cls) n.className = cls;
-  if(txt != null) n.textContent = txt;
-  return n;
+/* ===== プラン ===== */
+var PLANS={
+ A:{name:"記述先行型",sub:"推奨　記述を最優先で立ち上げる",
+   why:"択一6割・記述0点という前回の結果では、択一を1割上げるより記述を0点から30点にする方が速い。記述の訓練は条文の要件を言語化する作業なので、択一の精度も同時に上がる。",
+   tgt:"目標配分　法令択一28問112点／多肢16点／基礎知識9問36点／記述30点＝194点",
+   m:[{k:"a1",mode:"desc",n:2,t:"記述式を手で書く",d:"型を見てから書く。40字前後",min:20},
+      {k:"a2",mode:"talk",n:2,t:"口頭再現",d:"声に出して説明する",min:10},
+      {k:"a3",mode:"mc5",n:5,t:"5肢択一",d:"1問2分30秒で切る",min:15},
+      {k:"a4",mode:"wrong",n:5,t:"昨日までの誤答を解き直す",d:"間違えた問題だけ",min:10}],
+   e:[{k:"b1",mode:"video",n:1,t:"YouTubeで1単元インプット",d:"1.5倍速。見たら必ず次へ",min:20},
+      {k:"b2",mode:"ox",n:25,t:"一問一答",d:"見た単元の分野を優先",min:20},
+      {k:"b3",mode:"mc5",n:5,t:"5肢択一",d:"本番形式",min:15},
+      {k:"b4",mode:"fast",n:20,t:"高速一問一答",d:"1問15秒。考え込まない",min:7}]},
+ B:{name:"択一盤石型",sub:"択一を8割まで上げて記述の負担を減らす",
+   why:"インプットの積み上げが苦にならないタイプ向け。択一32問・基礎知識10問まで伸ばせば記述は20点で足りる。ただし行政法と民法の条文精度が要るため時間がかかり、読解速度の課題は別途つぶす必要がある。",
+   tgt:"目標配分　法令択一32問128点／多肢16点／基礎知識10問40点／記述20点＝204点",
+   m:[{k:"a1",mode:"video",n:1,t:"YouTubeで1単元インプット",d:"1.5倍速",min:25},
+      {k:"a2",mode:"ox",n:20,t:"見た単元の一問一答",d:"インプット直後に出す",min:15},
+      {k:"a3",mode:"mc5",n:5,t:"5肢択一",d:"時間を計る",min:15},
+      {k:"a4",mode:"wrong",n:5,t:"誤答の解き直し",d:"",min:10}],
+   e:[{k:"b1",mode:"mc5",n:8,t:"5肢択一",d:"本番形式で連続",min:25},
+      {k:"b2",mode:"ox",n:25,t:"一問一答",d:"",min:20},
+      {k:"b3",mode:"desc",n:1,t:"記述式",d:"週に数回でも必ず書く",min:12},
+      {k:"b4",mode:"fast",n:20,t:"高速一問一答",d:"",min:7}]},
+ C:{name:"時短・退避型",sub:"繁忙期用　1日90分で回す",
+   why:"仕事が重い週に完全に止まるのを防ぐための最低ライン。商法会社法と一般知識の深追いをやめ、行政法・民法・基礎知識の頻出に絞る。常用するプランではなく、2週間以上続いたらAに戻す。",
+   tgt:"目標配分　法令択一26問104点／多肢16点／基礎知識9問36点／記述25点＝181点",
+   m:[{k:"a1",mode:"desc",n:1,t:"記述式",d:"これだけは毎日",min:12},
+      {k:"a2",mode:"talk",n:1,t:"口頭再現",d:"移動中でもよい",min:6},
+      {k:"a3",mode:"mc5",n:3,t:"5肢択一",d:"",min:10}],
+   e:[{k:"b1",mode:"ox",n:15,t:"一問一答",d:"",min:12},
+      {k:"b2",mode:"mc5",n:3,t:"5肢択一",d:"",min:10},
+      {k:"b3",mode:"fast",n:15,t:"高速一問一答",d:"寝る前に",min:5}]}
 };
-var TYPE_LABEL = {ox:"正しければ〇、誤りなら×", mc:"正しいものを一つ選ぶ", desc:"40字程度で記述する", multi:"空欄ア〜エに入る語句を選ぶ"};
+var WHYS=[["jo","条文を知らなかった"],["yomi","読み違えた"],["suuji","数字・要件のズレ"],["hanrei","判例の取り違え"]];
+var WHYLABEL={};WHYS.forEach(function(w){WHYLABEL[w[0]]=w[1];});
 
-function renderQuestion(host, q, ctx){
-  host.innerHTML = "";
-  var sheet = el("div","sheet");
-  var head = el("div","sheet-head");
-  head.appendChild(el("span","tag", ctx.label));
-  head.appendChild(el("span","tag field", q.field));
-  head.appendChild(el("span","tag", q.topic));
+/* ===== 保存 ===== */
+var KEY="gyosei-r9-v2",db=null;
+var S={v:2,plan:"A",hist:{},talk:{},done:{}};
+function today(){var d=new Date();return ymd(d);}
+function ymd(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function loadLocal(){try{var r=localStorage.getItem(KEY);if(r){var o=JSON.parse(r);if(o&&o.hist)S=Object.assign(S,o);}}catch(e){}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}
+  if(db)db.doc("progress/v2").set(S).catch(function(){});}
+function weight(o){return o&&o.hist?Object.keys(o.hist).length:-1;}
+
+/* ===== 集計 ===== */
+function daysLeft(){var t=new Date();t.setHours(0,0,0,0);return Math.max(0,Math.round((EXAM-t)/86400000));}
+function dayDone(k){var d=S.done[k];return d&&((d.m&&d.m.length)||(d.e&&d.e.length));}
+function streak(){var d=new Date(),n=0;if(!dayDone(today()))d.setDate(d.getDate()-1);
+  for(;;){if(!dayDone(ymd(d)))break;n++;d.setDate(d.getDate()-1);}return n;}
+function restDays(){var n=0,d=new Date();
+  if(!Object.keys(S.done).length)return 0;
+  if(dayDone(today()))return 0;
+  for(;;){d.setDate(d.getDate()-1);if(dayDone(ymd(d)))break;n++;if(n>60)break;}return n;}
+function rate(list){var ok=0,n=0;list.forEach(function(q){var h=S.hist[q.id];if(h){ok+=h.ok;n+=h.n;}});
+  return n?ok/n:null;}
+function seenCount(){var n=0;for(var k in S.hist)n++;return n;}
+function isKiso(f){return KISO.indexOf(f)>=0;}
+function sim(){
+  var hOx=[],kOx=[];
+  DATA.questions.forEach(function(q){
+    if(q.type==="ox"||q.type==="mc"||q.type==="mc5"){
+      if(q.field==="5肢択一（民法・商法・基礎知識）"){ (q.topic.indexOf("行政書士")>=0?kOx:hOx).push(q); }
+      else if(isKiso(q.field)) kOx.push(q); else hOx.push(q);
+    }});
+  var rh=rate(hOx),rk=rate(kOx),rm=rate(BYT.multi||[]);
+  var kw=0,kn=0;
+  (BYT.desc||[]).forEach(function(q){var h=S.hist[q.id];if(h&&h.kw!=null){kw+=h.kw;kn++;}});
+  var rd=kn?kw/kn:null;
+  var a=rh==null?null:Math.round(rh*40)*4;
+  var b=rk==null?null:Math.round(rk*14)*4;
+  var c=rm==null?null:Math.round(rm*12)*2;
+  var d=rd==null?null:Math.round(rd*60);
+  var any=[a,b,c,d].some(function(x){return x!=null;});
+  return {h:a,k:b,m:c,d:d,
+    tot:any?((a||0)+(b||0)+(c||0)+(d||0)):null,
+    hourei:any?((a||0)+(c||0)+(d||0)):null};
+}
+function wrongList(){return DATA.questions.filter(function(q){var h=S.hist[q.id];return h&&h.last==="x";});}
+function record(q,ok,ms,extra){
+  var h=S.hist[q.id]||{n:0,ok:0,last:"",ms:0};
+  h.n++;if(ok)h.ok++;h.last=ok?"o":"x";
+  if(ms)h.ms=Math.round(((h.ms||0)*(h.n-1)+ms)/h.n);
+  if(extra)for(var k in extra)h[k]=extra[k];
+  S.hist[q.id]=h;
+}
+function paintMeta(){
+  var s=sim();
+  document.getElementById("m-days").textContent=daysLeft();
+  var st=document.getElementById("m-streak");
+  st.textContent=streak();st.className=restDays()>=2?"hot":"";
+  document.getElementById("m-score").textContent=s.tot==null?"—":s.tot;
+  document.getElementById("m-seen").textContent=seenCount();
+}
+/* ===== 部品 ===== */
+function el(t,c,x){var n=document.createElement(t);if(c)n.className=c;if(x!=null)n.textContent=x;return n;}
+function scrollTo(n){if(!n)return;try{n.scrollIntoView({block:"start",behavior:SOFT?"smooth":"auto"});}catch(e){n.scrollIntoView(true);}}
+function mmss(ms){var s=Math.floor(ms/1000);return Math.floor(s/60)+":"+String(s%60).padStart(2,"0");}
+function speakBtn(text){
+  if(!window.speechSynthesis)return null;
+  var b=el("button","speak","読み上げる");b.type="button";b.setAttribute("aria-pressed","false");
+  b.addEventListener("click",function(){
+    if(speechSynthesis.speaking){speechSynthesis.cancel();b.setAttribute("aria-pressed","false");b.textContent="読み上げる";return;}
+    var u=new SpeechSynthesisUtterance(text);u.lang="ja-JP";u.rate=1.05;
+    u.onend=function(){b.setAttribute("aria-pressed","false");b.textContent="読み上げる";};
+    speechSynthesis.speak(u);b.setAttribute("aria-pressed","true");b.textContent="停止";
+  });
+  return b;
+}
+function pick(pool,n,mode){
+  var a=pool.slice();
+  a.sort(function(x,y){return pri(x)-pri(y);});
+  var head=a.slice(0,Math.max(n,Math.min(n*3,a.length)));
+  for(var i=head.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=head[i];head[i]=head[j];head[j]=t;}
+  return head.slice(0,n);
+}
+function pri(q){var h=S.hist[q.id];if(!h)return 0;if(h.last==="x")return 1;return 2+h.ok/Math.max(1,h.n);}
+
+/* ===== 出題エンジン ===== */
+var TL={ox:"正しければ〇、誤りなら×",mc:"正しいものを一つ選ぶ",mc5:"正しいものを一つ選ぶ（本番形式）",
+  desc:"40字程度で記述する",multi:"空欄ア〜エに入る語句を選ぶ",talk:"声に出して説明する"};
+var run=null;
+
+function startRun(ids,label,onDone,opt){
+  run={ids:ids,i:0,ok:0,label:label,onDone:onDone,opt:opt||{}};
+  renderRun();
+}
+function renderRun(){
+  var host=document.getElementById("view-"+(run.host||"today"));
+  if(run.i>=run.ids.length){finishRun(host);return;}
+  var q=QS[run.ids[run.i]];
+  host.innerHTML="";
+  host.appendChild(buildCard(q,{
+    label:run.label,rail:{total:run.ids.length,at:run.i},
+    fast:run.opt.fast,
+    nextLabel:run.i===run.ids.length-1?"結果を見る":"次へ",
+    onNext:function(ok){if(ok)run.ok++;run.i++;renderRun();window.scrollTo(0,0);}
+  }));
+}
+function finishRun(host){
+  host.innerHTML="";
+  var sh=el("div","sheet");
+  var n=run.ids.length;
+  sh.appendChild(el("p","eyebrow",run.label));
+  var big=el("div","score");
+  var t=el("div","tot "+(run.ok/n>=0.6?"pass":"fail"));
+  t.appendChild(document.createTextNode(run.ok+" / "+n));
+  big.appendChild(t);
+  sh.appendChild(big);
+  sh.appendChild(el("p","note",run.ok/n>=0.8?"この調子。次のブロックへ進んでください。":
+    run.ok/n>=0.6?"合格ラインの感触です。間違えた問題は記録に残っています。":
+    "ここが伸びしろです。間違えた問題は明日の解き直しに回ります。"));
+  var act=el("div","actions");
+  var b=el("button","btn wide","メニューに戻る");
+  b.addEventListener("click",function(){var f=run.onDone;run=null;if(f)f();});
+  act.appendChild(b);sh.appendChild(act);
+  host.appendChild(sh);
+  window.scrollTo(0,0);
+}
+
+function buildCard(q,ctx){
+  var sh=el("div","sheet");
+  var head=el("div","sheet-head");
+  head.appendChild(el("span","tag",ctx.label));
+  head.appendChild(el("span","tag field",q.field.replace(/^5肢択一（|^基礎知識（|）$/g,"")));
+  if(q.topic)head.appendChild(el("span","tag",q.topic));
+  var clock=el("span","clock","0:00");
+  head.appendChild(clock);
   if(ctx.rail){
-    var rail = el("div","rail");
-    for(var i=0;i<ctx.rail.total;i++){
-      var b = el("i");
-      if(i < ctx.rail.at) b.className = "done";
-      else if(i === ctx.rail.at) b.className = "now";
-      rail.appendChild(b);
-    }
+    var rail=el("div","rail");rail.style.flex="1 0 100%";rail.style.marginLeft="0";
+    for(var i=0;i<ctx.rail.total;i++){var b=el("i");
+      if(i<ctx.rail.at)b.className="done";else if(i===ctx.rail.at)b.className="now";rail.appendChild(b);}
     head.appendChild(rail);
   }
-  sheet.appendChild(head);
-  sheet.appendChild(el("p","qtype", TYPE_LABEL[q.type]));
-  sheet.appendChild(el("p","qtext", q.q));
+  sh.appendChild(head);
+  sh.appendChild(el("p","qtype",TL[q.type]||""));
+  sh.appendChild(el("p","qtext",q.q));
 
-  var verdict = el("div","verdict hide");
-  var body = el("div");
-  sheet.appendChild(body);
-  sheet.appendChild(verdict);
-  host.appendChild(sheet);
+  var body=el("div"),verdict=el("div","verdict hide");
+  sh.appendChild(body);sh.appendChild(verdict);
 
-  function finish(correct){
-    verdict.classList.remove("hide");
-    body.classList.add("hide");
-    record(q, correct);
-    save(); paintMeta();
-    var mark = el("div", "mark " + (correct ? "ok" : "ng"));
-    mark.appendChild(el("span", null, correct ? "〇" : "×"));
-    mark.appendChild(el("b", null, correct ? "正解" : "不正解"));
-    verdict.appendChild(mark);
-    verdict.appendChild(el("p","answer", answerLine(q)));
-    verdict.appendChild(el("p","exp", q.exp));
-    if(q.ref) verdict.appendChild(el("p","ref", q.ref));
-    var act = el("div","actions");
-    var next = el("button","btn", ctx.nextLabel || "次の問題へ");
-    next.addEventListener("click", ctx.onNext);
-    act.appendChild(next);
-    verdict.appendChild(act);
-    scrollTo(mark);
-    next.focus({preventScroll:true});
+  var t0=Date.now(),limit=(ctx.fast?15:(q.sec||0))*1000,timer=null,dead=false;
+  function tick(){
+    var ms=Date.now()-t0;
+    clock.textContent=mmss(ms);
+    if(limit&&ms>limit){clock.className="clock over";
+      if(ctx.fast&&!dead){dead=true;clearInterval(timer);done(false,ms);}}
+  }
+  timer=setInterval(tick,250);tick();
+
+  function done(ok,ms,extra){
+    if(timer){clearInterval(timer);timer=null;}
+    ms=ms||(Date.now()-t0);
+    record(q,ok,ms,extra);save();paintMeta();
+    body.classList.add("hide");verdict.classList.remove("hide");
+    var mk=el("div","mark "+(ok?"ok":"ng"));
+    mk.appendChild(el("span",null,ok?"〇":"×"));
+    mk.appendChild(el("b",null,ok?"正解":(ctx.fast&&dead?"時間切れ":"不正解")));
+    var row=el("div");row.appendChild(mk);
+    var tk=el("span","took",mmss(ms)+(q.sec?"／目標 "+mmss(q.sec*1000):""));
+    row.appendChild(tk);verdict.appendChild(row);
+    verdict.appendChild(el("p","answer",ansLine(q)));
+    if(q.each){
+      var ul=el("ul","each");
+      q.each.forEach(function(x,i){var li=el("li",i===q.a?"hit":null);
+        li.appendChild(el("b",null,String(i+1)));li.appendChild(document.createTextNode(x));ul.appendChild(li);});
+      verdict.appendChild(ul);
+    }
+    if(q.exp)verdict.appendChild(el("p","exp",q.exp));
+    if(q.read){var rt=el("div","readtip");rt.appendChild(el("b",null,"読み方"));
+      rt.appendChild(document.createTextNode(q.read));verdict.appendChild(rt);}
+    if(q.ref)verdict.appendChild(el("p","ref",q.ref));
+    var sp=speakBtn((q.exp||"")+(q.read?" "+q.read:""));
+    if(sp)verdict.appendChild(sp);
+    if(!ok&&q.type!=="desc"&&q.type!=="talk"){
+      var w=el("div","why");w.appendChild(el("p",null,"なぜ間違えたか（1タップ）"));
+      var g=el("div","grid");
+      WHYS.forEach(function(p){var b=el("button",null,p[1]);
+        b.addEventListener("click",function(){
+          var h=S.hist[q.id];h.why=p[0];save();
+          Array.prototype.forEach.call(g.children,function(c){c.style.opacity=".4";});
+          b.style.opacity="1";b.style.borderColor="var(--kon)";b.style.color="var(--kon-ink)";
+        });g.appendChild(b);});
+      w.appendChild(g);verdict.appendChild(w);
+    }
+    var act=el("div","actions");
+    var nb=el("button","btn",ctx.nextLabel||"次へ");
+    nb.addEventListener("click",function(){ctx.onNext(ok);});
+    act.appendChild(nb);verdict.appendChild(act);
+    scrollTo(mk);nb.focus({preventScroll:true});
   }
 
-  if(q.type === "ox"){
-    var ox = el("div","ox");
+  if(q.type==="ox"){
+    var ox=el("div","ox");
     [[true,"〇","正しい"],[false,"×","誤り"]].forEach(function(p){
-      var b = el("button");
-      b.appendChild(document.createTextNode(p[1]));
-      b.appendChild(el("small", null, p[2]));
-      b.addEventListener("click", function(){ finish(q.a === p[0]); });
-      ox.appendChild(b);
-    });
+      var b=el("button");b.appendChild(document.createTextNode(p[1]));
+      b.appendChild(el("small",null,p[2]));
+      b.addEventListener("click",function(){if(!dead)done(q.a===p[0]);});ox.appendChild(b);});
     body.appendChild(ox);
   }
-  else if(q.type === "mc"){
-    var list = el("div","choices");
-    q.choices.forEach(function(c, i){
-      var b = el("button");
-      b.appendChild(el("b", null, String(i+1)));
-      b.appendChild(el("span", null, c));
-      b.addEventListener("click", function(){ finish(q.a === i); });
-      list.appendChild(b);
-    });
+  else if(q.type==="mc"||q.type==="mc5"){
+    var list=el("div","choices");
+    q.choices.forEach(function(c,i){
+      var b=el("button");b.appendChild(el("b",null,String(i+1)));
+      b.appendChild(el("span",null,c));
+      b.addEventListener("click",function(){done(q.a===i);});list.appendChild(b);});
     body.appendChild(list);
   }
-  else if(q.type === "multi"){
-    var grid = el("div","blanks");
-    var sels = [];
-    (q.blanks || ["ア","イ","ウ","エ"]).forEach(function(lb, i){
-      var lab = el("label");
-      lab.appendChild(el("span", null, "空欄 " + lb));
-      var sel = el("select");
-      sel.id = "blank-" + q.id + "-" + i;
-      var o0 = el("option", null, "選択してください"); o0.value = "";
-      sel.appendChild(o0);
-      q.choices.forEach(function(c, j){
-        var o = el("option", null, (j+1) + ". " + c); o.value = String(j);
-        sel.appendChild(o);
-      });
-      lab.appendChild(sel); grid.appendChild(lab); sels.push(sel);
-    });
-    body.appendChild(grid);
-    var act1 = el("div","actions");
-    var go = el("button","btn","答え合わせ");
-    go.addEventListener("click", function(){
-      var all = sels.every(function(s, i){ return String(q.a[i]) === s.value; });
-      finish(all);
-    });
-    act1.appendChild(go); body.appendChild(act1);
+  else if(q.type==="multi"){
+    var g=el("div","blanks"),sels=[];
+    (q.blanks||["ア","イ","ウ","エ"]).forEach(function(lb,i){
+      var lab=el("label");lab.appendChild(el("span",null,"空欄 "+lb));
+      var s=el("select");s.id="bl-"+q.id+"-"+i;
+      var o0=el("option",null,"選択");o0.value="";s.appendChild(o0);
+      q.choices.forEach(function(c,j){var o=el("option",null,(j+1)+". "+c);o.value=String(j);s.appendChild(o);});
+      lab.appendChild(s);g.appendChild(lab);sels.push(s);});
+    body.appendChild(g);
+    var a1=el("div","actions"),go=el("button","btn","答え合わせ");
+    go.addEventListener("click",function(){
+      done(sels.every(function(s,i){return String(q.a[i])===s.value;}));});
+    a1.appendChild(go);body.appendChild(a1);
   }
-  else if(q.type === "desc"){
-    var ta = el("textarea");
-    ta.id = "desc-" + q.id;
-    ta.placeholder = "ここに40字程度で書く";
-    var cnt = el("p","counter","0 字");
-    ta.addEventListener("input", function(){
-      var n = ta.value.replace(/\s/g,"").length;
-      cnt.textContent = n + " 字";
-      cnt.className = "counter" + (n >= 35 && n <= 45 ? " good" : "");
-    });
-    body.appendChild(ta); body.appendChild(cnt);
-    var act2 = el("div","actions");
-    var show = el("button","btn","解答例と照らす");
-    var ask = el("button","btn ghost hide","Claudeに採点してもらう");
-    act2.appendChild(show); act2.appendChild(ask);
-    body.appendChild(act2);
-
-    if(window.__sample){ ask.classList.remove("hide"); }
-    ask.addEventListener("click", function(){
-      var mine = ta.value.trim();
-      if(!mine){ ta.focus(); return; }
-      ask.disabled = true; ask.textContent = "採点中…";
-      var box = el("div","grade","採点しています…");
-      body.appendChild(box);
-      window.__sample(
-        "あなたは行政書士試験の記述式採点者です。20点満点で採点してください。\n\n" +
-        "【設問】" + q.q + "\n\n【模範解答】" + q.model + "\n\n【受験者の答案】" + mine + "\n\n" +
-        "次の形式で、日本語で簡潔に答えてください。1行目「得点：N／20点」。2行目以降に、書けている要素、" +
-        "落ちている要素、字数（40字程度が目安）についての講評を3行以内で。",
-        {modelTier:"default", onText:function(u){ box.textContent = u.text; }}
-      ).then(function(r){ box.textContent = r.text; })
-       .catch(function(){ box.textContent = "採点できませんでした。解答例と自分で照らし合わせてください。"; })
-       .finally(function(){ ask.disabled = false; ask.textContent = "もう一度採点する"; });
-    });
-
-    show.addEventListener("click", function(){
-      body.classList.add("hide");
-      verdict.classList.remove("hide");
-      verdict.appendChild(el("p","answer","解答例：" + q.model + "（" + q.model.length + "字）"));
-      if(ta.value.trim()){
-        var mineBox = el("div","grade","自分の答案：" + ta.value.trim());
-        verdict.appendChild(mineBox);
-      }
-      verdict.appendChild(el("p","exp", q.exp));
-      if(q.ref) verdict.appendChild(el("p","ref", q.ref));
-      var sm = el("div","selfmark");
-      sm.appendChild(el("span", null, "自己採点"));
-      [["書けた", true],["書けなかった", false]].forEach(function(p){
-        var b = el("button", p[1] ? "btn" : "btn ghost", p[0]);
-        b.addEventListener("click", function(){
-          record(q, p[1]); save(); paintMeta(); ctx.onNext();
+  else if(q.type==="desc"){
+    if(q.kata){var k=el("div","kata");k.appendChild(el("b",null,"型"));
+      k.appendChild(document.createTextNode(q.kata));body.appendChild(k);}
+    var ta=el("textarea");ta.id="d-"+q.id;ta.placeholder="ここに40字程度で書く";
+    body.appendChild(ta);
+    var cn=el("p","counter","0 字");body.appendChild(cn);
+    ta.addEventListener("input",function(){
+      var n=ta.value.replace(/\s/g,"").length;cn.textContent=n+" 字";
+      cn.className="counter"+(n>=35&&n<=50?" good":"");});
+    var dh=el("p","dictate","手で書いた答案を写すのが基本です。急ぐときはキーボードのマイクで声から入力できます。");
+    body.appendChild(dh);
+    var a2=el("div","actions");
+    var sub=el("button","btn","採点する");
+    a2.appendChild(sub);body.appendChild(a2);
+    sub.addEventListener("click",function(){
+      var mine=ta.value.trim();
+      if(timer){clearInterval(timer);timer=null;}
+      var ms=Date.now()-t0;
+      var hit=(q.keys||[]).filter(function(k){return mine.indexOf(k)>=0;});
+      var kw=(q.keys&&q.keys.length)?hit.length/q.keys.length:0;
+      var ok=kw>=0.6;
+      record(q,ok,ms,{kw:kw});save();paintMeta();
+      body.classList.add("hide");verdict.classList.remove("hide");
+      var mk=el("div","mark "+(ok?"ok":"ng"));
+      mk.appendChild(el("span",null,ok?"〇":"×"));
+      mk.appendChild(el("b",null,"キーワード "+hit.length+"／"+(q.keys||[]).length+"　推定 "+Math.round(kw*20)+"点／20点"));
+      verdict.appendChild(mk);
+      var ul=el("ul","each");
+      (q.keys||[]).forEach(function(k){
+        var in1=mine.indexOf(k)>=0;var li=el("li",in1?"hit":null);
+        li.appendChild(el("b",null,in1?"✓":"−"));
+        li.appendChild(document.createTextNode(k+(in1?"":"　← これが抜けている")));ul.appendChild(li);});
+      verdict.appendChild(ul);
+      if(mine)verdict.appendChild(el("div","grade","あなたの答案：\n"+mine));
+      verdict.appendChild(el("p","answer","解答例：" + q.model+"（"+q.model.length+"字）"));
+      verdict.appendChild(el("p","exp",q.exp));
+      if(q.ref)verdict.appendChild(el("p","ref",q.ref));
+      var sp=speakBtn(q.model+"。"+q.exp);if(sp)verdict.appendChild(sp);
+      var act=el("div","actions");
+      if(window.__sample&&mine){
+        var ask=el("button","btn ghost","Claudeに添削してもらう");
+        ask.addEventListener("click",function(){
+          ask.disabled=true;ask.textContent="添削中…";
+          var box=el("div","grade","採点しています…");verdict.insertBefore(box,act);
+          window.__sample("あなたは行政書士試験の記述式採点者です。20点満点で採点してください。\n\n【設問】"+q.q+
+            "\n\n【模範解答】"+q.model+"\n\n【受験者の答案】"+mine+
+            "\n\n1行目に「得点：N／20点」。2行目以降に、書けている要素、落ちている要素、字数（40字程度が目安）への講評を3行以内で。日本語で簡潔に。",
+            {modelTier:"default",onText:function(u){box.textContent=u.text;}})
+            .then(function(r){box.textContent=r.text;})
+            .catch(function(){box.textContent="添削できませんでした。キーワードの一覧で自己採点してください。";})
+            .finally(function(){ask.disabled=false;ask.textContent="もう一度添削";});
         });
-        sm.appendChild(b);
+        act.appendChild(ask);
+      }
+      var nb=el("button","btn",ctx.nextLabel||"次へ");
+      nb.addEventListener("click",function(){ctx.onNext(ok);});
+      act.appendChild(nb);verdict.appendChild(act);
+      scrollTo(mk);
+    });
+  }
+  else if(q.type==="talk"){
+    var sp0=speakBtn(q.q);if(sp0)body.appendChild(sp0);
+    var a3=el("div","actions");
+    var go3=el("button","btn","話し終えた。答え合わせ");
+    a3.appendChild(go3);body.appendChild(a3);
+    body.appendChild(el("p","dictate","制限時間は"+q.sec+"秒です。黙読ではなく、必ず口を動かしてください。"));
+    go3.addEventListener("click",function(){
+      if(timer){clearInterval(timer);timer=null;}
+      var ms=Date.now()-t0;
+      body.classList.add("hide");verdict.classList.remove("hide");
+      verdict.appendChild(el("p","qtype","言えた項目をタップしてください"));
+      var ul=el("ul","checks"),got={};
+      q.points.forEach(function(p,i){
+        var li=el("li"),b=el("button");b.type="button";b.setAttribute("aria-pressed","false");
+        b.appendChild(el("i",null,"□"));b.appendChild(el("span",null,p));
+        b.addEventListener("click",function(){
+          var on=b.getAttribute("aria-pressed")==="true";
+          b.setAttribute("aria-pressed",on?"false":"true");
+          b.querySelector("i").textContent=on?"□":"■";
+          if(on)delete got[i];else got[i]=1;
+          fin.textContent="採点して次へ（"+Object.keys(got).length+"／"+q.points.length+"）";
+        });
+        li.appendChild(b);ul.appendChild(li);});
+      verdict.appendChild(ul);
+      var act=el("div","actions");
+      var show=el("button","btn ghost","模範の説明を見る");
+      show.addEventListener("click",function(){
+        show.disabled=true;
+        var g=el("div","grade",q.model);verdict.insertBefore(g,act);
+        var sp=speakBtn(q.model);if(sp)verdict.insertBefore(sp,act);
+        if(q.ref)verdict.insertBefore(el("p","ref",q.ref),act);
       });
-      verdict.appendChild(sm);
+      var fin=el("button","btn","採点して次へ（0／"+q.points.length+"）");
+      fin.addEventListener("click",function(){
+        var sc=Object.keys(got).length/q.points.length;
+        S.talk[q.id]={n:((S.talk[q.id]||{}).n||0)+1,sc:sc};
+        record(q,sc>=0.6,ms,{kw:sc});save();paintMeta();ctx.onNext(sc>=0.6);
+      });
+      act.appendChild(show);act.appendChild(fin);verdict.appendChild(act);
       scrollTo(verdict);
     });
   }
+  return sh;
 }
-
-function answerLine(q){
-  if(q.type === "ox") return "答　" + (q.a ? "〇" : "×");
-  if(q.type === "mc") return "答　" + (q.a + 1) + "．" + q.choices[q.a];
-  if(q.type === "multi"){
-    var lb = q.blanks || ["ア","イ","ウ","エ"];
-    return "答　" + q.a.map(function(i, k){ return lb[k] + "＝" + q.choices[i]; }).join("　");
-  }
+function ansLine(q){
+  if(q.type==="ox")return "答　"+(q.a?"〇":"×");
+  if(q.type==="mc"||q.type==="mc5")return "答　"+(q.a+1)+"．"+q.choices[q.a];
+  if(q.type==="multi"){var lb=q.blanks||["ア","イ","ウ","エ"];
+    return "答　"+q.a.map(function(i,k){return lb[k]+"＝"+q.choices[i];}).join("　");}
   return "";
 }
 
-
-/* ---------- plan strip ---------- */
-function planStrip(currentNo){
-  var wrap = el("div","plan");
-  var head = el("div","plan-head");
-  head.appendChild(el("h3", null, "75日の進行表"));
-  var g = el("div","gauge"), gi = el("i");
-  gi.style.width = (S.doneDays.length / DAYS.length * 100).toFixed(1) + "%";
-  g.appendChild(gi); head.appendChild(g);
-  head.appendChild(el("span", null, "済 " + S.doneDays.length + " 日 ／ 全 " + DAYS.length + " 日"));
-  wrap.appendChild(head);
-  var ol = el("ol");
-  var start = Math.max(0, Math.min(currentNo - 2, DAYS.length - 5));
-  DAYS.slice(start, start + 5).forEach(function(d){
-    var li = el("li");
-    if(d.no === currentNo) li.className = "is-now";
-    else if(S.doneDays.indexOf(d.no) >= 0) li.className = "is-done";
-    var b = el("button");
-    b.appendChild(el("span","d","Day " + String(d.no).padStart(3,"0")));
-    b.appendChild(el("span", null, d.title));
-    b.appendChild(el("span","n", d.ids.length + "問"));
-    b.addEventListener("click", function(){
-      S.day = d.no; S.pos = 0; save(); viewToday();
-      window.scrollTo({top:0, behavior:"smooth"});
-    });
-    li.appendChild(b); ol.appendChild(li);
-  });
-  wrap.appendChild(ol);
-  var hint = el("p","note");
-  hint.style.marginTop = "10px";
-  hint.textContent = "1日5問、10〜20分。7日目ごとに記述式と多肢選択式を挟む週末チェックが入ります。";
-  wrap.appendChild(hint);
-  return wrap;
+/* ===== 今日 ===== */
+function poolFor(mode){
+  if(mode==="desc")return BYT.desc||[];
+  if(mode==="talk")return BYT.talk||[];
+  if(mode==="mc5")return BYT.mc5||[];
+  if(mode==="multi")return BYT.multi||[];
+  if(mode==="ox"||mode==="fast")return (BYT.ox||[]).concat(BYT.mc||[]);
+  if(mode==="wrong")return wrongList();
+  return [];
 }
-
-/* ---------- today view ---------- */
+function slotNow(){var h=new Date().getHours();return (h>=4&&h<13)?"m":"e";}
+function doneSet(slot){var d=S.done[today()]||{};return d[slot]||[];}
+function markDone(slot,k){
+  var d=S.done[today()]||{m:[],e:[]};d.m=d.m||[];d.e=d.e||[];
+  if(d[slot].indexOf(k)<0)d[slot].push(k);
+  S.done[today()]=d;save();paintMeta();
+}
 function viewToday(){
-  var host = document.getElementById("view-today");
-  var day = DAYS[Math.min(S.day, DAYS.length) - 1];
-  if(!day){ host.innerHTML = ""; host.appendChild(allDone()); return; }
-  var ids = day.ids;
-  if(S.pos >= ids.length){ completeDay(host, day); return; }
-  var q = QS[ids[S.pos]];
-  renderQuestion(host, q, {
-    label: "Day " + String(day.no).padStart(3,"0"),
-    rail: {total: ids.length, at: S.pos},
-    nextLabel: S.pos === ids.length - 1 ? "今日の分を終える" : "次の問題へ",
-    onNext: function(){ S.pos++; wantTop = true; save(); viewToday(); }
-  });
-  host.appendChild(planStrip(day.no));
-  afterRender(host);
-}
-function completeDay(host, day){
-  var d = today();
-  if(S.doneDates.indexOf(d) < 0) S.doneDates.push(d);
-  if(S.doneDays.indexOf(day.no) < 0) S.doneDays.push(day.no);
-  save(); paintMeta();
-  host.innerHTML = "";
-  var sheet = el("div","sheet");
-  var p = el("div","done-panel");
-  p.appendChild(el("p","big","Day " + String(day.no).padStart(3,"0") + " 終了"));
-  var st = stats();
-  p.appendChild(el("p", null, day.title));
-  p.appendChild(el("p", null, "連続 " + streak() + " 日　／　通算 " + st.seen + " 問"));
-  var act = el("div","actions");
-  act.style.justifyContent = "center";
-  if(day.no < DAYS.length){
-    var next = el("button","btn","Day " + String(day.no + 1).padStart(3,"0") + " に進む");
-    next.addEventListener("click", function(){ S.day = day.no + 1; S.pos = 0; save(); viewToday(); });
-    act.appendChild(next);
+  var host=document.getElementById("view-today");
+  if(run&&run.host==="today"){renderRun();return;}
+  host.innerHTML="";
+  var P=PLANS[S.plan]||PLANS.A;
+  var rest=restDays();
+  if(rest>=2){
+    var al=el("div","alert bad");
+    al.textContent=rest+"日あいています。2日続けて休まないことだけが唯一のルールです。いま1問だけ解いてください。それで連続は復活します。";
+    host.appendChild(al);
   }
-  var again = el("button","btn ghost","この日をもう一度");
-  again.addEventListener("click", function(){ S.pos = 0; save(); viewToday(); });
-  act.appendChild(again);
-  p.appendChild(act);
-  sheet.appendChild(p);
-  host.appendChild(sheet);
-  host.appendChild(planStrip(Math.min(day.no + 1, DAYS.length)));
-}
-function allDone(){
-  var sheet = el("div","sheet");
-  var p = el("div","done-panel");
-  p.appendChild(el("p","big","1周 修了"));
-  p.appendChild(el("p", null, "全75日を終えました。2周目は間違えた問題から回すと効率が上がります。"));
-  var act = el("div","actions"); act.style.justifyContent = "center";
-  var b = el("button","btn","Day 001 から2周目へ");
-  b.addEventListener("click", function(){ S.day = 1; S.pos = 0; save(); viewToday(); });
-  act.appendChild(b); p.appendChild(act); sheet.appendChild(p);
-  return sheet;
-}
-
-/* ---------- field view ---------- */
-var drill = null;
-function viewField(){
-  var host = document.getElementById("view-field");
-  if(drill){
-    if(drill.i >= drill.ids.length){
-      host.innerHTML = "";
-      var sheet = el("div","sheet"), p = el("div","done-panel");
-      p.appendChild(el("p","big", drill.ok + " / " + drill.ids.length));
-      p.appendChild(el("p", null, drill.field + "　5問終了"));
-      var act = el("div","actions"); act.style.justifyContent = "center";
-      var more = el("button","btn","同じ分野をもう5問");
-      more.addEventListener("click", function(){ startDrill(drill.field); });
-      var back = el("button","btn ghost","分野を選び直す");
-      back.addEventListener("click", function(){ drill = null; viewField(); });
-      act.appendChild(more); act.appendChild(back);
-      p.appendChild(act); sheet.appendChild(p); host.appendChild(sheet);
-      return;
-    }
-    var q = QS[drill.ids[drill.i]];
-    var before = S.hist[q.id] ? S.hist[q.id].ok : 0;
-    renderQuestion(host, q, {
-      label: drill.field,
-      rail: {total: drill.ids.length, at: drill.i},
-      nextLabel: drill.i === drill.ids.length - 1 ? "結果を見る" : "次の問題へ",
-      onNext: function(){
-        var h = S.hist[q.id];
-        if(h && h.last === "o") drill.ok++;
-        drill.i++; wantTop = true; viewField();
-      }
+  var slots=[["m","朝の枠","5:00 − 7:00",P.m],["e","夜の枠","19:00 − 21:00",P.e]];
+  if(slotNow()==="e")slots.reverse();
+  slots.forEach(function(sl){
+    var key=sl[0],blocks=sl[3],dn=doneSet(key);
+    var totMin=blocks.reduce(function(a,b){return a+b.min;},0);
+    var h=el("div","slot");
+    h.appendChild(el("h2",null,sl[1]));
+    h.appendChild(el("span",null,sl[2]+"　約"+totMin+"分"));
+    var bar=el("div","bar"),bi=el("i");
+    bi.style.width=(dn.length/blocks.length*100)+"%";bar.appendChild(bi);h.appendChild(bar);
+    h.appendChild(el("span",null,dn.length+"／"+blocks.length));
+    host.appendChild(h);
+    var m=el("div","menu"),nextFound=false;
+    blocks.forEach(function(b,i){
+      var isDone=dn.indexOf(b.k)>=0;
+      var btn=el("button",isDone?"done":(!nextFound&&!isDone?"next":""));
+      if(!isDone&&!nextFound)nextFound=true;
+      btn.appendChild(el("span","no",isDone?"":String(i+1)));
+      var ti=el("span","ti");
+      ti.appendChild(document.createTextNode(b.t+(b.mode==="video"?"":"　"+b.n+(b.mode==="talk"?"題":"問"))));
+      if(b.d)ti.appendChild(el("em",null,b.d));
+      btn.appendChild(ti);
+      btn.appendChild(el("span","mn",b.min+"分"));
+      btn.addEventListener("click",function(){startBlock(key,b);});
+      m.appendChild(btn);
     });
-    afterRender(host);
+    host.appendChild(m);
+  });
+  var tip=el("p","note");
+  tip.style.marginTop="16px";
+  tip.textContent="上から順に消していくだけです。迷う時間をなくすために、何をやるかはこちらで決めてあります。全部できない日は上の1つだけで構いません。";
+  host.appendChild(tip);
+}
+function startBlock(slot,b){
+  if(b.mode==="video"){
+    var host=document.getElementById("view-today");
+    host.innerHTML="";
+    var sh=el("div","sheet");
+    sh.appendChild(el("p","eyebrow","インプット"));
+    sh.appendChild(el("p","qtext","YouTubeで1単元を見てください。"));
+    sh.appendChild(el("p","exp","見るだけで終わらせないことがすべてです。動画を閉じたらこの画面に戻り、同じ分野の一問一答をすぐ解いてください。見た直後に解くと定着率が大きく変わります。チャンネルは1つに絞ってください。複数を行き来すると網羅性が不安になり時間だけが減ります。1.5倍速、1単元30分以内のものを選びます。"));
+    var act=el("div","actions");
+    var d1=el("button","btn","見終えた");
+    d1.addEventListener("click",function(){markDone(slot,b.k);viewToday();window.scrollTo(0,0);});
+    var d2=el("button","btn ghost","戻る");
+    d2.addEventListener("click",function(){viewToday();});
+    act.appendChild(d1);act.appendChild(d2);sh.appendChild(act);
+    host.appendChild(sh);window.scrollTo(0,0);return;
+  }
+  var pool=poolFor(b.mode);
+  if(!pool.length){
+    if(b.mode==="wrong"){markDone(slot,b.k);viewToday();}
     return;
   }
-  host.innerHTML = "";
-  host.appendChild(el("h2", null, "分野を選ぶ"));
-  host.appendChild(el("p","note","苦手な問題と未着手の問題を優先して5問出します。"));
-  var grid = el("div","fields");
-  FIELDS.forEach(function(f){
-    var s = fieldStat(f);
-    var b = el("button");
-    b.appendChild(el("span", null, f));
-    b.appendChild(el("small", null, s.seen + "/" + s.total + " 問　" + (s.rate === null ? "未着手" : "正答率 " + s.rate + "%")));
-    b.addEventListener("click", function(){ startDrill(f); });
-    grid.appendChild(b);
-  });
-  host.appendChild(grid);
-}
-function startDrill(field){
-  var qs = (BYFIELD[field] || []).slice();
-  qs.sort(function(a, b){ return score(a) - score(b); });
-  var head = qs.slice(0, Math.min(12, qs.length));
-  for(var i = head.length - 1; i > 0; i--){
-    var j = Math.floor(Math.random() * (i + 1));
-    var t = head[i]; head[i] = head[j]; head[j] = t;
-  }
-  drill = {field: field, ids: head.slice(0, 5).map(function(q){ return q.id; }), i: 0, ok: 0};
-  viewField();
-}
-function score(q){
-  var h = S.hist[q.id];
-  if(!h) return 0;                 // 未着手を最優先
-  if(h.last === "x") return 1;     // 直近で間違えた
-  return 2 + h.ok / Math.max(1, h.n);
+  var ids=pick(pool,Math.min(b.n,pool.length)).map(function(q){return q.id;});
+  run={host:"today"};
+  startRun(ids,b.t,function(){markDone(slot,b.k);viewToday();window.scrollTo(0,0);},{fast:b.mode==="fast"});
+  run.host="today";
+  renderRun();
 }
 
-/* ---------- records view ---------- */
-function viewRec(){
-  var host = document.getElementById("view-rec");
-  host.innerHTML = "";
-  host.appendChild(el("h2", null, "分野別の到達度"));
-  host.appendChild(el("p","note","正答率の低い順に並んでいます。上にあるものが次に手を入れるところです。"));
-  var rows = FIELDS.map(function(f){ return {f:f, s:fieldStat(f)}; });
-  rows.sort(function(a, b){
-    var ra = a.s.rate === null ? 999 : a.s.rate, rb = b.s.rate === null ? 999 : b.s.rate;
-    return ra - rb;
-  });
-  var bars = el("div","bars");
-  rows.forEach(function(r){
-    var row = el("div","bar-row");
-    var left = el("div");
-    left.appendChild(el("div","bar-name", r.f));
-    var track = el("div","track");
-    var fill = el("i");
-    fill.style.width = (r.s.seen / r.s.total * 100).toFixed(1) + "%";
-    if(r.s.rate !== null && r.s.rate < 60) fill.className = "weak";
-    track.appendChild(fill); left.appendChild(track);
-    var num = el("div","bar-num");
-    if(r.s.rate === null){ num.textContent = "未着手"; }
-    else{
-      num.appendChild(el("em", null, r.s.rate + "%"));
-      num.appendChild(el("div", null, r.s.seen + "/" + r.s.total));
-    }
-    row.appendChild(left); row.appendChild(num);
-    bars.appendChild(row);
-  });
-  host.appendChild(bars);
-
-  host.appendChild(el("h2", null, "直前に間違えた問題"));
-  var wrong = DATA.questions.filter(function(q){
-    var h = S.hist[q.id];
-    return h && h.last === "x";
-  });
-  if(!wrong.length){
-    host.appendChild(el("p","note","いまのところありません。"));
-  }else{
-    host.appendChild(el("p","note", wrong.length + " 問あります。分野別演習では、これらが優先して出ます。"));
-    var grid = el("div","fields");
-    wrong.slice(0, 24).forEach(function(q){
-      var b = el("button");
-      b.appendChild(el("span", null, q.topic));
-      b.appendChild(el("small", null, q.field + "　" + q.id));
-      b.addEventListener("click", function(){
-        drill = {field: q.field, ids:[q.id], i:0, ok:0};
-        selectTab("field");
-      });
-      grid.appendChild(b);
+/* ===== 演習 ===== */
+var MODES=[["mc5","5肢択一","本番形式。1問2分30秒",10],["ox","一問一答","〇×で高速に回す",20],
+  ["fast","高速一問一答","1問15秒。反射で答える",20],["desc","記述式","型を見て書く",3],
+  ["talk","口頭再現","声に出して説明する",3],["multi","多肢選択式","空欄補充",2],
+  ["wrong","間違えた問題","直近の誤答だけ",10]];
+function viewDrill(){
+  var host=document.getElementById("view-drill");
+  if(run&&run.host==="drill"){renderRun();return;}
+  host.innerHTML="";
+  host.appendChild(el("h2",null,"形式を選ぶ"));
+  host.appendChild(el("p","note","未着手と直近で間違えた問題が優先的に出ます。"));
+  var m=el("div","menu");
+  MODES.forEach(function(x){
+    var pool=poolFor(x[0]);
+    var btn=el("button");
+    btn.appendChild(el("span","no",""));
+    var ti=el("span","ti");
+    ti.appendChild(document.createTextNode(x[1]));
+    ti.appendChild(el("em",null,x[2]+"　全"+pool.length+"問"));
+    btn.appendChild(ti);
+    btn.appendChild(el("span","mn",Math.min(x[3],pool.length)+"問"));
+    if(!pool.length)btn.disabled=true;
+    btn.addEventListener("click",function(){
+      var ids=pick(pool,Math.min(x[3],pool.length)).map(function(q){return q.id;});
+      run={host:"drill"};
+      startRun(ids,x[1],function(){viewDrill();window.scrollTo(0,0);},{fast:x[0]==="fast"});
+      run.host="drill";renderRun();
     });
-    host.appendChild(grid);
-  }
-
-  host.appendChild(el("h2", null, "試験のしくみ"));
-  var note = el("p","note");
-  note.textContent =
-    "5肢択一式54問（法令等40・基礎知識14）、多肢選択式3問、記述式3問の計60問300点。" +
-    "合格には法令等122点以上、基礎知識24点以上、全体180点以上の3つをすべて満たす必要があります。" +
-    "基礎知識の足切りは択一6問正解が目安です。";
-  host.appendChild(note);
+    m.appendChild(btn);
+  });
+  host.appendChild(m);
+  host.appendChild(el("h2",null,"分野を選ぶ"));
+  var g=el("div","menu");
+  FIELDS.forEach(function(f){
+    var qs=BYF[f],r=rate(qs);
+    var btn=el("button");
+    btn.appendChild(el("span","no",""));
+    var ti=el("span","ti");ti.appendChild(document.createTextNode(f));
+    ti.appendChild(el("em",null,qs.length+"問　"+(r==null?"未着手":"正答率 "+Math.round(r*100)+"%")));
+    btn.appendChild(ti);btn.appendChild(el("span","mn","5問"));
+    btn.addEventListener("click",function(){
+      var ids=pick(qs,Math.min(5,qs.length)).map(function(q){return q.id;});
+      run={host:"drill"};
+      startRun(ids,f,function(){viewDrill();window.scrollTo(0,0);},{});
+      run.host="drill";renderRun();
+    });
+    g.appendChild(btn);
+  });
+  host.appendChild(g);
 }
 
-/* ---------- tabs ---------- */
-var TABS = {today:["tab-today","view-today",viewToday], field:["tab-field","view-field",viewField], rec:["tab-rec","view-rec",viewRec]};
-function selectTab(name){
-  Object.keys(TABS).forEach(function(k){
-    var t = TABS[k];
-    var on = k === name;
-    document.getElementById(t[0]).setAttribute("aria-selected", on ? "true" : "false");
-    document.getElementById(t[1]).classList.toggle("hide", !on);
+/* ===== 記録 ===== */
+function viewRec(){
+  var host=document.getElementById("view-rec");host.innerHTML="";
+  var s=sim();
+  host.appendChild(el("h2",null,"本試験の予想得点"));
+  host.appendChild(el("p","note","いまの正答率がそのまま本試験で出た場合の目安です。合格は180点以上、かつ基礎知識24点以上が必要です。"));
+  var sc=el("div","score");
+  var tot=el("div","tot "+(s.tot!=null&&s.tot>=180?"pass":"fail"));
+  tot.appendChild(document.createTextNode(s.tot==null?"—":String(s.tot)));
+  tot.appendChild(el("small",null,"／300点"));
+  sc.appendChild(tot);
+  var gg=el("div","gauge"),gi=el("i");
+  gi.style.width=Math.min(100,(s.tot||0)/300*100)+"%";gg.appendChild(gi);gg.appendChild(el("u"));
+  sc.appendChild(gg);
+  host.appendChild(sc);
+  [["法令等 5肢択一（40問160点）",s.h],["多肢選択式（3問24点）",s.m],
+   ["記述式（3問60点）",s.d],["基礎知識（14問56点）",s.k]].forEach(function(p){
+    var r=el("div","sline");
+    r.appendChild(el("span",null,p[0]));
+    r.appendChild(el("b",null,p[1]==null?"—":p[1]+"点"));
+    host.appendChild(r);
   });
+  if(s.k!=null&&s.k<24){
+    var a1=el("div","alert bad");
+    a1.textContent="基礎知識が24点を下回っています。ここは足切りです。何点取っても他で挽回できません。行政書士法と個人情報保護法を先に固めてください。";
+    host.appendChild(a1);
+  }
+  if(s.d!=null&&s.d<20){
+    var a2=el("div","alert");
+    a2.textContent="記述式が20点未満です。前回0点だった科目です。ここを20点に乗せるだけで合格可能性が大きく変わります。毎朝2問、必ず書いてください。";
+    host.appendChild(a2);
+  }
+
+  host.appendChild(el("h2",null,"学習の記録"));
+  var cal=el("div","cal"),now=new Date();
+  for(var i=34;i>=0;i--){
+    var d=new Date(now);d.setDate(d.getDate()-i);
+    var k=ymd(d),rec=S.done[k]||{};
+    var cell=el("div",i===0?"today":"");
+    var im=el("i",(rec.m&&rec.m.length)?"m":"");
+    var ie=el("i",(rec.e&&rec.e.length)?"e":"");
+    cell.appendChild(im);cell.appendChild(ie);
+    cell.title=k;cal.appendChild(cell);
+  }
+  host.appendChild(cal);
+  var lg=el("div","legend");
+  [["朝の枠","var(--kon)"],["夜の枠","var(--ok)"],["やっていない","var(--line-soft)"]].forEach(function(p){
+    var s1=el("span"),b=el("b");b.style.background=p[1];s1.appendChild(b);
+    s1.appendChild(document.createTextNode(p[0]));lg.appendChild(s1);});
+  host.appendChild(lg);
+
+  host.appendChild(el("h2",null,"分野別の到達度"));
+  var rows=FIELDS.map(function(f){
+    var qs=BYF[f],seen=0;qs.forEach(function(q){if(S.hist[q.id])seen++;});
+    return {f:f,r:rate(qs),seen:seen,tot:qs.length};});
+  rows.sort(function(a,b){return (a.r==null?9:a.r)-(b.r==null?9:b.r);});
+  rows.forEach(function(x){
+    var row=el("div","bar-row"),left=el("div");
+    left.appendChild(el("div","bar-name",x.f));
+    var tr=el("div","track"),fi=el("i");
+    fi.style.width=(x.seen/x.tot*100).toFixed(1)+"%";
+    if(x.r!=null&&x.r<0.6)fi.className="weak";
+    tr.appendChild(fi);left.appendChild(tr);
+    var num=el("div","bar-num");
+    if(x.r==null)num.textContent="未着手";
+    else{num.appendChild(el("em",null,Math.round(x.r*100)+"%"));
+      num.appendChild(el("div",null,x.seen+"/"+x.tot));}
+    row.appendChild(left);row.appendChild(num);host.appendChild(row);
+  });
+
+  var tally={},tn=0;
+  for(var id in S.hist){var h=S.hist[id];if(h.why){tally[h.why]=(tally[h.why]||0)+1;tn++;}}
+  if(tn){
+    host.appendChild(el("h2",null,"間違いの原因"));
+    host.appendChild(el("p","note","いちばん多い原因が、いま潰すべきものです。"));
+    WHYS.forEach(function(p){
+      var c=tally[p[0]]||0;
+      var row=el("div","bar-row"),left=el("div");
+      left.appendChild(el("div","bar-name",p[1]));
+      var tr=el("div","track"),fi=el("i");fi.style.width=(c/tn*100)+"%";
+      tr.appendChild(fi);left.appendChild(tr);
+      var num=el("div","bar-num");num.appendChild(el("em",null,String(c)));
+      row.appendChild(left);row.appendChild(num);host.appendChild(row);});
+    if((tally.yomi||0)>=Math.max(1,tn*0.3)){
+      var a3=el("div","alert");
+      a3.textContent="読み違いが最も多くなっています。設問が「正しいもの」か「妥当でないもの」かを最初に確認する癖をつけてください。これだけで読み違いの半分は消えます。";
+      host.appendChild(a3);
+    }
+  }
+  var avg=0,an=0;
+  (BYT.mc5||[]).forEach(function(q){var h=S.hist[q.id];if(h&&h.ms){avg+=h.ms;an++;}});
+  if(an){
+    host.appendChild(el("h2",null,"5肢択一の平均解答時間"));
+    var r1=el("div","sline");
+    r1.appendChild(el("span",null,"あなたの平均"));
+    r1.appendChild(el("b",null,mmss(avg/an)));
+    host.appendChild(r1);
+    var r2=el("div","sline");
+    r2.appendChild(el("span",null,"本番の目安（3時間60問）"));
+    r2.appendChild(el("b",null,"2:30"));
+    host.appendChild(r2);
+    host.appendChild(el("p","note",avg/an>150000?
+      "目標を超えています。全肢を精読しているのが原因です。語尾、数字、主語の順に見て、違和感のある肢だけ本文を読んでください。":
+      "本番のペースに乗っています。この速度を維持してください。"));
+  }
+}
+
+/* ===== 指南 ===== */
+function para(host,t){host.appendChild(el("p","body",t));}
+function list(host,arr){var ul=el("ul","body");arr.forEach(function(x){ul.appendChild(el("li",null,x));});host.appendChild(ul);}
+function viewPlan(){
+  var host=document.getElementById("view-plan");host.innerHTML="";
+
+  host.appendChild(el("h2",null,"合格までの設計図"));
+  para(host,"令和7年度の結果は択一6割・記述0点。推定で140点前後です。180点まで40点足りません。この40点をどこで取るかが、この1年の全てです。");
+  para(host,"択一を6割から8割に上げるには全範囲の条文精度を上げる必要があり、1年かけても届かないことがあります。一方、記述式は0点から30点なら、頻出20論点を「40字で書ける形」にするだけで届きます。前回0点だったのは実力ではなく、書いたことがなかったからです。投資対効果は記述が圧倒的に高い。");
+  para(host,"なお、記述を捨てるという選択肢は存在しません。記述0点を前提にすると、残り240点中180点、つまり択一で75%を取る必要があります。これは上位合格者の水準です。");
+
+  host.appendChild(el("h2",null,"3つのプラン"));
+  host.appendChild(el("p","note","タップで切り替わります。今日のメニューが選んだプランに変わります。"));
+  var wrap=el("div","plans");
+  ["A","B","C"].forEach(function(k){
+    var P=PLANS[k],on=S.plan===k;
+    var card=el("div","plan"+(on?" on":""));
+    var h4=el("h4");h4.appendChild(document.createTextNode("プラン"+k+"　"+P.name));
+    if(on)h4.appendChild(el("span","badge","選択中"));
+    card.appendChild(h4);
+    card.appendChild(el("p","sub",P.sub));
+    card.appendChild(el("div","tgt",P.tgt));
+    card.appendChild(el("p",null,P.why));
+    var mm=P.m.reduce(function(a,b){return a+b.min;},0),ee=P.e.reduce(function(a,b){return a+b.min;},0);
+    card.appendChild(el("p",null,"朝 約"+mm+"分／夜 約"+ee+"分　合計 約"+Math.round((mm+ee)/60*10)/10+"時間"));
+    if(!on){
+      var act=el("div","actions");
+      var b=el("button","btn","このプランにする");
+      b.addEventListener("click",function(){S.plan=k;save();viewPlan();window.scrollTo(0,0);});
+      act.appendChild(b);card.appendChild(act);
+    }
+    wrap.appendChild(card);
+  });
+  host.appendChild(wrap);
+
+  host.appendChild(el("h2",null,"ノートを作るべきか"));
+  para(host,"作らないでください。まとめノートは、作った時点で勉強した気になるのが最大の問題です。この試験で問われるのは知識の再生ではなく正誤の判別なので、問題を解く作業そのものが最も効率の高い訓練になります。学習時間の9割は演習に充ててください。");
+  host.appendChild(el("h3",null,"ただし、手を動かすべき例外が3つあります"));
+  list(host,[
+    "記述式の答案。これは必ず紙に手で書いてください。頭の中で「だいたい分かる」のと40字に収めるのは別の技術です。前回0点だった原因はほぼここにあります。",
+    "間違えた理由を1行だけ。このアプリでは不正解のたびに4択で記録できます。まとめではなく原因の分類です。",
+    "数字と要件の横断表。これは自作せず、市販のまとめ教材の表を使ってください。作る時間が惜しい。"]);
+
+  host.appendChild(el("h2",null,"1日の組み立て"));
+  host.appendChild(el("h3",null,"朝 5:00 − 7:00"));
+  para(host,"判断力が最も高い時間帯なので、記述式と新しい論点をここに置きます。記述を夜に回すと、疲れていて書かずに終わります。");
+  host.appendChild(el("h3",null,"夜 19:00 − 21:00"));
+  para(host,"帰宅後は集中力が落ちるので、インプット動画と択一の反復に充てます。考えるより回す時間です。");
+  para(host,"この2枠で1日3時間前後。371日あるので、全部できなくても朝の1ブロックだけ続けば形になります。");
+
+  host.appendChild(el("h2",null,"誘惑に負けないための設計"));
+  para(host,"意志の力で勝とうとすると必ず負けます。勝つのではなく、負ける機会を減らす作りにします。");
+  list(host,[
+    "最初の1アクションを1つにする。前の晩にスマホを机の上の充電器に置き、ベッドから離してください。目覚ましを止めるために机へ行くことになり、そこにこのアプリがあります。起きてから何をやるか考える余地をなくします。",
+    "何をやるか決めない。今日の画面は上から順に消すだけです。選択肢を出さないのは意図的な設計です。選ぶ作業が一番の離脱ポイントだからです。",
+    "帰宅のトリガーに結びつける。着替えるより先に1問。1問だけ解いてから夕食にしてください。着席の儀式を作ると、その後の2時間が動きます。",
+    "お酒は21時以降と時刻で固定する。やめる必要はありません。21時までは机、と決めるだけで夜の枠は守れます。時間を削るのではなく、順番を固定します。",
+    "2日続けて休まない。1日休むのは想定内です。2日あくと、記録の画面に警告が出ます。これだけが唯一のルールです。",
+    "記録を見る。記録タブのカレンダーで、やった日とやらなかった日が並びます。途切れが目に見えることが、いちばん効きます。"]);
+
+  host.appendChild(el("h2",null,"YouTubeの使い方"));
+  list(host,[
+    "チャンネルは1つに絞る。複数を行き来すると網羅性が不安になり、見る時間だけが増えます。行政法と民法が体系順に並んでいるものを選び、最後まで同じ講師で通してください。",
+    "見たら必ずその場で解く。動画を閉じた直後に、同じ分野の一問一答を10問。これをセットにしないと、見ただけで終わります。夜の枠がこの順番になっているのはそのためです。",
+    "1.5倍速、1単元30分以内。長い動画は1回で終わらず、再開の心理的コストが高くなります。",
+    "2周目は見ない。2周目は演習に充ててください。インプットは1周で十分です。"]);
+
+  host.appendChild(el("h2",null,"問題文を速く読むには"));
+  para(host,"前回「問題文の理解に時間がかかった」とのことでした。原因はほぼ、5つの肢を全部精読していることです。本試験は3時間で60問、1問3分。択一は2分30秒で切る必要があります。");
+  host.appendChild(el("h3",null,"肢を読む順番を変える"));
+  list(host,[
+    "まず設問を見る。「正しいもの」か「妥当でないもの」か。ここを取り違えると全部無駄になります。",
+    "次に語尾。「しなければならない」か「努めなければならない」か。行政手続法はこれだけで半分の肢が切れます。",
+    "次に数字。3か月か6か月か、3分の2か4分の1か。統治と不服審査は数字だけで解けます。",
+    "次に主語。誰が主体か。検閲は行政権、執行停止は裁判所、といった具合です。",
+    "ここまでで違和感がない肢だけ、本文を読む。"]);
+  para(host,"このアプリの5肢択一には、1問ごとに目標時間と「読み方」が付いています。時間を計ることが訓練になります。超えた分は赤く表示されます。");
+
+  host.appendChild(el("h2",null,"声に出すこと"));
+  para(host,"演習タブの口頭再現は、論点を声に出して説明する訓練です。説明できない論点は、解けていても理解していません。黙読では効果が出ないので、必ず口を動かしてください。通勤中や歩きながらでもできます。模範の説明は読み上げもできるので、耳から入れることもできます。");
+
+  host.appendChild(el("h2",null,"この教材でできること、できないこと"));
+  para(host,"正直に書きます。この教材は"+DATA.questions.length+"問です。これだけで合格できる量ではありません。合格者の標準的な演習量は、肢別で数千肢、過去問10年分を3周前後です。");
+  host.appendChild(el("h3",null,"この教材が担うもの"));
+  list(host,[
+    "毎日続けるための軸。何をやるか決める手間をなくし、途切れを可視化します。",
+    "記述式の型。前回0点の科目を、書ける形にします。",
+    "読解速度の訓練。時間を計り、読み方を示します。",
+    "頻出論点の確認。出題可能性の高いところに絞ってあります。"]);
+  host.appendChild(el("h3",null,"別に用意すべきもの"));
+  list(host,[
+    "市販の肢別過去問集を1冊。これが演習量の本体になります。スマホで完結させたいなら、肢別のアプリでも構いません。",
+    "過去問10年分。本試験の問題文の長さと独特の言い回しに慣れるには、本物を解くしかありません。行政書士試験研究センターのサイトで過去問が公開されています。",
+    "六法。条文を引く習慣は記述に直結します。アプリでも構いません。",
+    "直前期の模試を2〜3回。3時間座り続ける訓練は別途必要です。"]);
+  host.appendChild(el("h3",null,"令和8年度の出題内容について"));
+  para(host,"この教材には、令和8年度（2026年度）本試験の出題内容は反映されていません。同年度の試験は本日実施されたばかりで、問題はまだ公表されていないためです。反映されているのは令和7年度までの出題傾向と、令和9年4月1日時点で施行見込みの法改正です。");
+  para(host,"令和8年度の問題は、例年どおりであれば試験後に行政書士試験研究センターのサイトで公表されます。公表されたら必ず解いてください。最新の出題傾向が最も参考になります。");
+
+  host.appendChild(el("h2",null,"年間の進め方"));
+  list(host,[
+    "11月から2月　記述の型づくりと、行政法・民法の一巡。このアプリを毎日回しつつ、肢別本を1周。",
+    "3月から6月　肢別本の2周目と過去問5年分。択一の精度を上げる時期。記述は毎日1問を維持。",
+    "7月から9月　過去問10年分と、間違えた問題だけの反復。基礎知識の詰め。",
+    "10月から本試験　模試を3時間通しで。このアプリは間違えた問題の維持用に落とします。"]);
+}
+
+/* ===== タブと起動 ===== */
+var TABS={today:["tab-today","view-today",viewToday],drill:["tab-drill","view-drill",viewDrill],
+  rec:["tab-rec","view-rec",viewRec],plan:["tab-plan","view-plan",viewPlan]};
+function selectTab(name){
+  if(run&&run.host&&run.host!==name)run=null;
+  Object.keys(TABS).forEach(function(k){
+    var t=TABS[k],on=k===name;
+    document.getElementById(t[0]).setAttribute("aria-selected",on?"true":"false");
+    document.getElementById(t[1]).classList.toggle("hide",!on);});
   TABS[name][2]();
 }
 Object.keys(TABS).forEach(function(k){
-  document.getElementById(TABS[k][0]).addEventListener("click", function(){ selectTab(k); });
-});
-document.getElementById("reset").addEventListener("click", function(){
-  if(!confirm("学習記録をすべて消去します。元に戻せません。")) return;
-  S = {v:1, day:1, pos:0, hist:{}, doneDates:[], doneDays:[]};
-  save(); paintMeta(); selectTab("today");
-});
+  document.getElementById(TABS[k][0]).addEventListener("click",function(){selectTab(k);});});
+document.getElementById("reset").addEventListener("click",function(){
+  if(!confirm("学習記録をすべて消去します。元に戻せません。"))return;
+  S={v:2,plan:S.plan,hist:{},talk:{},done:{}};save();paintMeta();selectTab("today");});
 
-/* ---------- boot ---------- */
-document.getElementById("ver").textContent =
-  "収録 " + DATA.questions.length + " 問　データ更新 " + (DATA.generated || "") +
-  "　このリンクは常に最新版を開きます。";
-loadLocal();
-paintMeta();
-selectTab("today");
+document.getElementById("ver").textContent="収録 "+DATA.questions.length+" 問　データ更新 "+(DATA.generated||"")+"　このリンクは常に最新版を開きます。";
+loadLocal();paintMeta();selectTab("today");
 
-if(window.claude && window.claude.use){
+if(window.claude&&window.claude.use){
   window.claude.use("db").then(function(x){
-    if(!x) return;
-    db = x;
-    return db.doc("progress/main").get().then(function(snap){
-      if(snap && snap.exists && size(snap.data) > size(S)){
-        S = Object.assign(S, snap.data);
-        paintMeta();
-        selectTab(document.getElementById("tab-today").getAttribute("aria-selected") === "true" ? "today" : "rec");
-      }else{
-        save();
-      }
-    });
+    if(!x)return;db=x;
+    return db.doc("progress/v2").get().then(function(s){
+      if(s&&s.exists&&weight(s.data)>weight(S)){S=Object.assign(S,s.data);paintMeta();selectTab("today");}
+      else save();});
   }).catch(function(){});
-  window.claude.use("sample").then(function(fn){
-    if(fn) window.__sample = fn;
-  }).catch(function(){});
+  window.claude.use("sample").then(function(f){if(f)window.__sample=f;}).catch(function(){});
 }
 })();
 </script>

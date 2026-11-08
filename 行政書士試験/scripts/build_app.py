@@ -14,7 +14,6 @@ with open(DATA, encoding="utf-8") as f:
 # ページに埋め込む分は最小限に絞る（daily と questions のみ）
 slim = {
     "generated": data["generated"],
-    "days": data["days"],
     "questions": data["questions"],
 }
 payload = json.dumps(slim, ensure_ascii=False, separators=(",", ":"))
