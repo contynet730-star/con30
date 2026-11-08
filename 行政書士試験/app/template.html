@@ -245,6 +245,56 @@ footer{margin-top:28px;padding-top:14px;border-top:1px solid var(--line);
   font-size:11px;color:var(--faint);line-height:1.85}
 .linkish{appearance:none;background:none;border:0;padding:0;cursor:pointer;font:inherit;
   color:var(--muted);text-decoration:underline}
+.lk{display:grid;grid-template-columns:1fr auto;gap:3px 10px;text-decoration:none;
+  background:var(--sheet);border:1px solid var(--line);border-radius:3px;padding:11px 13px;color:var(--ink)}
+.lk:active{background:var(--kon-soft);border-color:var(--kon)}
+.lk .lk-t{font-size:13.5px;font-weight:500;line-height:1.5}
+.lk .lk-g{font-family:var(--mono);font-size:11px;color:var(--faint);align-self:center}
+.lk .lk-u{grid-column:1/-1;font-family:var(--mono);font-size:10.5px;color:var(--faint);
+  word-break:break-all;line-height:1.5;-webkit-user-select:all;user-select:all}
+.links{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.addv{display:flex;flex-direction:column;gap:7px;margin-top:10px}
+.addv input{font-family:var(--gothic);font-size:16px;padding:10px 11px;color:var(--ink);
+  background:var(--sheet-2);border:1px solid var(--line);border-radius:3px;width:100%}
+.addv input:focus-visible{outline:2px solid var(--kon);outline-offset:1px}
+.delv{appearance:none;background:none;border:0;color:var(--muted);font-size:11px;
+  cursor:pointer;text-decoration:underline;padding:0;align-self:flex-start}
+.lead{font-family:var(--mincho);font-size:15px;line-height:1.95;margin:0 0 14px;
+  padding:13px 14px;background:var(--sheet-2);border-left:3px solid var(--kon);
+  border-radius:0 3px 3px 0;white-space:pre-wrap}
+.items{margin:14px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:9px}
+.items li{font-family:var(--mincho);font-size:15px;line-height:1.9;white-space:pre-wrap}
+.cheer{background:var(--ok-soft);color:var(--ok);border-radius:3px;padding:12px 14px;
+  font-size:13.5px;line-height:1.85;margin-bottom:14px}
+.cheer b{display:block;font-family:var(--mincho);font-size:15px;margin-bottom:3px}
+.sch{display:flex;flex-direction:column;gap:0;margin-top:6px}
+.sch .row{display:grid;grid-template-columns:76px 1fr;gap:12px;padding:10px 0;
+  border-bottom:1px solid var(--line-soft)}
+.sch .row:last-child{border-bottom:0}
+.sch .mo{font-family:var(--mono);font-size:12px;color:var(--muted);
+  font-variant-numeric:tabular-nums;padding-top:2px}
+.sch .wt{font-size:13px;line-height:1.75;color:var(--ink-2)}
+.sch .wt b{display:block;color:var(--ink);font-weight:500}
+.sch .row.now{background:var(--kon-soft);margin-inline:-8px;padding-inline:8px;border-radius:3px}
+.sch .row.now .mo{color:var(--kon-ink);font-weight:500}
+.sch .row.key .wt b::after{content:"　要注意";color:var(--ng);font-size:11px;font-weight:400}
+.modes{display:flex;gap:0;margin-top:14px;border:1px solid var(--line);
+  border-radius:3px;overflow:hidden}
+.modes button{flex:1;appearance:none;border:0;background:var(--sheet-2);cursor:pointer;
+  font-family:var(--gothic);font-size:13px;padding:10px 4px;color:var(--muted)}
+.modes button[aria-pressed="true"]{background:var(--kon);color:#fff;font-weight:500}
+:root[data-theme="dark"] .modes button[aria-pressed="true"]{color:#11141a}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .modes button[aria-pressed="true"]{color:#11141a}}
+.pad{margin-top:12px;border:1px solid var(--line);border-radius:3px;background:var(--sheet);
+  overflow:hidden;position:relative}
+.pad canvas{display:block;width:100%;touch-action:none;-webkit-user-select:none;user-select:none;
+  cursor:crosshair}
+.padbar{display:flex;gap:7px;margin-top:9px;align-items:center;flex-wrap:wrap}
+.padbar button{appearance:none;background:var(--sheet-2);border:1px solid var(--line);
+  border-radius:3px;cursor:pointer;font-family:var(--gothic);font-size:12.5px;
+  color:var(--ink-2);padding:8px 13px}
+.padbar button:active{background:var(--kon-soft);border-color:var(--kon)}
+.padbar .hint{font-size:11.5px;color:var(--muted);margin-left:auto}
 .hide{display:none !important}
 .speak{appearance:none;background:var(--sheet-2);border:1px solid var(--line);
   border-radius:3px;cursor:pointer;font-family:var(--gothic);font-size:12px;
@@ -428,7 +478,7 @@ function pick(pool,n,mode){
 function pri(q){var h=S.hist[q.id];if(!h)return 0;if(h.last==="x")return 1;return 2+h.ok/Math.max(1,h.n);}
 
 /* ===== 出題エンジン ===== */
-var TL={ox:"正しければ〇、誤りなら×",mc:"正しいものを一つ選ぶ",mc5:"正しいものを一つ選ぶ（本番形式）",
+var TL={ox:"正しければ〇、誤りなら×",mc:"正しいものを一つ選ぶ",mc5:"本番形式　5肢択一",combo:"本番形式　組合せを一つ選ぶ",
   desc:"40字程度で記述する",multi:"空欄ア〜エに入る語句を選ぶ",talk:"声に出して説明する"};
 var run=null;
 
@@ -458,9 +508,11 @@ function finishRun(host){
   t.appendChild(document.createTextNode(run.ok+" / "+n));
   big.appendChild(t);
   sh.appendChild(big);
-  sh.appendChild(el("p","note",run.ok/n>=0.8?"この調子。次のブロックへ進んでください。":
-    run.ok/n>=0.6?"合格ラインの感触です。間違えた問題は記録に残っています。":
-    "ここが伸びしろです。間違えた問題は明日の解き直しに回ります。"));
+  sh.appendChild(el("p","note",run.ok/n>=0.8?"いまの精度なら本番でも取れます。次のブロックへ。":
+    run.ok/n>=0.6?"合格ラインの感触です。間違えた問題は明日の解き直しに回ります。":
+    run.ok/n>=0.3?"ここが伸びしろです。間違えた問題は記録に残り、明日また出ます。落ち込む必要はありません。":
+    "初見の分野ならこれが普通です。解説を読んだ時点で今日の目的は果たしています。"));
+  sh.appendChild(el("p","note","通算 "+seenCount()+" 問　連続 "+streak()+" 日　本試験まで "+daysLeft()+" 日"));
   var act=el("div","actions");
   var b=el("button","btn wide","メニューに戻る");
   b.addEventListener("click",function(){var f=run.onDone;run=null;if(f)f();});
@@ -485,7 +537,13 @@ function buildCard(q,ctx){
   }
   sh.appendChild(head);
   sh.appendChild(el("p","qtype",TL[q.type]||""));
+  if(q.lead)sh.appendChild(el("div","lead",q.lead));
   sh.appendChild(el("p","qtext",q.q));
+  if(q.items){
+    var iu=el("ul","items");
+    q.items.forEach(function(x){iu.appendChild(el("li",null,x));});
+    sh.appendChild(iu);
+  }
 
   var body=el("div"),verdict=el("div","verdict hide");
   sh.appendChild(body);sh.appendChild(verdict);
@@ -513,7 +571,9 @@ function buildCard(q,ctx){
     verdict.appendChild(el("p","answer",ansLine(q)));
     if(q.each){
       var ul=el("ul","each");
-      q.each.forEach(function(x,i){var li=el("li",i===q.a?"hit":null);
+      q.each.forEach(function(x,i){
+        if(x==="—")return;
+        var li=el("li",i===q.a?"hit":null);
         li.appendChild(el("b",null,String(i+1)));li.appendChild(document.createTextNode(x));ul.appendChild(li);});
       verdict.appendChild(ul);
     }
@@ -549,7 +609,7 @@ function buildCard(q,ctx){
       b.addEventListener("click",function(){if(!dead)done(q.a===p[0]);});ox.appendChild(b);});
     body.appendChild(ox);
   }
-  else if(q.type==="mc"||q.type==="mc5"){
+  else if(q.type==="mc"||q.type==="mc5"||q.type==="combo"){
     var list=el("div","choices");
     q.choices.forEach(function(c,i){
       var b=el("button");b.appendChild(el("b",null,String(i+1)));
@@ -574,43 +634,67 @@ function buildCard(q,ctx){
   else if(q.type==="desc"){
     if(q.kata){var k=el("div","kata");k.appendChild(el("b",null,"型"));
       k.appendChild(document.createTextNode(q.kata));body.appendChild(k);}
+    var sw=el("div","modes");
+    var bHand=el("button",null,"手書き");bHand.type="button";
+    var bKey=el("button",null,"キーボード");bKey.type="button";
+    sw.appendChild(bHand);sw.appendChild(bKey);body.appendChild(sw);
+    var handBox=el("div"),keyBox=el("div","hide");
+    body.appendChild(handBox);body.appendChild(keyBox);
+    var pad=makePad(handBox);
+    handBox.appendChild(el("p","dictate","Apple Pencilでそのまま書けます。書けない漢字に気づくことが目的なので、調べずにまず書いてください。"));
     var ta=el("textarea");ta.id="d-"+q.id;ta.placeholder="ここに40字程度で書く";
-    body.appendChild(ta);
-    var cn=el("p","counter","0 字");body.appendChild(cn);
+    keyBox.appendChild(ta);
+    var cn=el("p","counter","0 字");keyBox.appendChild(cn);
     ta.addEventListener("input",function(){
       var n=ta.value.replace(/\s/g,"").length;cn.textContent=n+" 字";
       cn.className="counter"+(n>=35&&n<=50?" good":"");});
-    var dh=el("p","dictate","手で書いた答案を写すのが基本です。急ぐときはキーボードのマイクで声から入力できます。");
-    body.appendChild(dh);
+    keyBox.appendChild(el("p","dictate","キーボードのマイクを使えば声から入力できます。"));
+    var handMode=true;
+    function setMode(h){
+      handMode=h;
+      bHand.setAttribute("aria-pressed",h?"true":"false");
+      bKey.setAttribute("aria-pressed",h?"false":"true");
+      handBox.classList.toggle("hide",!h);keyBox.classList.toggle("hide",h);
+    }
+    bHand.addEventListener("click",function(){setMode(true);});
+    bKey.addEventListener("click",function(){setMode(false);});
+    setMode(true);
+
     var a2=el("div","actions");
-    var sub=el("button","btn","採点する");
+    var sub=el("button","btn","書けた。採点する");
     a2.appendChild(sub);body.appendChild(a2);
     sub.addEventListener("click",function(){
-      var mine=ta.value.trim();
       if(timer){clearInterval(timer);timer=null;}
       var ms=Date.now()-t0;
-      var hit=(q.keys||[]).filter(function(k){return mine.indexOf(k)>=0;});
-      var kw=(q.keys&&q.keys.length)?hit.length/q.keys.length:0;
-      var ok=kw>=0.6;
-      record(q,ok,ms,{kw:kw});save();paintMeta();
-      body.classList.add("hide");verdict.classList.remove("hide");
-      var mk=el("div","mark "+(ok?"ok":"ng"));
-      mk.appendChild(el("span",null,ok?"〇":"×"));
-      mk.appendChild(el("b",null,"キーワード "+hit.length+"／"+(q.keys||[]).length+"　推定 "+Math.round(kw*20)+"点／20点"));
-      verdict.appendChild(mk);
-      var ul=el("ul","each");
-      (q.keys||[]).forEach(function(k){
-        var in1=mine.indexOf(k)>=0;var li=el("li",in1?"hit":null);
-        li.appendChild(el("b",null,in1?"✓":"−"));
-        li.appendChild(document.createTextNode(k+(in1?"":"　← これが抜けている")));ul.appendChild(li);});
-      verdict.appendChild(ul);
-      if(mine)verdict.appendChild(el("div","grade","あなたの答案：\n"+mine));
+      var mine=handMode?"":ta.value.trim();
+      verdict.classList.remove("hide");
+      body.classList.add("hide");
       verdict.appendChild(el("p","answer","解答例：" + q.model+"（"+q.model.length+"字）"));
+      verdict.appendChild(el("p","qtype","書けたキーワードをタップしてください"));
+      var got={},keys=q.keys||[];
+      var ul=el("ul","checks");
+      keys.forEach(function(kk,i){
+        var li=el("li"),b=el("button");b.type="button";
+        var auto=!handMode&&mine.indexOf(kk)>=0;
+        if(auto)got[i]=1;
+        b.setAttribute("aria-pressed",auto?"true":"false");
+        b.appendChild(el("i",null,auto?"■":"□"));
+        b.appendChild(el("span",null,kk));
+        b.addEventListener("click",function(){
+          var on=b.getAttribute("aria-pressed")==="true";
+          b.setAttribute("aria-pressed",on?"false":"true");
+          b.querySelector("i").textContent=on?"□":"■";
+          if(on)delete got[i];else got[i]=1;
+          fin.textContent="採点して次へ（"+Object.keys(got).length+"／"+keys.length+"）";
+        });
+        li.appendChild(b);ul.appendChild(li);});
+      verdict.appendChild(ul);
+      if(!handMode&&mine)verdict.appendChild(el("div","grade","あなたの答案：\n"+mine));
       verdict.appendChild(el("p","exp",q.exp));
       if(q.ref)verdict.appendChild(el("p","ref",q.ref));
       var sp=speakBtn(q.model+"。"+q.exp);if(sp)verdict.appendChild(sp);
       var act=el("div","actions");
-      if(window.__sample&&mine){
+      if(window.__sample&&!handMode&&mine){
         var ask=el("button","btn ghost","Claudeに添削してもらう");
         ask.addEventListener("click",function(){
           ask.disabled=true;ask.textContent="添削中…";
@@ -620,15 +704,19 @@ function buildCard(q,ctx){
             "\n\n1行目に「得点：N／20点」。2行目以降に、書けている要素、落ちている要素、字数（40字程度が目安）への講評を3行以内で。日本語で簡潔に。",
             {modelTier:"default",onText:function(u){box.textContent=u.text;}})
             .then(function(r){box.textContent=r.text;})
-            .catch(function(){box.textContent="添削できませんでした。キーワードの一覧で自己採点してください。";})
+            .catch(function(){box.textContent="添削できませんでした。キーワードで自己採点してください。";})
             .finally(function(){ask.disabled=false;ask.textContent="もう一度添削";});
         });
         act.appendChild(ask);
       }
-      var nb=el("button","btn",ctx.nextLabel||"次へ");
-      nb.addEventListener("click",function(){ctx.onNext(ok);});
-      act.appendChild(nb);verdict.appendChild(act);
-      scrollTo(mk);
+      var fin=el("button","btn","採点して次へ（"+Object.keys(got).length+"／"+keys.length+"）");
+      fin.addEventListener("click",function(){
+        var kw=keys.length?Object.keys(got).length/keys.length:0;
+        var ok=kw>=0.6;
+        record(q,ok,ms,{kw:kw});save();paintMeta();ctx.onNext(ok);
+      });
+      act.appendChild(fin);verdict.appendChild(act);
+      scrollTo(verdict);
     });
   }
   else if(q.type==="talk"){
@@ -677,12 +765,218 @@ function buildCard(q,ctx){
 }
 function ansLine(q){
   if(q.type==="ox")return "答　"+(q.a?"〇":"×");
-  if(q.type==="mc"||q.type==="mc5")return "答　"+(q.a+1)+"．"+q.choices[q.a];
+  if(q.type==="mc"||q.type==="mc5"||q.type==="combo")return "答　"+(q.a+1)+"．"+q.choices[q.a];
   if(q.type==="multi"){var lb=q.blanks||["ア","イ","ウ","エ"];
     return "答　"+q.a.map(function(i,k){return lb[k]+"＝"+q.choices[i];}).join("　");}
   return "";
 }
 
+
+
+
+
+
+/* ===== 手書きパッド（Apple Pencil対応） ===== */
+function makePad(host){
+  var wrap=el("div","pad");
+  var cv=document.createElement("canvas");
+  wrap.appendChild(cv);host.appendChild(wrap);
+  var bar=el("div","padbar");
+  var undo=el("button",null,"1つ戻す");
+  var clear=el("button",null,"全部消す");
+  var hint=el("span","hint","40マス　Apple Pencil対応");
+  bar.appendChild(undo);bar.appendChild(clear);bar.appendChild(hint);
+  host.appendChild(bar);
+
+  var strokes=[],cur=null,dpr=Math.max(1,window.devicePixelRatio||1);
+  var cols,rows,cell,W,H;
+  function layout(){
+    W=wrap.clientWidth||320;
+    cols=10; rows=4;
+    cell=Math.floor(W/cols); W=cell*cols; H=cell*rows;
+    cv.width=W*dpr; cv.height=H*dpr;
+    cv.style.width=W+"px"; cv.style.height=H+"px";
+    var g=cv.getContext("2d"); g.setTransform(dpr,0,0,dpr,0,0);
+    redraw();
+  }
+  function grid(g){
+    var cs=getComputedStyle(document.body);
+    g.clearRect(0,0,W,H);
+    g.fillStyle=cs.getPropertyValue("--sheet")||"#fff";
+    g.fillRect(0,0,W,H);
+    g.strokeStyle=cs.getPropertyValue("--line-soft")||"#e4e8ee";
+    g.lineWidth=1;
+    for(var c=0;c<=cols;c++){g.beginPath();g.moveTo(c*cell+.5,0);g.lineTo(c*cell+.5,H);g.stroke();}
+    for(var r=0;r<=rows;r++){g.beginPath();g.moveTo(0,r*cell+.5);g.lineTo(W,r*cell+.5);g.stroke();}
+  }
+  function redraw(){
+    var g=cv.getContext("2d");
+    grid(g);
+    g.strokeStyle=getComputedStyle(document.body).getPropertyValue("--ink")||"#161a21";
+    g.lineCap="round";g.lineJoin="round";
+    strokes.forEach(function(st){
+      if(st.length<2)return;
+      g.beginPath();g.lineWidth=st[0].w;
+      g.moveTo(st[0].x,st[0].y);
+      for(var i=1;i<st.length;i++){g.lineTo(st[i].x,st[i].y);}
+      g.stroke();
+    });
+  }
+  function pos(e){
+    var r=cv.getBoundingClientRect();
+    return {x:e.clientX-r.left,y:e.clientY-r.top,
+      w:(e.pointerType==="pen"&&e.pressure>0)?(0.8+e.pressure*2.6):2.1};
+  }
+  cv.addEventListener("pointerdown",function(e){
+    e.preventDefault();cv.setPointerCapture(e.pointerId);
+    cur=[pos(e)];strokes.push(cur);
+  });
+  cv.addEventListener("pointermove",function(e){
+    if(!cur)return;e.preventDefault();
+    cur.push(pos(e));redraw();
+  });
+  function end(e){if(cur){cur=null;redraw();}}
+  cv.addEventListener("pointerup",end);
+  cv.addEventListener("pointercancel",end);
+  cv.addEventListener("pointerleave",end);
+  undo.addEventListener("click",function(){strokes.pop();redraw();});
+  clear.addEventListener("click",function(){strokes=[];redraw();});
+  window.addEventListener("resize",layout);
+  setTimeout(layout,0);
+  return {empty:function(){return !strokes.length;},clear:function(){strokes=[];redraw();}};
+}
+
+/* ===== 年間スケジュール ===== */
+var SCHED=[
+ ["2026-11","立ち上げ","毎日アプリを開く習慣を作る。記述式の型に慣れる。何点取れるかは気にしない。",0],
+ ["2026-12","行政法 前半","行政法総論と行政手続法を一巡。YouTubeで見た単元をその日のうちに解く。",0],
+ ["2027-01","行政法 後半","行政不服審査法、行政事件訴訟法、国家賠償法、地方自治法を一巡。",0],
+ ["2027-02","民法 前半","総則と物権を一巡。意思表示、代理、物権変動、抵当権が山。",0],
+ ["2027-03","民法 後半","債権と親族相続を一巡。ここまでで主要科目が一周する。",0],
+ ["2027-04","憲法・商法","憲法の判例と会社法の機関。法令の基準日は4月1日。改正点をここで確認する。",0],
+ ["2027-05","基礎知識を固める","行政書士法と個人情報保護法。足切りのある科目を先に安全圏へ。肢別本2周目。",0],
+ ["2027-06","過去問 前半","公式の令和2〜4年度を3時間通しで解く。時間配分の感覚をつかむ。",0],
+ ["2027-07","過去問 後半","令和5〜7年度。記述は毎日2問。受験申込みの受付が始まる。",1],
+ ["2027-08","弱点の集中","正答率60%未満の分野だけを回す。受験申込みの締切に注意。",1],
+ ["2027-09","本試験型演習","模試を3時間通しで2回。本試験型と組合せ形式を集中的に。",0],
+ ["2027-10","総ざらい","間違えた問題だけを回す。記述の型を全部音読する。新しい教材に手を出さない。",0],
+ ["2027-11","本試験","11月14日（見込み）午後1時から3時間。前日は早く寝る。",1]
+];
+function viewSched(host){
+  host.appendChild(el("h2",null,"本試験までの13か月"));
+  host.appendChild(el("p","note","いまの月が色付きで表示されます。先のことは考えなくていいので、今月の行だけ見てください。"));
+  var now=new Date();
+  var cur=now.getFullYear()+"-"+String(now.getMonth()+1).padStart(2,"0");
+  var w=el("div","sch");
+  SCHED.forEach(function(x){
+    var cls="row"+(x[0]===cur?" now":"")+(x[3]?" key":"");
+    var r=el("div",cls);
+    var ym=x[0].split("-");
+    r.appendChild(el("div","mo",ym[0].slice(2)+"年"+parseInt(ym[1],10)+"月"));
+    var t=el("div","wt");
+    t.appendChild(el("b",null,x[1]));
+    t.appendChild(document.createTextNode(x[2]));
+    r.appendChild(t);
+    w.appendChild(r);
+  });
+  host.appendChild(w);
+  host.appendChild(el("p","note","受験申込みは例年7月下旬から8月下旬です。これを逃すと1年待つことになります。公式サイトで必ず日程を確認してください。"));
+}
+
+/* ===== 励まし ===== */
+function cheer(){
+  var st=streak(),sn=seenCount(),rest=restDays(),s=sim();
+  var left=daysLeft();
+  if(rest>=2)return null;
+  if(sn===0)return ["今日が1日目","371日あります。まず1問。それだけで今日は達成です。"];
+  if(st===0&&sn>0)return ["今日の分はこれから","昨日までの積み上げは消えません。1問開けば今日も続きます。"];
+  if(st===1)return ["1日目","いちばん難しい日を越えました。明日も同じ時刻に開くだけです。"];
+  if(st===2)return ["2日続いた","3日目が最初の壁です。明日を越えれば形になります。"];
+  if(st===3)return ["3日続いた","最初の壁を越えました。ここから楽になります。"];
+  if(st===7)return ["1週間","習慣になりかけています。この7日は確実に前回との差です。"];
+  if(st===14)return ["2週間","ここまで来た人は多くありません。淡々と続けてください。"];
+  if(st===30)return ["1か月","1か月分の差がつきました。残りは"+left+"日です。"];
+  if(st>=100)return [st+"日連続","もう崩れません。本試験まで"+left+"日。"];
+  if(st>=50)return [st+"日連続","習慣として定着しています。"];
+  if(s.d!=null&&s.d>=20)return ["記述が"+s.d+"点","前回0点だった科目です。ここが一番大きい前進です。"];
+  if(sn>=200)return ["通算"+sn+"問","解いた数は裏切りません。"];
+  if(sn>=50)return ["通算"+sn+"問","積み上がっています。今日の分もどうぞ。"];
+  return [st+"日続いている","今日の1問目を開いてください。"];
+}
+function cheerCard(){
+  var c=cheer();
+  if(!c)return null;
+  var d=el("div","cheer");
+  d.appendChild(el("b",null,c[0]));
+  d.appendChild(document.createTextNode(c[1]));
+  return d;
+}
+
+/* ===== 動画と公式過去問 ===== */
+var PASTS=[["令和7年度","r7"],["令和6年度","r6"],["令和5年度","r5"],
+           ["令和4年度","r4"],["令和3年度","r3"],["令和2年度","r2"]];
+function lk(label,url,gloss){
+  var a=document.createElement("a");
+  a.href=url;a.target="_blank";a.rel="noopener noreferrer";a.className="lk";
+  a.appendChild(el("span","lk-t",label));
+  if(gloss)a.appendChild(el("span","lk-g",gloss));
+  a.appendChild(el("span","lk-u",url));
+  return a;
+}
+function ytSearch(q){return "https://www.youtube.com/results?search_query="+encodeURIComponent(q);}
+function videoPanel(host){
+  host.appendChild(el("h3",null,"探す"));
+  host.appendChild(el("p","note","タップで開きます。開かない端末では、下のURLを長押ししてコピーしてください。"));
+  var box=el("div","links");
+  var weak=weakField();
+  var pre=[["令和8年度の解答速報・解説会",ytSearch("行政書士 令和8年度 解答速報 解説")],
+           ["アガルートの行政書士解説",ytSearch("アガルート 行政書士 解説")],
+           ["記述式の書き方",ytSearch("行政書士 記述式 書き方")]];
+  if(weak)pre.splice(2,0,["いま弱い分野　"+weak,ytSearch("行政書士 "+weak+" 解説")]);
+  pre.forEach(function(x){box.appendChild(lk(x[0],x[1],"YouTube"));});
+  host.appendChild(box);
+
+  host.appendChild(el("h3",null,"自分の動画・チャンネル"));
+  var saved=el("div","links");
+  function paint(){
+    saved.innerHTML="";
+    (S.vids||[]).forEach(function(v,i){
+      var wrap=el("div");
+      wrap.appendChild(lk(v.t||v.u,v.u,"保存"));
+      var d=el("button","delv","削除");
+      d.addEventListener("click",function(){S.vids.splice(i,1);save();paint();});
+      wrap.appendChild(d);
+      saved.appendChild(wrap);
+    });
+    if(!(S.vids||[]).length)saved.appendChild(el("p","note","まだありません。よく見るチャンネルを登録すると、毎日1タップで開けます。"));
+  }
+  host.appendChild(saved);paint();
+  var f=el("div","addv");
+  var it=el("input");it.type="text";it.placeholder="名前（例：アガルート 行政法）";it.id="vt";
+  var iu=el("input");iu.type="url";iu.placeholder="https://www.youtube.com/...";iu.id="vu";
+  var ab=el("button","btn","登録する");
+  ab.addEventListener("click",function(){
+    var u=iu.value.trim();
+    if(!/^https?:\/\//.test(u)){iu.focus();return;}
+    S.vids=S.vids||[];S.vids.push({t:it.value.trim(),u:u});
+    save();it.value="";iu.value="";paint();
+  });
+  f.appendChild(it);f.appendChild(iu);f.appendChild(ab);
+  host.appendChild(f);
+}
+function pastPanel(host){
+  host.appendChild(el("p","note","公式サイトで無料公開されている本物の試験問題です。市販の過去問集を買う前に、まずこちらを使ってください。"));
+  var box=el("div","links");
+  PASTS.forEach(function(x){
+    box.appendChild(lk(x[0]+"　試験問題","https://gyosei-shiken.or.jp/pdf/"+x[1]+"_mondai.pdf","PDF"));
+    box.appendChild(lk(x[0]+"　正解","https://gyosei-shiken.or.jp/doc/exam/"+x[1]+"ans.html","正解"));
+  });
+  host.appendChild(box);
+  host.appendChild(el("p","note","令和8年度（2026年度）の問題は、2026年11月8日時点ではまだ公開されていません。公開されると下のページに追加されます。"));
+  var box2=el("div","links");
+  box2.appendChild(lk("過去の試験問題と正解（公式）","https://gyosei-shiken.or.jp/doc/exam/index.html","公式"));
+  host.appendChild(box2);
+}
 
 /* ===== 聴くモード ===== */
 var LS=null;
@@ -734,7 +1028,7 @@ function renderListen(){
 function poolFor(mode){
   if(mode==="desc")return BYT.desc||[];
   if(mode==="talk")return BYT.talk||[];
-  if(mode==="mc5")return BYT.mc5||[];
+  if(mode==="mc5")return (BYT.mc5||[]).concat(BYT.combo||[]);
   if(mode==="multi")return BYT.multi||[];
   if(mode==="ox"||mode==="fast")return (BYT.ox||[]).concat(BYT.mc||[]);
   if(mode==="wrong")return wrongList();
@@ -763,6 +1057,7 @@ function viewToday(){
   if(run&&run.host==="today"){renderRun();return;}
   host.innerHTML="";
   var P=PLANS[S.plan]||PLANS.A;
+  var cc=cheerCard();if(cc)host.appendChild(cc);
   var rest=restDays();
   if(rest>=2){
     var al=el("div","alert bad");
@@ -809,16 +1104,10 @@ function startBlock(slot,b){
     var sh=el("div","sheet");
     sh.appendChild(el("p","eyebrow","インプット"));
     sh.appendChild(el("p","qtext","今日の単元を頭に入れる"));
-    sh.appendChild(el("p","exp","動画はこのアプリの中では再生できません。外部の動画を埋め込めない仕組みのためです。YouTubeを使う場合は、アプリをいったん離れて見てから戻ってきてください。見たら必ずその場で同じ分野を解きます。見るだけで終わらせないことがすべてです。"));
-    var weak=weakField();
-    if(weak){
-      var k=el("div","kata");
-      k.appendChild(el("b",null,"いま弱い分野　検索はこの言葉で"));
-      k.appendChild(document.createTextNode("行政書士 "+weak+" 解説"));
-      sh.appendChild(k);
-      sh.appendChild(el("p","note","長押しでコピーできます。チャンネルは1つに絞ってください。"));
-    }
-    sh.appendChild(el("p","exp","YouTubeが見られないときは、下の「アプリの中で聴く」を使ってください。口頭再現の模範説明を読み上げます。通勤中でも、画面を見ずに耳だけで進められます。"));
+    sh.appendChild(el("p","exp","動画はこのページの中では再生できません。外部の動画を埋め込めない仕組みのためです。下のリンクはYouTubeアプリかブラウザの別タブで開きます。見終えたらここに戻ってきて、同じ分野をすぐ解いてください。見るだけで終わらせないことがすべてです。"));
+    videoPanel(sh);
+    sh.appendChild(el("h3",null,"動画が見られないとき"));
+    sh.appendChild(el("p","note","口頭再現の模範説明を読み上げます。画面を見ずに耳だけで進められます。"));
     var act=el("div","actions");
     var lb=el("button","btn","アプリの中で聴く");
     lb.addEventListener("click",function(){
@@ -1087,6 +1376,11 @@ function viewPlan(){
   host.appendChild(el("h2",null,"声に出すこと"));
   para(host,"演習タブの口頭再現は、論点を声に出して説明する訓練です。説明できない論点は、解けていても理解していません。黙読では効果が出ないので、必ず口を動かしてください。通勤中や歩きながらでもできます。模範の説明は読み上げもできるので、耳から入れることもできます。");
 
+  host.appendChild(el("h2",null,"へこたれたときに読む"));
+  para(host,"正答率が上がらない時期は必ず来ます。特に2か月目から4か月目は、やっているのに点が伸びない感覚が続きます。これは知識が穴だらけの状態から、穴を1つずつ埋めている段階だからです。埋まった穴は見えません。見えるのは残りの穴だけです。だから伸びていないように感じます。");
+  para(host,"そういう日は、新しい問題をやらないでください。記録タブを開いて、解いた問題の総数と連続日数を見てください。それが唯一の事実です。そのうえで、間違えた問題を3問だけ解き直して終わりにしてください。3問でいいです。");
+  para(host,"1日休んでも構いません。2日続けて休まないことだけ守ってください。2日あくと3日目のハードルが跳ね上がります。1日の遅れは取り返せますが、やめてしまうと取り返せません。");
+  para(host,"前回140点だった人が180点を超えるのに必要なのは、才能ではなく回数です。あと371日あります。1日5問でも1800問を超えます。");
   host.appendChild(el("h2",null,"この教材でできること、できないこと"));
   para(host,"正直に書きます。この教材は"+DATA.questions.length+"問です。これだけで合格できる量ではありません。合格者の標準的な演習量は、肢別で数千肢、過去問10年分を3周前後です。");
   host.appendChild(el("h3",null,"この教材が担うもの"));
@@ -1098,19 +1392,17 @@ function viewPlan(){
   host.appendChild(el("h3",null,"別に用意すべきもの"));
   list(host,[
     "市販の肢別過去問集を1冊。これが演習量の本体になります。スマホで完結させたいなら、肢別のアプリでも構いません。",
-    "過去問10年分。本試験の問題文の長さと独特の言い回しに慣れるには、本物を解くしかありません。行政書士試験研究センターのサイトで過去問が公開されています。",
     "六法。条文を引く習慣は記述に直結します。アプリでも構いません。",
     "直前期の模試を2〜3回。3時間座り続ける訓練は別途必要です。"]);
+  host.appendChild(el("h3",null,"公式の過去問（無料）"));
+  pastPanel(host);
+  host.appendChild(el("h3",null,"動画で入れる"));
+  videoPanel(host);
   host.appendChild(el("h3",null,"令和8年度の出題内容について"));
   para(host,"この教材には、令和8年度（2026年度）本試験の出題内容は反映されていません。同年度の試験は本日実施されたばかりで、問題はまだ公表されていないためです。反映されているのは令和7年度までの出題傾向と、令和9年4月1日時点で施行見込みの法改正です。");
   para(host,"令和8年度の問題は、例年どおりであれば試験後に行政書士試験研究センターのサイトで公表されます。公表されたら必ず解いてください。最新の出題傾向が最も参考になります。");
 
-  host.appendChild(el("h2",null,"年間の進め方"));
-  list(host,[
-    "11月から2月　記述の型づくりと、行政法・民法の一巡。このアプリを毎日回しつつ、肢別本を1周。",
-    "3月から6月　肢別本の2周目と過去問5年分。択一の精度を上げる時期。記述は毎日1問を維持。",
-    "7月から9月　過去問10年分と、間違えた問題だけの反復。基礎知識の詰め。",
-    "10月から本試験　模試を3時間通しで。このアプリは間違えた問題の維持用に落とします。"]);
+  viewSched(host);
 }
 
 /* ===== タブと起動 ===== */
